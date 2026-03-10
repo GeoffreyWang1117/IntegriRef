@@ -14,6 +14,14 @@ from .europe_pmc import EuropePMCRegistry
 from .datacite import DataCiteRegistry
 from .opencitations import OpenCitationsRegistry
 
+# Phase 1a: New English API adapters
+from .biorxiv import BioRxivRegistry
+from .inspire_hep import INSPIRERegistry
+from .zenodo import ZenodoRegistry
+from .nasa_ads import NASAADSRegistry
+from .zbmath import ZbMATHRegistry
+from .clinicaltrials import ClinicalTrialsRegistry
+
 ALL_ACADEMIC = [
     CrossRefRegistry,
     ArXivRegistry,
@@ -28,4 +36,11 @@ ALL_ACADEMIC = [
     EuropePMCRegistry,
     DataCiteRegistry,
     OpenCitationsRegistry,
+    # Phase 1a
+    BioRxivRegistry,
+    INSPIRERegistry,
+    ZenodoRegistry,
+    NASAADSRegistry,
+    ZbMATHRegistry,
+    ClinicalTrialsRegistry,
 ]
