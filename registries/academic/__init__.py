@@ -22,6 +22,26 @@ from .nasa_ads import NASAADSRegistry
 from .zbmath import ZbMATHRegistry
 from .clinicaltrials import ClinicalTrialsRegistry
 
+# Phase 1b: Multilingual API adapters
+from .hal import HALRegistry
+from .cinii import CiNiiRegistry
+from .jstage import JStageRegistry
+from .scielo import SciELORegistry
+from .kci import KCIRegistry
+from .dergipark import DergiParkRegistry
+from .persee import PerseeRegistry
+from .theses_fr import ThesesFrRegistry
+from .europeana import EuropeanaRegistry
+
+# Phase 1c: OAI-PMH sources
+from .diva import DiVARegistry
+from .dialnet import DialnetRegistry
+from .redalyc import RedalycRegistry
+from .cyberleninka import CyberLeninkaRegistry
+from .garuda import GARUDARegistry
+from .shodhganga import ShodhgangaRegistry
+from .base_search import BASERegistry
+
 ALL_ACADEMIC = [
     CrossRefRegistry,
     ArXivRegistry,
@@ -43,4 +63,22 @@ ALL_ACADEMIC = [
     NASAADSRegistry,
     ZbMATHRegistry,
     ClinicalTrialsRegistry,
+    # Phase 1b: Multilingual
+    HALRegistry,
+    CiNiiRegistry,
+    JStageRegistry,
+    SciELORegistry,
+    KCIRegistry,
+    DergiParkRegistry,
+    PerseeRegistry,
+    ThesesFrRegistry,
+    EuropeanaRegistry,
+    # Phase 1c: OAI-PMH
+    DiVARegistry,
+    DialnetRegistry,
+    RedalycRegistry,
+    CyberLeninkaRegistry,
+    GARUDARegistry,
+    ShodhgangaRegistry,
+    BASERegistry,
 ]
