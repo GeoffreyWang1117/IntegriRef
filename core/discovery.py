@@ -6,11 +6,14 @@ based on identifier type, entity type, and domain signals.
 
 from __future__ import annotations
 
+import logging
 import re
 from typing import Optional
 
 from .entity import ICEntity
 from .registry import RegistryAdapter
+
+logger = logging.getLogger(__name__)
 
 
 class RegistryDiscovery:
@@ -140,6 +143,112 @@ class RegistryDiscovery:
                 continue
             hits = adapter.search(title, author=author, year=year, **kwargs)
             results.extend(hits)
+        return results
+
+    # ── Parallel query methods ─────────────────────────────────────────
+
+    def parallel_query_by_id(self, id_type: str, id_value: str,
+                              adapters: list[RegistryAdapter] | None = None,
+                              max_workers: int = 8,
+                              timeout: float = 10.0) -> list[tuple[RegistryAdapter, ICEntity]]:
+        """Query matching adapters in parallel. Returns (adapter, entity) pairs.
+
+        Args:
+            id_type: Identifier type (e.g. "doi", "arxiv", "pmid")
+            id_value: The identifier value
+            adapters: Specific adapters to query (defaults to all registered)
+            max_workers: Max concurrent threads
+            timeout: Overall timeout in seconds
+
+        Returns:
+            List of (adapter, entity) tuples for successful lookups.
+        """
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        targets = adapters if adapters is not None else self._registries
+        if not targets:
+            return []
+
+        results = []
+        with ThreadPoolExecutor(max_workers=min(max_workers, len(targets))) as executor:
+            futures = {
+                executor.submit(adapter.query_by_id, id_type, id_value): adapter
+                for adapter in targets
+            }
+            try:
+                for future in as_completed(futures, timeout=timeout):
+                    adapter = futures[future]
+                    try:
+                        entity = future.result(timeout=1.0)
+                        if entity:
+                            results.append((adapter, entity))
+                    except Exception as exc:
+                        logger.debug("Adapter %s failed for %s=%s: %s",
+                                     adapter.info().name, id_type, id_value, exc)
+                        continue
+            except TimeoutError:
+                logger.warning("parallel_query_by_id timed out after %.1fs",
+                               timeout)
+                for f in futures:
+                    f.cancel()
+        return results
+
+    def parallel_search(self, title: str, author: str = "", year: str = "",
+                         adapters: list[RegistryAdapter] | None = None,
+                         domains: list[str] | None = None,
+                         max_workers: int = 8,
+                         timeout: float = 15.0) -> list[tuple[RegistryAdapter, list[ICEntity]]]:
+        """Search across registries in parallel.
+
+        Args:
+            title: Search title
+            author: Author filter
+            year: Year filter
+            adapters: Specific adapters to query (defaults to all registered)
+            domains: Domain filter (only used when adapters is None)
+            max_workers: Max concurrent threads
+            timeout: Overall timeout in seconds
+
+        Returns:
+            List of (adapter, hits) tuples for adapters that returned results.
+        """
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        if adapters is not None:
+            targets = adapters
+        else:
+            targets = self._registries
+            if domains:
+                targets = [a for a in targets if a.info().domain in domains]
+
+        if not targets:
+            return []
+
+        def _do_search(adapter):
+            return adapter.search(title, author=author, year=year)
+
+        results = []
+        with ThreadPoolExecutor(max_workers=min(max_workers, len(targets))) as executor:
+            futures = {
+                executor.submit(_do_search, adapter): adapter
+                for adapter in targets
+            }
+            try:
+                for future in as_completed(futures, timeout=timeout):
+                    adapter = futures[future]
+                    try:
+                        hits = future.result(timeout=1.0)
+                        if hits:
+                            results.append((adapter, hits))
+                    except Exception as exc:
+                        logger.debug("Search failed for %s: %s",
+                                     adapter.info().name, exc)
+                        continue
+            except TimeoutError:
+                logger.warning("parallel_search timed out after %.1fs "
+                               "(%d results collected)", timeout, len(results))
+                for f in futures:
+                    f.cancel()
         return results
 
     def verify_reference(self, title: str = "", identifier: str = "",
