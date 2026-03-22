@@ -165,4 +165,4 @@ class TestAllRegistriesLoad:
 
         total = (len(ALL_ACADEMIC) + len(ALL_PATENTS) + len(ALL_LEGAL) +
                  len(ALL_GOVERNMENT) + len(ALL_FINANCIAL) + len(ALL_STANDARDS))
-        assert total >= 31, f"Expected >= 31 adapters, got {total}"
+        assert total >= 60, f"Expected >= 60 adapters, got {total}"

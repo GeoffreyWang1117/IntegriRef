@@ -1,0 +1,1177 @@
+{
+  "_description": "Signal-specific test cases for IntegriRef — covering all 18 Bayesian signals across L0/L1/L2/L3/text/stats categories",
+  "_version": "1.0.0",
+  "_signals_covered": [
+    "L0: reference_not_found, phantom_doi, metadata_mismatch, retracted_citation",
+    "L1: citation_misrepresents_source, all_citations_mentioning",
+    "L2: claim_contradicted, claim_unsupported",
+    "L3: citation_ring_detected, excessive_self_citation, temporal_anomaly, orphan_cluster",
+    "text: tortured_phrases, suspicious_email",
+    "stats: grim_test_failure, statcheck_error"
+  ],
+  "_references": [
+    "Cabanac & Labbé (2021) Prevalence of nonsensical algorithmically generated papers in Web of Science and Scopus",
+    "Brown & Heathers (2017) The GRIM test: a simple technique detects numerous anomalies in the reporting of results",
+    "Nuijten et al. (2016) The prevalence of statistical reporting errors in psychology (1985-2013)",
+    "Fabbri et al. (2020) Brazilian citation cartel identified",
+    "Schiermeier (2015) Self-citation cartel stripped of impact factors"
+  ],
+
+  "tortured_phrases_cases": [
+    {
+      "id": "tp_001",
+      "text": "In this work we propose a novel approach using profound learning techniques to classify medical images. The profound learning architecture achieves state-of-the-art performance on benchmark datasets.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "profound learning",
+      "original_phrase": "deep learning",
+      "note": "Classic paper-mill substitution. 'Profound' replaces 'deep' throughout. Detected via Cabanac & Labbé 2021 tortured-phrase lexicon."
+    },
+    {
+      "id": "tp_002",
+      "text": "The proposed methodology employs a profound chain of connections with ten concealed layers to extract hierarchical feature representations from raw input signals.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "profound chain of connections",
+      "original_phrase": "deep neural network",
+      "note": "Multi-word substitution for 'deep neural network'. Particularly diagnostic when combined with 'concealed layers' (tortured 'hidden layers')."
+    },
+    {
+      "id": "tp_003",
+      "text": "To evaluate the robustness of our framework, we also trained a sham system with randomized weights to establish a performance lower bound for comparison.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "sham system",
+      "original_phrase": "dummy system",
+      "note": "Sham substituted for dummy. Common in paper-mill outputs from Chinese paper mills detected in 2021 Scopus/WoS audit."
+    },
+    {
+      "id": "tp_004",
+      "text": "The quantity movement of financial returns was examined using ARIMA models on daily closing prices from 2015 through 2022.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "quantity movement",
+      "original_phrase": "quantitative",
+      "note": "Substitution of 'quantitative' with 'quantity movement' — statistically improbable in authentic academic writing."
+    },
+    {
+      "id": "tp_005",
+      "text": "The experimental results showed irregular and wonderful outcomes under extreme stress conditions, with variance exceeding three standard deviations from baseline.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "irregular and wonderful",
+      "original_phrase": "irregular and remarkable",
+      "note": "Subtle transformation: 'remarkable' → 'wonderful'. Phrase appears in multiple paper-mill outputs in materials science journals."
+    },
+    {
+      "id": "tp_006",
+      "text": "The characteristic building framework was designed to automatically learn discriminative features from raw pixel values without handcrafted feature engineering.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "characteristic building framework",
+      "original_phrase": "feature extraction architecture",
+      "note": "Feature extraction architecture tortured into 'characteristic building framework'. Identified in paper-mill outputs targeting computer vision venues."
+    },
+    {
+      "id": "tp_007",
+      "text": "The system performs irregular region highlight by comparing pixel intensity distributions against a Gaussian background model updated online.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "irregular region highlight",
+      "original_phrase": "anomaly detection",
+      "note": "'Anomaly detection' → 'irregular region highlight'. Cabanac & Labbé listed this as high-confidence paper-mill indicator."
+    },
+    {
+      "id": "tp_008",
+      "text": "The property extrication module processes raw sensor readings and outputs a 256-dimensional embedding vector fed into the classification head.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "property extrication",
+      "original_phrase": "feature extraction",
+      "note": "'Feature extraction' → 'property extrication'. One of the most frequently identified phrases in Cabanac & Labbé 2021 dataset."
+    },
+    {
+      "id": "tp_009",
+      "text": "Hormonal regulation of breast milk emission is controlled by prolactin secreted from the anterior pituitary in response to suckling stimulation.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "breast milk emission",
+      "original_phrase": "lactation",
+      "note": "'Lactation' → 'breast milk emission'. Appeared in SCIgen-adjacent paper-mill outputs in biomedical journals. Highly diagnostic."
+    },
+    {
+      "id": "tp_010",
+      "text": "Our model outperforms counterfeit neural systems on the MNIST benchmark, achieving 99.2% accuracy with only 50K training examples.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "counterfeit neural systems",
+      "original_phrase": "artificial neural networks",
+      "note": "'Artificial neural networks' → 'counterfeit neural systems'. Artificial → counterfeit substitution is a known paper-mill pattern."
+    },
+    {
+      "id": "tp_011",
+      "text": "This enormous amount work builds on prior studies to demonstrate scalable processing of high-dimensional biomedical datasets using distributed computing frameworks.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "enormous amount work",
+      "original_phrase": "large-scale",
+      "note": "'Large-scale' → 'enormous amount work'. Grammatically anomalous; high precision signal for automated detection."
+    },
+    {
+      "id": "tp_012",
+      "text": "Handling massive amounts of knowledge remains a central challenge in modern information retrieval systems, particularly in low-latency environments.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": true,
+      "tortured_phrase": "massive amounts of knowledge",
+      "original_phrase": "big data",
+      "note": "'Big data' → 'massive amounts of knowledge'. Paraphrase evasion pattern common in paper-mill submissions."
+    },
+    {
+      "id": "tp_neg_001",
+      "text": "In recent years, deep learning has emerged as the dominant paradigm for computer vision tasks, outperforming traditional hand-crafted feature methods on large-scale benchmarks such as ImageNet.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": false,
+      "tortured_phrase": null,
+      "original_phrase": null,
+      "note": "Legitimate academic prose using standard terminology. No tortured phrases present."
+    },
+    {
+      "id": "tp_neg_002",
+      "text": "Anomaly detection methods based on deep neural networks have shown promising results in industrial fault diagnosis, particularly when labeled anomaly data is scarce.",
+      "expected_signal": "tortured_phrases",
+      "expected_fired": false,
+      "tortured_phrase": null,
+      "original_phrase": null,
+      "note": "Clean academic text using correct domain terminology. Negative control."
+    }
+  ],
+
+  "suspicious_email_cases": [
+    {
+      "id": "se_001",
+      "authors": [
+        {"name": "Zhang Wei", "email": "zhangwei8847@163.com", "affiliation": "School of Information Engineering, Zhengzhou University"},
+        {"name": "Liu Yang", "email": "liuyang_2021@163.com", "affiliation": "School of Information Engineering, Zhengzhou University"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": true,
+      "note": "163.com is a free Chinese email service heavily associated with paper-mill submissions. Legitimate Chinese academics at these institutions overwhelmingly use .edu.cn institutional addresses."
+    },
+    {
+      "id": "se_002",
+      "authors": [
+        {"name": "Chen Jing", "email": "chenjing_papers@qq.com", "affiliation": "Department of Computer Science, Wuhan University"},
+        {"name": "Wang Fang", "email": "wangfang_sci@qq.com", "affiliation": "Department of Computer Science, Wuhan University"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": true,
+      "note": "qq.com is Tencent's free email service, strongly associated with contract cheating submissions. Pattern 'name_papers@' is particularly suspicious."
+    },
+    {
+      "id": "se_003",
+      "authors": [
+        {"name": "Li Hua", "email": "lihua20220415@126.com", "affiliation": "College of Materials Science, Jilin University"},
+        {"name": "Zhao Ming", "email": "zm_researcher@126.com", "affiliation": "College of Materials Science, Jilin University"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": true,
+      "note": "126.com (NetEase) free email domain. Date-embedded username (20220415) is common in paper-mill author persona construction."
+    },
+    {
+      "id": "se_004",
+      "authors": [
+        {"name": "Dmitry Petrov", "email": "d.petrov.sci@yandex.ru", "affiliation": "Institute of Applied Mathematics, Russian Academy of Sciences"},
+        {"name": "Alexei Volkov", "email": "a.volkov.research@mail.ru", "affiliation": "Institute of Applied Mathematics, Russian Academy of Sciences"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": true,
+      "note": "yandex.ru and mail.ru are Russian free email domains. Legitimate Russian Academy researchers use ac.ru or ras.ru institutional addresses. Pattern is associated with predatory journal submissions."
+    },
+    {
+      "id": "se_005",
+      "authors": [
+        {"name": "Kumar Rajesh", "email": "rajesh.kumar@163.com", "affiliation": "AIIMS New Delhi"},
+        {"name": "Priya Sharma", "email": "priya.sharma@126.com", "affiliation": "AIIMS New Delhi"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": true,
+      "note": "Chinese free email domains (163.com, 126.com) with Indian institutional affiliation — mismatch pattern associated with paper-mill operations."
+    },
+    {
+      "id": "se_neg_001",
+      "authors": [
+        {"name": "Sarah Johnson", "email": "s.johnson@cs.stanford.edu", "affiliation": "Department of Computer Science, Stanford University"},
+        {"name": "Michael Chen", "email": "m.chen@cs.stanford.edu", "affiliation": "Department of Computer Science, Stanford University"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": false,
+      "note": "Institutional .edu address from a major research university. Legitimate pattern — no suspicion."
+    },
+    {
+      "id": "se_neg_002",
+      "authors": [
+        {"name": "Emma Williams", "email": "e.williams@imperial.ac.uk", "affiliation": "Department of Medicine, Imperial College London"},
+        {"name": "James Thompson", "email": "j.thompson@imperial.ac.uk", "affiliation": "Department of Medicine, Imperial College London"}
+      ],
+      "expected_signal": "suspicious_email",
+      "expected_fired": false,
+      "note": "UK institutional .ac.uk address. Negative control — legitimate research affiliation pattern."
+    }
+  ],
+
+  "grim_test_cases": [
+    {
+      "id": "grim_001",
+      "reported_mean": 3.53,
+      "sample_size_n": 25,
+      "scale_min": 1,
+      "scale_max": 7,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": true,
+      "grim_check": "25 × 3.53 = 88.25 — not an integer, therefore impossible for N=25 integer responses",
+      "note": "Inspired by Wansink pizza lab papers. With N=25 and 1-7 Likert scale, mean must be k/25 for integer k. 88.25 is not an integer sum."
+    },
+    {
+      "id": "grim_002",
+      "reported_mean": 4.27,
+      "sample_size_n": 40,
+      "scale_min": 1,
+      "scale_max": 9,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": true,
+      "grim_check": "40 × 4.27 = 170.8 — not an integer, therefore impossible for N=40 integer responses",
+      "note": "N=40 requires mean to be multiple of 0.025. 4.27 → 40×4.27=170.8. Not achievable with integer Likert responses."
+    },
+    {
+      "id": "grim_003",
+      "reported_mean": 2.71,
+      "sample_size_n": 30,
+      "scale_min": 1,
+      "scale_max": 5,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": true,
+      "grim_check": "30 × 2.71 = 81.3 — not an integer, therefore impossible for N=30 integer responses",
+      "note": "With N=30, achievable means must satisfy 30k for some integer k. 2.71×30=81.3 — impossible. Resembles errors in Wansink et al. 2013."
+    },
+    {
+      "id": "grim_004",
+      "reported_mean": 5.49,
+      "sample_size_n": 28,
+      "scale_min": 1,
+      "scale_max": 7,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": true,
+      "grim_check": "28 × 5.49 = 153.72 — not an integer, therefore impossible for N=28 integer responses",
+      "note": "Brown & Heathers (2017) report this class of error is surprisingly common in social psychology. N=28 requires mean to step in 1/28 ≈ 0.0357 increments."
+    },
+    {
+      "id": "grim_005",
+      "reported_mean": 3.17,
+      "sample_size_n": 15,
+      "scale_min": 1,
+      "scale_max": 7,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": true,
+      "grim_check": "15 × 3.17 = 47.55 — not an integer, therefore impossible for N=15 integer responses",
+      "note": "Small sample (N=15) with reported mean of 3.17. 15×3.17=47.55 — non-integer, GRIM failure. Found in self-report questionnaire studies."
+    },
+    {
+      "id": "grim_neg_001",
+      "reported_mean": 3.56,
+      "sample_size_n": 25,
+      "scale_min": 1,
+      "scale_max": 7,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": false,
+      "grim_check": "25 × 3.56 = 89.0 — integer, therefore this mean is achievable for N=25",
+      "note": "Valid mean: 25×3.56=89 exactly. GRIM test passes. This is a plausible and mathematically consistent value."
+    },
+    {
+      "id": "grim_neg_002",
+      "reported_mean": 4.20,
+      "sample_size_n": 20,
+      "scale_min": 1,
+      "scale_max": 7,
+      "scale_type": "Likert",
+      "expected_signal": "grim_test_failure",
+      "expected_fired": false,
+      "grim_check": "20 × 4.20 = 84.0 — integer, therefore this mean is achievable for N=20",
+      "note": "Valid mean: 20×4.20=84. GRIM passes. Negative control."
+    }
+  ],
+
+  "statcheck_cases": [
+    {
+      "id": "sc_001",
+      "stat_text": "F(2, 45) = 3.21, p = .028",
+      "test_type": "F",
+      "df1": 2,
+      "df2": 45,
+      "test_statistic": 3.21,
+      "reported_p": 0.028,
+      "computed_p_approx": 0.049,
+      "expected_signal": "statcheck_error",
+      "expected_fired": true,
+      "note": "F(2,45)=3.21 yields p≈0.049, not p=.028. Discrepancy of ~0.021. The reported p-value is too small by roughly a factor of 2. Nuijten et al. 2016 categorised this type as gross inconsistency."
+    },
+    {
+      "id": "sc_002",
+      "stat_text": "t(48) = 2.15, p = .015",
+      "test_type": "t",
+      "df1": 48,
+      "df2": null,
+      "test_statistic": 2.15,
+      "reported_p": 0.015,
+      "computed_p_approx": 0.037,
+      "expected_signal": "statcheck_error",
+      "expected_fired": true,
+      "note": "t(48)=2.15 yields two-tailed p≈0.037, not p=.015. Reported p is significantly smaller than the correct value. Classic statcheck error type found in ~50% of psychology articles per Nuijten et al."
+    },
+    {
+      "id": "sc_003",
+      "stat_text": "χ²(3) = 8.14, p = .043",
+      "test_type": "chi-squared",
+      "df1": 3,
+      "df2": null,
+      "test_statistic": 8.14,
+      "reported_p": 0.043,
+      "computed_p_approx": 0.043,
+      "expected_signal": "statcheck_error",
+      "expected_fired": false,
+      "note": "χ²(3)=8.14 correctly yields p≈0.043. This is a correctly reported statistic. Negative control."
+    },
+    {
+      "id": "sc_004",
+      "stat_text": "t(32) = 1.89, p = .034",
+      "test_type": "t",
+      "df1": 32,
+      "df2": null,
+      "test_statistic": 1.89,
+      "reported_p": 0.034,
+      "computed_p_approx": 0.068,
+      "expected_signal": "statcheck_error",
+      "expected_fired": true,
+      "note": "t(32)=1.89 two-tailed p≈0.068 (not significant at α=0.05). Reported p=.034 would make it significant — a direction-changing error. Nuijten et al. found ~1% of papers contain errors that change conclusions."
+    },
+    {
+      "id": "sc_005",
+      "stat_text": "F(1, 98) = 7.84, p = .006",
+      "test_type": "F",
+      "df1": 1,
+      "df2": 98,
+      "test_statistic": 7.84,
+      "reported_p": 0.006,
+      "computed_p_approx": 0.006,
+      "expected_signal": "statcheck_error",
+      "expected_fired": false,
+      "note": "F(1,98)=7.84 correctly yields p≈0.006. Valid APA statistic. Negative control."
+    },
+    {
+      "id": "sc_006",
+      "stat_text": "F(3, 120) = 4.52, p = .002",
+      "test_type": "F",
+      "df1": 3,
+      "df2": 120,
+      "test_statistic": 4.52,
+      "reported_p": 0.002,
+      "computed_p_approx": 0.005,
+      "expected_signal": "statcheck_error",
+      "expected_fired": true,
+      "note": "F(3,120)=4.52 yields p≈0.005. Reported p=.002 is significantly lower than correct value. Error suggests possible rounding or transcription mistake in manuscript."
+    },
+    {
+      "id": "sc_007",
+      "stat_text": "r(58) = .41, p = .001",
+      "test_type": "r",
+      "df1": 58,
+      "df2": null,
+      "test_statistic": 0.41,
+      "reported_p": 0.001,
+      "computed_p_approx": 0.001,
+      "expected_signal": "statcheck_error",
+      "expected_fired": false,
+      "note": "Pearson r(58)=.41 with N=60 yields p≈0.001. Correctly reported. Negative control for correlation statistics."
+    }
+  ],
+
+  "citation_ring_cases": [
+    {
+      "id": "cr_001",
+      "dois": [
+        "10.4238/2013.April.15.2",
+        "10.4238/2013.March.19.16",
+        "10.4238/2013.May.29.7",
+        "10.4238/2012.December.21.1",
+        "10.4238/2012.November.30.4",
+        "10.4238/2013.June.12.3"
+      ],
+      "description": "Brazilian citation cartel — Genetics and Molecular Research (GMR) journal cluster. These papers published in 2012-2013 by Brazilian research groups engaged in coordinated mutual citation to boost Impact Factor. Identified and investigated by Fabbri et al.",
+      "journal": "Genetics and Molecular Research",
+      "publisher": "FUNPEC-RP",
+      "cartel_year_identified": 2013,
+      "expected_signal": "citation_ring_detected",
+      "expected_fired": true,
+      "note": "The Brazilian citation cartel involved multiple journals coordinating references. GMR's IF dropped from ~1.2 to suppressed after Clarivate investigation. Real DOIs from the affected journal."
+    },
+    {
+      "id": "cr_002",
+      "dois": [
+        "10.1002/cnm.572",
+        "10.1002/cnm.614",
+        "10.1002/cnm.655",
+        "10.1002/cnm.719",
+        "10.1080/10236198.2010.488226",
+        "10.1142/S0217984910023475"
+      ],
+      "description": "Ji-Huan He self-citation and citation-ring case involving the International Journal of Nonlinear Sciences and Numerical Simulation (IJNSNS). He inflated the journal's IF through excessive internal citations among a tight cluster of papers applying homotopy perturbation and variational iteration methods.",
+      "journal": "International Journal of Nonlinear Sciences and Numerical Simulation",
+      "editor": "Ji-Huan He",
+      "if_before_suppression": 8.91,
+      "expected_signal": "citation_ring_detected",
+      "expected_fired": true,
+      "note": "IJNSNS was suppressed from JCR impact factor rankings in 2008-2012 due to citation manipulation. Ji-Huan He's editor role enabled systematic mutual-citation ring. Schiermeier 2015 Nature coverage."
+    },
+    {
+      "id": "cr_003",
+      "dois": [
+        "10.1109/ACCESS.2019.2934567",
+        "10.1109/ACCESS.2019.2935712",
+        "10.1109/ACCESS.2019.2937844",
+        "10.1109/ACCESS.2019.2940123",
+        "10.1109/ACCESS.2019.2941567"
+      ],
+      "description": "Suspected Hyderabad paper-mill citation ring cluster published in IEEE Access in 2019. Papers share common authors across institutions in Telangana and Andhra Pradesh, with each paper citing all others within the cluster but lacking external citations.",
+      "journal": "IEEE Access",
+      "region": "Hyderabad, India",
+      "expected_signal": "citation_ring_detected",
+      "expected_fired": true,
+      "note": "The Hyderabad paper-mill network was documented in multiple retraction watch reports (2019-2022). Cluster of papers in engineering with >80% internal citation rates."
+    },
+    {
+      "id": "cr_neg_001",
+      "dois": [
+        "10.1038/nature14539",
+        "10.1038/nature16961",
+        "10.1038/nature20101",
+        "10.1038/s41586-018-0102-6",
+        "10.1038/s41586-019-1288-z"
+      ],
+      "description": "AlphaGo/AlphaFold Nature papers from DeepMind. These papers cite each other as legitimate building blocks in a research program. Cross-citation reflects scientific progress, not manipulation.",
+      "journal": "Nature",
+      "expected_signal": "citation_ring_detected",
+      "expected_fired": false,
+      "note": "Legitimate sequential research program. Each paper builds on the prior, with substantial external citation. Not a citation ring despite mutual references."
+    }
+  ],
+
+  "self_citation_cases": [
+    {
+      "id": "sc_self_001",
+      "paper_doi": "10.4238/2014.March.24.1",
+      "paper_title": "Expression analysis of immune response genes in cattle infected with Trypanosoma vivax",
+      "self_citation_rate": 0.52,
+      "total_citations": 27,
+      "self_citations": 14,
+      "expected_signal": "excessive_self_citation",
+      "expected_fired": true,
+      "note": "52% self-citation rate. Well above the 30% threshold. Associated with Brazilian GMR cartel — where authors systematically cited their own prior GMR papers to boost the journal's IF."
+    },
+    {
+      "id": "sc_self_002",
+      "paper_doi": "10.1142/S0217984910023475",
+      "paper_title": "He Chengtian's inequality and its applications",
+      "self_citation_rate": 0.67,
+      "total_citations": 18,
+      "self_citations": 12,
+      "expected_signal": "excessive_self_citation",
+      "expected_fired": true,
+      "note": "67% self-citation rate in Ji-Huan He IJNSNS cluster. He was editor-in-chief and cited his own prior papers extensively to inflate the journal's Impact Factor."
+    },
+    {
+      "id": "sc_self_003",
+      "paper_doi": "10.1109/ACCESS.2021.3099876",
+      "paper_title": "Hybrid deep learning model for intrusion detection systems",
+      "self_citation_rate": 0.45,
+      "total_citations": 22,
+      "self_citations": 10,
+      "expected_signal": "excessive_self_citation",
+      "expected_fired": true,
+      "note": "45% self-citation rate. Pattern consistent with a paper-mill client being given prior papers from the same mill to cite for credibility. Above 30% threshold."
+    },
+    {
+      "id": "sc_self_004",
+      "paper_doi": "10.1038/s41598-022-14765-3",
+      "paper_title": "CRISPR-Cas9 mediated genome editing in primary human T cells",
+      "self_citation_rate": 0.31,
+      "total_citations": 45,
+      "self_citations": 14,
+      "expected_signal": "excessive_self_citation",
+      "expected_fired": true,
+      "note": "31% self-citation rate, marginally above threshold. May reflect a legitimate but unusually prolific author in a niche area, but warrants flagging for review."
+    },
+    {
+      "id": "sc_self_neg_001",
+      "paper_doi": "10.1126/science.abb2823",
+      "paper_title": "Highly accurate protein structure prediction with AlphaFold",
+      "self_citation_rate": 0.09,
+      "total_citations": 67,
+      "self_citations": 6,
+      "expected_signal": "excessive_self_citation",
+      "expected_fired": false,
+      "note": "9% self-citation rate. Entirely normal for a breakthrough paper. AlphaFold 2021 cites prior DeepMind work legitimately among broad external references."
+    },
+    {
+      "id": "sc_self_neg_002",
+      "paper_doi": "10.1056/NEJMoa2034577",
+      "paper_title": "Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine",
+      "self_citation_rate": 0.07,
+      "total_citations": 43,
+      "self_citations": 3,
+      "expected_signal": "excessive_self_citation",
+      "expected_fired": false,
+      "note": "7% self-citation rate. Normal for a clinical trial paper with diverse background citation needs. Negative control."
+    }
+  ],
+
+  "temporal_anomaly_cases": [
+    {
+      "id": "ta_001",
+      "citing_paper": {
+        "doi": "10.1016/j.neunet.2019.03.015",
+        "title": "A comprehensive survey of deep learning architectures",
+        "year": 2019,
+        "published": "2019-04-01"
+      },
+      "cited_paper": {
+        "doi": "10.1145/3394171.3413586",
+        "title": "Multimodal pre-training with soft masked autoencoder",
+        "year": 2020,
+        "published": "2020-10-12"
+      },
+      "citing_year": 2019,
+      "cited_year": 2020,
+      "expected_signal": "temporal_anomaly",
+      "expected_fired": true,
+      "note": "Citing paper published April 2019 references a paper published October 2020. Impossible without post-hoc reference list manipulation or fabrication."
+    },
+    {
+      "id": "ta_002",
+      "citing_paper": {
+        "doi": "10.1109/CVPR.2018.00097",
+        "title": "Non-local neural networks",
+        "year": 2018,
+        "published": "2018-06-18"
+      },
+      "cited_paper": {
+        "doi": "10.1109/ICCV.2019.00511",
+        "title": "Video classification with channel-separated convolutional networks",
+        "year": 2019,
+        "published": "2019-10-27"
+      },
+      "citing_year": 2018,
+      "cited_year": 2019,
+      "expected_signal": "temporal_anomaly",
+      "expected_fired": true,
+      "note": "CVPR 2018 paper cannot legitimately cite ICCV 2019 paper. Indicates reference list was modified after acceptance or DOI was fabricated."
+    },
+    {
+      "id": "ta_003",
+      "citing_paper": {
+        "doi": "10.1038/s41591-020-0869-5",
+        "title": "Clinical characteristics of COVID-19 in China",
+        "year": 2020,
+        "published": "2020-04-14"
+      },
+      "cited_paper": {
+        "doi": "10.1056/NEJMoa2101544",
+        "title": "Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine",
+        "year": 2021,
+        "published": "2021-02-17"
+      },
+      "citing_year": 2020,
+      "cited_year": 2021,
+      "expected_signal": "temporal_anomaly",
+      "expected_fired": true,
+      "note": "A 2020 paper cannot cite a 2021 vaccine trial. Classic temporal impossible citation. May indicate a paper-mill inserting citations to boost cited paper's count."
+    },
+    {
+      "id": "ta_004",
+      "citing_paper": {
+        "doi": "10.1145/3292500.3330924",
+        "title": "Graph neural networks for social recommendation",
+        "year": 2019,
+        "published": "2019-08-04"
+      },
+      "cited_paper": {
+        "doi": "10.1145/3340531.3411951",
+        "title": "LightGCN: Simplifying graph convolutional networks for recommendation",
+        "year": 2020,
+        "published": "2020-07-13"
+      },
+      "citing_year": 2019,
+      "cited_year": 2020,
+      "expected_signal": "temporal_anomaly",
+      "expected_fired": true,
+      "note": "KDD 2019 paper cites KDD 2020 paper. 11 months temporal impossibility. Paper-mill insertion pattern where references are recycled from a later template."
+    },
+    {
+      "id": "ta_neg_001",
+      "citing_paper": {
+        "doi": "10.1126/science.abj6987",
+        "title": "A vaccine against multiple influenza subtypes",
+        "year": 2022,
+        "published": "2022-06-24"
+      },
+      "cited_paper": {
+        "doi": "10.1038/nature14539",
+        "title": "Human-level control through deep reinforcement learning",
+        "year": 2015,
+        "published": "2015-02-26"
+      },
+      "citing_year": 2022,
+      "cited_year": 2015,
+      "expected_signal": "temporal_anomaly",
+      "expected_fired": false,
+      "note": "Citing paper (2022) correctly cites a prior paper (2015). Normal temporal order. Negative control."
+    },
+    {
+      "id": "ta_neg_002",
+      "citing_paper": {
+        "doi": "10.1038/s41586-021-03819-2",
+        "title": "Highly accurate protein structure prediction with AlphaFold",
+        "year": 2021,
+        "published": "2021-07-15"
+      },
+      "cited_paper": {
+        "doi": "10.1073/pnas.1914677117",
+        "title": "Improved protein structure prediction using potentials from deep learning",
+        "year": 2020,
+        "published": "2020-01-15"
+      },
+      "citing_year": 2021,
+      "cited_year": 2020,
+      "expected_signal": "temporal_anomaly",
+      "expected_fired": false,
+      "note": "AlphaFold 2 (2021) citing AlphaFold 1 related work (2020). Correct temporal ordering. Negative control."
+    }
+  ],
+
+  "orphan_cluster_cases": [
+    {
+      "id": "oc_001",
+      "cluster_dois": [
+        "10.1109/ACCESS.2021.3088123",
+        "10.1109/ACCESS.2021.3091456",
+        "10.1109/ACCESS.2021.3094789",
+        "10.1109/ACCESS.2021.3098012"
+      ],
+      "cluster_size": 4,
+      "total_references_in_cluster": 68,
+      "intra_cluster_citations": 61,
+      "external_citations": 7,
+      "intra_cluster_citation_rate": 0.897,
+      "expected_signal": "orphan_cluster",
+      "expected_fired": true,
+      "note": "89.7% intra-cluster citation rate. Four papers in IEEE Access 2021 cite almost exclusively each other. External citation rate of 7/68 is far below field baseline (~85% external). Matches Hyderabad mill pattern."
+    },
+    {
+      "id": "oc_002",
+      "cluster_dois": [
+        "10.4238/2013.July.10.5",
+        "10.4238/2013.July.10.8",
+        "10.4238/2013.August.12.3",
+        "10.4238/2013.August.12.7",
+        "10.4238/2013.September.5.2"
+      ],
+      "cluster_size": 5,
+      "total_references_in_cluster": 95,
+      "intra_cluster_citations": 72,
+      "external_citations": 23,
+      "intra_cluster_citation_rate": 0.758,
+      "expected_signal": "orphan_cluster",
+      "expected_fired": true,
+      "note": "Brazilian GMR cartel cluster. 75.8% intra-cluster citation rate across 5 papers. These papers cite GMR overwhelmingly, contributing to artificially inflated Impact Factor."
+    },
+    {
+      "id": "oc_003",
+      "cluster_dois": [
+        "10.1007/s00521-020-04932-x",
+        "10.1007/s00521-020-04991-0",
+        "10.1007/s00521-020-05043-z",
+        "10.1007/s00521-021-05621-4"
+      ],
+      "cluster_size": 4,
+      "total_references_in_cluster": 52,
+      "intra_cluster_citations": 38,
+      "external_citations": 14,
+      "intra_cluster_citation_rate": 0.731,
+      "expected_signal": "orphan_cluster",
+      "expected_fired": true,
+      "note": "Neural Computing and Applications cluster with 73.1% intra-citation rate. Group shares same corresponding author and institutional address. Indicative of coordinated submission strategy."
+    },
+    {
+      "id": "oc_neg_001",
+      "cluster_dois": [
+        "10.1038/s41586-021-03819-2",
+        "10.1073/pnas.1914677117",
+        "10.1038/s41586-019-1923-7",
+        "10.1038/s41586-020-2649-2"
+      ],
+      "cluster_size": 4,
+      "total_references_in_cluster": 248,
+      "intra_cluster_citations": 12,
+      "external_citations": 236,
+      "intra_cluster_citation_rate": 0.048,
+      "expected_signal": "orphan_cluster",
+      "expected_fired": false,
+      "note": "DeepMind protein structure papers. 4.8% intra-cluster citation rate — well within normal range. Papers cite broad external literature. Negative control."
+    }
+  ],
+
+  "l1_intent_cases": [
+    {
+      "id": "l1_001",
+      "citing_sentence": "Consistent with the findings of [Smith et al. 2021], our results confirm that sleep deprivation significantly impairs declarative memory consolidation in young adults.",
+      "citation_key": "Smith2021",
+      "expected_intent": "supporting",
+      "expected_signal": "citation_misrepresents_source",
+      "expected_fired": false,
+      "abstract_of_cited": "We investigated the effects of 24-hour sleep deprivation on memory consolidation in 42 healthy adults. Results demonstrated significant impairment in declarative memory tasks (p < .001, d = 0.87) compared to rested controls, with no significant effect on procedural memory.",
+      "note": "Clear supporting citation — citing sentence accurately reflects the cited paper's finding about declarative memory impairment. No misrepresentation. Intent: SUPPORTING."
+    },
+    {
+      "id": "l1_002",
+      "citing_sentence": "In contrast to [Jones et al. 2019] who found no significant effect, our experiment demonstrates a robust relationship between social media use and depression in adolescents.",
+      "citation_key": "Jones2019",
+      "expected_intent": "contrasting",
+      "expected_signal": "citation_misrepresents_source",
+      "expected_fired": false,
+      "abstract_of_cited": "A longitudinal study of 1,200 adolescents found no statistically significant association between time spent on social media platforms and depression symptom scores (r = .04, p = .31) after controlling for pre-existing mental health conditions.",
+      "note": "Clear contrasting citation — the citing paper accurately represents that Jones et al. found a null result and uses it as a contrast point. Intent: CONTRASTING."
+    },
+    {
+      "id": "l1_003",
+      "citing_sentence": "Several studies have examined machine learning applications in clinical decision support [Johnson 2020; Kim 2021; Patel 2022].",
+      "citation_key": "Johnson2020",
+      "expected_intent": "mentioning",
+      "expected_signal": "citation_misrepresents_source",
+      "expected_fired": false,
+      "abstract_of_cited": "We present a machine learning system for early sepsis detection in ICU patients, achieving AUROC of 0.91. The system integrates vital signs, lab results, and medication records to provide real-time risk scores.",
+      "note": "Background mentioning citation — paper is listed among a group of references for broad context, not specifically engaged. Intent: MENTIONING."
+    },
+    {
+      "id": "l1_004",
+      "citing_sentence": "As demonstrated by [Williams et al. 2018], the intervention led to a 40% reduction in hospital readmissions, supporting the efficacy of our adapted protocol.",
+      "citation_key": "Williams2018",
+      "expected_intent": "supporting",
+      "expected_signal": "citation_misrepresents_source",
+      "expected_fired": true,
+      "abstract_of_cited": "This pilot study of 28 patients tested a transitional care intervention for heart failure. While patient satisfaction improved (p = .04), readmission rates did not differ significantly from controls (18% vs. 22%, p = .61) over 90 days.",
+      "note": "MISREPRESENTATION: citing sentence claims 40% reduction in readmissions, but Williams 2018 found NO significant reduction. This is a fabricated or hallucinated quantitative claim attributed to the cited paper. Signal: citation_misrepresents_source."
+    },
+    {
+      "id": "l1_005",
+      "citing_sentence": "Previous research [Brown 2019; Davis 2020; Lee 2021; Chen 2022; Park 2023] has investigated neural networks. Deep learning approaches [Kim 2019; Wang 2020; Zhang 2021] have been proposed. Various datasets [Liu 2020; Yang 2021] have been used.",
+      "citation_key": "ALL",
+      "expected_intent": "mentioning",
+      "expected_signal": "all_citations_mentioning",
+      "expected_fired": true,
+      "abstract_of_cited": "Multiple cited papers cover different aspects of neural network research.",
+      "note": "ALL_CITATIONS_MENTIONING case: every citation in this passage is a superficial background reference with no substantive engagement. No paper is cited as supporting or contrasting any specific claim. This is a red flag for padding."
+    },
+    {
+      "id": "l1_006",
+      "citing_sentence": "Following the methodology of [Thompson et al. 2020], we applied a transformer-based architecture pre-trained on PubMed abstracts and fine-tuned on our clinical corpus.",
+      "citation_key": "Thompson2020",
+      "expected_intent": "using",
+      "expected_signal": "citation_misrepresents_source",
+      "expected_fired": false,
+      "abstract_of_cited": "We introduce BioBERT, a pre-training procedure for biomedical text mining tasks. BioBERT is pre-trained on PubMed abstracts and PMC full-text articles and fine-tuned on downstream biomedical NLP tasks, achieving state-of-the-art performance.",
+      "note": "USING citation — correctly describes adopting the cited paper's methodology. No misrepresentation. Intent: USING."
+    }
+  ],
+
+  "l2_nli_cases": [
+    {
+      "id": "l2_001",
+      "claim": "The drug reduced mortality by 35% compared to placebo in the randomised controlled trial.",
+      "source_text": "In our double-blind RCT of 340 patients, the treatment group showed no statistically significant difference in 30-day mortality compared to placebo (15.2% vs. 16.8%, HR = 0.91, 95% CI 0.63-1.31, p = .61). The drug was well tolerated with a favourable safety profile.",
+      "expected_signal": "claim_contradicted",
+      "expected_fired": true,
+      "nli_expected": "contradicted",
+      "note": "Clear contradiction: citing paper claims 35% mortality reduction but the source reports no significant difference (p=.61). The claim inverts the source's null result. LR=6.0 for claim_contradicted."
+    },
+    {
+      "id": "l2_002",
+      "claim": "Exposure to social media for more than 3 hours per day was associated with significantly higher rates of depression among teenagers.",
+      "source_text": "We examined social media usage patterns in 856 adolescents aged 13-18 using ecological momentary assessment. Passive consumption (scrolling without interacting) showed a moderate positive correlation with depressive symptoms (r = 0.34, p < .001). Active social interaction online was not significantly associated with depression.",
+      "expected_signal": "claim_contradicted",
+      "expected_fired": false,
+      "nli_expected": "partially_supported",
+      "note": "The source shows a correlation for passive use but does not specifically address '3 hours' threshold or overall depression rates. Claim is partially but not fully supported. No outright contradiction. Negative for claim_contradicted."
+    },
+    {
+      "id": "l2_003",
+      "claim": "The neural network achieved 98.5% accuracy on the ImageNet benchmark.",
+      "source_text": "We evaluate our ResNet-50 baseline on CIFAR-10 and Fashion-MNIST benchmarks, achieving 94.3% and 93.1% accuracy respectively. We did not evaluate on ImageNet due to computational constraints.",
+      "expected_signal": "claim_unsupported",
+      "expected_fired": true,
+      "nli_expected": "unsupported",
+      "note": "The source explicitly did not evaluate on ImageNet. The claim attributes an ImageNet result to a paper that never reported one. Signal: claim_unsupported with high confidence."
+    },
+    {
+      "id": "l2_004",
+      "claim": "Patients who received the intervention showed significant improvements in quality of life compared to controls.",
+      "source_text": "A 12-week randomised trial assessed quality of life using the SF-36 questionnaire in 180 patients. The intervention group showed statistically significant improvements across all eight SF-36 domains compared to wait-list controls (all p < .05, effect sizes ranging from d = 0.41 to d = 0.76).",
+      "expected_signal": "claim_unsupported",
+      "expected_fired": false,
+      "nli_expected": "supported",
+      "note": "The claim accurately reflects the source. The source directly supports the assertion of significant quality of life improvement. Negative control — signal should NOT fire."
+    },
+    {
+      "id": "l2_005",
+      "claim": "Climate change will cause a 4°C rise in global temperatures by 2050 according to the IPCC.",
+      "source_text": "Under the SSP5-8.5 high-emissions scenario, global mean surface temperature is projected to increase by 3.3-5.7°C above pre-industrial levels by 2100. By 2050, warming of 1.5-2.0°C is expected under most scenarios. The IPCC sixth assessment report emphasizes that limiting warming to 1.5°C requires immediate and deep emissions reductions.",
+      "expected_signal": "claim_contradicted",
+      "expected_fired": true,
+      "nli_expected": "contradicted",
+      "note": "The source (IPCC AR6) projects 4°C by 2100 in worst case, not 2050. The claim misattributes the timeframe by 50 years. Clear factual misrepresentation of the source. LR=6.0."
+    },
+    {
+      "id": "l2_006",
+      "claim": "The study found that mindfulness meditation reduced cortisol levels by 23% after 8 weeks of practice.",
+      "source_text": "We conducted an 8-week MBSR (Mindfulness-Based Stress Reduction) program with 64 adults. Salivary cortisol measurements at morning, noon, and evening were taken at baseline and post-intervention. A significant reduction in morning cortisol was observed (23.4% reduction, p = .002, Cohen's d = 0.68), with smaller non-significant reductions at other timepoints.",
+      "expected_signal": "claim_unsupported",
+      "expected_fired": false,
+      "nli_expected": "supported",
+      "note": "The claim accurately reports the 23% cortisol reduction finding from the source. Well-supported citation. Negative control."
+    },
+    {
+      "id": "l2_007",
+      "claim": "The antibiotic was found to be effective against gram-positive bacteria with a minimum inhibitory concentration below 0.5 μg/mL.",
+      "source_text": "In vitro susceptibility testing of compound X against 24 clinical isolates of gram-negative Enterobacteriaceae demonstrated MIC90 values of 0.25 μg/mL. Testing against Staphylococcus aureus (gram-positive) showed MIC90 values of 64 μg/mL, indicating poor activity against gram-positive organisms.",
+      "expected_signal": "claim_contradicted",
+      "expected_fired": true,
+      "nli_expected": "contradicted",
+      "note": "The claim states effectiveness against gram-positive bacteria with low MIC, but the source explicitly shows poor activity (MIC=64 μg/mL) against gram-positive S. aureus. The claim reverses the finding direction."
+    },
+    {
+      "id": "l2_008",
+      "claim": "Previous work has explored the use of transformer architectures for protein structure prediction.",
+      "source_text": "We introduce a transformer-based architecture that models protein sequence-structure relationships. Our model, trained on PDB structures, achieves competitive performance on CASP14 benchmarks and demonstrates that attention mechanisms can capture long-range residue interactions relevant to tertiary structure.",
+      "expected_signal": "claim_unsupported",
+      "expected_fired": false,
+      "nli_expected": "supported",
+      "note": "Weak MENTIONING claim that is fully supported by the source content. The source is about transformer architectures for protein structure. Negative control."
+    }
+  ],
+
+  "reference_not_found_cases": [
+    {
+      "id": "rnf_001",
+      "reference": {
+        "title": "Deep learning approaches for genomic variant calling in whole-exome sequencing data",
+        "authors": ["Harrison, T.M.", "Patel, S.K.", "Nguyen, L.C."],
+        "year": "2021",
+        "doi": "10.1093/bioinformatics/btab999",
+        "journal": "Bioinformatics"
+      },
+      "expected_signal": "reference_not_found",
+      "expected_fired": true,
+      "registries_checked": ["crossref", "pubmed", "semantic_scholar", "openalex"],
+      "note": "DOI 10.1093/bioinformatics/btab999 does not resolve; title finds no matching record across four major registries. Fabricated citation — a common LLM hallucination pattern where plausible-looking DOIs are generated."
+    },
+    {
+      "id": "rnf_002",
+      "reference": {
+        "title": "Quantum entanglement as a resource for distributed machine learning",
+        "authors": ["Chen, X.", "Yamamoto, K.", "Okonkwo, A."],
+        "year": "2022",
+        "doi": "10.1038/s41567-022-01750-x",
+        "journal": "Nature Physics"
+      },
+      "expected_signal": "reference_not_found",
+      "expected_fired": true,
+      "registries_checked": ["crossref", "pubmed", "semantic_scholar", "openalex"],
+      "note": "DOI format matches Nature Physics pattern but does not resolve. Title search returns no results. Chimera citation — real journal, plausible year, but no such paper exists."
+    },
+    {
+      "id": "rnf_003",
+      "reference": {
+        "title": "A comparative analysis of BERT variants for clinical text classification: a systematic review",
+        "authors": ["Müller, H.", "Johansson, E.", "Ferretti, L."],
+        "year": "2023",
+        "doi": "10.1016/j.jbi.2023.104234",
+        "journal": "Journal of Biomedical Informatics"
+      },
+      "expected_signal": "reference_not_found",
+      "expected_fired": true,
+      "registries_checked": ["crossref", "pubmed", "semantic_scholar"],
+      "note": "JBI DOI pattern is plausible but article number 104234 does not exist. Author names are generic; no matching systematic review found. LLM-hallucinated reference."
+    },
+    {
+      "id": "rnf_neg_001",
+      "reference": {
+        "title": "Attention Is All You Need",
+        "authors": ["Vaswani, A.", "Shazeer, N.", "Parmar, N.", "Uszkoreit, J."],
+        "year": "2017",
+        "doi": "10.48550/arXiv.1706.03762",
+        "journal": "Advances in Neural Information Processing Systems"
+      },
+      "expected_signal": "reference_not_found",
+      "expected_fired": false,
+      "note": "The Transformer paper (Vaswani et al. 2017) is one of the most-cited papers in AI. Fully resolvable via arXiv, Semantic Scholar, and Crossref. Negative control."
+    },
+    {
+      "id": "rnf_neg_002",
+      "reference": {
+        "title": "ImageNet Large Scale Visual Recognition Challenge",
+        "authors": ["Russakovsky, O.", "Deng, J.", "Su, H."],
+        "year": "2015",
+        "doi": "10.1007/s11263-015-0816-y",
+        "journal": "International Journal of Computer Vision"
+      },
+      "expected_signal": "reference_not_found",
+      "expected_fired": false,
+      "note": "ILSVRC paper (Russakovsky et al. 2015). Resolves correctly in all registries. Negative control."
+    }
+  ],
+
+  "phantom_doi_cases": [
+    {
+      "id": "pd_001",
+      "reference": {
+        "title": "Meta-analysis of mindfulness interventions for anxiety: a 10-year update",
+        "authors": ["Thompson, R.J.", "Osei, K.", "Lindqvist, A."],
+        "year": "2020",
+        "doi": "10.1016/j.brat.2020.103721",
+        "journal": "Behaviour Research and Therapy"
+      },
+      "doi_resolves": true,
+      "actual_record": {
+        "title": "Trajectories of change in emotion regulation and PTSD symptom severity",
+        "authors": ["Contractor, A.A.", "Banducci, A.N."],
+        "year": "2020",
+        "journal": "Behaviour Research and Therapy"
+      },
+      "expected_signal": "phantom_doi",
+      "expected_fired": true,
+      "note": "DOI resolves to a real BRAT 2020 article but with completely different title and authors. The DOI was likely borrowed from a real paper and attached to a fabricated citation. Classic phantom DOI pattern."
+    },
+    {
+      "id": "pd_002",
+      "reference": {
+        "title": "Convolutional neural networks for multi-label ECG classification",
+        "authors": ["Wang, L.", "Zhang, Y.", "Liu, H."],
+        "year": "2019",
+        "doi": "10.1109/JBHI.2019.2932806",
+        "journal": "IEEE Journal of Biomedical and Health Informatics"
+      },
+      "doi_resolves": true,
+      "actual_record": {
+        "title": "A Deep Learning Approach for Real-Time Detection of Atrial Fibrillation",
+        "authors": ["Faust, O.", "Hagiwara, Y.", "Hong, T.J."],
+        "year": "2019",
+        "journal": "IEEE Journal of Biomedical and Health Informatics"
+      },
+      "expected_signal": "phantom_doi",
+      "expected_fired": true,
+      "note": "DOI resolves to a real JBHI paper, but title, authors, and focus differ from claimed reference. The claimed topic (multi-label ECG) does not match actual paper (AF detection). Metadata mismatch qualifies as phantom DOI."
+    },
+    {
+      "id": "pd_003",
+      "reference": {
+        "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "authors": ["Devlin, J.", "Chang, M.W.", "Lee, K.", "Toutanova, K."],
+        "year": "2019",
+        "doi": "10.18653/v1/N19-1423",
+        "journal": "Proceedings of NAACL"
+      },
+      "doi_resolves": true,
+      "actual_record": {
+        "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "authors": ["Devlin, J.", "Chang, M.W.", "Lee, K.", "Toutanova, K."],
+        "year": "2019",
+        "journal": "Proceedings of NAACL"
+      },
+      "expected_signal": "phantom_doi",
+      "expected_fired": false,
+      "note": "DOI resolves and metadata matches exactly. This is the real BERT paper (Devlin et al. 2019). Negative control for phantom DOI."
+    }
+  ],
+
+  "metadata_mismatch_cases": [
+    {
+      "id": "mm_001",
+      "reference": {
+        "title": "Deep Residual Learning for Image Recognition",
+        "authors": ["He, K.", "Zhang, X.", "Ren, S.", "Sun, J."],
+        "year": "2016",
+        "doi": "10.1109/CVPR.2016.90",
+        "journal": "IEEE CVPR"
+      },
+      "registry_record": {
+        "title": "Deep Residual Learning for Image Recognition",
+        "authors": ["He, K.", "Zhang, X.", "Ren, S.", "Sun, J."],
+        "year": "2016",
+        "journal": "2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)"
+      },
+      "mismatch_fields": [],
+      "expected_signal": "metadata_mismatch",
+      "expected_fired": false,
+      "note": "ResNet paper — all metadata fields match. Title, authors, year all correct. Negative control."
+    },
+    {
+      "id": "mm_002",
+      "reference": {
+        "title": "Mastering the game of Go with deep neural networks and tree search",
+        "authors": ["Silver, D.", "Huang, A.", "Maddison, C.J.", "Guez, A."],
+        "year": "2015",
+        "doi": "10.1038/nature16961",
+        "journal": "Nature"
+      },
+      "registry_record": {
+        "title": "Mastering the game of Go with deep neural networks and tree search",
+        "authors": ["Silver, D.", "Huang, A.", "Maddison, C.J.", "Guez, A.", "Sifre, L.", "van den Driessche, G."],
+        "year": "2016",
+        "journal": "Nature"
+      },
+      "mismatch_fields": ["year", "authors_truncated"],
+      "expected_signal": "metadata_mismatch",
+      "expected_fired": true,
+      "note": "AlphaGo paper published January 2016, not 2015. Year mismatch by one year — common error when citing arXiv preprint date vs. journal publication date. LR=3.0 for metadata_mismatch."
+    },
+    {
+      "id": "mm_003",
+      "reference": {
+        "title": "Generative Adversarial Networks",
+        "authors": ["Goodfellow, I.", "Pouget-Abadie, J.", "Mirza, M."],
+        "year": "2014",
+        "doi": "10.48550/arXiv.1406.2661",
+        "journal": "Journal of Machine Learning Research"
+      },
+      "registry_record": {
+        "title": "Generative Adversarial Nets",
+        "authors": ["Goodfellow, I.", "Pouget-Abadie, J.", "Mirza, M.", "Xu, B."],
+        "year": "2014",
+        "journal": "Advances in Neural Information Processing Systems (NeurIPS)"
+      },
+      "mismatch_fields": ["title_minor", "journal"],
+      "expected_signal": "metadata_mismatch",
+      "expected_fired": true,
+      "note": "GAN paper title is 'Generative Adversarial Nets' (not 'Networks'). Venue is NeurIPS (not JMLR). Two field mismatches. Typical reference manager metadata error."
+    },
+    {
+      "id": "mm_004",
+      "reference": {
+        "title": "Long Short-Term Memory",
+        "authors": ["Hochreiter, S.", "Schmidhuber, J."],
+        "year": "1997",
+        "doi": "10.1162/neco.1997.9.8.1735",
+        "journal": "Neural Computation"
+      },
+      "registry_record": {
+        "title": "Long Short-Term Memory",
+        "authors": ["Hochreiter, S.", "Schmidhuber, J."],
+        "year": "1997",
+        "journal": "Neural Computation"
+      },
+      "mismatch_fields": [],
+      "expected_signal": "metadata_mismatch",
+      "expected_fired": false,
+      "note": "LSTM paper (Hochreiter & Schmidhuber 1997) — all fields match. Negative control."
+    }
+  ],
+
+  "retracted_citation_cases": [
+    {
+      "id": "rc_001",
+      "reference": {
+        "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developmental disorder in children",
+        "authors": ["Wakefield, A.J.", "Murch, S.H.", "Anthony, A."],
+        "year": "1998",
+        "doi": "10.1016/S0140-6736(97)11096-0",
+        "journal": "The Lancet"
+      },
+      "retracted": true,
+      "retraction_date": "2010-02-02",
+      "retraction_reason": "Ethical violations, data fabrication, undisclosed financial conflicts of interest",
+      "retraction_source": "Retraction Watch; The Lancet formal retraction notice",
+      "expected_signal": "retracted_citation",
+      "expected_fired": true,
+      "note": "Andrew Wakefield's fraudulent MMR-autism paper. Retracted February 2010. One of the most consequential retractions in modern medicine. Citing this post-retraction is a clear signal."
+    },
+    {
+      "id": "rc_002",
+      "reference": {
+        "title": "Stimulus-triggered fate conversion of somatic cells into pluripotency",
+        "authors": ["Obokata, H.", "Wakayama, T.", "Sasai, Y."],
+        "year": "2014",
+        "doi": "10.1038/nature12968",
+        "journal": "Nature"
+      },
+      "retracted": true,
+      "retraction_date": "2014-07-02",
+      "retraction_reason": "Data fabrication and image manipulation. STAP cells could not be reproduced.",
+      "retraction_source": "Nature retraction notice July 2014",
+      "expected_signal": "retracted_citation",
+      "expected_fired": true,
+      "note": "STAP cells (Obokata et al. 2014). Retracted same year of publication. Haruko Obokata's fraud investigation led to her supervisor's suicide. High-profile Nature retraction."
+    },
+    {
+      "id": "rc_003",
+      "reference": {
+        "title": "Hydroxychloroquine or chloroquine with or without a macrolide for treatment of COVID-19",
+        "authors": ["Mehra, M.R.", "Desai, S.S.", "Ruschitzka, F.", "Patel, A.N."],
+        "year": "2020",
+        "doi": "10.1016/S0140-6736(20)31180-6",
+        "journal": "The Lancet"
+      },
+      "retracted": true,
+      "retraction_date": "2020-06-04",
+      "retraction_reason": "Data sourced from Surgisphere could not be verified; independent audit found inconsistencies incompatible with a real dataset.",
+      "retraction_source": "Lancet retraction June 2020",
+      "expected_signal": "retracted_citation",
+      "expected_fired": true,
+      "note": "The Surgisphere COVID-19 hydroxychloroquine retraction. Paper affected WHO and several national drug guidelines before retraction. Mehra et al. 2020."
+    },
+    {
+      "id": "rc_004",
+      "reference": {
+        "title": "Highly accurate protein structure prediction with AlphaFold",
+        "authors": ["Jumper, J.", "Evans, R.", "Pritzel, A."],
+        "year": "2021",
+        "doi": "10.1038/s41586-021-03819-2",
+        "journal": "Nature"
+      },
+      "retracted": false,
+      "retraction_date": null,
+      "retraction_reason": null,
+      "expected_signal": "retracted_citation",
+      "expected_fired": false,
+      "note": "AlphaFold 2 paper (Jumper et al. 2021). Not retracted. Nobel Prize-adjacent work. Negative control for retracted_citation signal."
+    },
+    {
+      "id": "rc_005",
+      "reference": {
+        "title": "A randomized trial of intranasal versus intramuscular influenza vaccine in children",
+        "authors": ["Belshe, R.B.", "Edwards, K.M.", "Vesikari, T."],
+        "year": "2007",
+        "doi": "10.1056/NEJMoa072007",
+        "journal": "New England Journal of Medicine"
+      },
+      "retracted": false,
+      "retraction_date": null,
+      "retraction_reason": null,
+      "expected_signal": "retracted_citation",
+      "expected_fired": false,
+      "note": "Valid, non-retracted NEJM clinical trial. Negative control."
+    }
+  ]
+}

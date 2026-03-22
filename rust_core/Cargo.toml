@@ -1,0 +1,23 @@
+[package]
+name = "integriref_core"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance Rust core for IntegriRef — field comparison, tortured phrase detection, graph anomaly scoring"
+
+[lib]
+name = "integriref_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.24", features = ["extension-module"] }
+aho-corasick = "1.1"
+unicode-normalization = "0.1"
+strsim = "0.11"        # Jaro-Winkler, Levenshtein
+rayon = "1.10"          # Data parallelism
+regex-lite = "0.1.9"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

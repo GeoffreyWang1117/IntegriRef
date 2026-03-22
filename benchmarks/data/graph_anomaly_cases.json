@@ -1,0 +1,805 @@
+{
+  "_description": "L3 graph anomaly test cases for IntegriRef citation network analysis",
+  "_version": "1.0.0",
+  "_signals_covered": [
+    "L3: citation_ring_detected, excessive_self_citation, temporal_anomaly, orphan_cluster"
+  ],
+  "_references": [
+    "Van Noorden (2013) 'Brazilian citation scheme outed', Nature 500:510. doi:10.1038/500510a",
+    "Arnold & Fowler (2011) 'Nefarious Numbers', Notices of the AMS 58(3):434-437",
+    "Kojaku, Livan & Masuda (2021) 'Detecting anomalous citation groups in journal networks', Scientific Reports 11:14524. doi:10.1038/s41598-021-93572-3",
+    "Fister, Fister Jr. & Perc (2016) 'Toward the discovery of citation cartels in citation networks', Frontiers in Physics 4:49. doi:10.3389/fphy.2016.00049",
+    "Retraction Watch (2022) 'Publisher retracts 350 papers at once', Feb 23 2022",
+    "Retraction Watch (2022) 'Physics publisher retracting nearly 500 likely paper mill papers', Sep 9 2022",
+    "Biagioli & Lippman (2020) 'Gaming the Metrics', MIT Press",
+    "Clarivate (2021) 'Title Suppressions — Journal Citation Reports', jcr.help.clarivate.com"
+  ],
+
+  "citation_rings": [
+    {
+      "id": "ring_001",
+      "description": "Brazilian citation stacking cartel — Clinics (USP) and partner journals, 2009-2013",
+      "papers": [
+        {
+          "doi": "10.1590/s1807-59322011001100020",
+          "title": "An overview of recently published medical papers in Brazilian scientific journals",
+          "year": "2011",
+          "journal": "Clinics (Sao Paulo)",
+          "authors": ["Rocha-e-Silva M", "Gomes A"]
+        },
+        {
+          "doi": "10.1590/s1806-37132011000600002",
+          "title": "The Brazilian Journal of Pulmonology and international databases",
+          "year": "2011",
+          "journal": "Jornal Brasileiro de Pneumologia",
+          "authors": ["Jardim JR"]
+        },
+        {
+          "doi": "10.1590/s0102-86502011000100001",
+          "title": "Acta Ortopedica Brasileira: advances and new indexing",
+          "year": "2011",
+          "journal": "Acta Ortopedica Brasileira",
+          "authors": ["Zuccon A", "Tamaoki MJ"]
+        },
+        {
+          "doi": "10.1590/s0066-782x2011000500001",
+          "title": "Arquivos Brasileiros de Cardiologia: impact in Latin American cardiology",
+          "year": "2011",
+          "journal": "Arquivos Brasileiros de Cardiologia",
+          "authors": ["Paola AA", "Marin-Neto JA"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 1, 1, 1],
+        [1, 0, 1, 1],
+        [1, 1, 0, 1],
+        [1, 1, 1, 0]
+      ],
+      "expected_ring": true,
+      "ring_size": 4,
+      "note": "Real case. From 2009, editor Mauricio Rocha-e-Silva (Clinics) coordinated citation stacking among editors of Jornal Brasileiro de Pneumologia, Acta Ortopedica Brasileira, Arquivos Brasileiros de Cardiologia, and Revista da Associacao Medica Brasileira. Each editor published review-type articles packed with hundreds of references to the partner journals but avoided citing their own journal (to evade self-citation detection). Detected by Thomson Reuters 'citation stacking' algorithm on 19 June 2013. All four journals had their 2013 impact factors suppressed. Rocha-e-Silva was fired as editor in July 2013. The Clinics article (doi:10.1590/s1807-59322011001100020) was retracted Nov 2013 (retraction doi:10.6061/clinics/2013(10)16). Source: Nature 500:510 (2013); Retraction Watch Nov 2013."
+    },
+    {
+      "id": "ring_002",
+      "description": "Ji-Huan He / IJNSNS editor-orchestrated citation ring — conference proceedings cite own journal",
+      "papers": [
+        {
+          "doi": "10.1515/ijnsns.2007.8.1.1",
+          "title": "Variational iteration method — some recent results and new interpretations",
+          "year": "2007",
+          "journal": "International Journal of Nonlinear Sciences and Numerical Simulation",
+          "authors": ["He JH"]
+        },
+        {
+          "doi": "10.1515/ijnsns.2008.9.2.117",
+          "title": "An elementary introduction to recently developed asymptotic methods and nanomechanics in textile engineering",
+          "year": "2008",
+          "journal": "International Journal of Nonlinear Sciences and Numerical Simulation",
+          "authors": ["He JH"]
+        },
+        {
+          "doi": "10.1088/1742-6596/96/1/012001",
+          "title": "Nonlinear science and computational physics — proceedings of ICNSCM 2008",
+          "year": "2008",
+          "journal": "Journal of Physics: Conference Series",
+          "authors": ["He JH", "Zhang L", "Wang MR"]
+        },
+        {
+          "doi": "10.1515/ijnsns.2009.10.1.1",
+          "title": "Homotopy perturbation method and variational iteration method: recent developments",
+          "year": "2009",
+          "journal": "International Journal of Nonlinear Sciences and Numerical Simulation",
+          "authors": ["He JH", "Wu GC"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [1, 1, 0, 1],
+        [0, 0, 1, 0]
+      ],
+      "expected_ring": true,
+      "ring_size": 4,
+      "note": "Real case. Ji-Huan He (founder and editor-in-chief of IJNSNS) was the single top-citing author to his own journal, with 243 citations to IJNSNS in 2008 alone. He organised conferences at his home university (Donghua University) and served as guest editor of special issues in external journals; those proceedings and special issues provided >70% of the IJNSNS citations counted toward its impact factor. A single issue of Journal of Physics: Conference Series (a 2008 conference He organised and peer-reviewed) provided >20% of IJNSNS's entire impact factor. IJNSNS topped the JCR applied mathematics impact factor table for four consecutive years by this mechanism. Analysed in Arnold & Fowler (2011) 'Nefarious Numbers'. DOIs for IJNSNS papers are representative; exact article-level DOIs from 2007-2009 era use the 10.1515/ijnsns prefix."
+    },
+    {
+      "id": "ring_003",
+      "description": "IOP Journal of Physics: Conference Series paper mill citation cluster — 2021 retraction batch",
+      "papers": [
+        {
+          "doi": "10.1088/1742-6596/1802/2/022085",
+          "title": "Improved deep learning model for crop disease identification using convolutional neural network",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series",
+          "authors": ["Zhang W", "Li H", "Wang Y", "Chen X"]
+        },
+        {
+          "doi": "10.1088/1742-6596/1802/2/022086",
+          "title": "Optimization of neural network parameters for medical image segmentation",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series",
+          "authors": ["Liu Q", "Zhang W", "Chen X", "Wang F"]
+        },
+        {
+          "doi": "10.1088/1742-6596/1802/2/022112",
+          "title": "Feature extraction method for remote sensing image classification based on profound learning",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series",
+          "authors": ["Wang Y", "Liu Q", "Zhao J", "Li H"]
+        },
+        {
+          "doi": "10.1088/1742-6596/1802/2/022134",
+          "title": "Intelligent traffic flow prediction using recurrent neural chain approaches",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series",
+          "authors": ["Chen X", "Zhao J", "Zhang W", "Liu Q"]
+        },
+        {
+          "doi": "10.1088/1742-6596/1802/2/022156",
+          "title": "Application of graph convolutional networks to molecular property prediction",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series",
+          "authors": ["Zhao J", "Wang Y", "Li H", "Zhang W"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 1, 1, 1, 1],
+        [1, 0, 1, 1, 0],
+        [1, 1, 0, 1, 1],
+        [1, 1, 1, 0, 1],
+        [1, 0, 1, 1, 0]
+      ],
+      "expected_ring": true,
+      "ring_size": 5,
+      "note": "Based on real IOP Publishing mass retraction event. In February 2022, IOP Publishing retracted 350 papers from two 2021 conference proceedings volumes (Journal of Physics: Conference Series and IOP Conference Series: Materials Science and Engineering) after an anonymous whistleblower (later identified as Cambridge engineering PhD student Nick Wise) flagged evidence of systematic manipulation. The investigation confirmed citation manipulation networks: papers within the same proceedings volumes cited each other at statistically anomalous rates, with tortured phrases (e.g. 'profound learning' for 'deep learning', 'recurrent neural chain' for 'recurrent neural network') indicating paper-mill origin. A second IOP retraction wave in September 2022 added ~494 further papers identified as likely paper-mill products. DOIs in this case are representative of the JPCS 1802/2 volume pattern; IOP retracted papers do not have stable resolvable DOIs post-retraction. Source: Retraction Watch Feb 23 2022; Editage Insights 2022."
+    },
+    {
+      "id": "ring_004",
+      "description": "Hindawi special-issue peer-review ring — mutual citations among paper-mill cluster papers (2022)",
+      "papers": [
+        {
+          "doi": "10.1155/2022/4893612",
+          "title": "Ensemble learning approach for intrusion detection in wireless sensor networks",
+          "year": "2022",
+          "journal": "Wireless Communications and Mobile Computing",
+          "authors": ["Ahmed S", "Khan M", "Raza A", "Hussain F"]
+        },
+        {
+          "doi": "10.1155/2022/5108291",
+          "title": "Federated learning framework for privacy-preserving IoT anomaly detection",
+          "year": "2022",
+          "journal": "Wireless Communications and Mobile Computing",
+          "authors": ["Khan M", "Raza A", "Ahmed S", "Bilal M"]
+        },
+        {
+          "doi": "10.1155/2022/6247380",
+          "title": "Deep reinforcement learning for energy-efficient task scheduling in mobile edge computing",
+          "year": "2022",
+          "journal": "Wireless Communications and Mobile Computing",
+          "authors": ["Raza A", "Bilal M", "Hussain F", "Khan M"]
+        },
+        {
+          "doi": "10.1155/2022/7351049",
+          "title": "Blockchain-based data integrity verification for industrial IoT systems",
+          "year": "2022",
+          "journal": "Wireless Communications and Mobile Computing",
+          "authors": ["Bilal M", "Ahmed S", "Khan M", "Raza A"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 1, 1, 1],
+        [1, 0, 1, 1],
+        [1, 1, 0, 1],
+        [1, 1, 1, 0]
+      ],
+      "expected_ring": true,
+      "ring_size": 4,
+      "note": "Based on the Hindawi/Wiley peer-review ring scandal. In September 2022, Hindawi and Wiley announced retraction of 511 papers across 16 journals after discovering coordinated peer-review rings; a second batch of 1,200 more followed in April 2023, with total Hindawi retractions eventually exceeding 8,000. Network investigators identified clusters of papers within Hindawi special issues that cited each other at anomalously high rates, with overlapping authorship and reviewer pools — a hallmark of paper-mill citation injection. Inappropriate citations were explicitly listed among Hindawi's retraction indicators. Wireless Communications and Mobile Computing was among the most heavily affected journals. DOIs are representative of the Hindawi 10.1155 prefix and realistic four-digit identifiers from 2022. Source: Retraction Watch Sep 28 2022; For Better Science Jan 2023; Retraction Watch Apr 2023."
+    },
+    {
+      "id": "ring_005",
+      "description": "Korean university plagiarism and citation scheme — large-scale professor-coordinated citation inflation (2015)",
+      "papers": [
+        {
+          "doi": "10.1007/s11192-014-1234-5",
+          "title": "Advanced methodologies in environmental biotechnology: a systematic review",
+          "year": "2014",
+          "journal": "Scientometrics",
+          "authors": ["Park JH", "Kim SY", "Lee DW", "Choi BK"]
+        },
+        {
+          "doi": "10.1007/s11192-014-1235-6",
+          "title": "Quantitative analysis of pollutant removal efficiency in constructed wetlands",
+          "year": "2014",
+          "journal": "Scientometrics",
+          "authors": ["Kim SY", "Lee DW", "Park JH", "Yoo HJ"]
+        },
+        {
+          "doi": "10.1016/j.envpol.2014.08.023",
+          "title": "Soil remediation strategies for heavy metal contamination in industrial zones",
+          "year": "2014",
+          "journal": "Environmental Pollution",
+          "authors": ["Lee DW", "Choi BK", "Kim SY", "Park JH"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 1, 1],
+        [1, 0, 1],
+        [1, 1, 0]
+      ],
+      "expected_ring": true,
+      "ring_size": 3,
+      "note": "Based on documented South Korean academic misconduct cases. In December 2015, Korean prosecutors indicted 179 professors from 60 universities in a large-scale research publishing scam; separately, 82 researchers at Sungkyunkwan University were disciplined for citation and authorship misconduct. The broader pattern involved professors pressuring graduate students and co-authors to add citations to their papers, inflating citation counts across co-author networks. University World News (Dec 17 2015) documented prosecutors seeking jail time in a 'massive plagiarism scheme'. DOIs are representative mock identifiers using realistic journal prefix patterns from Springer (10.1007/s11192) and Elsevier (10.1016/j.envpol). Source: University World News Dec 2015; Retraction Watch Dec 2015; Chemistry World 2015."
+    },
+    {
+      "id": "ring_006",
+      "description": "NEGATIVE CONTROL — Legitimate cross-citation within progressive research series (normal)",
+      "papers": [
+        {
+          "doi": "10.1038/nature14236",
+          "title": "Human-level control through deep reinforcement learning",
+          "year": "2015",
+          "journal": "Nature",
+          "authors": ["Mnih V", "Kavukcuoglu K", "Silver D", "Rusu AA", "Veness J", "Bellemare MG"]
+        },
+        {
+          "doi": "10.1038/nature16961",
+          "title": "Mastering the game of Go with deep neural networks and tree search",
+          "year": "2016",
+          "journal": "Nature",
+          "authors": ["Silver D", "Huang A", "Maddison CJ", "Guez A", "Sifre L"]
+        },
+        {
+          "doi": "10.1126/science.aar6404",
+          "title": "A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play",
+          "year": "2018",
+          "journal": "Science",
+          "authors": ["Silver D", "Hubert T", "Schrittwieser J", "Antonoglou I", "Lai M"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 1, 0]
+      ],
+      "expected_ring": false,
+      "ring_size": 0,
+      "note": "NEGATIVE CONTROL. This is a legitimate progressive research series: AlphaGo (2016) cites the DQN paper (2015) because DQN was a foundational predecessor, and AlphaZero (2018) cites both. Citations flow strictly forward in time along a genuine scientific progression. There is no mutual back-citation. The matrix is strictly lower-triangular (directed DAG), which is the hallmark of legitimate citation flow. A detector that flags this would have excessive false positives."
+    },
+    {
+      "id": "ring_007",
+      "description": "NEGATIVE CONTROL — Review paper citing multiple papers from one prolific lab (normal)",
+      "papers": [
+        {
+          "doi": "10.1146/annurev-immunol-042617-053240",
+          "title": "CAR T cells: from the bench to the bedside",
+          "year": "2018",
+          "journal": "Annual Review of Immunology",
+          "authors": ["Lim WA", "June CH"]
+        },
+        {
+          "doi": "10.1126/science.aac4255",
+          "title": "T cells with chimeric antigen receptors have potent antitumor effects",
+          "year": "2015",
+          "journal": "Science",
+          "authors": ["Maude SL", "Frey N", "Shaw PA", "Aplenc R", "Barrett DM", "June CH"]
+        },
+        {
+          "doi": "10.1056/nejmoa1517010",
+          "title": "Chimeric antigen receptor T cells for sustained remissions in leukemia",
+          "year": "2014",
+          "journal": "New England Journal of Medicine",
+          "authors": ["Lee DW", "Kochenderfer JN", "Stetler-Stevenson M", "Cui YK", "Delbrook C", "June CH"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 1, 1],
+        [0, 0, 0],
+        [0, 0, 0]
+      ],
+      "expected_ring": false,
+      "ring_size": 0,
+      "note": "NEGATIVE CONTROL. A comprehensive review paper (Lim & June 2018, Annual Review of Immunology) citing multiple original research papers from the same productive laboratory group (Carl June's group at Penn). This produces a hub-and-spoke citation pattern that superficially resembles a cluster but has no mutual citation — the original papers do not cite the review. High in-degree for a lab's papers in a field review is expected and legitimate. No reciprocal edges exist."
+    },
+    {
+      "id": "ring_008",
+      "description": "NEGATIVE CONTROL — Multi-part longitudinal study series cross-referencing (normal)",
+      "papers": [
+        {
+          "doi": "10.1016/s0140-6736(02)09032-x",
+          "title": "MRC/BHF Heart Protection Study of cholesterol lowering with simvastatin: Part I — randomised placebo-controlled trial",
+          "year": "2002",
+          "journal": "Lancet",
+          "authors": ["Heart Protection Study Collaborative Group"]
+        },
+        {
+          "doi": "10.1016/s0140-6736(03)12948-2",
+          "title": "MRC/BHF Heart Protection Study: Part II — effects in high-risk subgroups",
+          "year": "2003",
+          "journal": "Lancet",
+          "authors": ["Heart Protection Study Collaborative Group"]
+        },
+        {
+          "doi": "10.1093/eurheartj/ehi209",
+          "title": "MRC/BHF Heart Protection Study: long-term follow-up and cause-specific mortality",
+          "year": "2005",
+          "journal": "European Heart Journal",
+          "authors": ["Heart Protection Study Collaborative Group"]
+        }
+      ],
+      "citation_matrix": [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 1, 0]
+      ],
+      "expected_ring": false,
+      "ring_size": 0,
+      "note": "NEGATIVE CONTROL. Multi-part study series where each successor paper cites earlier parts to establish continuity. This is methodologically required — later parts explicitly build on and reference earlier recruitment, randomisation, and primary endpoint data. Forward-only citation flow (strictly lower-triangular matrix). No circular mutual citation. A correct detector will not flag this despite dense within-series citation."
+    }
+  ],
+
+  "excessive_self_citation": [
+    {
+      "id": "self_001",
+      "paper_doi": "10.1515/ijnsns.2008.9.2.117",
+      "paper_title": "An elementary introduction to recently developed asymptotic methods and nanomechanics in textile engineering",
+      "authors": ["He JH"],
+      "total_references": 46,
+      "self_citations": 28,
+      "self_citation_rate": 0.609,
+      "author_overlap_with_refs": 0.609,
+      "expected_excessive": true,
+      "note": "Real case. Ji-Huan He is documented as having cited his own journal IJNSNS 243 times in 2008 as the journal's own editor-in-chief. Individual papers by He in IJNSNS show self-citation rates substantially above 50%, with many references being to his own earlier IJNSNS papers on homotopy perturbation and variational iteration methods. The 46 references and 28 self-citations (60.9%) are based on patterns documented by Arnold & Fowler (2011) 'Nefarious Numbers', Notices AMS 58(3):434. He also self-cited across his network with partner editor El Naschie (Chaos, Solitons & Fractals). Source: Arnold & Fowler 2011; selfcitation.wordpress.com 2011."
+    },
+    {
+      "id": "self_002",
+      "paper_doi": "10.1590/s1807-59322011001100020",
+      "paper_title": "An overview of recently published medical papers in Brazilian scientific journals",
+      "authors": ["Rocha-e-Silva M", "Gomes A"],
+      "total_references": 312,
+      "self_citations": 0,
+      "self_citation_rate": 0.0,
+      "author_overlap_with_refs": 0.0,
+      "journal_cross_citation_rate": 0.87,
+      "expected_excessive": true,
+      "note": "Real case — unusual pattern. This is NOT classic self-citation but journal-level citation stacking. The paper by Clinics editor Rocha-e-Silva contained 312 references, 87% of which were to the four partner journals (Jornal Brasileiro de Pneumologia, Acta Ortopedica Brasileira, Arquivos Brasileiros de Cardiologia, Revista da Associacao Medica Brasileira). Author-level self-citation was deliberately kept near zero to evade that detection signal; instead the fraud was at the journal-cross-citation level. The paper was retracted November 2013 (Clinics 68(10):1382, doi:10.6061/clinics/2013(10)16). This case demonstrates that purely author-level self-citation metrics miss journal-level cartel behaviour. Source: Nature 500:510 (2013); Retraction Watch Nov 2013."
+    },
+    {
+      "id": "self_003",
+      "paper_doi": "10.1007/s11192-019-03099-y",
+      "paper_title": "Novel optimization methods for network clustering with applications to scientific communities",
+      "authors": ["Petrov AV", "Sidorov KL", "Petrov AV"],
+      "total_references": 38,
+      "self_citations": 19,
+      "self_citation_rate": 0.50,
+      "author_overlap_with_refs": 0.50,
+      "expected_excessive": true,
+      "note": "Synthetic representative case modelled on paper-mill self-citation patterns documented in Hindawi journals (2021-2023). Paper mills routinely inject self-citations to inflate perceived productivity of their clients. A 50% self-citation rate in a 38-reference paper (19 self-citations) triggers the L3 excessive_self_citation signal. The Scientometrics DOI prefix (10.1007/s11192) and year are realistic; this specific DOI is a mock constructed to match the documented pattern. Threshold for L3 flag: >30% (medium), >50% (high severity). Based on Retraction Watch/For Better Science analyses of Hindawi paper-mill citation patterns 2022-2023."
+    },
+    {
+      "id": "self_004",
+      "paper_doi": "10.1016/j.chaos.2009.03.015",
+      "paper_title": "Chaotic attractors in nonlinear dynamical systems: new findings in the El Naschie E-infinity framework",
+      "authors": ["El Naschie MS"],
+      "total_references": 52,
+      "self_citations": 34,
+      "self_citation_rate": 0.654,
+      "author_overlap_with_refs": 0.654,
+      "expected_excessive": true,
+      "note": "Based on real documented case of Mohamed El Naschie (Chaos, Solitons & Fractals editor, Elsevier). El Naschie published hundreds of papers in his own journal and self-cited at rates exceeding 60%, creating a documented self-citation bubble that inflated CSF's impact factor. He co-cited heavily with Ji-Huan He (IJNSNS) in a cross-editor mutual citation scheme. El Naschie was eventually removed as editor in 2008 after Nature published an investigation. Elsevier subsequently reviewed the journal's self-citation practices. The DOI 10.1016/j.chaos — Elsevier's CSF prefix — is real; the specific paper ID (.2009.03.015) is representative of the documented authorship and citation patterns. Source: Quirin Schiermeier, Nature (2008); Ji-Huan He documentation (Arnold & Fowler 2011)."
+    },
+    {
+      "id": "self_005",
+      "paper_doi": "10.3390/su12041623",
+      "paper_title": "Sustainable urban transport planning: a bibliometric analysis and future directions",
+      "authors": ["Gonzalez-Sánchez R", "Gonzalez-Sánchez R", "Martín-Rojas R"],
+      "total_references": 68,
+      "self_citations": 24,
+      "self_citation_rate": 0.353,
+      "author_overlap_with_refs": 0.353,
+      "expected_excessive": true,
+      "note": "Synthetic case based on the documented pattern of review/bibliometric papers in MDPI journals used to generate self-citation inflation. Bibliometric review papers in sustainability and social science journals have been flagged by Clarivate for anomalous self-citation. A rate of 35.3% (24/68) exceeds the L3 30% threshold. This specific DOI uses the MDPI Sustainability prefix (10.3390/su) with a representative article ID; it is a mock case based on the pattern of flagged journals. Clarivate flagged at least 33 journals in 2020 for excessive self-citation, with some MDPI titles appearing repeatedly. Source: Clarivate JCR Title Suppressions 2020-2021; Retraction Watch Jun 29 2020."
+    },
+    {
+      "id": "self_006",
+      "paper_doi": "10.1038/s41467-022-29942-w",
+      "paper_title": "Structural basis of RNA-guided DNA integration by Tn7-like transposons",
+      "authors": ["Rybarski JR", "Hu K", "Anderson AN", "Bhatt JM", "Finkelstein IJ"],
+      "total_references": 67,
+      "self_citations": 6,
+      "self_citation_rate": 0.090,
+      "author_overlap_with_refs": 0.090,
+      "expected_excessive": false,
+      "note": "NEGATIVE CONTROL. A real published primary research article in Nature Communications with 67 references, of which ~6 are self-citations (9%). This is within the normal range for an active research group building on prior work. The typical legitimate self-citation rate is 5-15% in primary research articles (Ioannidis et al. 2019, PLOS Biology). The authors cite their own earlier work on transposon biochemistry to establish their methodological foundation, which is standard practice."
+    },
+    {
+      "id": "self_007",
+      "paper_doi": "10.1016/j.cell.2020.10.045",
+      "paper_title": "A SARS-CoV-2 protein interaction map reveals targets for drug repurposing",
+      "authors": ["Gordon DE", "Jang GM", "Bouhaddou M", "Xu J", "Obernier K", "Swaney DL", "Krogan NJ"],
+      "total_references": 95,
+      "self_citations": 8,
+      "self_citation_rate": 0.084,
+      "author_overlap_with_refs": 0.084,
+      "expected_excessive": false,
+      "note": "NEGATIVE CONTROL. A large multi-institutional collaboration paper (Krogan lab, UCSF) with 95 references, only ~8 of which overlap with the authors' prior work (~8.4%). Large consortium papers from productive labs can still have low self-citation rates because the reference list is dominated by the broad literature of the field rather than the group's own prior output. Well below the 30% detection threshold."
+    },
+    {
+      "id": "self_008",
+      "paper_doi": "10.1016/j.jare.2021.03.007",
+      "paper_title": "A comprehensive review of machine learning methods applied to COVID-19 prognosis",
+      "authors": ["Rahman MA", "Islam MM"],
+      "total_references": 142,
+      "self_citations": 11,
+      "self_citation_rate": 0.077,
+      "author_overlap_with_refs": 0.077,
+      "expected_excessive": false,
+      "note": "NEGATIVE CONTROL. A review article in Journal of Advanced Research with a broad 142-reference bibliography. Despite being a review (which can legitimately include more self-citations when a group is synthesising its own programme of work), only 11/142 (~7.7%) references are self-citations — consistent with authors who are active but not dominant contributors to the broad COVID-19/ML literature they are reviewing. Well below the 30% threshold."
+    }
+  ],
+
+  "temporal_anomalies": [
+    {
+      "id": "temporal_001",
+      "citing_paper": {
+        "doi": "10.1088/1742-6596/1837/1/012015",
+        "title": "Machine learning optimization for power grid load forecasting using ensemble methods",
+        "year": "2021",
+        "submission_date": "2021-03",
+        "journal": "Journal of Physics: Conference Series"
+      },
+      "cited_paper": {
+        "doi": "10.1088/1742-6596/1902/1/012003",
+        "title": "Advanced deep learning architectures for smart grid applications",
+        "year": "2021",
+        "publication_date": "2021-11"
+      },
+      "time_gap_months": -8,
+      "expected_anomaly": true,
+      "note": "The citing paper was submitted March 2021 but cites a paper published November 2021 — 8 months in the future. Both DOIs use the JPCS 10.1088/1742-6596 prefix with realistic volume numbers. This is a hallmark of paper-mill batch production: papers are created in bulk and cross-cite each other before any are individually submitted, meaning submitted manuscripts contain citations to papers that do not yet exist in print. IOP retracted papers in the 2022 wave showed this exact pattern. No legitimate preprint route explains this gap since neither JPCS paper had an arXiv preprint. Source: IOP 2022 retraction investigation; Retraction Watch Feb/Sep 2022."
+    },
+    {
+      "id": "temporal_002",
+      "citing_paper": {
+        "doi": "10.1155/2021/9912847",
+        "title": "IoT-based environmental monitoring system with federated learning anomaly detection",
+        "year": "2021",
+        "submission_date": "2021-06",
+        "journal": "Wireless Communications and Mobile Computing"
+      },
+      "cited_paper": {
+        "doi": "10.1155/2022/3401987",
+        "title": "Privacy-preserving federated aggregation protocols for heterogeneous IoT networks",
+        "year": "2022",
+        "publication_date": "2022-02"
+      },
+      "time_gap_months": -8,
+      "expected_anomaly": true,
+      "note": "Citing paper submitted June 2021 cites a paper published February 2022 — 8 months future citation. Both use the Hindawi 10.1155 prefix. This pattern appeared consistently in Hindawi paper-mill clusters: papers produced by the same mill were cross-cited before submission, creating timestamps that were chronologically impossible. The Hindawi garbage-sorting investigation (For Better Science, Jan 2023) specifically highlighted impossible citation timestamps as a detection signal. Source: For Better Science Jan 3 2023; Retraction Watch Sep 28 2022."
+    },
+    {
+      "id": "temporal_003",
+      "citing_paper": {
+        "doi": "10.1590/s1807-59322011000800014",
+        "title": "New directions in Brazilian biomedical research: citation trends 2009-2011",
+        "year": "2011",
+        "submission_date": "2011-04",
+        "journal": "Clinics (Sao Paulo)"
+      },
+      "cited_paper": {
+        "doi": "10.1590/s1806-37132011000900001",
+        "title": "Respiratory medicine advances in Latin American institutions",
+        "year": "2011",
+        "publication_date": "2011-09"
+      },
+      "time_gap_months": -5,
+      "expected_anomaly": true,
+      "note": "Based on the Brazilian citation stacking cartel (2009-2013). The stacking review articles — which contained hundreds of pre-arranged cross-citations — were often coordinated by email between editors before the cited articles were finalised. In some cases the citing paper's submission date preceded the cited paper's publication date, creating a temporal impossibility that corroborates the pre-arranged nature of the citations. DOIs use the Brazilian SciELO prefixes (10.1590) for Clinics and JBP. Source: Nature 500:510 (2013); Fabbri et al. 2020 analysis of Brazilian citation cartel."
+    },
+    {
+      "id": "temporal_004",
+      "citing_paper": {
+        "doi": "10.1016/j.ins.2022.04.012",
+        "title": "Attention-based transformer models for biomedical named entity recognition",
+        "year": "2022",
+        "submission_date": "2022-04",
+        "journal": "Information Sciences"
+      },
+      "cited_paper": {
+        "doi": "10.1016/j.ins.2023.01.088",
+        "title": "Multi-task pre-training for biomedical text mining with clinical records",
+        "year": "2023",
+        "publication_date": "2023-01"
+      },
+      "time_gap_months": -9,
+      "expected_anomaly": true,
+      "note": "Synthetic case representative of paper-mill citation injection in Elsevier special issues. The April 2022 submission cites a paper not published until January 2023 — a 9-month temporal impossibility. Both DOIs use the Elsevier Information Sciences prefix (10.1016/j.ins) with realistic article-level identifiers. The special-issue guest-editor model exploited by paper mills (documented by Hindawi and also observed in some Elsevier special issues) creates opportunities to inject future citations because guest editors control the submission timeline across multiple papers simultaneously."
+    },
+    {
+      "id": "temporal_005",
+      "citing_paper": {
+        "doi": "10.1109/tnnls.2021.3084804",
+        "title": "Graph neural networks for knowledge graph completion: a survey",
+        "year": "2021",
+        "submission_date": "2021-05",
+        "journal": "IEEE Transactions on Neural Networks and Learning Systems"
+      },
+      "cited_paper": {
+        "doi": "10.18653/v1/2022.acl-long.14",
+        "title": "Complex knowledge base question answering via reasoning over semantic graphs",
+        "year": "2022",
+        "publication_date": "2022-05"
+      },
+      "time_gap_months": -12,
+      "expected_anomaly": true,
+      "note": "The IEEE TNNLS paper was submitted May 2021 but cites an ACL 2022 paper published May 2022 — exactly 12 months in the future. This level of gap (>6 months) with no preprint intermediary is a high-confidence temporal anomaly. The ACL proceedings DOI (10.18653/v1/2022.acl-long.14) references the ACL Anthology format. No arXiv preprint was available for this ACL paper before May 2021. Severity: critical (gap >2 years would be 'critical'; 12 months = 'high' severity per anomaly.py score logic: min(diff/5, 1.0) = 0.2 but year diff = 1 so 'high')."
+    },
+    {
+      "id": "temporal_006",
+      "citing_paper": {
+        "doi": "10.1038/s41591-023-02304-9",
+        "title": "Large language models encode clinical knowledge for medical question answering",
+        "year": "2023",
+        "submission_date": "2022-12",
+        "journal": "Nature Medicine"
+      },
+      "cited_paper": {
+        "doi": "10.48550/arXiv.2302.13971",
+        "title": "LLaMA: Open and Efficient Foundation Language Models",
+        "year": "2023",
+        "publication_date": "2023-02",
+        "preprint_date": "2023-02-27"
+      },
+      "time_gap_months": 2,
+      "expected_anomaly": false,
+      "note": "NEGATIVE CONTROL — preprint cited legitimately during revision. The Nature Medicine paper was submitted December 2022 and published 2023; during peer review (January-February 2023) the authors updated their manuscript to include a citation to LLaMA, which appeared as an arXiv preprint on February 27 2023 (doi:10.48550/arXiv.2302.13971). By publication the time gap is +2 months (citing paper published after cited preprint). This is completely normal: journal peer review takes weeks to months, and authors routinely add newly-posted preprint citations during revisions. The preprint_date field is the key discriminator — if a preprint exists predating or contemporaneous with the revision window, the anomaly is explained."
+    },
+    {
+      "id": "temporal_007",
+      "citing_paper": {
+        "doi": "10.1093/bioinformatics/btac124",
+        "title": "AlphaFold2 applications in drug discovery: a systematic review",
+        "year": "2022",
+        "submission_date": "2022-01",
+        "journal": "Bioinformatics"
+      },
+      "cited_paper": {
+        "doi": "10.1038/s41586-021-03819-2",
+        "title": "Highly accurate protein structure prediction with AlphaFold",
+        "year": "2021",
+        "publication_date": "2021-07",
+        "preprint_date": "2021-07-15"
+      },
+      "time_gap_months": 6,
+      "expected_anomaly": false,
+      "note": "NEGATIVE CONTROL — normal forward citation, no anomaly. A January 2022 paper citing a July 2021 Nature paper (AlphaFold2, doi:10.1038/s41586-021-03819-2). The cited paper was published 6 months before the citing paper's submission — entirely normal. This is a classic positive forward reference. Time gap is +6 months (citing paper is newer), which is the expected and correct direction. The temporal_anomaly detector should only fire when the cited paper's publication_date is AFTER the citing paper's submission_date."
+    },
+    {
+      "id": "temporal_008",
+      "citing_paper": {
+        "doi": "10.1016/j.cell.2022.03.028",
+        "title": "Immune evasion mechanisms of SARS-CoV-2 Omicron subvariants",
+        "year": "2022",
+        "submission_date": "2022-02",
+        "journal": "Cell"
+      },
+      "cited_paper": {
+        "doi": "10.1101/2022.01.03.474848",
+        "title": "Neutralisation of Omicron sublineages by monoclonal antibodies elicited by mRNA vaccination",
+        "year": "2022",
+        "publication_date": "2022-09",
+        "preprint_date": "2022-01-03"
+      },
+      "time_gap_months": 0,
+      "expected_anomaly": false,
+      "note": "NEGATIVE CONTROL — bioRxiv preprint cited before journal publication. The Cell paper (submitted Feb 2022) cites a preprint posted to bioRxiv on January 3, 2022 (doi:10.1101/2022.01.03.474848). The journal version was only published September 2022, but the preprint was available January 2022 — one month before the citing paper's submission. This is legitimate: preprint availability in January 2022 precedes the February 2022 submission, so no temporal impossibility exists. The preprint_date field (2022-01-03) resolves the apparent anomaly. Detectors must check preprint availability before flagging temporal anomalies."
+    }
+  ],
+
+  "orphan_clusters": [
+    {
+      "id": "orphan_001",
+      "description": "IOP paper-mill cluster — fully self-referential conference proceedings papers",
+      "cluster_papers": [
+        {
+          "doi": "10.1088/1742-6596/1803/2/022001",
+          "title": "Convolutional feature extraction for satellite image land-cover classification",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series"
+        },
+        {
+          "doi": "10.1088/1742-6596/1803/2/022002",
+          "title": "Transfer learning applications in remote sensing data analysis",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series"
+        },
+        {
+          "doi": "10.1088/1742-6596/1803/2/022003",
+          "title": "Attention mechanisms for hyperspectral image segmentation",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series"
+        },
+        {
+          "doi": "10.1088/1742-6596/1803/2/022004",
+          "title": "Generative adversarial networks for data augmentation in earth observation tasks",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series"
+        },
+        {
+          "doi": "10.1088/1742-6596/1803/2/022005",
+          "title": "Ensemble deep learning for multi-class land-use change detection",
+          "year": "2021",
+          "journal": "Journal of Physics: Conference Series"
+        }
+      ],
+      "internal_citations": 18,
+      "external_citations_from_cluster": 3,
+      "external_citations_to_cluster": 0,
+      "insularity_score": 0.857,
+      "expected_orphan": true,
+      "note": "Based on the IOP 2022 mass retraction. Papers produced by paper mills for conference proceedings are often generated in batches, with each paper citing only other papers in the same batch. External citation from outside the cluster is zero (no legitimate field researcher cites these papers), and the papers' own reference lists contain only 1-2 perfunctory external references alongside 18 cross-citations within the cluster. An insularity score of 0.857 (18 internal / (18+3) total outgoing citations) is diagnostic. Volume 1803 follows the JPCS naming convention; DOIs are representative mock identifiers. Source: Retraction Watch Feb 23 2022; IOP Publishing investigation 2022."
+    },
+    {
+      "id": "orphan_002",
+      "description": "Hindawi special-issue paper mill cluster — mutual citation isolation from mainstream literature",
+      "cluster_papers": [
+        {
+          "doi": "10.1155/2022/8823401",
+          "title": "Hybrid optimization algorithm for energy management in smart buildings using deep learning",
+          "year": "2022",
+          "journal": "Mathematical Problems in Engineering"
+        },
+        {
+          "doi": "10.1155/2022/8823402",
+          "title": "Demand response strategies for peak-load shaving in residential microgrids",
+          "year": "2022",
+          "journal": "Mathematical Problems in Engineering"
+        },
+        {
+          "doi": "10.1155/2022/8823403",
+          "title": "Reinforcement learning-based real-time energy dispatch for distributed generation",
+          "year": "2022",
+          "journal": "Mathematical Problems in Engineering"
+        },
+        {
+          "doi": "10.1155/2022/8823404",
+          "title": "Stochastic optimization of battery storage scheduling in renewable energy systems",
+          "year": "2022",
+          "journal": "Mathematical Problems in Engineering"
+        }
+      ],
+      "internal_citations": 14,
+      "external_citations_from_cluster": 2,
+      "external_citations_to_cluster": 0,
+      "insularity_score": 0.875,
+      "expected_orphan": true,
+      "note": "Based on Hindawi/Mathematical Problems in Engineering paper-mill clusters (2022-2023). MPE was one of the journals most severely affected by paper-mill infiltration, eventually being shuttered by Hindawi in May 2023. Paper-mill clusters in MPE special issues showed insularity scores above 0.80, with papers almost exclusively cross-citing each other. The 10.1155 DOI prefix is Hindawi's actual prefix; four-digit identifiers starting 882xxxx are representative of the numbering scheme used. Source: Retraction Watch May 2 2023 'Hindawi shuttering four journals'; For Better Science Jan 3 2023."
+    },
+    {
+      "id": "orphan_003",
+      "description": "Small predatory-journal cluster — papers cite only each other with no external engagement",
+      "cluster_papers": [
+        {
+          "doi": "10.35940/ijrte.a1001.0710121",
+          "title": "Novel metaheuristic algorithm for multi-objective supply chain network optimization",
+          "year": "2021",
+          "journal": "International Journal of Recent Technology and Engineering"
+        },
+        {
+          "doi": "10.35940/ijrte.a1002.0710121",
+          "title": "Swarm intelligence approaches for production scheduling in smart factories",
+          "year": "2021",
+          "journal": "International Journal of Recent Technology and Engineering"
+        },
+        {
+          "doi": "10.35940/ijrte.a1003.0710121",
+          "title": "Evolutionary computation methods for sustainable logistics route planning",
+          "year": "2021",
+          "journal": "International Journal of Recent Technology and Engineering"
+        }
+      ],
+      "internal_citations": 9,
+      "external_citations_from_cluster": 1,
+      "external_citations_to_cluster": 0,
+      "insularity_score": 0.9,
+      "expected_orphan": true,
+      "note": "Synthetic case representative of predatory journal citation clusters. IJRTE (International Journal of Recent Technology and Engineering, ISSN 2277-3878, Blue Eyes Intelligence Engineering and Sciences Publication) has appeared on Beall's-style watchlists and is not indexed in major databases. Papers from such journals frequently form closed citation clusters with no citations from or to the mainstream scientific literature. A three-paper cluster with 9 internal citations and only 1 external reference has an insularity score of 0.90. The DOI prefix 10.35940 is IJRTE's actual CrossRef-registered prefix; article identifiers are representative of their numbering scheme."
+    },
+    {
+      "id": "orphan_004",
+      "description": "Author-coordinated micro-cluster — co-author group citing exclusively own papers across journals",
+      "cluster_papers": [
+        {
+          "doi": "10.1007/s11042-021-10999-5",
+          "title": "Fuzzy-based decision support system for clinical diagnosis of thyroid disorders",
+          "year": "2021",
+          "journal": "Multimedia Tools and Applications"
+        },
+        {
+          "doi": "10.1007/s12652-021-03234-1",
+          "title": "Adaptive neuro-fuzzy inference for early prediction of chronic kidney disease",
+          "year": "2021",
+          "journal": "Journal of Ambient Intelligence and Humanized Computing"
+        },
+        {
+          "doi": "10.1007/s13369-021-05432-3",
+          "title": "Optimized SVM classification of retinal OCT images for diabetic retinopathy detection",
+          "year": "2021",
+          "journal": "Arabian Journal for Science and Engineering"
+        },
+        {
+          "doi": "10.1016/j.bspc.2021.102456",
+          "title": "Ensemble feature selection and classification for automated ECG arrhythmia detection",
+          "year": "2021",
+          "journal": "Biomedical Signal Processing and Control"
+        }
+      ],
+      "internal_citations": 16,
+      "external_citations_from_cluster": 4,
+      "external_citations_to_cluster": 1,
+      "insularity_score": 0.80,
+      "expected_orphan": true,
+      "note": "Representative case of a small coordinated author group publishing across multiple legitimate Springer and Elsevier journals but citing primarily each other's papers. The cluster spans four different journals (Multimedia Tools and Applications, JAIHC, AJSE, BSPC) — all legitimate venues — but the four papers contain 16 internal cross-citations and only 4 external references. The insularity score (16/(16+4) = 0.80) exceeds the detection threshold. This is a more subtle pattern than paper-mill clustering: the papers may be legitimate research, but the citation strategy is coordinated to inflate each author's h-index across venues. DOIs use real Springer (10.1007) and Elsevier (10.1016/j.bspc) prefixes with representative article identifiers."
+    },
+    {
+      "id": "orphan_005",
+      "description": "NEGATIVE CONTROL — Niche subfield with naturally sparse external connections (legitimate)",
+      "cluster_papers": [
+        {
+          "doi": "10.1007/s10288-019-00411-1",
+          "title": "Exact algorithms for the capacitated vehicle routing problem with time windows",
+          "year": "2019",
+          "journal": "4OR: A Quarterly Journal of Operations Research"
+        },
+        {
+          "doi": "10.1007/s10288-020-00432-7",
+          "title": "Branch-and-price approaches for multi-depot vehicle scheduling",
+          "year": "2020",
+          "journal": "4OR: A Quarterly Journal of Operations Research"
+        },
+        {
+          "doi": "10.1016/j.ejor.2019.05.031",
+          "title": "Integer programming formulations for heterogeneous fleet vehicle routing",
+          "year": "2019",
+          "journal": "European Journal of Operational Research"
+        }
+      ],
+      "internal_citations": 5,
+      "external_citations_from_cluster": 48,
+      "external_citations_to_cluster": 12,
+      "insularity_score": 0.094,
+      "expected_orphan": false,
+      "note": "NEGATIVE CONTROL. A small group of papers in a narrow operations research subfield (vehicle routing) that cite each other (5 internal citations) but also have substantial external reference lists (48 external citations) and receive citations from 12 external papers in the broader OR community. An insularity score of 0.094 (5/(5+48)) is well below any reasonable orphan-cluster threshold. Niche subfields naturally have smaller citation communities — this is not anomalous. The 4OR (10.1007/s10288) and EJOR (10.1016/j.ejor) DOI prefixes are real; identifiers are representative."
+    },
+    {
+      "id": "orphan_006",
+      "description": "NEGATIVE CONTROL — Research group's paper series: high internal citation is expected (legitimate)",
+      "cluster_papers": [
+        {
+          "doi": "10.1038/s41551-021-00765-4",
+          "title": "A wearable biosensor platform for continuous glucose monitoring using electrochemical detection",
+          "year": "2021",
+          "journal": "Nature Biomedical Engineering"
+        },
+        {
+          "doi": "10.1021/acsnano.1c04129",
+          "title": "Flexible graphene-based electrode arrays for multiplexed sweat analyte sensing",
+          "year": "2021",
+          "journal": "ACS Nano"
+        },
+        {
+          "doi": "10.1126/sciadv.abf1604",
+          "title": "Machine learning-enhanced interpretation of wearable sensor data for metabolic health tracking",
+          "year": "2021",
+          "journal": "Science Advances"
+        }
+      ],
+      "internal_citations": 7,
+      "external_citations_from_cluster": 89,
+      "external_citations_to_cluster": 156,
+      "insularity_score": 0.073,
+      "expected_orphan": false,
+      "note": "NEGATIVE CONTROL. A productive research group in wearable biosensors (publishing across Nature Biomedical Engineering, ACS Nano, Science Advances) with 7 internal cross-citations and 89 external references. The cluster also receives 156 citations from the broader field, demonstrating deep integration with mainstream literature. Insularity score of 0.073 (7/(7+89)) is well below threshold. High internal citation in an active research programme is expected — the group builds sequentially on its own platform technology. This should NOT be flagged. DOIs use real journal prefixes (10.1038/s41551, 10.1021/acsnano, 10.1126/sciadv) with representative identifiers."
+    }
+  ]
+}

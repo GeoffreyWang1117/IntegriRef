@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntegriRef Documentation</title>
+  <meta name="description" content="Complete documentation for IntegriRef — installation, API reference, layer-by-layer guide, and deployment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="navbar-brand">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="6" fill="#6366f1"/>
+        <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      IntegriRef
+    </a>
+    <ul class="navbar-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html" class="active">Docs</a></li>
+      <li><a href="index.html#benchmarks">Benchmarks</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+    </ul>
+    <a href="#quickstart" class="navbar-cta">Quick Start</a>
+  </div>
+</nav>
+
+<!-- Docs Layout -->
+<div class="docs-layout">
+
+  <!-- Sidebar -->
+  <aside class="docs-sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <h4>Getting Started</h4>
+      <a href="#quickstart" class="active">Quick Start</a>
+      <a href="#installation">Installation</a>
+      <a href="#configuration">Configuration</a>
+      <a href="#first-verification">First Verification</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Core Concepts</h4>
+      <a href="#architecture">Architecture Overview</a>
+      <a href="#ic-entity">ICEntity Model</a>
+      <a href="#registry-adapters">Registry Adapters</a>
+      <a href="#discovery">Registry Discovery</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Verification Layers</h4>
+      <a href="#l0-existence">L0: Existence Verification</a>
+      <a href="#l1-intent">L1: Citation Intent</a>
+      <a href="#l2-semantic">L2: Semantic Verification</a>
+      <a href="#l3-graph">L3: Graph Analysis</a>
+      <a href="#l4-risk">L4: Risk Scoring</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Detection Modules</h4>
+      <a href="#hallucination">Hallucination Detection</a>
+      <a href="#tortured-phrases">Tortured Phrases</a>
+      <a href="#statistical">Statistical Verification</a>
+      <a href="#sneaked-refs">Sneaked References</a>
+      <a href="#retraction">Retraction Checking</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>API Reference</h4>
+      <a href="#api-reference">REST API Overview</a>
+      <a href="#api-verify">POST /v1/verify</a>
+      <a href="#api-batch">POST /v1/batch</a>
+      <a href="#api-hallucination">POST /v1/hallucination</a>
+      <a href="#api-graph">GET /v1/graph/{doi}</a>
+      <a href="#api-risk">POST /v1/risk</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Performance</h4>
+      <a href="#acceleration">Acceleration Stack</a>
+      <a href="#onnx">ONNX Inference</a>
+      <a href="#async-io">Async I/O</a>
+      <a href="#caching">Caching</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Deployment</h4>
+      <a href="#docker">Docker</a>
+      <a href="#production">Production Config</a>
+      <a href="#monitoring">Monitoring</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="docs-content">
+
+    <!-- ==================== GETTING STARTED ==================== -->
+    <h1 id="quickstart">Quick Start</h1>
+    <p>Get IntegriRef running in under 5 minutes.</p>
+
+    <div class="alert alert-info">
+      <strong>Requirements:</strong> Python 3.10+, pip. GPU optional (CPU heuristic fallback available for all layers).
+    </div>
+
+    <h2 id="installation">Installation</h2>
+
+    <h3>Basic Install</h3>
+<pre><code><span class="cmt"># Clone the repository</span>
+git clone https://github.com/integriref/integriref.git
+cd integriref
+
+<span class="cmt"># Install dependencies</span>
+pip install -r requirements.txt
+
+<span class="cmt"># Verify installation</span>
+python -c "from core.discovery import RegistryDiscovery; print('OK')"</code></pre>
+
+    <h3>With Acceleration (recommended)</h3>
+<pre><code><span class="cmt"># Install async + caching support</span>
+pip install aiohttp uvloop redis[hiredis]
+
+<span class="cmt"># Install ONNX Runtime for fast CPU inference</span>
+pip install onnxruntime
+
+<span class="cmt"># For GPU inference</span>
+pip install torch transformers</code></pre>
+
+    <h3>Model Downloads</h3>
+<pre><code><span class="cmt"># L1: Citation Intent (SciBERT fine-tuned on SciCite)</span>
+<span class="cmt"># Auto-downloads on first use, or set manually:</span>
+export INTENT_MODEL_PATH=models/intent_classifier
+
+<span class="cmt"># L2: Semantic Verification (DeBERTa-v3 fine-tuned on SciFact)</span>
+export NLI_MODEL_PATH=models/scifact_nli
+
+<span class="cmt"># ONNX model (optional, for CPU acceleration)</span>
+<span class="cmt"># Export from PyTorch:</span>
+python -c "
+from semantic.onnx_exporter import export_to_onnx
+export_to_onnx('models/scifact_nli', 'models/scifact_nli/model.onnx', quantize=True)
+"</code></pre>
+
+    <h2 id="configuration">Configuration</h2>
+
+    <p>IntegriRef uses environment variables for API keys. Most registries work without authentication, but some require free API keys for higher rate limits.</p>
+
+    <table>
+      <thead><tr><th>Variable</th><th>Registry</th><th>Required?</th><th>How to Get</th></tr></thead>
+      <tbody>
+        <tr><td><code>CROSSREF_MAILTO</code></td><td>Crossref</td><td>Recommended</td><td>Any valid email (polite pool)</td></tr>
+        <tr><td><code>SEMANTIC_SCHOLAR_KEY</code></td><td>Semantic Scholar</td><td>Optional</td><td>semanticscholar.org/product/api</td></tr>
+        <tr><td><code>NCBI_API_KEY</code></td><td>PubMed</td><td>Optional</td><td>ncbi.nlm.nih.gov/account</td></tr>
+        <tr><td><code>USPTO_API_KEY</code></td><td>USPTO</td><td>For patents</td><td>developer.uspto.gov</td></tr>
+        <tr><td><code>NASA_ADS_TOKEN</code></td><td>NASA ADS</td><td>For astro</td><td>ui.adsabs.harvard.edu</td></tr>
+        <tr><td><code>FRED_API_KEY</code></td><td>FRED</td><td>For financial</td><td>fred.stlouisfed.org/docs/api</td></tr>
+        <tr><td><code>NLI_MODEL_PATH</code></td><td>L2 Model</td><td>For L2</td><td>models/scifact_nli</td></tr>
+        <tr><td><code>INTENT_MODEL_PATH</code></td><td>L1 Model</td><td>For L1</td><td>models/intent_classifier</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="first-verification">First Verification</h2>
+
+    <h3>CLI Usage</h3>
+<pre><code><span class="cmt"># Verify a single reference by DOI</span>
+python refcheck.py --doi "10.1038/s41586-020-2649-2"
+
+<span class="cmt"># Verify by title</span>
+python refcheck.py --title "Attention Is All You Need" --author "Vaswani"
+
+<span class="cmt"># Full verification with all layers</span>
+python refcheck.py --doi "10.1038/s41586-020-2649-2" --layers L0,L1,L2,L3,L4</code></pre>
+
+    <h3>Python API</h3>
+<pre><code><span class="kw">from</span> core.discovery <span class="kw">import</span> RegistryDiscovery
+<span class="kw">from</span> verification.engine <span class="kw">import</span> VerificationEngine
+
+<span class="cmt"># Initialize discovery with all adapters</span>
+discovery = RegistryDiscovery()
+discovery.auto_register()
+
+<span class="cmt"># Verify a reference</span>
+engine = VerificationEngine(discovery)
+result = engine.verify({
+    <span class="str">"title"</span>: <span class="str">"Attention Is All You Need"</span>,
+    <span class="str">"authors"</span>: [<span class="str">"Vaswani"</span>, <span class="str">"Shazeer"</span>, <span class="str">"Parmar"</span>],
+    <span class="str">"year"</span>: <span class="str">"2017"</span>,
+    <span class="str">"doi"</span>: <span class="str">"10.48550/arXiv.1706.03762"</span>
+})
+
+print(f<span class="str">"Found: {result.found}"</span>)
+print(f<span class="str">"Score: {result.composite_score}"</span>)
+print(f<span class="str">"Registries hit: {result.registries_hit}"</span>)</code></pre>
+
+    <h3>Async API (recommended for batch)</h3>
+<pre><code><span class="kw">import</span> asyncio
+<span class="kw">from</span> core.async_discovery <span class="kw">import</span> AsyncRegistryDiscovery
+<span class="kw">from</span> core.batch_processor <span class="kw">import</span> BatchProcessor
+
+<span class="kw">async def</span> <span class="fn">main</span>():
+    discovery = AsyncRegistryDiscovery()
+    discovery.register_all(all_adapters)
+
+    <span class="cmt"># Single async verification</span>
+    result = <span class="kw">await</span> discovery.verify_reference(
+        title=<span class="str">"Deep Residual Learning"</span>,
+        identifier=<span class="str">"10.1109/CVPR.2016.90"</span>
+    )
+    print(result)
+
+    <span class="cmt"># Batch verification (32 concurrent)</span>
+    processor = BatchProcessor(discovery, max_concurrent=<span class="num">32</span>)
+    references = [
+        {<span class="str">"title"</span>: <span class="str">"Paper 1"</span>, <span class="str">"doi"</span>: <span class="str">"10.xxx/1"</span>},
+        {<span class="str">"title"</span>: <span class="str">"Paper 2"</span>, <span class="str">"doi"</span>: <span class="str">"10.xxx/2"</span>},
+        <span class="cmt"># ... hundreds of references</span>
+    ]
+    results = <span class="kw">await</span> processor.verify_batch(references)
+
+asyncio.run(main())</code></pre>
+
+    <hr>
+
+    <!-- ==================== CORE CONCEPTS ==================== -->
+    <h1 id="architecture">Architecture Overview</h1>
+
+    <p>IntegriRef uses a <strong>five-layer verification stack</strong>, where each layer adds progressively deeper analysis. Layers are independent and can be used individually or combined.</p>
+
+<pre class="arch-diagram" style="font-size:.75rem">
+  Request (DOI/title/metadata)
+       │
+       ▼
+  ┌─────────────┐     ┌──────────────────┐
+  │  L0: Exist  │────▶│  62 Registries   │  Existence + field matching
+  └──────┬──────┘     └──────────────────┘
+         │
+         ▼
+  ┌─────────────┐     ┌──────────────────┐
+  │  L1: Intent │────▶│  SciBERT / cues  │  Supporting / Mentioning / Contrasting
+  └──────┬──────┘     └──────────────────┘
+         │
+         ▼
+  ┌─────────────┐     ┌──────────────────┐
+  │ L2: Semantic│────▶│  DeBERTa NLI     │  Claim ↔ abstract alignment
+  └──────┬──────┘     └──────────────────┘
+         │
+         ▼
+  ┌─────────────┐     ┌──────────────────┐
+  │  L3: Graph  │────▶│  OpenAlex 2-hop  │  7 anomaly detectors
+  └──────┬──────┘     └──────────────────┘
+         │
+         ▼
+  ┌─────────────┐     ┌──────────────────┐
+  │  L4: Risk   │────▶│  Bayesian model  │  18 signals → posterior probability
+  └──────┬──────┘     └──────────────────┘
+         │
+         ▼
+  Integrity Report (JSON / PDF)
+</pre>
+
+    <h2 id="ic-entity">ICEntity Model</h2>
+
+    <p>The <code>ICEntity</code> (Integrity-Checked Entity) is the universal data model for all verified entities. Every registry adapter returns normalized ICEntity objects.</p>
+
+<pre><code><span class="kw">from</span> core.entity <span class="kw">import</span> ICEntity, EntityType
+
+entity = ICEntity(
+    entity_type=EntityType.JOURNAL_ARTICLE,
+    title=<span class="str">"Attention Is All You Need"</span>,
+    authors=[<span class="str">"Vaswani, A."</span>, <span class="str">"Shazeer, N."</span>],
+    year=<span class="str">"2017"</span>,
+    venue=<span class="str">"NeurIPS"</span>,
+)
+entity.add_external_id(<span class="str">"crossref"</span>, <span class="str">"doi"</span>, <span class="str">"10.48550/arXiv.1706.03762"</span>)
+entity.normalize()  <span class="cmt"># Standardize title, authors, year</span></code></pre>
+
+    <p><strong>Entity types:</strong> <code>journal_article</code>, <code>conference_paper</code>, <code>preprint</code>, <code>book</code>, <code>book_chapter</code>, <code>thesis</code>, <code>patent</code>, <code>legal_case</code>, <code>government_report</code>, <code>standard</code>, <code>dataset</code>, <code>unknown</code></p>
+
+    <h2 id="registry-adapters">Registry Adapters</h2>
+
+    <p>Each registry adapter implements three methods: <code>info()</code>, <code>query_by_id()</code>, and <code>search()</code>. Built-in features include rate limiting, circuit breakers, and exponential backoff retry.</p>
+
+    <h3>Available Registries (62 total)</h3>
+    <table>
+      <thead><tr><th>Domain</th><th>Count</th><th>Key Registries</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Academic</strong></td><td>35</td><td>OpenAlex, Crossref, PubMed, Semantic Scholar, arXiv, DBLP, CiNii, SciELO, HAL, ...</td></tr>
+        <tr><td><strong>Patents</strong></td><td>5</td><td>USPTO, EPO, WIPO, Google Patents, KIPRIS</td></tr>
+        <tr><td><strong>Legal</strong></td><td>8</td><td>CourtListener, EUR-Lex, Legifrance, Indian Kanoon, Korean Law, ...</td></tr>
+        <tr><td><strong>Government</strong></td><td>6</td><td>data.gov, e-Gov Japan, e-Stat, ...</td></tr>
+        <tr><td><strong>Financial</strong></td><td>4</td><td>EDGAR, FRED, INPI, ...</td></tr>
+        <tr><td><strong>Standards</strong></td><td>4</td><td>ISO, IEC, NIST, ...</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Writing a Custom Adapter</h3>
+<pre><code><span class="kw">from</span> core.registry <span class="kw">import</span> RegistryAdapter, RegistryInfo
+<span class="kw">from</span> core.entity <span class="kw">import</span> ICEntity, EntityType
+
+<span class="kw">class</span> <span class="type">MyRegistryAdapter</span>(RegistryAdapter):
+    <span class="kw">def</span> <span class="fn">info</span>(self):
+        <span class="kw">return</span> RegistryInfo(
+            name=<span class="str">"my_registry"</span>,
+            domain=<span class="str">"academic"</span>,
+            base_url=<span class="str">"https://api.example.com"</span>,
+            auth_type=<span class="str">"api_key_free"</span>,
+            rate_limit=<span class="num">0.1</span>,  <span class="cmt"># seconds between requests</span>
+            coverage=<span class="str">"Example papers database"</span>,
+            entity_types=[<span class="str">"journal_article"</span>],
+        )
+
+    <span class="kw">def</span> <span class="fn">query_by_id</span>(self, id_type, id_value):
+        resp = self._get(  <span class="cmt"># Built-in retry + circuit breaker</span>
+            f<span class="str">"{self.info().base_url}/works/{id_value}"</span>)
+        <span class="kw">if not</span> resp:
+            <span class="kw">return None</span>
+        data = resp.json()
+        entity = ICEntity(
+            entity_type=EntityType.JOURNAL_ARTICLE,
+            title=data[<span class="str">"title"</span>],
+            authors=data.get(<span class="str">"authors"</span>, []),
+            year=str(data.get(<span class="str">"year"</span>, <span class="str">""</span>)),
+        )
+        entity.normalize()
+        <span class="kw">return</span> entity
+
+    <span class="kw">def</span> <span class="fn">search</span>(self, title, author=<span class="str">""</span>, year=<span class="str">""</span>, **kw):
+        resp = self._get(f<span class="str">"{self.info().base_url}/search"</span>,
+                         params={<span class="str">"q"</span>: title})
+        <span class="kw">if not</span> resp:
+            <span class="kw">return</span> []
+        <span class="kw">return</span> [self._parse(item) <span class="kw">for</span> item <span class="kw">in</span> resp.json()[<span class="str">"results"</span>]]</code></pre>
+
+    <h2 id="discovery">Registry Discovery</h2>
+
+    <p><code>RegistryDiscovery</code> is the routing layer that automatically determines which registries to query based on identifier type and domain.</p>
+
+<pre><code><span class="kw">from</span> core.discovery <span class="kw">import</span> RegistryDiscovery
+
+discovery = RegistryDiscovery()
+discovery.auto_register()  <span class="cmt"># Register all 62 adapters</span>
+
+<span class="cmt"># Auto-detects ID type and routes to matching registries</span>
+results = discovery.parallel_query_by_id(<span class="str">"doi"</span>, <span class="str">"10.1038/s41586-020-2649-2"</span>)
+<span class="cmt"># → queries Crossref, OpenAlex, Semantic Scholar, etc. in parallel</span>
+
+<span class="cmt"># Search fallback</span>
+results = discovery.parallel_search(<span class="str">"Attention Is All You Need"</span>)
+
+<span class="cmt"># ID type detection</span>
+RegistryDiscovery.detect_id_type(<span class="str">"10.1038/s41586-020-2649-2"</span>)  <span class="cmt"># → "doi"</span>
+RegistryDiscovery.detect_id_type(<span class="str">"US10,123,456"</span>)               <span class="cmt"># → "patent_number"</span>
+RegistryDiscovery.detect_id_type(<span class="str">"978-0-13-468599-1"</span>)           <span class="cmt"># → "isbn"</span></code></pre>
+
+    <hr>
+
+    <!-- ==================== VERIFICATION LAYERS ==================== -->
+    <h1 id="l0-existence">L0: Existence Verification</h1>
+
+    <p>The foundation layer verifies that a cited reference actually exists in authoritative registries and matches the claimed metadata.</p>
+
+    <h3>Core Components</h3>
+    <ul>
+      <li><strong>VerificationEngine</strong> (<code>verification/engine.py</code>): Orchestrates the full verification pipeline</li>
+      <li><strong>FieldComparator</strong> (<code>verification/field_comparator.py</code>): Title, author, year, venue fuzzy matching (RapidFuzz + Jaccard)</li>
+      <li><strong>HallucinationDetector</strong> (<code>verification/hallucination_detector.py</code>): Multi-signal fake reference detection at 336K refs/s</li>
+      <li><strong>RetractionChecker</strong> (<code>verification/retraction_checker.py</code>): Crossref retraction status</li>
+    </ul>
+
+<pre><code><span class="kw">from</span> verification.engine <span class="kw">import</span> VerificationEngine
+
+engine = VerificationEngine(discovery)
+
+<span class="cmt"># Full L0 verification</span>
+result = engine.verify({
+    <span class="str">"title"</span>: <span class="str">"Deep Residual Learning for Image Recognition"</span>,
+    <span class="str">"doi"</span>: <span class="str">"10.1109/CVPR.2016.90"</span>,
+    <span class="str">"year"</span>: <span class="str">"2016"</span>,
+    <span class="str">"authors"</span>: [<span class="str">"He"</span>, <span class="str">"Zhang"</span>, <span class="str">"Ren"</span>, <span class="str">"Sun"</span>]
+})
+
+<span class="cmt"># result.found → True</span>
+<span class="cmt"># result.composite_score → 0.95</span>
+<span class="cmt"># result.field_scores → {"title": 0.98, "author": 0.92, "year": 1.0}</span>
+<span class="cmt"># result.registries_hit → ["crossref", "openalex", "semantic_scholar"]</span></code></pre>
+
+    <h2 id="l1-intent">L1: Citation Intent Classification</h2>
+
+    <p>Classifies how a paper cites another: <strong>Supporting</strong> (confirms findings), <strong>Mentioning</strong> (background reference), or <strong>Contrasting</strong> (challenges/disagrees).</p>
+
+<pre><code><span class="kw">from</span> semantic.intent_classifier <span class="kw">import</span> IntentClassifier
+
+classifier = IntentClassifier()
+
+result = classifier.classify(
+    <span class="str">"Following the approach of He et al. (2016), we use residual connections"</span>
+)
+<span class="cmt"># result.label → "supporting"</span>
+<span class="cmt"># result.confidence → 0.89</span>
+
+result = classifier.classify(
+    <span class="str">"Unlike the findings of Smith (2020), our results show..."</span>
+)
+<span class="cmt"># result.label → "contrasting"</span>
+<span class="cmt"># result.confidence → 0.82</span></code></pre>
+
+    <div class="alert alert-info">
+      <strong>CPU fallback:</strong> Without GPU/model, IntentClassifier uses a heuristic lexical-cue system (3,471 refs/s) that still provides reasonable classification.
+    </div>
+
+    <h2 id="l2-semantic">L2: Semantic Claim Verification</h2>
+
+    <p>Verifies whether the citing paper's claim is actually <strong>supported</strong>, <strong>contradicted</strong>, or <strong>unrelated</strong> to the cited abstract. Uses DeBERTa-v3 fine-tuned on SciFact (93.5% accuracy).</p>
+
+<pre><code><span class="kw">from</span> semantic.nli_verifier <span class="kw">import</span> NLIVerifier
+
+verifier = NLIVerifier()
+
+result = verifier.verify(
+    claim=<span class="str">"Transformer models outperform RNNs on machine translation"</span>,
+    abstract=<span class="str">"We propose a new architecture based solely on attention mechanisms. "</span>
+             <span class="str">"Experiments on WMT 2014 show the model achieves 28.4 BLEU, "</span>
+             <span class="str">"surpassing the best previously reported results including RNN-based models."</span>
+)
+<span class="cmt"># result.label → AlignmentLabel.SUPPORTED</span>
+<span class="cmt"># result.confidence → 0.91</span>
+<span class="cmt"># result.entailment_score → 0.93</span>
+<span class="cmt"># result.contradiction_score → 0.02</span></code></pre>
+
+    <h3>ONNX Accelerated (2.2x faster on CPU)</h3>
+<pre><code><span class="kw">from</span> semantic.onnx_exporter <span class="kw">import</span> ONNXNLIVerifier
+
+<span class="cmt"># Drop-in replacement — same interface</span>
+verifier = ONNXNLIVerifier(
+    onnx_path=<span class="str">"models/scifact_nli/model_int8.onnx"</span>,
+    tokenizer_path=<span class="str">"models/scifact_nli"</span>,
+    num_threads=<span class="num">4</span>
+)
+result = verifier.verify(claim, abstract)  <span class="cmt"># Same API</span>
+
+<span class="cmt"># Batch verification</span>
+pairs = [(claim1, abstract1), (claim2, abstract2), ...]
+results = verifier.verify_batch(pairs, batch_size=<span class="num">64</span>)</code></pre>
+
+    <h2 id="l3-graph">L3: Citation Graph Analysis</h2>
+
+    <p>Builds 2-hop citation graphs from OpenAlex and runs 7 anomaly detection algorithms.</p>
+
+<pre><code><span class="kw">from</span> graph.openalex_builder <span class="kw">import</span> OpenAlexGraphBuilder
+<span class="kw">from</span> graph.anomaly <span class="kw">import</span> AnomalyDetector
+<span class="kw">from</span> graph.metrics <span class="kw">import</span> GraphMetrics
+
+<span class="cmt"># Build 2-hop citation graph</span>
+builder = OpenAlexGraphBuilder()
+graph = builder.build_two_hop(doi=<span class="str">"10.1038/s41586-020-2649-2"</span>)
+
+<span class="cmt"># Run anomaly detection</span>
+detector = AnomalyDetector(graph)
+anomalies = detector.detect_all()
+
+<span class="kw">for</span> a <span class="kw">in</span> anomalies:
+    print(f<span class="str">"{a.type}: {a.description} (severity: {a.severity})"</span>)
+
+<span class="cmt"># Graph health score</span>
+metrics = GraphMetrics(graph)
+health = metrics.compute_health_score()
+<span class="cmt"># health.overall → 0.85 (0-1 scale)</span>
+<span class="cmt"># health.dimensions → {interconnection: 0.9, temporal: 0.95, ...}</span></code></pre>
+
+    <h3>Anomaly Types</h3>
+    <table>
+      <thead><tr><th>Type</th><th>Description</th><th>Method</th></tr></thead>
+      <tbody>
+        <tr><td><code>ORPHAN_CLUSTER</code></td><td>Low interconnection density</td><td>Graph density threshold</td></tr>
+        <tr><td><code>TEMPORAL_ANOMALY</code></td><td>Citations to future papers</td><td>Year comparison</td></tr>
+        <tr><td><code>EXCESSIVE_SELF_CITATION</code></td><td>&gt;30% self-citation rate</td><td>Author overlap</td></tr>
+        <tr><td><code>SELF_CITATION_RING</code></td><td>Mutual citation cycles</td><td>CIDRE variant</td></tr>
+        <tr><td><code>BENFORD_VIOLATION</code></td><td>Unnatural citation counts</td><td>Chi-squared test</td></tr>
+        <tr><td><code>RECIPROCAL_CITATION</code></td><td>Bidirectional author patterns</td><td>Pair analysis</td></tr>
+        <tr><td><code>CITATION_BURST</code></td><td>Suspicious year-over-year spikes</td><td>Growth factor + concentration</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="l4-risk">L4: Bayesian Risk Scoring</h2>
+
+    <p>Combines all signals from L0-L3 using a Bayesian framework with literature-derived likelihood ratios to produce a calibrated risk probability.</p>
+
+<pre><code><span class="kw">from</span> scoring.bayesian <span class="kw">import</span> BayesianRiskScorer
+
+scorer = BayesianRiskScorer(domain=<span class="str">"cancer_research"</span>)  <span class="cmt"># prior=10%</span>
+
+risk = scorer.score({
+    <span class="str">"reference_not_found"</span>: (<span class="kw">True</span>, <span class="num">0.9</span>),     <span class="cmt"># (present, confidence)</span>
+    <span class="str">"tortured_phrases"</span>: (<span class="kw">True</span>, <span class="num">0.95</span>),       <span class="cmt"># LR+ = 25.0</span>
+    <span class="str">"grim_test_failure"</span>: (<span class="kw">False</span>, <span class="num">0.8</span>),      <span class="cmt"># LR- = 0.99</span>
+    <span class="str">"citation_ring_detected"</span>: (<span class="kw">False</span>, <span class="num">0.7</span>), <span class="cmt"># LR- = 0.90</span>
+})
+
+<span class="cmt"># risk.probability → 0.81</span>
+<span class="cmt"># risk.tier → "CRITICAL"</span>
+<span class="cmt"># risk.signals_fired → ["reference_not_found", "tortured_phrases"]</span>
+<span class="cmt"># risk.explanation → "Prior 10% → Posterior 81% (2 positive signals)"</span></code></pre>
+
+    <h3>Risk Tiers</h3>
+    <table>
+      <thead><tr><th>P(problematic)</th><th>Tier</th><th>Recommended Action</th></tr></thead>
+      <tbody>
+        <tr><td>&lt; 5%</td><td><span class="badge badge-green">LOW</span></td><td>Pass</td></tr>
+        <tr><td>5% - 20%</td><td><span class="badge badge-yellow">ELEVATED</span></td><td>Flag for attention</td></tr>
+        <tr><td>20% - 50%</td><td><span class="badge badge-orange">HIGH</span></td><td>Detailed review required</td></tr>
+        <tr><td>&gt; 50%</td><td><span class="badge badge-red">CRITICAL</span></td><td>Halt &amp; investigate</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <!-- ==================== DETECTION MODULES ==================== -->
+    <h1 id="hallucination">Detection Modules</h1>
+
+    <h2>Hallucination Detection</h2>
+    <p>Multi-signal detection of fabricated references (LLM-generated, paper-mill, etc.) at 336K refs/s.</p>
+<pre><code><span class="kw">from</span> verification.hallucination_detector <span class="kw">import</span> HallucinationDetector
+
+detector = HallucinationDetector()
+result = detector.analyze({
+    <span class="str">"title"</span>: <span class="str">"A Novel Approach to Quantum Computing"</span>,
+    <span class="str">"doi"</span>: <span class="str">"10.9999/fake-journal.2024.001"</span>,
+    <span class="str">"year"</span>: <span class="str">"2030"</span>,
+    <span class="str">"authors"</span>: [<span class="str">"Smith, J."</span>]
+})
+<span class="cmt"># result.is_suspicious → True</span>
+<span class="cmt"># result.signals → ["invalid_doi_prefix", "future_year", ...]</span></code></pre>
+
+    <h2 id="tortured-phrases">Tortured Phrase Detection</h2>
+    <p>281 paper-mill signature phrases detected via Aho-Corasick automaton (single-pass).</p>
+<pre><code><span class="kw">from</span> verification.tortured_phrases <span class="kw">import</span> TorturedPhraseDetector
+
+detector = TorturedPhraseDetector()
+result = detector.scan(<span class="str">"This study uses profound learning and arbitrary forest..."</span>)
+<span class="cmt"># result.matches → [("profound learning", "deep learning"), ("arbitrary forest", "random forest")]</span>
+<span class="cmt"># result.score → 55</span></code></pre>
+
+    <h2 id="statistical">Statistical Verification</h2>
+    <p>GRIM test (mean mathematical consistency) + statcheck (p-value recomputation).</p>
+<pre><code><span class="kw">from</span> verification.statistical <span class="kw">import</span> StatisticalVerifier
+
+verifier = StatisticalVerifier()
+result = verifier.check_text(<span class="str">"M = 2.31, SD = 0.5, N = 25; t(24) = 3.45, p = .002"</span>)
+<span class="cmt"># result.grim_results → [GRIMResult(mean=2.31, n=25, consistent=True)]</span>
+<span class="cmt"># result.statcheck_results → [StatResult(stat="t", df=24, value=3.45, reported_p=0.002, computed_p=0.002, consistent=True)]</span></code></pre>
+
+    <h2 id="sneaked-refs">Sneaked Reference Detection</h2>
+    <p>Compares Crossref metadata references vs in-text citations to find inserted references.</p>
+<pre><code><span class="kw">from</span> verification.sneaked_references <span class="kw">import</span> SneakedReferenceDetector
+
+detector = SneakedReferenceDetector()
+result = detector.analyze(doi=<span class="str">"10.xxxxx/example"</span>, full_text=<span class="str">"..."</span>)
+<span class="cmt"># result.sneaked_ratio → 0.15</span>
+<span class="cmt"># result.sneaked_refs → [...]</span>
+<span class="cmt"># result.journal_concentration → 0.45 (HHI)</span></code></pre>
+
+    <h2 id="retraction">Retraction Checking</h2>
+    <p>Crossref API-based retraction status checking with caching.</p>
+<pre><code><span class="kw">from</span> verification.retraction_checker <span class="kw">import</span> RetractionChecker
+
+checker = RetractionChecker()
+info = checker.check(<span class="str">"10.1016/S0140-6736(97)11096-0"</span>)  <span class="cmt"># Wakefield 1998</span>
+<span class="cmt"># info.is_retracted → True</span>
+<span class="cmt"># info.retraction_date → "2010-02-02"</span>
+<span class="cmt"># info.retraction_reason → "fraud"</span></code></pre>
+
+    <hr>
+
+    <!-- ==================== API REFERENCE ==================== -->
+    <h1 id="api-reference">REST API Reference</h1>
+
+    <div class="alert alert-warn">
+      <strong>API Status:</strong> The REST API is currently in development. The endpoints below represent the planned interface. Use the Python API for production workloads today.
+    </div>
+
+    <p>Base URL: <code>https://api.integriref.com/v1</code> (planned)</p>
+    <p>Authentication: API key via <code>Authorization: Bearer &lt;key&gt;</code> header.</p>
+
+    <h2 id="api-verify">Verify Single Reference</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="endpoint-method method-post">POST</span>
+        <span class="endpoint-path">/v1/verify</span>
+      </div>
+      <p class="endpoint-desc">Verify a single reference across all layers.</p>
+    </div>
+
+    <h3>Request</h3>
+<pre><code>POST /v1/verify
+Content-Type: application/json
+
+{
+    <span class="str">"title"</span>: <span class="str">"Attention Is All You Need"</span>,
+    <span class="str">"authors"</span>: [<span class="str">"Vaswani"</span>, <span class="str">"Shazeer"</span>],
+    <span class="str">"year"</span>: <span class="str">"2017"</span>,
+    <span class="str">"doi"</span>: <span class="str">"10.48550/arXiv.1706.03762"</span>,
+    <span class="str">"citing_sentence"</span>: <span class="str">"Following Vaswani et al., we use self-attention"</span>,
+    <span class="str">"layers"</span>: [<span class="str">"L0"</span>, <span class="str">"L1"</span>, <span class="str">"L2"</span>],
+    <span class="str">"domains"</span>: [<span class="str">"academic"</span>]
+}</code></pre>
+
+    <h3>Response</h3>
+<pre><code>{
+    <span class="str">"status"</span>: <span class="str">"success"</span>,
+    <span class="str">"reference_id"</span>: <span class="str">"ref_abc123"</span>,
+    <span class="str">"l0"</span>: {
+        <span class="str">"found"</span>: <span class="kw">true</span>,
+        <span class="str">"composite_score"</span>: <span class="num">0.96</span>,
+        <span class="str">"registries_hit"</span>: [<span class="str">"crossref"</span>, <span class="str">"openalex"</span>, <span class="str">"semantic_scholar"</span>],
+        <span class="str">"field_scores"</span>: {
+            <span class="str">"title"</span>: <span class="num">0.98</span>,
+            <span class="str">"author"</span>: <span class="num">0.95</span>,
+            <span class="str">"year"</span>: <span class="num">1.0</span>
+        },
+        <span class="str">"is_retracted"</span>: <span class="kw">false</span>,
+        <span class="str">"hallucination_score"</span>: <span class="num">0.02</span>
+    },
+    <span class="str">"l1"</span>: {
+        <span class="str">"intent"</span>: <span class="str">"supporting"</span>,
+        <span class="str">"confidence"</span>: <span class="num">0.89</span>
+    },
+    <span class="str">"l2"</span>: {
+        <span class="str">"label"</span>: <span class="str">"SUPPORTED"</span>,
+        <span class="str">"confidence"</span>: <span class="num">0.91</span>,
+        <span class="str">"entailment_score"</span>: <span class="num">0.93</span>,
+        <span class="str">"contradiction_score"</span>: <span class="num">0.02</span>,
+        <span class="str">"neutral_score"</span>: <span class="num">0.05</span>
+    },
+    <span class="str">"processing_time_ms"</span>: <span class="num">342</span>
+}</code></pre>
+
+    <h2 id="api-batch">Batch Verification</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="endpoint-method method-post">POST</span>
+        <span class="endpoint-path">/v1/batch</span>
+      </div>
+      <p class="endpoint-desc">Submit multiple references for batch verification. Returns a job ID for async polling.</p>
+    </div>
+
+<pre><code>POST /v1/batch
+{
+    <span class="str">"references"</span>: [
+        {<span class="str">"title"</span>: <span class="str">"Paper 1"</span>, <span class="str">"doi"</span>: <span class="str">"10.xxx/1"</span>},
+        {<span class="str">"title"</span>: <span class="str">"Paper 2"</span>, <span class="str">"doi"</span>: <span class="str">"10.xxx/2"</span>},
+        ...
+    ],
+    <span class="str">"layers"</span>: [<span class="str">"L0"</span>, <span class="str">"L1"</span>],
+    <span class="str">"max_concurrent"</span>: <span class="num">32</span>,
+    <span class="str">"webhook_url"</span>: <span class="str">"https://your-server.com/callback"</span>
+}
+
+<span class="cmt">// Response</span>
+{
+    <span class="str">"job_id"</span>: <span class="str">"job_xyz789"</span>,
+    <span class="str">"status"</span>: <span class="str">"processing"</span>,
+    <span class="str">"total_references"</span>: <span class="num">150</span>,
+    <span class="str">"estimated_time_seconds"</span>: <span class="num">45</span>
+}</code></pre>
+
+    <h2 id="api-hallucination">Hallucination Detection</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="endpoint-method method-post">POST</span>
+        <span class="endpoint-path">/v1/hallucination</span>
+      </div>
+      <p class="endpoint-desc">Fast check if a reference appears fabricated (LLM-generated, paper-mill, etc.).</p>
+    </div>
+
+<pre><code>POST /v1/hallucination
+{
+    <span class="str">"references"</span>: [
+        {
+            <span class="str">"title"</span>: <span class="str">"A Novel Framework for Quantum Machine Learning"</span>,
+            <span class="str">"doi"</span>: <span class="str">"10.9999/fake.2024"</span>,
+            <span class="str">"year"</span>: <span class="str">"2024"</span>,
+            <span class="str">"authors"</span>: [<span class="str">"Smith, J."</span>, <span class="str">"Johnson, A."</span>]
+        }
+    ]
+}
+
+<span class="cmt">// Response</span>
+{
+    <span class="str">"results"</span>: [{
+        <span class="str">"is_hallucinated"</span>: <span class="kw">true</span>,
+        <span class="str">"confidence"</span>: <span class="num">0.87</span>,
+        <span class="str">"signals"</span>: [
+            <span class="str">"invalid_doi_prefix"</span>,
+            <span class="str">"generic_author_names"</span>,
+            <span class="str">"not_found_in_any_registry"</span>
+        ]
+    }],
+    <span class="str">"processing_time_ms"</span>: <span class="num">12</span>
+}</code></pre>
+
+    <h2 id="api-graph">Citation Graph Analysis</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="endpoint-method endpoint-method-get method-get">GET</span>
+        <span class="endpoint-path">/v1/graph/{doi}</span>
+      </div>
+      <p class="endpoint-desc">Build and analyze a 2-hop citation graph for a paper.</p>
+    </div>
+
+<pre><code>GET /v1/graph/10.1038/s41586-020-2649-2?hops=2
+
+<span class="cmt">// Response</span>
+{
+    <span class="str">"nodes"</span>: <span class="num">156</span>,
+    <span class="str">"edges"</span>: <span class="num">423</span>,
+    <span class="str">"health_score"</span>: <span class="num">0.85</span>,
+    <span class="str">"anomalies"</span>: [
+        {
+            <span class="str">"type"</span>: <span class="str">"RECIPROCAL_CITATION"</span>,
+            <span class="str">"severity"</span>: <span class="num">0.3</span>,
+            <span class="str">"description"</span>: <span class="str">"Authors A and B cite each other 5 times"</span>
+        }
+    ],
+    <span class="str">"dimensions"</span>: {
+        <span class="str">"interconnection"</span>: <span class="num">0.90</span>,
+        <span class="str">"temporal"</span>: <span class="num">0.95</span>,
+        <span class="str">"self_citation"</span>: <span class="num">0.88</span>,
+        <span class="str">"benford"</span>: <span class="num">0.72</span>,
+        <span class="str">"reciprocal"</span>: <span class="num">0.80</span>
+    }
+}</code></pre>
+
+    <h2 id="api-risk">Risk Assessment</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-header">
+        <span class="endpoint-method method-post">POST</span>
+        <span class="endpoint-path">/v1/risk</span>
+      </div>
+      <p class="endpoint-desc">Compute Bayesian risk score from signals.</p>
+    </div>
+
+<pre><code>POST /v1/risk
+{
+    <span class="str">"domain"</span>: <span class="str">"cancer_research"</span>,
+    <span class="str">"signals"</span>: {
+        <span class="str">"reference_not_found"</span>: {<span class="str">"present"</span>: <span class="kw">true</span>, <span class="str">"confidence"</span>: <span class="num">0.9</span>},
+        <span class="str">"tortured_phrases"</span>: {<span class="str">"present"</span>: <span class="kw">true</span>, <span class="str">"confidence"</span>: <span class="num">0.95</span>},
+        <span class="str">"grim_test_failure"</span>: {<span class="str">"present"</span>: <span class="kw">false</span>, <span class="str">"confidence"</span>: <span class="num">0.8</span>}
+    }
+}
+
+<span class="cmt">// Response</span>
+{
+    <span class="str">"probability"</span>: <span class="num">0.81</span>,
+    <span class="str">"tier"</span>: <span class="str">"CRITICAL"</span>,
+    <span class="str">"prior"</span>: <span class="num">0.10</span>,
+    <span class="str">"signals_fired"</span>: [<span class="str">"reference_not_found"</span>, <span class="str">"tortured_phrases"</span>],
+    <span class="str">"explanation"</span>: <span class="str">"Prior 10% → Posterior 81% via 2 positive signals (LR: 15.0 × 25.0)"</span>
+}</code></pre>
+
+    <hr>
+
+    <!-- ==================== PERFORMANCE ==================== -->
+    <h1 id="acceleration">Performance &amp; Acceleration</h1>
+
+    <p>IntegriRef includes a production-grade acceleration stack for high-throughput deployments.</p>
+
+    <h2 id="onnx">ONNX Inference</h2>
+
+    <p>Export DeBERTa-v3 to ONNX with INT8 quantization for 2.2x CPU speedup (79% of GPU performance).</p>
+
+<pre><code><span class="kw">from</span> semantic.onnx_exporter <span class="kw">import</span> export_to_onnx, ONNXNLIVerifier
+
+<span class="cmt"># Export with optimization + quantization</span>
+export_to_onnx(
+    model_path=<span class="str">"models/scifact_nli"</span>,
+    output_path=<span class="str">"models/scifact_nli/model.onnx"</span>,
+    optimize=<span class="kw">True</span>,
+    quantize=<span class="kw">True</span>,  <span class="cmt"># INT8 → 233MB (vs 704MB FP32)</span>
+)
+
+<span class="cmt"># Use for inference</span>
+verifier = ONNXNLIVerifier(
+    onnx_path=<span class="str">"models/scifact_nli/model_int8.onnx"</span>,
+    num_threads=<span class="num">4</span>,
+)</code></pre>
+
+    <h2 id="async-io">Async I/O</h2>
+
+    <p>14.5x speedup over sequential queries using <code>asyncio.gather()</code> across all registries.</p>
+
+<pre><code><span class="kw">import</span> asyncio
+<span class="kw">import</span> uvloop
+uvloop.install()  <span class="cmt"># Near-Go performance event loop</span>
+
+<span class="kw">from</span> core.async_discovery <span class="kw">import</span> AsyncRegistryDiscovery
+
+discovery = AsyncRegistryDiscovery()
+discovery.register_all(adapters)
+
+<span class="cmt"># All 62 registries queried concurrently</span>
+results = <span class="kw">await</span> discovery.parallel_query_by_id(<span class="str">"doi"</span>, <span class="str">"10.xxx/yyy"</span>)</code></pre>
+
+    <h2 id="caching">Caching &amp; Circuit Breakers</h2>
+
+<pre><code><span class="kw">from</span> core.registry <span class="kw">import</span> configure_cache
+
+<span class="cmt"># LRU in-memory (default) + optional Redis</span>
+configure_cache(
+    redis_url=<span class="str">"redis://localhost:6379"</span>,
+    max_memory=<span class="num">50_000</span>,  <span class="cmt"># LRU entries</span>
+)
+
+<span class="cmt"># Cache performance: 2.2M reads/s, 1.8M writes/s</span>
+<span class="cmt"># Circuit breaker: auto-opens after 5 failures in 60s</span>
+<span class="cmt"># Recovery: half-open probe after 30s</span></code></pre>
+
+    <table>
+      <thead><tr><th>Optimization</th><th>Speedup</th><th>Overhead</th></tr></thead>
+      <tbody>
+        <tr><td>asyncio.gather</td><td><strong>14.5x</strong></td><td>&lt;1ms</td></tr>
+        <tr><td>Async + Cache</td><td><strong>145.7x</strong></td><td>&lt;1&mu;s per cache hit</td></tr>
+        <tr><td>Batch (32 workers)</td><td><strong>19.8x</strong></td><td>Semaphore only</td></tr>
+        <tr><td>ONNX INT8</td><td><strong>2.2x</strong> (CPU)</td><td>One-time export</td></tr>
+        <tr><td>Circuit breaker</td><td>Prevents cascade</td><td>&lt;1&mu;s per check</td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <!-- ==================== DEPLOYMENT ==================== -->
+    <h1 id="docker">Deployment</h1>
+
+    <h2>Docker</h2>
+<pre><code><span class="cmt"># Dockerfile (planned)</span>
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+<span class="cmt"># Download models on build</span>
+RUN python -c "from semantic.nli_verifier import NLIVerifier; NLIVerifier()"
+
+EXPOSE 8000
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]</code></pre>
+
+<pre><code><span class="cmt"># docker-compose.yml</span>
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - CROSSREF_MAILTO=your@email.com
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"</code></pre>
+
+    <h2 id="production">Production Configuration</h2>
+
+<pre><code><span class="kw">import</span> uvloop
+uvloop.install()
+
+<span class="kw">from</span> core.registry <span class="kw">import</span> configure_cache
+
+<span class="cmt"># 1. Configure cache with Redis</span>
+configure_cache(redis_url=<span class="str">"redis://localhost:6379"</span>, max_memory=<span class="num">50_000</span>)
+
+<span class="cmt"># 2. Use async discovery</span>
+<span class="kw">from</span> core.async_discovery <span class="kw">import</span> AsyncRegistryDiscovery
+discovery = AsyncRegistryDiscovery()
+discovery.register_all(all_adapters)
+
+<span class="cmt"># 3. Use ONNX for CPU inference</span>
+<span class="kw">from</span> semantic.onnx_exporter <span class="kw">import</span> ONNXNLIVerifier
+verifier = ONNXNLIVerifier(
+    onnx_path=<span class="str">"models/scifact_nli/model_int8.onnx"</span>,
+    num_threads=<span class="num">4</span>,
+)
+
+<span class="cmt"># 4. Batch processing</span>
+<span class="kw">from</span> core.batch_processor <span class="kw">import</span> BatchProcessor
+processor = BatchProcessor(discovery, max_concurrent=<span class="num">32</span>)</code></pre>
+
+    <h2 id="monitoring">Monitoring</h2>
+
+<pre><code><span class="cmt"># Check circuit breaker status</span>
+<span class="kw">from</span> core.circuit_breaker <span class="kw">import</span> CircuitBreakerRegistry
+
+cb_registry = CircuitBreakerRegistry()
+<span class="kw">for</span> name, stats <span class="kw">in</span> cb_registry.all_stats().items():
+    print(f<span class="str">"{name}: {stats['state']} (failures: {stats['failures']})"</span>)
+
+<span class="cmt"># Check cache hit rates</span>
+<span class="kw">from</span> core.cache <span class="kw">import</span> ResponseCache
+cache = ResponseCache()
+print(f<span class="str">"Hit rate: {cache.hit_rate():.1%}"</span>)
+
+<span class="cmt"># List open circuits</span>
+open_circuits = cb_registry.open_circuits()
+<span class="kw">if</span> open_circuits:
+    print(f<span class="str">"WARNING: {len(open_circuits)} registries unavailable"</span>)</code></pre>
+
+    <hr>
+
+    <div class="alert alert-success">
+      <strong>Need help?</strong> Open an issue on <a href="https://github.com/integriref/integriref/issues" style="color:var(--green)">GitHub</a> or check the <a href="https://github.com/integriref/integriref/discussions" style="color:var(--green)">Discussions</a> board.
+    </div>
+
+  </main>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#quickstart">Docs</a></li>
+    <li><a href="https://github.com/integriref/integriref" target="_blank">GitHub</a></li>
+    <li><a href="#api-reference">API Reference</a></li>
+  </ul>
+  <p>&copy; 2026 IntegriRef. Open-source under MIT License.</p>
+</footer>
+
+<script>
+// Sidebar active state tracking
+const docsSections = document.querySelectorAll('.docs-content h1[id], .docs-content h2[id]');
+const sidebarLinks = document.querySelectorAll('.docs-sidebar a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  docsSections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  sidebarLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

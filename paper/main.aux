@@ -1,0 +1,279 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{alkhalaf2025}
+\citation{scancar2025}
+\citation{vannoorden2023}
+\citation{else2024iop}
+\citation{alkaissi2023}
+\citation{byrne2022}
+\citation{cabanac2021}
+\citation{scite2019}
+\citation{cabanac2021}
+\@writefile{toc}{\contentsline {section}{Abstract}{1}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{brown2017grim}
+\citation{nuijten2016}
+\citation{crossref2024}
+\citation{priem2022openalex}
+\citation{kinney2023semantic}
+\citation{cohan2019structural}
+\citation{jurgens2018measuring}
+\citation{impactcite2020}
+\citation{scite2019}
+\citation{bakker2023}
+\citation{jurgens2018measuring}
+\citation{thorne2018fever}
+\citation{wadden2020fact}
+\citation{wright2022generating}
+\citation{multivers2022}
+\citation{kosprdic2024}
+\citation{fister2016toward}
+\citation{kojaku2021}
+\citation{campanario2011benford}
+\citation{vannoorden2013}
+\citation{xia2023action}
+\citation{ma2025graphad}
+\citation{alkaissi2023}
+\citation{gravel2024}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Reference Existence Verification}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Citation Context Analysis}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Semantic Verification via NLI}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Citation Graph Anomaly Detection}{2}{subsection.2.4}\protected@file@percent }
+\citation{alkhalaf2025}
+\citation{heydari2025}
+\citation{wu2024llmdetect}
+\citation{cabanac2021}
+\citation{brown2017grim}
+\citation{vanderzee2017}
+\citation{nuijten2016}
+\citation{wilhite2012}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}LLM Citation Hallucination}{3}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Paper Mill Detection and Statistical Auditing}{3}{subsection.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}System Architecture}{3}{section.3}\protected@file@percent }
+\newlabel{sec:architecture}{{3}{3}{System Architecture}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Overview}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces IntegriRef five-layer pipeline architecture. L0$^\star $ denotes text/statistical signals computed alongside L0 when full text is available. Conditional edges are triggered by upstream ambiguity.}}{3}{figure.caption.4}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:architecture}{{1}{3}{IntegriRef five-layer pipeline architecture. L0$^\star $ denotes text/statistical signals computed alongside L0 when full text is available. Conditional edges are triggered by upstream ambiguity}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Data Model: ICEntity}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}L0: Registry Verification Engine}{3}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:l0}{{3.3}{3}{L0: Registry Verification Engine}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}Phase 1: Identifier Detection and Parallel Lookup}{3}{subsubsection.3.3.1}\protected@file@percent }
+\citation{cohan2019structural}
+\citation{jurgens2018measuring}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}Phase 2: Search Fallback}{4}{subsubsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.3}Phase 3: Composite Confidence Scoring}{4}{subsubsection.3.3.3}\protected@file@percent }
+\newlabel{eq:composite}{{1}{4}{Phase 3: Composite Confidence Scoring}{equation.3.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.4}Phase 4: Retraction Detection}{4}{subsubsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.5}Phase 5: Hallucination Detection}{4}{subsubsection.3.3.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Registry adapter coverage by domain. Each adapter implements \texttt  {query\_by\_id()}, \texttt  {search()}, and \texttt  {verify\_exists()} against a specific data source.}}{4}{table.caption.5}\protected@file@percent }
+\newlabel{tab:registries}{{1}{4}{Registry adapter coverage by domain. Each adapter implements \texttt {query\_by\_id()}, \texttt {search()}, and \texttt {verify\_exists()} against a specific data source}{table.caption.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.6}Registry Adapter Coverage}{4}{subsubsection.3.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}L1: Citation Intent Classification}{4}{subsection.3.4}\protected@file@percent }
+\newlabel{sec:l1}{{3.4}{4}{L1: Citation Intent Classification}{subsection.3.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}Two-Tier Architecture}{4}{subsubsection.3.4.1}\protected@file@percent }
+\newlabel{eq:intent}{{2}{4}{Two-Tier Architecture}{equation.3.2}{}}
+\citation{cohan2019structural}
+\citation{wadden2020fact}
+\citation{arnold2011}
+\citation{campanario2011benford}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Signal Extraction}{5}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}L2: Semantic NLI Verification}{5}{subsection.3.5}\protected@file@percent }
+\newlabel{sec:l2}{{3.5}{5}{L2: Semantic NLI Verification}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Model Architecture}{5}{subsubsection.3.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Alignment Scoring}{5}{subsubsection.3.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Sentence-Level Aggregation}{5}{subsubsection.3.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.4}Token-Overlap Fallback}{5}{subsubsection.3.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.5}ONNX Quantization}{5}{subsubsection.3.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.6}Signal Extraction}{5}{subsubsection.3.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}L3: Citation Graph Analysis}{5}{subsection.3.6}\protected@file@percent }
+\newlabel{sec:l3}{{3.6}{5}{L3: Citation Graph Analysis}{subsection.3.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.1}Graph Construction}{5}{subsubsection.3.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.2}Anomaly Detection Algorithms}{5}{subsubsection.3.6.2}\protected@file@percent }
+\citation{cabanac2021}
+\citation{byrne2022}
+\citation{brown2017grim}
+\citation{wilhite2012}
+\citation{alkaissi2023}
+\citation{wadden2020fact}
+\citation{kojaku2021}
+\citation{cabanac2021}
+\citation{brown2017grim}
+\citation{nuijten2016}
+\citation{scancar2025}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.3}Graph Health Score}{6}{subsubsection.3.6.3}\protected@file@percent }
+\newlabel{eq:graphhealth}{{3}{6}{Graph Health Score}{equation.3.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.4}Signal Extraction}{6}{subsubsection.3.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Text and Statistical Signals}{6}{subsection.3.7}\protected@file@percent }
+\newlabel{sec:textstats}{{3.7}{6}{Text and Statistical Signals}{subsection.3.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.1}Tortured Phrase Detection}{6}{subsubsection.3.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.2}Email Risk Scoring}{6}{subsubsection.3.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.3}GRIM Test}{6}{subsubsection.3.7.3}\protected@file@percent }
+\newlabel{eq:grim}{{4}{6}{GRIM Test}{equation.3.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.4}Statcheck}{6}{subsubsection.3.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.5}Sneaked Reference Detection}{6}{subsubsection.3.7.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Bayesian signal definitions. LR+ = likelihood ratio when signal fires; LR$-$ = when absent. Higher LR+ indicates stronger evidence of problems.}}{6}{table.caption.6}\protected@file@percent }
+\newlabel{tab:signals}{{2}{6}{Bayesian signal definitions. LR+ = likelihood ratio when signal fires; LR$-$ = when absent. Higher LR+ indicates stronger evidence of problems}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.8}L4: Bayesian Risk Scoring}{6}{subsection.3.8}\protected@file@percent }
+\newlabel{sec:l4}{{3.8}{6}{L4: Bayesian Risk Scoring}{subsection.3.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.8.1}Mathematical Framework}{6}{subsubsection.3.8.1}\protected@file@percent }
+\newlabel{eq:bayes}{{5}{6}{Mathematical Framework}{equation.3.5}{}}
+\newlabel{eq:posterior}{{6}{6}{Mathematical Framework}{equation.3.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.8.2}Signal Definitions}{6}{subsubsection.3.8.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Domain-specific prior probabilities $P(\text  {problematic})$.}}{7}{table.caption.7}\protected@file@percent }
+\newlabel{tab:priors}{{3}{7}{Domain-specific prior probabilities $P(\text {problematic})$}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.8.3}Domain-Specific Priors}{7}{subsubsection.3.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.8.4}Risk Tier Assignment}{7}{subsubsection.3.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation}{7}{section.4}\protected@file@percent }
+\newlabel{sec:implementation}{{4}{7}{Implementation}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Pipeline Orchestration}{7}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Caching Architecture}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Resilience}{7}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Batch Processing}{7}{subsection.4.4}\protected@file@percent }
+\newlabel{eq:speedup}{{7}{7}{Batch Processing}{equation.4.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}REST API}{7}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Reference Parsing}{7}{subsection.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}IntegriRef-Bench: Benchmark Dataset}{7}{section.5}\protected@file@percent }
+\newlabel{sec:benchmark}{{5}{7}{IntegriRef-Bench: Benchmark Dataset}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Dataset Construction}{7}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Golden Test Set: Reference Verification (58 cases)}{7}{subsubsection.5.1.1}\protected@file@percent }
+\citation{vanderzee2017}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces IntegriRef-Bench dataset splits.}}{8}{table.caption.8}\protected@file@percent }
+\newlabel{tab:benchmark_splits}{{4}{8}{IntegriRef-Bench dataset splits}{table.caption.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Signal Unit Tests (86 cases)}{8}{subsubsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.3}L1 Intent Pairs (20 cases)}{8}{subsubsection.5.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.4}L2 NLI Pairs (20 cases)}{8}{subsubsection.5.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.5}Graph Anomaly Cases (30 cases)}{8}{subsubsection.5.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.6}Retracted Papers (250 cases)}{8}{subsubsection.5.1.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Dataset Availability}{8}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Setup}{9}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{9}{Experimental Setup}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Evaluation Tasks}{9}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Layer Ablation Design}{9}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Integrity Benchmark Design}{9}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Signal-Level Benchmark Design}{9}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Metrics}{9}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Results}{9}{section.7}\protected@file@percent }
+\newlabel{sec:results}{{7}{9}{Results}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Layer Ablation Results}{9}{subsection.7.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Layer ablation: three-class classification on 8 ground-truth cases.}}{9}{table.caption.9}\protected@file@percent }
+\newlabel{tab:ablation}{{5}{9}{Layer ablation: three-class classification on 8 ground-truth cases}{table.caption.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Signal-level detector accuracy on IntegriRef-Bench (86 unit test cases).}}{9}{table.caption.10}\protected@file@percent }
+\newlabel{tab:signal_results}{{6}{9}{Signal-level detector accuracy on IntegriRef-Bench (86 unit test cases)}{table.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Signal-Level Benchmark Results}{9}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Integrity Benchmark Results}{9}{subsection.7.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces IntegriRef-Bench integrity benchmark results (L0+L4 pipeline, 58 golden test cases). Post-optimization results include phantom DOI fix, kill-shot override, and search author guard.}}{10}{table.caption.11}\protected@file@percent }
+\newlabel{tab:integrity}{{7}{10}{IntegriRef-Bench integrity benchmark results (L0+L4 pipeline, 58 golden test cases). Post-optimization results include phantom DOI fix, kill-shot override, and search author guard}{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.3.1}L0 Standalone Benchmark (ref-check)}{10}{subsubsection.7.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces L0 standalone screening results on the 58-case golden test set.}}{10}{table.caption.12}\protected@file@percent }
+\newlabel{tab:l0standalone}{{8}{10}{L0 standalone screening results on the 58-case golden test set}{table.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Signal fire rates by reference category.}}{10}{table.caption.13}\protected@file@percent }
+\newlabel{tab:fire_rates}{{9}{10}{Signal fire rates by reference category}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces L1 citation intent classification on SciCite test set (1,861 samples).}}{10}{table.caption.14}\protected@file@percent }
+\newlabel{tab:l1_results}{{10}{10}{L1 citation intent classification on SciCite test set (1,861 samples)}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.3.2}Per-Signal Fire Rate Analysis}{10}{subsubsection.7.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Semantic Verification Accuracy}{10}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.4.1}L1: Citation Intent Classification}{10}{subsubsection.7.4.1}\protected@file@percent }
+\citation{scancar2025}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces L2 claim verification on SciFact (693 samples with evidence).}}{11}{table.caption.15}\protected@file@percent }
+\newlabel{tab:l2_results}{{11}{11}{L2 claim verification on SciFact (693 samples with evidence)}{table.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Pipeline throughput benchmarks.}}{11}{table.caption.16}\protected@file@percent }
+\newlabel{tab:throughput}{{12}{11}{Pipeline throughput benchmarks}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.4.2}L2: Semantic Claim Verification}{11}{subsubsection.7.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Throughput Results}{11}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{11}{section.8}\protected@file@percent }
+\newlabel{sec:discussion}{{8}{11}{Discussion}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Signal Complementarity}{11}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}The Hallucination Detection Gap and Its Resolution}{11}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Domain-Specific Prior Calibration}{11}{subsection.8.3}\protected@file@percent }
+\citation{alkhalaf2025}
+\citation{morrison2024}
+\citation{berta2024}
+\citation{akritidis2025}
+\citation{ramos2021}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Feature comparison with existing reference verification tools.}}{12}{table.caption.17}\protected@file@percent }
+\newlabel{tab:comparison}{{13}{12}{Feature comparison with existing reference verification tools}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Cross-Domain Generalization}{12}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.5}Comparison with Existing Tools}{12}{subsection.8.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.5.1}Head-to-Head Benchmark: IntegriRef vs.\ CheckIfExist}{12}{subsubsection.8.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Head-to-head benchmark: IntegriRef (L0+L4) vs.\ CheckIfExist on the 58-case golden test set. Thresholds: hallucination recall uses $\geq $HIGH; retraction and chimera recall use $\geq $ELEVATED.}}{12}{table.caption.18}\protected@file@percent }
+\newlabel{tab:headtohead}{{14}{12}{Head-to-head benchmark: IntegriRef (L0+L4) vs.\ CheckIfExist on the 58-case golden test set. Thresholds: hallucination recall uses $\geq $HIGH; retraction and chimera recall use $\geq $ELEVATED}{table.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.6}Limitations and Future Directions}{12}{subsection.8.6}\protected@file@percent }
+\newlabel{sec:limitations}{{8.6}{12}{Limitations and Future Directions}{subsection.8.6}{}}
+\citation{chen2025copula,xu2025copula}
+\citation{su2025ds,jiang2023ds}
+\citation{ding2025c3po}
+\citation{straitouri2025}
+\citation{crossref2024}
+\citation{multivers2022}
+\citation{wadden2022open}
+\citation{morrison2024}
+\citation{akritidis2025}
+\citation{chen2025copula}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Ethical Considerations}{13}{section.9}\protected@file@percent }
+\newlabel{sec:ethics}{{9}{13}{Ethical Considerations}{section.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{13}{section.10}\protected@file@percent }
+\newlabel{sec:conclusion}{{10}{13}{Conclusion}{section.10}{}}
+\bibstyle{ACM-Reference-Format}
+\bibcite{scancar2025}{{1}{}{{}}{{}}}
+\bibcite{vannoorden2023}{{2}{}{{}}{{}}}
+\bibcite{else2024iop}{{3}{}{{}}{{}}}
+\bibcite{alkaissi2023}{{4}{}{{}}{{}}}
+\bibcite{byrne2022}{{5}{}{{}}{{}}}
+\bibcite{cabanac2021}{{6}{}{{}}{{}}}
+\bibcite{scite2019}{{7}{}{{}}{{}}}
+\bibcite{bakker2023}{{8}{}{{}}{{}}}
+\bibcite{brown2017grim}{{9}{}{{}}{{}}}
+\bibcite{nuijten2016}{{10}{}{{}}{{}}}
+\bibcite{wilhite2012}{{11}{}{{}}{{}}}
+\bibcite{vanderzee2017}{{12}{}{{}}{{}}}
+\bibcite{crossref2024}{{13}{}{{}}{{}}}
+\bibcite{priem2022openalex}{{14}{}{{}}{{}}}
+\bibcite{kinney2023semantic}{{15}{}{{}}{{}}}
+\bibcite{cohan2019structural}{{16}{}{{}}{{}}}
+\bibcite{jurgens2018measuring}{{17}{}{{}}{{}}}
+\bibcite{impactcite2020}{{18}{}{{}}{{}}}
+\bibcite{thorne2018fever}{{19}{}{{}}{{}}}
+\bibcite{wadden2020fact}{{20}{}{{}}{{}}}
+\bibcite{wright2022generating}{{21}{}{{}}{{}}}
+\bibcite{multivers2022}{{22}{}{{}}{{}}}
+\bibcite{kosprdic2024}{{23}{}{{}}{{}}}
+\bibcite{fister2016toward}{{24}{}{{}}{{}}}
+\bibcite{kojaku2021}{{25}{}{{}}{{}}}
+\bibcite{campanario2011benford}{{26}{}{{}}{{}}}
+\bibcite{arnold2011}{{27}{}{{}}{{}}}
+\bibcite{vannoorden2013}{{28}{}{{}}{{}}}
+\bibcite{morrison2024}{{29}{}{{}}{{}}}
+\bibcite{ramos2021}{{30}{}{{}}{{}}}
+\bibcite{berta2024}{{31}{}{{}}{{}}}
+\bibcite{wang2023calibration}{{32}{}{{}}{{}}}
+\bibcite{xia2023action}{{33}{}{{}}{{}}}
+\bibcite{heydari2025}{{34}{}{{}}{{}}}
+\bibcite{ma2025graphad}{{35}{}{{}}{{}}}
+\bibcite{alkhalaf2025}{{36}{}{{}}{{}}}
+\bibcite{gravel2024}{{37}{}{{}}{{}}}
+\bibcite{wu2024llmdetect}{{38}{}{{}}{{}}}
+\bibcite{wadden2022open}{{39}{}{{}}{{}}}
+\bibcite{chen2025copula}{{40}{}{{}}{{}}}
+\bibcite{xu2025copula}{{41}{}{{}}{{}}}
+\bibcite{su2025ds}{{42}{}{{}}{{}}}
+\bibcite{jiang2023ds}{{43}{}{{}}{{}}}
+\bibcite{ding2025c3po}{{44}{}{{}}{{}}}
+\bibcite{straitouri2025}{{45}{}{{}}{{}}}
+\bibcite{scancar2025ai}{{46}{}{{}}{{}}}
+\bibcite{akritidis2025}{{47}{}{{}}{{}}}
+\bibcite{nakov2026}{{48}{}{{}}{{}}}
+\newlabel{tocindent-1}{0pt}
+\newlabel{tocindent0}{0pt}
+\newlabel{tocindent1}{8.37pt}
+\newlabel{tocindent2}{10.34999pt}
+\newlabel{tocindent3}{18.198pt}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\@writefile{toc}{\contentsline {section}{References}{14}{section*.20}\protected@file@percent }
+\newlabel{TotPages}{{14}{14}{}{page.14}{}}
+\gdef \@abspage@last{14}

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntegriRef — Multi-Layer Reference Integrity Verification</title>
+  <meta name="description" content="Open-source L0-L4 verification engine for academic reference integrity. 62 registries, 15+ languages, 93.5% semantic accuracy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     Navbar
+     ============================================================ -->
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="navbar-brand">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="6" fill="#6366f1"/>
+        <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      IntegriRef
+    </a>
+    <ul class="navbar-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#layers">L0-L4 Stack</a></li>
+      <li><a href="#benchmarks">Benchmarks</a></li>
+      <li><a href="#comparison">Comparison</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="docs.html">Docs</a></li>
+    </ul>
+    <a href="docs.html#quickstart" class="navbar-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     Hero
+     ============================================================ -->
+<section class="hero">
+  <div class="container">
+    <h1>Verify Every Reference.<br><span class="gradient">Trust Every Citation.</span></h1>
+    <p class="subtitle">
+      IntegriRef is an open-source, multi-layer verification engine that checks reference existence,
+      semantic accuracy, citation intent, graph anomalies, and integrity risk &mdash; across 62 registries in 15+ languages.
+    </p>
+    <div class="hero-buttons">
+      <a href="docs.html#quickstart" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm3.5 8.5l-5 3A.5.5 0 016 11V5a.5.5 0 01.8-.4l5 3a.5.5 0 010 .9z"/></svg>
+        Quick Start
+      </a>
+      <a href="https://github.com/integriref/integriref" class="btn btn-secondary" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">62</div>
+        <div class="label">Registry Adapters</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">93.5%</div>
+        <div class="label">Semantic Accuracy (SciFact)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">5</div>
+        <div class="label">Verification Layers</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">15+</div>
+        <div class="label">Languages Supported</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Features
+     ============================================================ -->
+<section id="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Why IntegriRef?</h2>
+      <p>The most comprehensive open-source reference verification engine available today.</p>
+    </div>
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(99,102,241,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <h3>Five-Layer Verification</h3>
+        <p>L0 existence checks, L1 citation intent, L2 semantic claim verification, L3 graph anomaly detection, L4 Bayesian risk scoring &mdash; no other tool covers all five.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(34,197,94,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <h3>62 Registries, 15+ Languages</h3>
+        <p>Crossref, OpenAlex, PubMed, arXiv, USPTO, EUR-Lex, EDGAR, CiNii, SciELO, HAL, and 52 more &mdash; academic, patents, legal, government, financial, and standards.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(6,182,212,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.49 8.49l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.49-8.49l2.83-2.83"/></svg>
+        </div>
+        <h3>Exceeds Human Agreement</h3>
+        <p>L2 semantic verification achieves 93.5% accuracy on SciFact &mdash; surpassing human inter-annotator agreement of 89.1%. Fine-tuned DeBERTa-v3 on domain-specific data.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(249,115,22,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Production-Grade Performance</h3>
+        <p>Async I/O with 14.5x speedup, ONNX INT8 inference at 79% GPU speed on CPU, dual-layer caching (2.2M ops/s), circuit breakers, and batch processing up to 19.8x throughput.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(239,68,68,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4m0 4h.01"/></svg>
+        </div>
+        <h3>Paper Mill Detection</h3>
+        <p>281 tortured phrases, GRIM test, statcheck, sneaked reference detection, email risk scoring, and retraction checking &mdash; multi-signal fabrication detection.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(168,85,247,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Open Source & Self-Hostable</h3>
+        <p>Full source code, no vendor lock-in. Deploy on your own infrastructure with Docker. All competitors are closed-source SaaS.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     L0-L4 Layer Stack
+     ============================================================ -->
+<section id="layers">
+  <div class="container">
+    <div class="section-header">
+      <h2>The L0-L4 Verification Stack</h2>
+      <p>Each layer adds a deeper dimension of integrity analysis.</p>
+    </div>
+    <div class="layer-stack">
+
+      <div class="layer-card">
+        <div class="layer-id">L0<small>Foundation</small></div>
+        <div class="layer-body">
+          <h3>Reference Existence Verification</h3>
+          <p>Multi-registry cascade across 62 adapters. DOI/PMID/ISBN lookup, title fuzzy search fallback, field-by-field comparison (RapidFuzz + Jaccard), hallucination detection (336K refs/s), and retraction checking.</p>
+          <div class="layer-tags">
+            <span class="badge badge-green">18,555 refs/s</span>
+            <span class="badge badge-blue">62 registries</span>
+            <span class="badge badge-cyan">Hallucination detect</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-id">L1<small>Intent</small></div>
+        <div class="layer-body">
+          <h3>Citation Intent Classification</h3>
+          <p>SciBERT (110M params) fine-tuned on SciCite &mdash; classifies each citation as <strong>Supporting</strong>, <strong>Mentioning</strong>, or <strong>Contrasting</strong>. Heuristic fallback for CPU-only deployments with lexical cue matching.</p>
+          <div class="layer-tags">
+            <span class="badge badge-green">86.0% F1</span>
+            <span class="badge badge-blue">3-class</span>
+            <span class="badge badge-cyan">CPU heuristic fallback</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-id">L2<small>Semantic</small></div>
+        <div class="layer-body">
+          <h3>Semantic Claim Verification</h3>
+          <p>DeBERTa-v3-base fine-tuned on SciFact. Splits abstracts into sentences, scores each against the citing claim via NLI (entailment/contradiction/neutral). <strong>Exceeds human agreement.</strong></p>
+          <div class="layer-tags">
+            <span class="badge badge-green">93.5% accuracy</span>
+            <span class="badge badge-yellow">&gt; human 89.1%</span>
+            <span class="badge badge-cyan">ONNX accelerated</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-id">L3<small>Graph</small></div>
+        <div class="layer-body">
+          <h3>Citation Graph Anomaly Detection</h3>
+          <p>2-hop citation graph from OpenAlex. 7 anomaly detectors: orphan clusters, temporal anomalies, excessive self-citation, citation rings (CIDRE variant), Benford's law violations, reciprocal patterns, and citation bursts.</p>
+          <div class="layer-tags">
+            <span class="badge badge-red">7 anomaly types</span>
+            <span class="badge badge-blue">2-hop graphs</span>
+            <span class="badge badge-orange">Benford + CIDRE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="layer-id">L4<small>Risk</small></div>
+        <div class="layer-body">
+          <h3>Bayesian Integrity Risk Scoring</h3>
+          <p>18 signals with literature-derived likelihood ratios. Domain-specific priors (cancer: 10%, CS: 2%). Four risk tiers: Low / Elevated / High / Critical. Confidence-weighted evidence accumulation.</p>
+          <div class="layer-tags">
+            <span class="badge badge-orange">18 signals</span>
+            <span class="badge badge-blue">8 domain priors</span>
+            <span class="badge badge-red">4 risk tiers</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Architecture
+     ============================================================ -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-header">
+      <h2>System Architecture</h2>
+      <p>Modular, extensible, production-ready.</p>
+    </div>
+<pre class="arch-diagram">
+<span class="cmt">                    ┌──────────────────────────────────────────────────────────┐</span>
+                    │  <span class="fn">L4: Bayesian Risk Scoring</span>                                │
+                    │  └─ 18 signals x likelihood ratios → posterior probability  │
+<span class="cmt">                    ├──────────────────────────────────────────────────────────┤</span>
+                    │  <span class="fn">L3: Citation Graph Analysis</span>                               │
+                    │  └─ OpenAlex 2-hop │ 7 anomaly detectors │ health score    │
+<span class="cmt">                    ├──────────────────────────────────────────────────────────┤</span>
+                    │  <span class="fn">L2: Semantic Claim Verification</span>                           │
+                    │  └─ DeBERTa-v3 NLI │ ONNX INT8 │ sentence-level scoring   │
+<span class="cmt">                    ├──────────────────────────────────────────────────────────┤</span>
+                    │  <span class="fn">L1: Citation Intent Classification</span>                        │
+                    │  └─ SciBERT fine-tuned │ 3-class │ heuristic fallback      │
+<span class="cmt">                    ├──────────────────────────────────────────────────────────┤</span>
+                    │  <span class="fn">L0: Reference Existence Verification</span>                      │
+                    │  └─ FieldComparator │ HallucinationDetector │ Retraction   │
+                    │  └─ TorturedPhrases │ GRIM │ statcheck │ SneakedRefs      │
+<span class="cmt">                    ├──────────────────────────────────────────────────────────┤</span>
+                    │  <span class="type">Foundation: 62 Registry Adapters</span>                          │
+                    │  ┌────────┐ ┌────────┐ ┌───────┐ ┌──────┐ ┌─────┐ ┌─────┐│
+                    │  │Academic│ │Patents │ │ Legal │ │ Gov  │ │Fin  │ │ Std ││
+                    │  │  35    │ │   5    │ │   8   │ │  6   │ │  4  │ │  4  ││
+                    │  └────────┘ └────────┘ └───────┘ └──────┘ └─────┘ └─────┘│
+<span class="cmt">                    ├──────────────────────────────────────────────────────────┤</span>
+                    │  <span class="str">Infrastructure: Cache │ Circuit Breaker │ Async I/O │ ONNX</span> │
+<span class="cmt">                    └──────────────────────────────────────────────────────────┘</span>
+</pre>
+  </div>
+</section>
+
+<!-- ============================================================
+     Benchmarks
+     ============================================================ -->
+<section id="benchmarks">
+  <div class="container">
+    <div class="section-header">
+      <h2>Benchmark Results</h2>
+      <p>Every claim backed by reproducible benchmarks.</p>
+    </div>
+
+    <h3 style="margin-bottom:1rem;text-align:center">Accuracy</h3>
+    <div class="comparison-wrap" style="margin-bottom:3rem">
+      <table class="bench-table">
+        <thead><tr><th>Layer</th><th>Before Fine-Tuning</th><th>After Fine-Tuning</th><th>Published SOTA</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>L1 &mdash; SciCite</td><td>69.8% acc / 46.9 F1</td><td class="highlight">87.6% acc / 86.0 F1</td><td>88.9 F1 (ImpactCite)</td><td>Within 3 pts of SOTA, 110M params</td></tr>
+          <tr><td>L2 &mdash; SciFact</td><td>52.4% acc</td><td class="highlight">93.5% acc</td><td>88% F1 (DeBERTa ft)</td><td>Exceeds human agreement (89.1%)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-bottom:1rem;text-align:center">Throughput</h3>
+    <div class="comparison-wrap" style="margin-bottom:3rem">
+      <table class="bench-table">
+        <thead><tr><th>Component</th><th>Throughput</th><th>Avg Latency</th><th>P95 Latency</th></tr></thead>
+        <tbody>
+          <tr><td>L0 FieldComparator</td><td class="highlight">18,555 refs/s</td><td>0.05 ms</td><td>0.06 ms</td></tr>
+          <tr><td>L0 HallucinationDetector</td><td class="highlight">336,136 refs/s</td><td>&lt;0.01 ms</td><td>&lt;0.01 ms</td></tr>
+          <tr><td>L1 Heuristic (CPU)</td><td>3,471 refs/s</td><td>0.29 ms</td><td>0.49 ms</td></tr>
+          <tr><td>L1 SciBERT batch=8 (GPU)</td><td>263.5 refs/s</td><td>3.80 ms</td><td>6.44 ms</td></tr>
+          <tr><td>L2 NLI (GPU)</td><td>25.1 refs/s</td><td>39.8 ms</td><td>96.5 ms</td></tr>
+          <tr><td>L2 ONNX INT8 (CPU)</td><td class="highlight">~55 refs/s</td><td>~18 ms</td><td class="dim">est.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-bottom:1rem;text-align:center">Acceleration Infrastructure</h3>
+    <div class="comparison-wrap">
+      <table class="bench-table">
+        <thead><tr><th>Optimization</th><th>Speedup</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>asyncio.gather vs Sequential</td><td class="highlight">14.5x</td><td>True concurrent I/O across 62 registries</td></tr>
+          <tr><td>Async + Cache Hit</td><td class="highlight">145.7x</td><td>LRU cache at 2.2M ops/s read throughput</td></tr>
+          <tr><td>Batch Processor (32 workers)</td><td class="highlight">19.8x</td><td>Semaphore-controlled concurrent verification</td></tr>
+          <tr><td>ONNX INT8 vs PyTorch CPU</td><td class="highlight">2.2x</td><td>Dynamic quantization, 233MB vs 704MB model</td></tr>
+          <tr><td>Circuit Breaker overhead</td><td class="dim">&lt;1&mu;s</td><td>1.8M ops/s &mdash; zero perceptible overhead</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Competitive Comparison
+     ============================================================ -->
+<section id="comparison">
+  <div class="container">
+    <div class="section-header">
+      <h2>How IntegriRef Compares</h2>
+      <p>The only open-source system with five verification layers.</p>
+    </div>
+    <div class="comparison-wrap">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th style="color:var(--accent-light)">IntegriRef</th>
+            <th>scite.ai</th>
+            <th>CiteTrue / SwanRef</th>
+            <th>Papermill Alarm</th>
+            <th>RefChecker</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>L0 Existence Verification</td><td class="check">62 registries</td><td class="partial">30M+ papers</td><td class="check">150M+</td><td class="cross">&mdash;</td><td class="partial">LLM-based</td></tr>
+          <tr><td>L1 Citation Intent</td><td class="check">86.0% F1</td><td class="partial">~29% F1*</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>L2 Semantic Claim Verify</td><td class="check">93.5% acc</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>L3 Citation Graph Analysis</td><td class="check">7 anomaly types</td><td class="partial">Basic</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>L4 Bayesian Risk Scoring</td><td class="check">18 signals</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>Tortured Phrase Detection</td><td class="check">281 patterns</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="check">Yes</td><td class="cross">&mdash;</td></tr>
+          <tr><td>GRIM / statcheck</td><td class="check">Yes</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>Sneaked Reference Detection</td><td class="check">Yes</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>Retraction Checking</td><td class="check">Crossref</td><td class="check">Yes</td><td class="check">Yes</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>Multilingual (15+ langs)</td><td class="check">Yes</td><td class="partial">Partial</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td><td class="cross">&mdash;</td></tr>
+          <tr><td>Open Source</td><td class="check">Yes</td><td class="cross">No</td><td class="cross">No</td><td class="cross">No</td><td class="check">Yes</td></tr>
+          <tr><td>Self-Hostable</td><td class="check">Docker</td><td class="cross">SaaS</td><td class="cross">SaaS</td><td class="cross">SaaS</td><td class="check">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="text-align:center;margin-top:1rem;font-size:.8rem;color:var(--text-dim)">
+      * scite.ai self-reported F1~74%; independent evaluation (Bakker et al. 2023) measured F1~29%.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     Use Cases
+     ============================================================ -->
+<section id="usecases">
+  <div class="container">
+    <div class="section-header">
+      <h2>Who Uses IntegriRef?</h2>
+      <p>From individual researchers to major publishers.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(99,102,241,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.42a12 12 0 01.34 3.93L12 18l-6.5-3.49a12 12 0 01.34-3.93L12 14z"/></svg>
+        </div>
+        <h3>Researchers</h3>
+        <p>Pre-submission self-check: verify all your references exist, are correctly cited, and flag potential issues before peer review catches them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(34,197,94,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        </div>
+        <h3>Journal Publishers</h3>
+        <p>Automated screening during submission: detect paper-mill products, sneaked references, citation manipulation, and fabricated citations at scale.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(249,115,22,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Funding Agencies</h3>
+        <p>Grant application review: assess reference quality and integrity signals before committing research funds. Identify high-risk proposals early.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(6,182,212,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        </div>
+        <h3>AI Platforms</h3>
+        <p>LLM hallucination detection: verify citations generated by ChatGPT, Claude, Gemini, and other AI systems. The fastest-growing use case in 2025-2026.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(168,85,247,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>University Libraries</h3>
+        <p>Institutional integrity monitoring: track reference quality across departments, identify systematic issues, and support research integrity offices.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(239,68,68,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8m8 4H8m2-8H8"/></svg>
+        </div>
+        <h3>Investigative Journalists</h3>
+        <p>Deep-dive analysis of suspicious publications: combine all five layers to build comprehensive integrity reports for retraction investigations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Pricing
+     ============================================================ -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Open-source core, commercial tiers for teams and publishers.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Free / Open Source</h3>
+        <div class="price">$0</div>
+        <div class="desc">For individual researchers</div>
+        <ul>
+          <li>Full L0-L4 engine (self-hosted)</li>
+          <li>CLI tool &mdash; unlimited local use</li>
+          <li>Community support (GitHub)</li>
+          <li>All 62 registry adapters</li>
+          <li>CPU inference (heuristic fallback)</li>
+        </ul>
+        <a href="docs.html#quickstart" class="btn btn-secondary">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <h3>Researcher Pro</h3>
+        <div class="price">$15<span>/month</span></div>
+        <div class="desc">For active researchers</div>
+        <ul>
+          <li>Cloud API access</li>
+          <li>L0-L2 verification layers</li>
+          <li>100 references/day</li>
+          <li>GPU-accelerated inference</li>
+          <li>PDF report export</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Coming Soon</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Institution</h3>
+        <div class="price">$500<span>/month</span></div>
+        <div class="desc">For universities &amp; libraries</div>
+        <ul>
+          <li>Full L0-L4 API access</li>
+          <li>Unlimited references</li>
+          <li>Admin dashboard</li>
+          <li>Usage analytics</li>
+          <li>SSO integration</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#" class="btn btn-secondary">Contact Sales</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Publisher</h3>
+        <div class="price">Custom</div>
+        <div class="desc">For publishers &amp; agencies</div>
+        <ul>
+          <li>Private deployment option</li>
+          <li>Batch API + webhooks</li>
+          <li>OJS / ScholarOne integration</li>
+          <li>Custom model fine-tuning</li>
+          <li>SLA guarantee</li>
+          <li>Dedicated account manager</li>
+        </ul>
+        <a href="#" class="btn btn-secondary">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+     ============================================================ -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Verify?</h2>
+    <p>Get started in under 5 minutes with pip install. Full documentation, example scripts, and API reference included.</p>
+    <div class="hero-buttons">
+      <a href="docs.html#quickstart" class="btn btn-primary">Read the Docs</a>
+      <a href="https://github.com/integriref/integriref" class="btn btn-secondary" target="_blank">Star on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="footer">
+  <ul class="footer-links">
+    <li><a href="docs.html">Documentation</a></li>
+    <li><a href="https://github.com/integriref/integriref" target="_blank">GitHub</a></li>
+    <li><a href="docs.html#api-reference">API Reference</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <p>&copy; 2026 IntegriRef. Open-source under MIT License.</p>
+</footer>
+
+<script>
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+
+// Navbar active state on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.navbar-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

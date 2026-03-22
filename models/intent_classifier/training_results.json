@@ -1,0 +1,36 @@
+{
+  "model": "allenai/scibert_scivocab_uncased",
+  "best_epoch": 3,
+  "best_dev_acc": 0.8504366812227074,
+  "test_acc": 0.8699623858140785,
+  "test_macro_f1": 0.8601475069819098,
+  "test_our_acc": 0.8774852229983879,
+  "test_per_class": {
+    "background": {
+      "precision": 0.8976215098241985,
+      "recall": 0.8706118355065195,
+      "f1": 0.8839103869653767
+    },
+    "method": {
+      "precision": 0.8803418803418803,
+      "recall": 0.8512396694214877,
+      "f1": 0.865546218487395
+    },
+    "result": {
+      "precision": 0.7637540453074434,
+      "recall": 0.9111969111969112,
+      "f1": 0.8309859154929577
+    }
+  },
+  "args": {
+    "model_name": "allenai/scibert_scivocab_uncased",
+    "epochs": 5,
+    "batch_size": 16,
+    "lr": 2e-05,
+    "warmup_ratio": 0.1,
+    "max_length": 256,
+    "seed": 42,
+    "output": "models/intent_classifier",
+    "data_dir": null
+  }
+}
