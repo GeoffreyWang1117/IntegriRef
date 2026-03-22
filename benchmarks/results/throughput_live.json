@@ -1,0 +1,122 @@
+[
+  {
+    "name": "single_L0+L4",
+    "refs_count": 3,
+    "total_ms": 69314.82,
+    "per_ref_ms": 23104.94,
+    "throughput_rps": 0.04,
+    "p50_ms": 29891.49,
+    "p95_ms": 31321.45,
+    "extra": {}
+  },
+  {
+    "name": "single_cold",
+    "refs_count": 3,
+    "total_ms": 0.12,
+    "per_ref_ms": 0.04,
+    "throughput_rps": 25205.21,
+    "p50_ms": 0.03,
+    "p95_ms": 0.06,
+    "extra": {}
+  },
+  {
+    "name": "cache_hit_warm",
+    "refs_count": 3,
+    "total_ms": 0.07,
+    "per_ref_ms": 0.02,
+    "throughput_rps": 44462.89,
+    "p50_ms": 0.02,
+    "p95_ms": 0.03,
+    "extra": {}
+  },
+  {
+    "name": "batch_seq_n4_w1",
+    "refs_count": 4,
+    "total_ms": 30865.48,
+    "per_ref_ms": 7716.37,
+    "throughput_rps": 0.13,
+    "p50_ms": 0.04,
+    "p95_ms": 30865.36,
+    "extra": {
+      "max_workers": 1
+    }
+  },
+  {
+    "name": "batch_par_n4_w4",
+    "refs_count": 4,
+    "total_ms": 0.67,
+    "per_ref_ms": 0.17,
+    "throughput_rps": 5995.26,
+    "p50_ms": 0.04,
+    "p95_ms": 0.07,
+    "extra": {
+      "max_workers": 4
+    }
+  },
+  {
+    "name": "batch_seq_n8_w1",
+    "refs_count": 8,
+    "total_ms": 127114.6,
+    "per_ref_ms": 15889.33,
+    "throughput_rps": 0.06,
+    "p50_ms": 15589.8,
+    "p95_ms": 32152.14,
+    "extra": {
+      "max_workers": 1
+    }
+  },
+  {
+    "name": "batch_par_n8_w4",
+    "refs_count": 8,
+    "total_ms": 0.82,
+    "per_ref_ms": 0.1,
+    "throughput_rps": 9739.27,
+    "p50_ms": 0.03,
+    "p95_ms": 0.06,
+    "extra": {
+      "max_workers": 4
+    }
+  },
+  {
+    "name": "batch_par_n8_w8",
+    "refs_count": 8,
+    "total_ms": 0.64,
+    "per_ref_ms": 0.08,
+    "throughput_rps": 12490.18,
+    "p50_ms": 0.03,
+    "p95_ms": 0.05,
+    "extra": {
+      "max_workers": 8
+    }
+  },
+  {
+    "name": "layer_L0_only",
+    "refs_count": 3,
+    "total_ms": 1389.65,
+    "per_ref_ms": 463.22,
+    "throughput_rps": 2.16,
+    "p50_ms": 0.04,
+    "p95_ms": 1389.6,
+    "extra": {}
+  },
+  {
+    "name": "layer_L0+L4",
+    "refs_count": 3,
+    "total_ms": 3914.25,
+    "per_ref_ms": 1304.75,
+    "throughput_rps": 0.77,
+    "p50_ms": 0.05,
+    "p95_ms": 3914.18,
+    "extra": {}
+  },
+  {
+    "name": "layer_L0+L1+L4",
+    "refs_count": 3,
+    "total_ms": 1455.77,
+    "per_ref_ms": 485.26,
+    "throughput_rps": 2.06,
+    "p50_ms": 29.55,
+    "p95_ms": 1397.93,
+    "extra": {}
+  }
+]

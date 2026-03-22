@@ -1,0 +1,134 @@
+[
+  {
+    "name": "single_L0+L4",
+    "refs_count": 3,
+    "total_ms": 42132.08,
+    "per_ref_ms": 14044.03,
+    "throughput_rps": 0.07,
+    "p50_ms": 8040.02,
+    "p95_ms": 30341.54,
+    "extra": {}
+  },
+  {
+    "name": "single_cold",
+    "refs_count": 3,
+    "total_ms": 0.11,
+    "per_ref_ms": 0.04,
+    "throughput_rps": 26948.86,
+    "p50_ms": 0.03,
+    "p95_ms": 0.05,
+    "extra": {}
+  },
+  {
+    "name": "cache_hit_warm",
+    "refs_count": 3,
+    "total_ms": 0.11,
+    "per_ref_ms": 0.04,
+    "throughput_rps": 27456.69,
+    "p50_ms": 0.04,
+    "p95_ms": 0.05,
+    "extra": {}
+  },
+  {
+    "name": "batch_seq_n2_w1",
+    "refs_count": 2,
+    "total_ms": 0.07,
+    "per_ref_ms": 0.03,
+    "throughput_rps": 30403.46,
+    "p50_ms": 0.03,
+    "p95_ms": 0.03,
+    "extra": {
+      "max_workers": 1
+    }
+  },
+  {
+    "name": "batch_seq_n4_w1",
+    "refs_count": 4,
+    "total_ms": 0.11,
+    "per_ref_ms": 0.03,
+    "throughput_rps": 35192.05,
+    "p50_ms": 0.02,
+    "p95_ms": 0.04,
+    "extra": {
+      "max_workers": 1
+    }
+  },
+  {
+    "name": "batch_par_n4_w4",
+    "refs_count": 4,
+    "total_ms": 0.59,
+    "per_ref_ms": 0.15,
+    "throughput_rps": 6818.0,
+    "p50_ms": 0.05,
+    "p95_ms": 0.05,
+    "extra": {
+      "max_workers": 4
+    }
+  },
+  {
+    "name": "batch_seq_n8_w1",
+    "refs_count": 8,
+    "total_ms": 0.21,
+    "per_ref_ms": 0.03,
+    "throughput_rps": 37883.27,
+    "p50_ms": 0.02,
+    "p95_ms": 0.04,
+    "extra": {
+      "max_workers": 1
+    }
+  },
+  {
+    "name": "batch_par_n8_w4",
+    "refs_count": 8,
+    "total_ms": 0.71,
+    "per_ref_ms": 0.09,
+    "throughput_rps": 11325.43,
+    "p50_ms": 0.03,
+    "p95_ms": 0.05,
+    "extra": {
+      "max_workers": 4
+    }
+  },
+  {
+    "name": "batch_par_n8_w8",
+    "refs_count": 8,
+    "total_ms": 0.64,
+    "per_ref_ms": 0.08,
+    "throughput_rps": 12423.25,
+    "p50_ms": 0.02,
+    "p95_ms": 0.04,
+    "extra": {
+      "max_workers": 8
+    }
+  },
+  {
+    "name": "layer_L0_only",
+    "refs_count": 3,
+    "total_ms": 13770.41,
+    "per_ref_ms": 4590.14,
+    "throughput_rps": 0.22,
+    "p50_ms": 0.04,
+    "p95_ms": 13770.36,
+    "extra": {}
+  },
+  {
+    "name": "layer_L0+L4",
+    "refs_count": 3,
+    "total_ms": 4562.39,
+    "per_ref_ms": 1520.8,
+    "throughput_rps": 0.66,
+    "p50_ms": 0.05,
+    "p95_ms": 4562.33,
+    "extra": {}
+  },
+  {
+    "name": "layer_L0+L1+L4",
+    "refs_count": 3,
+    "total_ms": 30353.67,
+    "per_ref_ms": 10117.89,
+    "throughput_rps": 0.1,
+    "p50_ms": 36.07,
+    "p95_ms": 30284.65,
+    "extra": {}
+  }
+]

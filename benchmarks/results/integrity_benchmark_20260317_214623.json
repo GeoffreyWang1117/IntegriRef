@@ -1,0 +1,587 @@
+{
+  "metadata": {
+    "timestamp": "20260317_214623",
+    "layers": [
+      "L0",
+      "L4"
+    ],
+    "domain": "default",
+    "total_cases": 30,
+    "include_fetched": false
+  },
+  "metrics": {
+    "total_cases": 30,
+    "total_errors": 0,
+    "avg_latency_ms": 60650.1,
+    "p95_latency_ms": 128486.2,
+    "retraction_recall": 1.0,
+    "retraction_retracted_flag_rate": 0.6087,
+    "hallucination_recall": 0.0,
+    "hallucination_precision": 1.0,
+    "chimera_recall": 0.0,
+    "false_positive_rate": 0.0,
+    "risk_confusion": {
+      "LOW": {
+        "LOW": 4,
+        "ELEVATED": 0,
+        "HIGH": 0,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      },
+      "ELEVATED": {
+        "LOW": 3,
+        "ELEVATED": 0,
+        "HIGH": 0,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      },
+      "HIGH": {
+        "LOW": 0,
+        "ELEVATED": 6,
+        "HIGH": 14,
+        "CRITICAL": 3,
+        "UNKNOWN": 0
+      },
+      "CRITICAL": {
+        "LOW": 0,
+        "ELEVATED": 0,
+        "HIGH": 0,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      }
+    },
+    "signal_fire_rates": {
+      "reference_not_found": {
+        "retracted": 0.1304,
+        "real": 0.0
+      },
+      "phantom_doi": {
+        "retracted": 0.1304,
+        "real": 0.0
+      },
+      "metadata_mismatch": {
+        "retracted": 1.0,
+        "real": 0.0
+      },
+      "retracted_citation": {
+        "retracted": 0.6087,
+        "real": 0.0
+      }
+    },
+    "category_metrics": {
+      "retracted": {
+        "count": 23,
+        "errors": 0,
+        "risk_correct_rate": 0.7391304347826086,
+        "detection_correct_rate": 0.6086956521739131,
+        "found_rate": 0.8695652173913043,
+        "retracted_rate": 0.6086956521739131,
+        "avg_risk_prob": 0.32392004347826087,
+        "risk_distribution": {
+          "HIGH": 14,
+          "ELEVATED": 6,
+          "CRITICAL": 3
+        },
+        "avg_latency_ms": 65912.3
+      },
+      "real": {
+        "count": 7,
+        "errors": 0,
+        "risk_correct_rate": 1.0,
+        "detection_correct_rate": 1.0,
+        "found_rate": 1.0,
+        "retracted_rate": 0.0,
+        "avg_risk_prob": 0.025774,
+        "risk_distribution": {
+          "LOW": 7
+        },
+        "avg_latency_ms": 43360.2
+      }
+    }
+  },
+  "per_case": [
+    {
+      "id": "retracted_001",
+      "category": "retracted",
+      "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developm",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 128113.6,
+      "error": null
+    },
+    {
+      "id": "retracted_002",
+      "category": "retracted",
+      "title": "Stimulus-triggered fate conversion of somatic cells into pluripotency",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 128455.6,
+      "error": null
+    },
+    {
+      "id": "retracted_003",
+      "category": "retracted",
+      "title": "Primary Prevention of Cardiovascular Disease with a Mediterranean Diet",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 128528.7,
+      "error": null
+    },
+    {
+      "id": "retracted_004",
+      "category": "retracted",
+      "title": "Visfatin: a protein secreted by visceral fat that mimics the effects of insulin",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 128486.2,
+      "error": null
+    },
+    {
+      "id": "retracted_005",
+      "category": "retracted",
+      "title": "Purification and characterization of a human tumor necrosis factor from the LuKI",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 68018.3,
+      "error": null
+    },
+    {
+      "id": "retracted_006",
+      "category": "retracted",
+      "title": "Hydroxychloroquine or chloroquine with or without a macrolide for treatment of C",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30475.4,
+      "error": null
+    },
+    {
+      "id": "retracted_007",
+      "category": "retracted",
+      "title": "Cardiovascular Disease, Drug Therapy, and Mortality in Covid-19",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 44630.9,
+      "error": null
+    },
+    {
+      "id": "retracted_008",
+      "category": "real",
+      "title": "Experimental evidence of massive-scale emotional contagion through social networ",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 86890.6,
+      "error": null
+    },
+    {
+      "id": "retracted_009",
+      "category": "retracted",
+      "title": "A Staphylococcus aureus pore-forming toxin subverts the activity of ADAM10 to ca",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 73430.2,
+      "error": null
+    },
+    {
+      "id": "retracted_010",
+      "category": "retracted",
+      "title": "Generation of Germline-Competent Induced Pluripotent Stem Cells",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 74072.9,
+      "error": null
+    },
+    {
+      "id": "retracted_011",
+      "category": "retracted",
+      "title": "When contact changes minds: An experiment on transmission of support for gay equ",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 59310.0,
+      "error": null
+    },
+    {
+      "id": "retracted_012",
+      "category": "real",
+      "title": "Crystal structure of a monomeric retroviral protease solved by protein folding g",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 29935.7,
+      "error": null
+    },
+    {
+      "id": "retracted_013",
+      "category": "retracted",
+      "title": "The effects of clonidine and dexmedetomidine on postoperative pain and other out",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 61949.8,
+      "error": null
+    },
+    {
+      "id": "retracted_014",
+      "category": "retracted",
+      "title": "Perioperative fluid management with tetrastarch and gelatin in cardiac surgery —",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 62486.7,
+      "error": null
+    },
+    {
+      "id": "retracted_015",
+      "category": "retracted",
+      "title": "Superconductivity in single crystals of the fullerene C70",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.361,
+      "latency_ms": 60880.5,
+      "error": null
+    },
+    {
+      "id": "retracted_016",
+      "category": "retracted",
+      "title": "Longitudinal changes in true fat-free mass in women after menopause: Metabolic a",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 61500.7,
+      "error": null
+    },
+    {
+      "id": "retracted_017",
+      "category": "retracted",
+      "title": "The effect of combining pregabalin with celecoxib on pain control after laparosc",
+      "expected_risk": "HIGH",
+      "actual_risk": "CRITICAL",
+      "risk_correct": true,
+      "found": false,
+      "retracted": false,
+      "signals_fired": [
+        "reference_not_found",
+        "phantom_doi"
+      ],
+      "risk_probability": 0.6658,
+      "latency_ms": 59423.3,
+      "error": null
+    },
+    {
+      "id": "retracted_018",
+      "category": "retracted",
+      "title": "Coping with chaos: How disordered contexts promote stereotyping and discriminati",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 31218.4,
+      "error": null
+    },
+    {
+      "id": "retracted_019",
+      "category": "retracted",
+      "title": "Tracheobronchial transplantation with a stem-cell-seeded bioartificial nanocompo",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 63170.6,
+      "error": null
+    },
+    {
+      "id": "retracted_020",
+      "category": "retracted",
+      "title": "Patient-specific embryonic stem cells derived from human SCNT blastocysts",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30551.3,
+      "error": null
+    },
+    {
+      "id": "retracted_021",
+      "category": "retracted",
+      "title": "Bidirectional developmental potential in reprogrammed cells with acquired plurip",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30357.6,
+      "error": null
+    },
+    {
+      "id": "retracted_022",
+      "category": "retracted",
+      "title": "Cardioprotection by resveratrol: A human clinical trial in patients with stable ",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 61978.8,
+      "error": null
+    },
+    {
+      "id": "retracted_023",
+      "category": "retracted",
+      "title": "Genomic signatures to guide the use of chemotherapeutics",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30333.9,
+      "error": null
+    },
+    {
+      "id": "retracted_024",
+      "category": "retracted",
+      "title": "Mesenteric oxygen saturation measured by near-infrared spectroscopy in healthy n",
+      "expected_risk": "HIGH",
+      "actual_risk": "CRITICAL",
+      "risk_correct": true,
+      "found": false,
+      "retracted": false,
+      "signals_fired": [
+        "reference_not_found",
+        "phantom_doi"
+      ],
+      "risk_probability": 0.6658,
+      "latency_ms": 61372.3,
+      "error": null
+    },
+    {
+      "id": "retracted_025",
+      "category": "retracted",
+      "title": "Investigation of novel SARS-CoV-2 surface proteins and their interactions with A",
+      "expected_risk": "HIGH",
+      "actual_risk": "CRITICAL",
+      "risk_correct": true,
+      "found": false,
+      "retracted": false,
+      "signals_fired": [
+        "reference_not_found",
+        "phantom_doi"
+      ],
+      "risk_probability": 0.6658,
+      "latency_ms": 37237.1,
+      "error": null
+    },
+    {
+      "id": "retracted_026",
+      "category": "real",
+      "title": "Feeling the future: Experimental evidence for anomalous retroactive influences o",
+      "expected_risk": "ELEVATED",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30527.4,
+      "error": null
+    },
+    {
+      "id": "retracted_027",
+      "category": "real",
+      "title": "Power posing: Brief nonverbal displays affect neuroendocrine levels and risk tol",
+      "expected_risk": "ELEVATED",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 64769.6,
+      "error": null
+    },
+    {
+      "id": "retracted_028",
+      "category": "real",
+      "title": "Growth in a Time of Debt",
+      "expected_risk": "ELEVATED",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 31228.0,
+      "error": null
+    },
+    {
+      "id": "real_001",
+      "category": "real",
+      "title": "Attention Is All You Need",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30675.1,
+      "error": null
+    },
+    {
+      "id": "real_002",
+      "category": "real",
+      "title": "Deep Residual Learning for Image Recognition",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 29494.8,
+      "error": null
+    }
+  ]
+}

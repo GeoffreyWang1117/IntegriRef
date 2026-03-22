@@ -1,0 +1,101 @@
+{
+  "Conservative": {
+    "threshold_high": 0.8,
+    "threshold_low": 0.01,
+    "total_cases": 58,
+    "skip_count": 8,
+    "skip_rate": 0.1379,
+    "skip_high_bad": 8,
+    "skip_low_good": 0,
+    "regressions": 8,
+    "estimated_savings_ms": 18000,
+    "per_category": {
+      "chimera": {
+        "count": 3,
+        "skipped": 0,
+        "skip_rate": 0.0
+      },
+      "hallucinated": {
+        "count": 14,
+        "skipped": 5,
+        "skip_rate": 0.3571
+      },
+      "real": {
+        "count": 18,
+        "skipped": 0,
+        "skip_rate": 0.0
+      },
+      "retracted": {
+        "count": 23,
+        "skipped": 3,
+        "skip_rate": 0.1304
+      }
+    }
+  },
+  "Moderate": {
+    "threshold_high": 0.7,
+    "threshold_low": 0.02,
+    "total_cases": 58,
+    "skip_count": 8,
+    "skip_rate": 0.1379,
+    "skip_high_bad": 8,
+    "skip_low_good": 0,
+    "regressions": 8,
+    "estimated_savings_ms": 18000,
+    "per_category": {
+      "chimera": {
+        "count": 3,
+        "skipped": 0,
+        "skip_rate": 0.0
+      },
+      "hallucinated": {
+        "count": 14,
+        "skipped": 5,
+        "skip_rate": 0.3571
+      },
+      "real": {
+        "count": 18,
+        "skipped": 0,
+        "skip_rate": 0.0
+      },
+      "retracted": {
+        "count": 23,
+        "skipped": 3,
+        "skip_rate": 0.1304
+      }
+    }
+  },
+  "Aggressive": {
+    "threshold_high": 0.5,
+    "threshold_low": 0.05,
+    "total_cases": 58,
+    "skip_count": 39,
+    "skip_rate": 0.6724,
+    "skip_high_bad": 15,
+    "skip_low_good": 24,
+    "regressions": 8,
+    "estimated_savings_ms": 87750,
+    "per_category": {
+      "chimera": {
+        "count": 3,
+        "skipped": 0,
+        "skip_rate": 0.0
+      },
+      "hallucinated": {
+        "count": 14,
+        "skipped": 5,
+        "skip_rate": 0.3571
+      },
+      "real": {
+        "count": 18,
+        "skipped": 18,
+        "skip_rate": 1.0
+      },
+      "retracted": {
+        "count": 23,
+        "skipped": 16,
+        "skip_rate": 0.6957
+      }
+    }
+  }
+}

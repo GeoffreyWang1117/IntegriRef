@@ -1,0 +1,1484 @@
+{
+  "metadata": {
+    "timestamp": "20260318_100615",
+    "total_cases": 58,
+    "case_distribution": {
+      "retracted": 23,
+      "real": 18,
+      "hallucinated": 14,
+      "chimera": 3
+    }
+  },
+  "integriref": {
+    "method": "IntegriRef L0+L4 (Bayesian risk scoring)",
+    "layers": [
+      "L0",
+      "L4"
+    ],
+    "metrics": {
+      "total_cases": 58,
+      "total_errors": 0,
+      "avg_latency_ms": 38535.0,
+      "p95_latency_ms": 62822.5,
+      "retraction_recall": 0.7391,
+      "retraction_retracted_flag_rate": 0.3043,
+      "hallucination_recall": 1.0,
+      "hallucination_precision": 1.0,
+      "chimera_recall": 1.0,
+      "false_positive_rate": 0.0,
+      "risk_confusion": {
+        "LOW": {
+          "LOW": 15,
+          "ELEVATED": 0,
+          "HIGH": 0,
+          "CRITICAL": 0,
+          "UNKNOWN": 0
+        },
+        "ELEVATED": {
+          "LOW": 3,
+          "ELEVATED": 0,
+          "HIGH": 1,
+          "CRITICAL": 0,
+          "UNKNOWN": 0
+        },
+        "HIGH": {
+          "LOW": 6,
+          "ELEVATED": 2,
+          "HIGH": 24,
+          "CRITICAL": 7,
+          "UNKNOWN": 0
+        },
+        "CRITICAL": {
+          "LOW": 0,
+          "ELEVATED": 0,
+          "HIGH": 0,
+          "CRITICAL": 0,
+          "UNKNOWN": 0
+        }
+      },
+      "signal_fire_rates": {
+        "reference_not_found": {
+          "retracted": 0.1304,
+          "real": 0.0,
+          "hallucinated": 0.5,
+          "chimera": 0.0
+        },
+        "phantom_doi": {
+          "retracted": 0.1304,
+          "real": 0.0,
+          "hallucinated": 0.3571,
+          "chimera": 0.0
+        },
+        "metadata_mismatch": {
+          "retracted": 0.7,
+          "real": 0.0,
+          "hallucinated": 1.0,
+          "chimera": 1.0
+        },
+        "no_id_match": {
+          "retracted": 0.2609,
+          "real": 0.2778,
+          "hallucinated": 0.5,
+          "chimera": 1.0
+        },
+        "retracted_citation": {
+          "retracted": 0.3043,
+          "real": 0.0,
+          "hallucinated": 0.0,
+          "chimera": 0.0
+        }
+      },
+      "category_metrics": {
+        "retracted": {
+          "count": 23,
+          "errors": 0,
+          "risk_correct_rate": 0.6521739130434783,
+          "detection_correct_rate": 0.30434782608695654,
+          "found_rate": 0.8695652173913043,
+          "retracted_rate": 0.30434782608695654,
+          "avg_risk_prob": 0.33886139130434784,
+          "risk_distribution": {
+            "LOW": 6,
+            "HIGH": 8,
+            "CRITICAL": 7,
+            "ELEVATED": 2
+          },
+          "avg_latency_ms": 41426.3
+        },
+        "real": {
+          "count": 18,
+          "errors": 0,
+          "risk_correct_rate": 1.0,
+          "detection_correct_rate": 1.0,
+          "found_rate": 1.0,
+          "retracted_rate": 0.0,
+          "avg_risk_prob": 0.02883977777777778,
+          "risk_distribution": {
+            "LOW": 18
+          },
+          "avg_latency_ms": 27716.8
+        },
+        "hallucinated": {
+          "count": 14,
+          "errors": 0,
+          "risk_correct_rate": 1.0,
+          "detection_correct_rate": 0.5,
+          "found_rate": 0.5,
+          "retracted_rate": 0.0,
+          "avg_risk_prob": 0.40354014285714285,
+          "risk_distribution": {
+            "HIGH": 14
+          },
+          "avg_latency_ms": 49144.9
+        },
+        "chimera": {
+          "count": 3,
+          "errors": 0,
+          "risk_correct_rate": 1.0,
+          "detection_correct_rate": 0.0,
+          "found_rate": 1.0,
+          "retracted_rate": 0.0,
+          "avg_risk_prob": 0.248355,
+          "risk_distribution": {
+            "HIGH": 3
+          },
+          "avg_latency_ms": 31764.9
+        }
+      }
+    }
+  },
+  "checkifexist": {
+    "method": "CheckIfExist baseline (CrossRef→S2→OpenAlex cascade)",
+    "metrics": {
+      "total_cases": 58,
+      "total_correct": 36,
+      "hallucination_recall": 0.0,
+      "hallucination_count": 14,
+      "hallucination_precision": 0.0,
+      "retraction_recall": 0.2609,
+      "retraction_count": 23,
+      "chimera_recall": 0.3333,
+      "chimera_count": 3,
+      "false_positive_rate": 0.1111,
+      "real_count": 18,
+      "avg_latency_ms": 2258.2,
+      "p95_latency_ms": 4723.3,
+      "category_breakdown": {
+        "retracted": {
+          "count": 23,
+          "correct_rate": 0.2609,
+          "risk_distribution": {
+            "LOW": 17,
+            "ELEVATED": 6
+          },
+          "avg_title_sim": 0.8731
+        },
+        "real": {
+          "count": 18,
+          "correct_rate": 0.8889,
+          "risk_distribution": {
+            "LOW": 16,
+            "ELEVATED": 2
+          },
+          "avg_title_sim": 0.9628
+        },
+        "hallucinated": {
+          "count": 14,
+          "correct_rate": 0.9286,
+          "risk_distribution": {
+            "ELEVATED": 13,
+            "LOW": 1
+          },
+          "avg_title_sim": 0.5678
+        },
+        "chimera": {
+          "count": 3,
+          "correct_rate": 0.3333,
+          "risk_distribution": {
+            "LOW": 2,
+            "ELEVATED": 1
+          },
+          "avg_title_sim": 0.8814
+        }
+      }
+    }
+  },
+  "comparison": {
+    "hallucination_recall_delta": 1.0,
+    "retraction_recall_delta": 0.4782,
+    "chimera_recall_delta": 0.6667,
+    "fpr_delta": -0.1111
+  },
+  "per_case": [
+    {
+      "id": "retracted_001",
+      "category": "retracted",
+      "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developm",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": false,
+        "latency_ms": 2196.7
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.9507,
+        "author_overlap": 1.0,
+        "correct": false,
+        "latency_ms": 2993.0
+      }
+    },
+    {
+      "id": "retracted_002",
+      "category": "retracted",
+      "title": "Stimulus-triggered fate conversion of somatic cells into pluripotency",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": false,
+        "latency_ms": 1236.3
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.879,
+        "author_overlap": 0.5,
+        "correct": false,
+        "latency_ms": 1593.0
+      }
+    },
+    {
+      "id": "retracted_003",
+      "category": "retracted",
+      "title": "Primary Prevention of Cardiovascular Disease with a Mediterranean Diet",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": false,
+        "latency_ms": 3064.3
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.3333,
+        "correct": false,
+        "latency_ms": 2442.0
+      }
+    },
+    {
+      "id": "retracted_004",
+      "category": "retracted",
+      "title": "Visfatin: a protein secreted by visceral fat that mimics the effects of insulin",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": false,
+        "latency_ms": 2967.3
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.3333,
+        "correct": false,
+        "latency_ms": 1761.7
+      }
+    },
+    {
+      "id": "retracted_005",
+      "category": "retracted",
+      "title": "Purification and characterization of a human tumor necrosis factor from the LuKI",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 62646.2
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.9945,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1750.0
+      }
+    },
+    {
+      "id": "retracted_006",
+      "category": "retracted",
+      "title": "Hydroxychloroquine or chloroquine with or without a macrolide for treatment of C",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": false,
+        "latency_ms": 31291.0
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.9569,
+        "author_overlap": 0.5,
+        "correct": false,
+        "latency_ms": 2422.9
+      }
+    },
+    {
+      "id": "retracted_007",
+      "category": "retracted",
+      "title": "Cardiovascular Disease, Drug Therapy, and Mortality in Covid-19",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5791,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 30804.5
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.2,
+        "correct": false,
+        "latency_ms": 2413.8
+      }
+    },
+    {
+      "id": "retracted_008",
+      "category": "real",
+      "title": "Experimental evidence of massive-scale emotional contagion through social networ",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 29460.5
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.6667,
+        "correct": true,
+        "latency_ms": 1672.8
+      }
+    },
+    {
+      "id": "retracted_009",
+      "category": "retracted",
+      "title": "A Staphylococcus aureus pore-forming toxin subverts the activity of ADAM10 to ca",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0431,
+        "signals_fired": [
+          "no_id_match"
+        ],
+        "correct": false,
+        "latency_ms": 61528.8
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1764.0
+      }
+    },
+    {
+      "id": "retracted_010",
+      "category": "retracted",
+      "title": "Generation of Germline-Competent Induced Pluripotent Stem Cells",
+      "integriref": {
+        "risk_tier": "ELEVATED",
+        "risk_prob": 0.1455,
+        "signals_fired": [
+          "metadata_mismatch"
+        ],
+        "correct": false,
+        "latency_ms": 62274.2
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1419.5
+      }
+    },
+    {
+      "id": "retracted_011",
+      "category": "retracted",
+      "title": "When contact changes minds: An experiment on transmission of support for gay equ",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5791,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 30654.7
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1243.8
+      }
+    },
+    {
+      "id": "retracted_012",
+      "category": "real",
+      "title": "Crystal structure of a monomeric retroviral protease solved by protein folding g",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 29690.2
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 1.0,
+        "correct": true,
+        "latency_ms": 1612.2
+      }
+    },
+    {
+      "id": "retracted_013",
+      "category": "retracted",
+      "title": "The effects of clonidine and dexmedetomidine on postoperative pain and other out",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 62337.0
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.5424,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 3687.1
+      }
+    },
+    {
+      "id": "retracted_014",
+      "category": "retracted",
+      "title": "Perioperative fluid management with tetrastarch and gelatin in cardiac surgery —",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 61496.7
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.8766,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1556.8
+      }
+    },
+    {
+      "id": "retracted_015",
+      "category": "retracted",
+      "title": "Superconductivity in single crystals of the fullerene C70",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5787,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 60918.3
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 1.0,
+        "correct": false,
+        "latency_ms": 2605.1
+      }
+    },
+    {
+      "id": "retracted_016",
+      "category": "retracted",
+      "title": "Longitudinal changes in true fat-free mass in women after menopause: Metabolic a",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 60696.1
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.3509,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 3093.0
+      }
+    },
+    {
+      "id": "retracted_017",
+      "category": "retracted",
+      "title": "The effect of combining pregabalin with celecoxib on pain control after laparosc",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 62055.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.6408,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 2691.0
+      }
+    },
+    {
+      "id": "retracted_018",
+      "category": "retracted",
+      "title": "Coping with chaos: How disordered contexts promote stereotyping and discriminati",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5791,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 12379.3
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.5,
+        "correct": false,
+        "latency_ms": 1728.4
+      }
+    },
+    {
+      "id": "retracted_019",
+      "category": "retracted",
+      "title": "Tracheobronchial transplantation with a stem-cell-seeded bioartificial nanocompo",
+      "integriref": {
+        "risk_tier": "ELEVATED",
+        "risk_prob": 0.1455,
+        "signals_fired": [
+          "metadata_mismatch"
+        ],
+        "correct": false,
+        "latency_ms": 33698.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.8195,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1820.0
+      }
+    },
+    {
+      "id": "retracted_020",
+      "category": "retracted",
+      "title": "Patient-specific embryonic stem cells derived from human SCNT blastocysts",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5791,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 29868.6
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.4,
+        "correct": false,
+        "latency_ms": 4723.3
+      }
+    },
+    {
+      "id": "retracted_021",
+      "category": "retracted",
+      "title": "Bidirectional developmental potential in reprogrammed cells with acquired plurip",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5791,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 31584.9
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.9101,
+        "author_overlap": 0.1818,
+        "correct": false,
+        "latency_ms": 1828.5
+      }
+    },
+    {
+      "id": "retracted_022",
+      "category": "retracted",
+      "title": "Cardioprotection by resveratrol: A human clinical trial in patients with stable ",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 62482.7
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1505.3
+      }
+    },
+    {
+      "id": "retracted_023",
+      "category": "retracted",
+      "title": "Genomic signatures to guide the use of chemotherapeutics",
+      "integriref": {
+        "risk_tier": "CRITICAL",
+        "risk_prob": 0.5791,
+        "signals_fired": [
+          "metadata_mismatch",
+          "retracted_citation"
+        ],
+        "correct": true,
+        "latency_ms": 29591.2
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.3529,
+        "correct": false,
+        "latency_ms": 3569.7
+      }
+    },
+    {
+      "id": "retracted_024",
+      "category": "retracted",
+      "title": "Mesenteric oxygen saturation measured by near-infrared spectroscopy in healthy n",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 95965.1
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.7253,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 4125.0
+      }
+    },
+    {
+      "id": "retracted_025",
+      "category": "retracted",
+      "title": "Investigation of novel SARS-CoV-2 surface proteins and their interactions with A",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 61066.7
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.4358,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 5152.2
+      }
+    },
+    {
+      "id": "retracted_026",
+      "category": "real",
+      "title": "Feeling the future: Experimental evidence for anomalous retroactive influences o",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 30013.4
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1712.5
+      }
+    },
+    {
+      "id": "retracted_027",
+      "category": "real",
+      "title": "Power posing: Brief nonverbal displays affect neuroendocrine levels and risk tol",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 61304.3
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.7679,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1713.8
+      }
+    },
+    {
+      "id": "retracted_028",
+      "category": "real",
+      "title": "Growth in a Time of Debt",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 31251.3
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.5,
+        "correct": true,
+        "latency_ms": 1657.7
+      }
+    },
+    {
+      "id": "real_001",
+      "category": "real",
+      "title": "Attention Is All You Need",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 30306.2
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 1.0,
+        "correct": true,
+        "latency_ms": 1987.2
+      }
+    },
+    {
+      "id": "real_002",
+      "category": "real",
+      "title": "Deep Residual Learning for Image Recognition",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 30522.7
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 2299.0
+      }
+    },
+    {
+      "id": "real_003",
+      "category": "real",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 30358.8
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.6442,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 3704.7
+      }
+    },
+    {
+      "id": "real_004",
+      "category": "real",
+      "title": "ImageNet Large Scale Visual Recognition Challenge",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 31191.2
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.6667,
+        "correct": true,
+        "latency_ms": 3604.9
+      }
+    },
+    {
+      "id": "real_005",
+      "category": "real",
+      "title": "A Mathematical Theory of Communication",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0433,
+        "signals_fired": [
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 32919.9
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 1.0,
+        "correct": true,
+        "latency_ms": 1604.1
+      }
+    },
+    {
+      "id": "real_006",
+      "category": "real",
+      "title": "Language Models are Few-Shot Learners",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 2036.0
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.6667,
+        "correct": true,
+        "latency_ms": 1981.0
+      }
+    },
+    {
+      "id": "real_007",
+      "category": "real",
+      "title": "Generative Adversarial Nets",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 4834.1
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1926.3
+      }
+    },
+    {
+      "id": "real_008",
+      "category": "real",
+      "title": "Dropout: A Simple Way to Prevent Neural Networks from Overfitting",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0433,
+        "signals_fired": [
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 30167.9
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.6667,
+        "correct": true,
+        "latency_ms": 1999.2
+      }
+    },
+    {
+      "id": "real_009",
+      "category": "real",
+      "title": "The Structure of Scientific Revolutions",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0433,
+        "signals_fired": [
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31058.5
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.9176,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1500.3
+      }
+    },
+    {
+      "id": "real_010",
+      "category": "real",
+      "title": "A Few Useful Things to Know About Machine Learning",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 30572.8
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 1.0,
+        "correct": true,
+        "latency_ms": 1721.4
+      }
+    },
+    {
+      "id": "halluc_001",
+      "category": "hallucinated",
+      "title": "Transformative Learning Through Neural Architecture: A Comprehensive Survey",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 62722.2
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.5984,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 2595.8
+      }
+    },
+    {
+      "id": "halluc_002",
+      "category": "hallucinated",
+      "title": "Advances in Multi-Modal Representation Learning for Scientific Discovery",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 61816.4
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.4505,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 2308.5
+      }
+    },
+    {
+      "id": "halluc_003",
+      "category": "hallucinated",
+      "title": "Deep Reinforcement Learning for Autonomous Systems: Theory and Practice",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 64163.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.6211,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 2005.6
+      }
+    },
+    {
+      "id": "halluc_004",
+      "category": "hallucinated",
+      "title": "Scalable Graph Neural Networks for Molecular Property Prediction",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 61393.6
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 0.8759,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 4120.5
+      }
+    },
+    {
+      "id": "halluc_005",
+      "category": "hallucinated",
+      "title": "Quantum-Enhanced Machine Learning: Bridging Classical and Quantum Computing",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.6846,
+        "signals_fired": [
+          "reference_not_found",
+          "phantom_doi"
+        ],
+        "correct": true,
+        "latency_ms": 61483.6
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.6742,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 2861.2
+      }
+    },
+    {
+      "id": "halluc_006",
+      "category": "hallucinated",
+      "title": "A Unified Framework for Federated Learning in Healthcare Applications",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31330.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.4203,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1452.4
+      }
+    },
+    {
+      "id": "halluc_007",
+      "category": "hallucinated",
+      "title": "Efficient Transformers: A Survey of Recent Advances",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31565.2
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.4512,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1247.6
+      }
+    },
+    {
+      "id": "halluc_008",
+      "category": "hallucinated",
+      "title": "Self-Supervised Learning for Natural Language Processing: A Critical Review",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 62812.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.5889,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 4835.6
+      }
+    },
+    {
+      "id": "halluc_009",
+      "category": "hallucinated",
+      "title": "On the Convergence of Adam and Beyond: A Revised Analysis",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2449,
+        "signals_fired": [
+          "reference_not_found"
+        ],
+        "correct": true,
+        "latency_ms": 31151.7
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.4921,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1821.8
+      }
+    },
+    {
+      "id": "halluc_010",
+      "category": "hallucinated",
+      "title": "Robustness of Physics-Informed Neural Networks to Adversarial Perturbations",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2449,
+        "signals_fired": [
+          "reference_not_found"
+        ],
+        "correct": true,
+        "latency_ms": 32032.5
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.7692,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1610.3
+      }
+    },
+    {
+      "id": "halluc_011",
+      "category": "hallucinated",
+      "title": "Large Language Models as Zero-Shot Clinical Decision Support Systems",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 61183.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.6184,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1707.3
+      }
+    },
+    {
+      "id": "halluc_012",
+      "category": "hallucinated",
+      "title": "The Impact of Social Media on Political Polarization: A Meta-Analysis",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2477,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 62822.5
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.3556,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 4059.6
+      }
+    },
+    {
+      "id": "halluc_013",
+      "category": "hallucinated",
+      "title": "Neural Radiance Fields for Dynamic Scene Reconstruction",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31252.9
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.5357,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1271.4
+      }
+    },
+    {
+      "id": "halluc_014",
+      "category": "real",
+      "title": "Contrastive Learning of Structured World Models",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0228,
+        "signals_fired": [],
+        "correct": true,
+        "latency_ms": 31415.8
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.3333,
+        "correct": true,
+        "latency_ms": 1685.8
+      }
+    },
+    {
+      "id": "halluc_015",
+      "category": "hallucinated",
+      "title": "Automated Scientific Literature Review Using Large Language Models",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 32296.4
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.4977,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1532.2
+      }
+    },
+    {
+      "id": "chimera_001",
+      "category": "chimera",
+      "title": "Attention Is All You Need",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31379.8
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1812.5
+      }
+    },
+    {
+      "id": "chimera_002",
+      "category": "chimera",
+      "title": "Deep Residual Learning for Image Recognition",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 32131.4
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": false,
+        "latency_ms": 1555.4
+      }
+    },
+    {
+      "id": "chimera_003",
+      "category": "real",
+      "title": "Language Models are Few-Shot Learners",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0498,
+        "signals_fired": [
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 0.1
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 1.0,
+        "correct": true,
+        "latency_ms": 1752.7
+      }
+    },
+    {
+      "id": "chimera_004",
+      "category": "chimera",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "integriref": {
+        "risk_tier": "HIGH",
+        "risk_prob": 0.2484,
+        "signals_fired": [
+          "metadata_mismatch",
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31783.6
+      },
+      "checkifexist": {
+        "status": "SUSPICIOUS",
+        "risk_level": "ELEVATED",
+        "title_sim": 0.6442,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 1200.9
+      }
+    },
+    {
+      "id": "chimera_005",
+      "category": "real",
+      "title": "Generative Adversarial Nets",
+      "integriref": {
+        "risk_tier": "LOW",
+        "risk_prob": 0.0433,
+        "signals_fired": [
+          "no_id_match"
+        ],
+        "correct": true,
+        "latency_ms": 31798.4
+      },
+      "checkifexist": {
+        "status": "VERIFIED",
+        "risk_level": "LOW",
+        "title_sim": 1.0,
+        "author_overlap": 0.0,
+        "correct": true,
+        "latency_ms": 950.3
+      }
+    }
+  ]
+}

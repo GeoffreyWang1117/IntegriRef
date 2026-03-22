@@ -1,0 +1,406 @@
+{
+  "metadata": {
+    "timestamp": "20260316_202826",
+    "layers": [
+      "L0",
+      "L4"
+    ],
+    "domain": "default",
+    "total_cases": 20,
+    "include_fetched": true
+  },
+  "metrics": {
+    "total_cases": 20,
+    "total_errors": 0,
+    "avg_latency_ms": 32782.0,
+    "p95_latency_ms": 62274.4,
+    "retraction_recall": 0.8,
+    "retraction_retracted_flag_rate": 0.6,
+    "hallucination_recall": 0.0,
+    "hallucination_precision": 1.0,
+    "chimera_recall": 0.0,
+    "false_positive_rate": 0.0,
+    "risk_confusion": {
+      "LOW": {
+        "LOW": 10,
+        "ELEVATED": 0,
+        "HIGH": 0,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      },
+      "ELEVATED": {
+        "LOW": 0,
+        "ELEVATED": 0,
+        "HIGH": 0,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      },
+      "HIGH": {
+        "LOW": 2,
+        "ELEVATED": 2,
+        "HIGH": 6,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      },
+      "CRITICAL": {
+        "LOW": 0,
+        "ELEVATED": 0,
+        "HIGH": 0,
+        "CRITICAL": 0,
+        "UNKNOWN": 0
+      }
+    },
+    "signal_fire_rates": {
+      "reference_not_found": {
+        "retracted": 0.0,
+        "real": 0.0
+      },
+      "phantom_doi": {
+        "retracted": 0.0,
+        "real": 0.0
+      },
+      "metadata_mismatch": {
+        "retracted": 0.8,
+        "real": 0.0
+      },
+      "retracted_citation": {
+        "retracted": 0.6,
+        "real": 0.0
+      }
+    },
+    "category_metrics": {
+      "retracted": {
+        "count": 10,
+        "errors": 0,
+        "risk_correct_rate": 0.6,
+        "detection_correct_rate": 0.6,
+        "found_rate": 1.0,
+        "retracted_rate": 0.6,
+        "avg_risk_prob": 0.23512,
+        "risk_distribution": {
+          "HIGH": 6,
+          "LOW": 2,
+          "ELEVATED": 2
+        },
+        "avg_latency_ms": 34575.3
+      },
+      "real": {
+        "count": 10,
+        "errors": 0,
+        "risk_correct_rate": 1.0,
+        "detection_correct_rate": 1.0,
+        "found_rate": 1.0,
+        "retracted_rate": 0.0,
+        "avg_risk_prob": 0.025774,
+        "risk_distribution": {
+          "LOW": 10
+        },
+        "avg_latency_ms": 30988.6
+      }
+    }
+  },
+  "per_case": [
+    {
+      "id": "retracted_001",
+      "category": "retracted",
+      "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developm",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 8331.4,
+      "error": null
+    },
+    {
+      "id": "retracted_002",
+      "category": "retracted",
+      "title": "Stimulus-triggered fate conversion of somatic cells into pluripotency",
+      "expected_risk": "HIGH",
+      "actual_risk": "LOW",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 6759.3,
+      "error": null
+    },
+    {
+      "id": "retracted_003",
+      "category": "retracted",
+      "title": "Primary Prevention of Cardiovascular Disease with a Mediterranean Diet",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 23374.0,
+      "error": null
+    },
+    {
+      "id": "retracted_004",
+      "category": "retracted",
+      "title": "Visfatin: a protein secreted by visceral fat that mimics the effects of insulin",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30700.0,
+      "error": null
+    },
+    {
+      "id": "retracted_005",
+      "category": "retracted",
+      "title": "Purification and characterization of a human tumor necrosis factor from the LuKI",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 60946.5,
+      "error": null
+    },
+    {
+      "id": "retracted_006",
+      "category": "retracted",
+      "title": "Hydroxychloroquine or chloroquine with or without a macrolide for treatment of C",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30235.3,
+      "error": null
+    },
+    {
+      "id": "retracted_007",
+      "category": "retracted",
+      "title": "Cardiovascular Disease, Drug Therapy, and Mortality in Covid-19",
+      "expected_risk": "HIGH",
+      "actual_risk": "LOW",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 31156.4,
+      "error": null
+    },
+    {
+      "id": "retracted_008",
+      "category": "real",
+      "title": "Experimental evidence of massive-scale emotional contagion through social networ",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 31296.9,
+      "error": null
+    },
+    {
+      "id": "retracted_009",
+      "category": "retracted",
+      "title": "A Staphylococcus aureus pore-forming toxin subverts the activity of ADAM10 to ca",
+      "expected_risk": "HIGH",
+      "actual_risk": "ELEVATED",
+      "risk_correct": false,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "risk_probability": 0.0655,
+      "latency_ms": 62274.4,
+      "error": null
+    },
+    {
+      "id": "retracted_010",
+      "category": "retracted",
+      "title": "Generation of Germline-Competent Induced Pluripotent Stem Cells",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 61407.9,
+      "error": null
+    },
+    {
+      "id": "retracted_011",
+      "category": "retracted",
+      "title": "When contact changes minds: An experiment on transmission of support for gay equ",
+      "expected_risk": "HIGH",
+      "actual_risk": "HIGH",
+      "risk_correct": true,
+      "found": true,
+      "retracted": true,
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "risk_probability": 0.3615,
+      "latency_ms": 30568.0,
+      "error": null
+    },
+    {
+      "id": "retracted_012",
+      "category": "real",
+      "title": "Crystal structure of a monomeric retroviral protease solved by protein folding g",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30370.5,
+      "error": null
+    },
+    {
+      "id": "real_001",
+      "category": "real",
+      "title": "Attention Is All You Need",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30867.5,
+      "error": null
+    },
+    {
+      "id": "real_002",
+      "category": "real",
+      "title": "Deep Residual Learning for Image Recognition",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30889.2,
+      "error": null
+    },
+    {
+      "id": "real_003",
+      "category": "real",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 29888.1,
+      "error": null
+    },
+    {
+      "id": "real_004",
+      "category": "real",
+      "title": "ImageNet Large Scale Visual Recognition Challenge",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 31773.7,
+      "error": null
+    },
+    {
+      "id": "real_005",
+      "category": "real",
+      "title": "A Mathematical Theory of Communication",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 31227.0,
+      "error": null
+    },
+    {
+      "id": "real_006",
+      "category": "real",
+      "title": "Language Models are Few-Shot Learners",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30826.6,
+      "error": null
+    },
+    {
+      "id": "real_007",
+      "category": "real",
+      "title": "Generative Adversarial Nets",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 30406.7,
+      "error": null
+    },
+    {
+      "id": "real_008",
+      "category": "real",
+      "title": "Dropout: A Simple Way to Prevent Neural Networks from Overfitting",
+      "expected_risk": "LOW",
+      "actual_risk": "LOW",
+      "risk_correct": true,
+      "found": true,
+      "retracted": false,
+      "signals_fired": [],
+      "risk_probability": 0.0258,
+      "latency_ms": 32340.2,
+      "error": null
+    }
+  ]
+}

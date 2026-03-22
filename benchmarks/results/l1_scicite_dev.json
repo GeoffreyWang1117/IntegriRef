@@ -1,0 +1,71 @@
+{
+  "name": "L1 Citation Intent",
+  "dataset": "scicite",
+  "n_samples": 916,
+  "overall": {
+    "precision": 0.6736,
+    "recall": 0.6736,
+    "f1": 0.6736,
+    "accuracy": 0.7824,
+    "tp": 617,
+    "fp": 299,
+    "fn": 299,
+    "tn": 1533
+  },
+  "per_class": {
+    "supporting": {
+      "precision": 0.6596,
+      "recall": 0.4921,
+      "f1": 0.5636,
+      "accuracy": 0.6856,
+      "tp": 186,
+      "fp": 96,
+      "fn": 192,
+      "tn": 442
+    },
+    "contrasting": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "accuracy": 0.9749,
+      "tp": 0,
+      "fp": 23,
+      "fn": 0,
+      "tn": 893
+    },
+    "mentioning": {
+      "precision": 0.7054,
+      "recall": 0.8011,
+      "f1": 0.7502,
+      "accuracy": 0.6867,
+      "tp": 431,
+      "fp": 180,
+      "fn": 107,
+      "tn": 198
+    }
+  },
+  "confusion_matrix": {
+    "supporting": {
+      "supporting": 186,
+      "contrasting": 12,
+      "mentioning": 180
+    },
+    "contrasting": {
+      "supporting": 0,
+      "contrasting": 0,
+      "mentioning": 0
+    },
+    "mentioning": {
+      "supporting": 96,
+      "contrasting": 11,
+      "mentioning": 431
+    }
+  },
+  "latency_ms": 0.17,
+  "latency_p95_ms": 0.29,
+  "n_errors": 0,
+  "extra": {
+    "macro_f1": 0.438,
+    "accuracy": 0.6736
+  }
+}

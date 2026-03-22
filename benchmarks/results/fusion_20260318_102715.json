@@ -1,0 +1,1511 @@
+{
+  "metadata": {
+    "timestamp": "20260318_102715",
+    "total_cases": 58
+  },
+  "summary": {
+    "bayes": {
+      "total_correct": 52,
+      "total_cases": 58,
+      "chimera_correct": 3,
+      "chimera_count": 3,
+      "chimera_avg_posterior": 0.2467,
+      "hallucinated_correct": 14,
+      "hallucinated_count": 14,
+      "hallucinated_avg_posterior": 0.467,
+      "real_correct": 18,
+      "real_count": 18,
+      "real_avg_posterior": 0.0282,
+      "retracted_correct": 17,
+      "retracted_count": 23,
+      "retracted_avg_posterior": 0.3626,
+      "fpr": 0.0,
+      "halluc_recall_high": 1.0,
+      "halluc_recall_elevated": 1.0
+    },
+    "grouped": {
+      "total_correct": 42,
+      "total_cases": 58,
+      "chimera_correct": 0,
+      "chimera_count": 3,
+      "chimera_avg_posterior": 0.1551,
+      "hallucinated_correct": 7,
+      "hallucinated_count": 14,
+      "hallucinated_avg_posterior": 0.2529,
+      "real_correct": 18,
+      "real_count": 18,
+      "real_avg_posterior": 0.0315,
+      "retracted_correct": 17,
+      "retracted_count": 23,
+      "retracted_avg_posterior": 0.2884,
+      "fpr": 0.0,
+      "halluc_recall_high": 0.5,
+      "halluc_recall_elevated": 1.0
+    },
+    "ds": {
+      "total_correct": 40,
+      "total_cases": 58,
+      "chimera_correct": 3,
+      "chimera_count": 3,
+      "chimera_avg_posterior": 0.4386,
+      "hallucinated_correct": 14,
+      "hallucinated_count": 14,
+      "hallucinated_avg_posterior": 0.6054,
+      "real_correct": 0,
+      "real_count": 18,
+      "real_avg_posterior": 0.1495,
+      "retracted_correct": 23,
+      "retracted_count": 23,
+      "retracted_avg_posterior": 0.5465,
+      "fpr": 1.0,
+      "halluc_recall_high": 1.0,
+      "halluc_recall_elevated": 1.0
+    }
+  },
+  "per_case": [
+    {
+      "id": "retracted_001",
+      "category": "retracted",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": false
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": true,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_002",
+      "category": "retracted",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": false
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": true,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_003",
+      "category": "retracted",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": false
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": true,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_004",
+      "category": "retracted",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": false
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": true,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_005",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_006",
+      "category": "retracted",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": false
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": true,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_007",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_008",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_009",
+      "category": "retracted",
+      "signals_fired": [
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.042919,
+        "tier": "low",
+        "correct": false
+      },
+      "grouped": {
+        "posterior": 0.049818,
+        "tier": "low",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.24428,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.168722,
+        "conflict": 0.331969
+      }
+    },
+    {
+      "id": "retracted_010",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "bayes": {
+        "posterior": 0.144245,
+        "tier": "elevated",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_011",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_012",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_013",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_014",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_015",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_016",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_017",
+      "category": "retracted",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "retracted_018",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_019",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch"
+      ],
+      "bayes": {
+        "posterior": 0.144245,
+        "tier": "elevated",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_020",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_021",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_022",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "retracted_023",
+      "category": "retracted",
+      "signals_fired": [
+        "metadata_mismatch",
+        "retracted_citation"
+      ],
+      "bayes": {
+        "posterior": 0.576647,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.597274,
+        "tier": "critical",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.876722,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.027832,
+        "conflict": 0.75101
+      }
+    },
+    {
+      "id": "retracted_024",
+      "category": "retracted",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "retracted_025",
+      "category": "retracted",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "retracted_026",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_027",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "retracted_028",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_001",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_002",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_003",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_004",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_005",
+      "category": "real",
+      "signals_fired": [
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.042919,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.049818,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.24428,
+        "tier": "high",
+        "correct": false,
+        "uncertainty": 0.168722,
+        "conflict": 0.331969
+      }
+    },
+    {
+      "id": "real_006",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_007",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "real_008",
+      "category": "real",
+      "signals_fired": [
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.042919,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.049818,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.24428,
+        "tier": "high",
+        "correct": false,
+        "uncertainty": 0.168722,
+        "conflict": 0.331969
+      }
+    },
+    {
+      "id": "real_009",
+      "category": "real",
+      "signals_fired": [
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.042919,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.049818,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.24428,
+        "tier": "high",
+        "correct": false,
+        "uncertainty": 0.168722,
+        "conflict": 0.331969
+      }
+    },
+    {
+      "id": "real_010",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "halluc_001",
+      "category": "hallucinated",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "halluc_002",
+      "category": "hallucinated",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "halluc_003",
+      "category": "hallucinated",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "halluc_004",
+      "category": "hallucinated",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "halluc_005",
+      "category": "hallucinated",
+      "signals_fired": [
+        "phantom_doi",
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.875301,
+        "tier": "critical",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.398064,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.851084,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.030949,
+        "conflict": 0.762516
+      }
+    },
+    {
+      "id": "halluc_006",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "halluc_007",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "halluc_008",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "halluc_009",
+      "category": "hallucinated",
+      "signals_fired": [
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.217505,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.232335,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.574624,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.088404,
+        "conflict": 0.667446
+      }
+    },
+    {
+      "id": "halluc_010",
+      "category": "hallucinated",
+      "signals_fired": [
+        "reference_not_found"
+      ],
+      "bayes": {
+        "posterior": 0.217505,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.232335,
+        "tier": "high",
+        "correct": true,
+        "conflict": 0.5
+      },
+      "ds": {
+        "posterior": 0.574624,
+        "tier": "critical",
+        "correct": true,
+        "uncertainty": 0.088404,
+        "conflict": 0.667446
+      }
+    },
+    {
+      "id": "halluc_011",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "halluc_012",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "halluc_013",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "halluc_014",
+      "category": "real",
+      "signals_fired": [],
+      "bayes": {
+        "posterior": 0.022559,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.024514,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.113027,
+        "tier": "elevated",
+        "correct": false,
+        "uncertainty": 0.182302,
+        "conflict": 0.002171
+      }
+    },
+    {
+      "id": "halluc_015",
+      "category": "hallucinated",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "chimera_001",
+      "category": "chimera",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "chimera_002",
+      "category": "chimera",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "chimera_003",
+      "category": "real",
+      "signals_fired": [
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.042919,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.049818,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.24428,
+        "tier": "high",
+        "correct": false,
+        "uncertainty": 0.168722,
+        "conflict": 0.331969
+      }
+    },
+    {
+      "id": "chimera_004",
+      "category": "chimera",
+      "signals_fired": [
+        "metadata_mismatch",
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.246708,
+        "tier": "high",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.15507,
+        "tier": "elevated",
+        "correct": false,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.438647,
+        "tier": "high",
+        "correct": true,
+        "uncertainty": 0.125328,
+        "conflict": 0.562063
+      }
+    },
+    {
+      "id": "chimera_005",
+      "category": "real",
+      "signals_fired": [
+        "no_id_match"
+      ],
+      "bayes": {
+        "posterior": 0.042919,
+        "tier": "low",
+        "correct": true
+      },
+      "grouped": {
+        "posterior": 0.049818,
+        "tier": "low",
+        "correct": true,
+        "conflict": 0.0
+      },
+      "ds": {
+        "posterior": 0.24428,
+        "tier": "high",
+        "correct": false,
+        "uncertainty": 0.168722,
+        "conflict": 0.331969
+      }
+    }
+  ]
+}
