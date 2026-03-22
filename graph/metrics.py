@@ -24,6 +24,8 @@ class GraphHealthReport:
     interconnection_score: float = 100.0
     temporal_consistency_score: float = 100.0
     self_citation_score: float = 100.0
+    benford_score: float = 100.0
+    reciprocal_score: float = 100.0
     overall_health_score: float = 100.0
 
     def summary(self) -> dict:
@@ -36,6 +38,8 @@ class GraphHealthReport:
             "interconnection_score": round(self.interconnection_score, 1),
             "temporal_consistency_score": round(self.temporal_consistency_score, 1),
             "self_citation_score": round(self.self_citation_score, 1),
+            "benford_score": round(self.benford_score, 1),
+            "reciprocal_score": round(self.reciprocal_score, 1),
             "overall_health_score": round(self.overall_health_score, 1),
         }
 
@@ -89,11 +93,15 @@ class GraphMetrics:
         report.interconnection_score = self._score_interconnection(report)
         report.temporal_consistency_score = self._score_temporal(report)
         report.self_citation_score = self._score_self_citation(report)
+        report.benford_score = self._score_benford(report)
+        report.reciprocal_score = self._score_reciprocal(report)
 
         report.overall_health_score = (
-            report.interconnection_score * 0.35 +
-            report.temporal_consistency_score * 0.35 +
-            report.self_citation_score * 0.30
+            report.interconnection_score * 0.25 +
+            report.temporal_consistency_score * 0.25 +
+            report.self_citation_score * 0.20 +
+            report.benford_score * 0.15 +
+            report.reciprocal_score * 0.15
         )
         return report
 
@@ -122,3 +130,24 @@ class GraphMetrics:
         ring_bonus = 20 if any(a.anomaly_type == AnomalyType.SELF_CITATION_RING
                                for a in self_cites) else 0
         return max(0.0, 100.0 - max_score * 40 - ring_bonus)
+
+    def _score_benford(self, report: GraphHealthReport) -> float:
+        """Score based on Benford's law violations."""
+        benford = [a for a in report.anomalies
+                   if a.anomaly_type == AnomalyType.BENFORD_VIOLATION]
+        if not benford:
+            return 100.0
+        max_score = max(a.score for a in benford)
+        return max(0.0, 100.0 - max_score * 50)
+
+    def _score_reciprocal(self, report: GraphHealthReport) -> float:
+        """Score based on reciprocal citation anomalies and citation bursts."""
+        reciprocals = [a for a in report.anomalies
+                       if a.anomaly_type in (AnomalyType.RECIPROCAL_CITATION,
+                                             AnomalyType.CITATION_BURST)]
+        if not reciprocals:
+            return 100.0
+        max_score = max(a.score for a in reciprocals)
+        burst_penalty = 10 if any(a.anomaly_type == AnomalyType.CITATION_BURST
+                                  for a in reciprocals) else 0
+        return max(0.0, 100.0 - max_score * 40 - burst_penalty)

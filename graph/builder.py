@@ -37,6 +37,7 @@ class CitationNode:
     citation_count: int = 0
     reference_count: int = 0
     metadata: dict = field(default_factory=dict)
+    field: str = ""
 
 
 class CitationGraph:
@@ -132,6 +133,7 @@ class GraphBuilder:
             authors=entity.authors[:],
             venue=entity.venue,
             entity_type=entity.entity_type.value,
+            field=entity.metadata.get("field", "") or "",
             citation_count=(
                 entity.metadata.get("citation_count", 0) or
                 entity.metadata.get("is_referenced_by_count", 0) or 0
