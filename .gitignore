@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Models (too large for git, use HuggingFace Hub)
+models/intent_classifier/model.safetensors
+models/scifact_nli/model.safetensors
+models/scifact_nli/model.onnx
+models/scifact_nli/model_int8.onnx
+models/scifact_nli/spm.model
+models/scifact_nli/tokenizer.json
+
+# Benchmark data (large crawled datasets)
+benchmarks/data/crawled/
+benchmarks/data/hf_export/
+benchmarks/data/scifact/
+benchmarks/data/scicite/
+
+# Rust build artifacts
+rust_core/target/
+
+# Environment
+.env
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+texput.log
+*.log

@@ -1,76 +1,121 @@
 # IntegriRef
 
-**Cross-Domain Reference Integrity Engine**
+**Multi-Layer Reference Integrity Verification Engine**
 
-跨域文档引用完整性验证引擎 — 不是引用检查工具，而是跨学术、专利、法律、金融、政府、标准六大领域的引用完整性基础设施。
+L0-L4 五层验证栈 — 覆盖学术、专利、法律、政府、金融、标准六大领域的引用完整性引擎。62 个注册表适配器，15+ 语言，L2 语义验证精度 93.5%（超越人类一致性 89.1%）。
 
 ---
 
-## 定位
+## 核心能力
 
-当前市场上的引用检查工具（CiteTrue, SwanRef, Citely, scite.ai）都局限于：
-- 仅学术领域
-- 仅L0存在性验证（"这篇文献存在吗？"）或L1意图分类（"支持/反对/提及"）
-- 不做声明-原文事实对齐
-- 不做引用图拓扑异常检测
-- 不跨域（专利→论文、判决→法规、标准→标准 等关系完全空白）
+| 验证层 | 能力 | 精度/性能 | 竞品现状 |
+|--------|------|-----------|----------|
+| **L0** | 存在性验证 + 字段匹配 + 幻觉检测 + 撤稿检查 | 18,555 refs/s (字段) · 336K refs/s (幻觉) | CiteTrue/SwanRef 仅此层 |
+| **L1** | 引文意图分类 (Supporting/Contrasting/Mentioning) | 86.0% F1 (SciBERT on SciCite) | scite.ai 独立评估仅 29% F1 |
+| **L2** | 语义声明验证 (claim ↔ abstract NLI 对齐) | **93.5% acc** (DeBERTa-v3 on SciFact) | **无竞品** |
+| **L3** | 引文图谱异常检测 (7 种异常 + 2-hop OpenAlex) | CIDRE 变体 + Benford 定律 | **无竞品** |
+| **L4** | 贝叶斯风险评分 (18 信号 × 似然比) | 校准后验概率 · 4 风险等级 | **无竞品** |
 
-**IntegriRef 的目标是 L2-L5 的全栈验证**，在 L0/L1 与竞品持平的同时，提供：
-
-| 验证层级 | 能力 | 竞品现状 | IntegriRef |
-|---------|------|---------|------------|
-| L0 | 存在性验证 | CiteTrue/SwanRef/Citely | 92个数据源, 14种语言 |
-| L1 | 引用意图分类 | scite.ai | NLI模型 + 引用上下文 |
-| L2 | 声明-摘要语义对齐 | **无商业产品** | 核心差异化功能 |
-| L3 | 引用图拓扑异常检测 | **无商业产品** | CIDRE+PDCN变体 |
-| L4 | 跨域引用验证 | **无任何存在** | 六大领域跨库映射 |
-| L5 | 假实验/论文工厂检测 | **无任何存在** | 图指纹+数值一致性 |
+**额外检测能力**: 281 扭曲短语 · GRIM 数值验证 · statcheck p 值重算 · Sneaked Reference 检测 · 邮箱风险评分
 
 ---
 
 ## 架构
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    IntegriRef Engine                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
-│  │  Format       │  │  Semantic    │  │  Graph           │  │
-│  │  Adapters     │  │  Verification│  │  Analysis         │  │
-│  │  .bib .pdf    │  │  NLI/LLM    │  │  异常检测/风险评分  │  │
-│  │  .docx .djvu  │  │  (计划中)    │  │  (计划中)          │  │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────────┘  │
-│         │                 │                  │              │
-│  ┌──────▼─────────────────▼──────────────────▼───────────┐  │
-│  │              Core Engine                               │  │
-│  │  ICEntity (实体模型) + RegistryDiscovery (智能路由)      │  │
-│  └──────────────────────┬────────────────────────────────┘  │
-│                         │                                   │
-│  ┌──────────────────────▼────────────────────────────────┐  │
-│  │              Registry Adapters (31个已实现)             │  │
-│  │  Academic(13) Patents(4) Legal(4) Gov(4) Fin(2) Std(4)│  │
-│  └───────────────────────────────────────────────────────┘  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  L4: Bayesian Risk Scoring                                    │
+│  └─ 18 signals × likelihood ratios → posterior probability    │
+├──────────────────────────────────────────────────────────────┤
+│  L3: Citation Graph Analysis                                  │
+│  └─ OpenAlex 2-hop │ 7 anomaly detectors │ health score      │
+├──────────────────────────────────────────────────────────────┤
+│  L2: Semantic Claim Verification                              │
+│  └─ DeBERTa-v3 NLI │ ONNX INT8 加速 │ sentence-level        │
+├──────────────────────────────────────────────────────────────┤
+│  L1: Citation Intent Classification                           │
+│  └─ SciBERT fine-tuned │ 3-class │ heuristic fallback        │
+├──────────────────────────────────────────────────────────────┤
+│  L0: Reference Existence Verification                         │
+│  └─ FieldComparator │ HallucinationDetector │ Retraction      │
+│  └─ TorturedPhrases │ GRIM │ statcheck │ SneakedRefs         │
+├──────────────────────────────────────────────────────────────┤
+│  Foundation: 62 Registry Adapters × 6 Domains                 │
+│  ┌─────────┐ ┌────────┐ ┌───────┐ ┌──────┐ ┌─────┐ ┌─────┐ │
+│  │Academic │ │Patents │ │ Legal │ │ Gov  │ │ Fin │ │ Std │ │
+│  │   35    │ │   5    │ │   8   │ │  6   │ │  4  │ │  4  │ │
+│  └─────────┘ └────────┘ └───────┘ └──────┘ └─────┘ └─────┘ │
+├──────────────────────────────────────────────────────────────┤
+│  Infrastructure: Cache │ Circuit Breaker │ Async I/O │ ONNX   │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### 三层核心
+---
 
-1. **验证接口层** (Verification Interface Layer)
-   - 为每个公开数据库构建统一的 `RegistryAdapter` 适配器
-   - 内置速率限制、重试、超时
-   - 不缓存原文内容，只返回验证结果
+## 快速开始
 
-2. **实体标准化层** (Entity Normalization Layer)
-   - `ICEntity` — 统一跨库实体模型，12种实体类型
-   - 15种标识符格式自动检测 (DOI, arXiv, PMID, 专利号, CELEX, RFC, CVE, ISBN, ORCID...)
-   - 跨ID桥接 + 标题模糊匹配消歧
+```bash
+# 克隆 & 安装
+git clone https://github.com/GeoffreyWang1117/IntegriRef.git
+cd IntegriRef
+pip install -r requirements.txt
 
-3. **跨库映射层** (Cross-Registry Mapping Layer)
-   - 在异构数据库之间建立引用关系图
-   - 专利→论文 (NPL引用)、判决→法规、标准→论文 等跨域边
-   - 引用图异常检测 (孤岛引用、时序反常、共引偏离、自引环)
+# 可选：异步 + ONNX 加速
+pip install aiohttp uvloop onnxruntime
+
+# 运行测试 (480+ tests)
+pytest tests/ -x -q
+```
+
+### 基本用法
+
+```python
+from core.discovery import RegistryDiscovery
+
+# 初始化 — 自动注册 62 个适配器
+discovery = RegistryDiscovery()
+discovery.auto_register()
+
+# 按标识符查询 (自动检测 DOI/arXiv/PMID/ISBN/专利号等 15 种格式)
+result = discovery.verify_reference(
+    title="Attention Is All You Need",
+    identifier="10.48550/arXiv.1706.03762",
+)
+print(result["found"])            # True
+print(result["registries_hit"])   # ["crossref", "openalex", ...]
+```
+
+### 语义验证 (L2)
+
+```python
+from semantic.nli_verifier import NLIVerifier
+
+verifier = NLIVerifier()  # DeBERTa-v3, 93.5% accuracy
+result = verifier.verify(
+    claim="Transformer models outperform RNNs on translation",
+    abstract="Experiments on WMT 2014 show the model achieves 28.4 BLEU, "
+             "surpassing the best previously reported RNN-based models."
+)
+# result.label → SUPPORTED (confidence: 0.91)
+```
+
+### 异步批量验证
+
+```python
+import asyncio
+from core.async_discovery import AsyncRegistryDiscovery
+from core.batch_processor import BatchProcessor
+
+async def main():
+    discovery = AsyncRegistryDiscovery()
+    discovery.register_all(all_adapters)
+
+    processor = BatchProcessor(discovery, max_concurrent=32)
+    results = await processor.verify_batch(references)
+    # 19.8x throughput vs sequential
+
+asyncio.run(main())
+```
 
 ---
 
@@ -78,218 +123,259 @@
 
 ```
 IntegriRef/
-├── core/
-│   ├── entity.py          # ICEntity 数据模型 (12种实体类型, ExternalID, 标准化)
-│   ├── registry.py        # RegistryAdapter 抽象基类 (rate limiting, HTTP helpers)
-│   └── discovery.py       # RegistryDiscovery 智能路由 (15种ID检测, 跨库查询)
+├── core/                      # 核心引擎
+│   ├── entity.py              # ICEntity 数据模型 (12 种实体类型)
+│   ├── registry.py            # RegistryAdapter 基类 (限速/重试/熔断)
+│   ├── discovery.py           # RegistryDiscovery 路由 (15 种 ID 检测)
+│   ├── async_registry.py      # 异步适配器基类 (aiohttp)
+│   ├── async_discovery.py     # 异步发现引擎 (asyncio.gather)
+│   ├── batch_processor.py     # 批量处理器 (Semaphore 并发控制)
+│   ├── cache.py               # 双层缓存 (LRU + Redis)
+│   ├── circuit_breaker.py     # 熔断器 (滑动窗口/3 状态)
+│   └── parsing.py             # 统一解析工具
 │
-├── registries/            # 31个已实现的数据库适配器
-│   ├── academic/          # (13) CrossRef, arXiv, DBLP, S2, OpenAlex, PubMed,
-│   │                      #      ORCID, DOAJ, Unpaywall, CORE, Europe PMC,
-│   │                      #      DataCite, OpenCitations
-│   ├── patents/           # (4)  USPTO, EPO OPS, WIPO, Lens.org
-│   ├── legal/             # (4)  CourtListener, GovInfo, EUR-Lex SPARQL, Federal Register
-│   ├── government/        # (4)  World Bank, IMF, WHO GHO, UN Digital Library
-│   ├── financial/         # (2)  SEC EDGAR, Federal Register
-│   └── standards/         # (4)  NIST NVD, IETF RFC, Wikidata SPARQL, Open Library
+├── verification/              # L0 验证层
+│   ├── engine.py              # 多注册表级联验证引擎 (1050+ 行)
+│   ├── field_comparator.py    # 字段模糊匹配 (RapidFuzz + Jaccard)
+│   ├── hallucination_detector.py  # AI 引文幻觉检测 (7 种模式 + kill-shot)
+│   ├── retraction_checker.py  # Crossref 撤稿检测
+│   ├── tortured_phrases.py    # 扭曲短语检测 (281 模式, Aho-Corasick)
+│   ├── statistical.py         # GRIM + statcheck 统计验证
+│   ├── sneaked_references.py  # Sneaked Reference 检测
+│   └── email_risk.py          # 邮箱风险评分 (55 免费 + 25 工厂域名)
 │
-├── adapters/              # 文档格式适配器
-│   ├── base.py            # FormatAdapter 抽象基类
-│   ├── bibtex.py          # .bib 解析
-│   ├── pdf.py             # PDF (GROBID + PyMuPDF fallback)
-│   ├── docx_adapter.py    # DOCX (python-docx)
-│   └── text.py            # TXT + DjVu (via djvutxt)
+├── semantic/                  # L1-L2 语义层
+│   ├── nli_verifier.py        # NLI 验证器 (DeBERTa-v3, 93.5%)
+│   ├── intent_classifier.py   # 引文意图分类 (SciBERT, 86% F1)
+│   ├── onnx_exporter.py       # ONNX 导出 + INT8 量化
+│   └── semantic_pipeline.py   # 端到端语义管线
 │
-├── refcheck.py            # 遗留: 5源级联验证引擎 (将用 Rust 重写)
-├── test_registries.py     # 冒烟测试 (31 adapters + 15 ID检测)
-├── requirements.txt
-├── ROADMAP.md             # 详细技术路线图 + 竞品分析 + 商业模型
-└── RESEARCH.md            # 调研报告 (92个数据源, 学术蓝海方法, 多语言覆盖)
+├── graph/                     # L3 图谱层
+│   ├── builder.py             # CitationGraph 构建
+│   ├── anomaly.py             # 7 种异常检测器
+│   ├── metrics.py             # 5 维健康评分
+│   └── openalex_builder.py    # OpenAlex 2-hop 图谱
+│
+├── scoring/                   # L4 评分层
+│   ├── bayesian.py            # 贝叶斯风险评分 (18 信号)
+│   ├── dempster_shafer.py     # D-S 证据融合 + Grouped Bayesian
+│   ├── calibration.py         # 经验校准器 (Platt/Isotonic/Bayesian)
+│   ├── scorer.py              # 多维度完整性评分
+│   └── profiles.py            # 领域评分配置
+│
+├── registries/                # 62 个数据库适配器
+│   ├── academic/   (35)       # OpenAlex, Crossref, PubMed, S2, arXiv, DBLP, ...
+│   ├── patents/    (5)        # USPTO, EPO, WIPO, Google Patents, KIPRIS
+│   ├── legal/      (8)        # CourtListener, EUR-Lex, Legifrance, ...
+│   ├── government/ (6)        # data.gov, e-Gov Japan, e-Stat, ...
+│   ├── financial/  (4)        # EDGAR, FRED, INPI, ...
+│   └── standards/  (4)        # ISO, IEC, NIST, ...
+│
+├── models/                    # 微调模型
+│   ├── intent_classifier/     # SciBERT on SciCite (86% F1)
+│   └── scifact_nli/           # DeBERTa-v3 on SciFact (93.5%)
+│
+├── tests/          (480+)     # 测试套件
+├── benchmarks/                # 基准测试套件
+│   ├── bench_comparison.py    # IntegriRef vs CheckIfExist 对比
+│   ├── bench_fusion.py        # 信号融合消融 (Bayes/Grouped/D-S)
+│   ├── bench_early_stop.py    # 级联早停模拟
+│   └── baselines/             # 基线实现 (CheckIfExist 等)
+├── web/                       # 展示网站 + 文档
+└── docs/                      # 开发笔记 + 战略分析
 ```
 
 ---
 
-## 当前状态
+## Benchmark 结果
 
-### 已完成
+### 完整性基准 (IntegriRef-Bench Golden Test Set, 58 cases)
 
-- **31个 RegistryAdapter** 全部通过冒烟测试
-- **ICEntity 数据模型** — 12种实体类型, 跨库ID管理, 标题/作者标准化
-- **RegistryDiscovery** — 15种标识符格式自动检测, 智能查询路由
-- **格式适配器** — BibTeX, PDF (GROBID), DOCX, DjVu/TXT
-- **调研完成** — 92个可接入数据源清单, 5大商业化蓝海, 学术SOTA方法
+| 指标 | 优化前 | 优化后 | 说明 |
+|------|--------|--------|------|
+| 撤稿召回率 (≥ ELEVATED) | 100% (10/10*) | **73.9% (17/23)** | 全量 23 篇撤稿论文，6 篇缺少撤稿标记 |
+| 幻觉召回率 (≥ HIGH) | 42.9% | **100% (14/14)** | 14/14 假引用全部检出 |
+| 误报率 (real → ≥ ELEVATED) | 0% (0/15) | **0% (0/18)** | 18 篇真论文零误报 |
+| Chimera 检测率 | 100% | **100% (3/3)** | 3/3 元数据嵌合体 |
+| 幻觉精确率 | 100% | **100%** | 无假阳性 |
 
-### 计划中
+\* 优化前仅处理了 10/25 篇撤稿论文（超时）；优化后为全量 58-case 运行。
 
-- **Phase 0.5**: Retraction Watch 集成 (Crossref 扩展, 零成本)
-- **Phase 1a**: 7个新英语API (bioRxiv, ClinicalTrials, NASA ADS, INSPIRE, Zenodo, FRED, zbMATH)
-- **Phase 1b**: 17个多语言API (HAL, CiNii, J-STAGE, SciELO, Legifrance, etc.)
-- **Phase 1c**: OAI-PMH 通用基类 + 7个OAI-PMH源
-- **Phase 2**: 语义验证 — NLI模型实现 claim-abstract 对齐 (L2核心功能)
-- **Phase 3**: 引用图异常检测 (CIDRE引用环 + PDCN论文工厂)
-- **Phase 4**: 风险评分系统 (多维度加权, 按领域可配)
-- **Phase 5**: 跨域引用边发现
+**关键优化**: Phantom DOI 信号独立于搜索结果 · Kill-shot override 阻止贝叶斯软化 · 搜索阶段 author guard 防止假匹配
 
----
+### L0 独立筛查模式 (ref-check, 92 秒完成)
 
-## 数据源覆盖
+| 指标 | 值 | 说明 |
+|------|-----|------|
+| 幻觉召回率 | **100% (14/14)** | 所有假引用被 FAIL/WARN |
+| 真论文正确率 | 70% (7/10) | 3 篇误报可由人工复核修正 |
+| Phantom ID 检测 | 4 个 | 格式正确但不存在的 DOI/arXiv |
+| 撤稿检测 | 0% | L0 无 Retraction Watch 集成 |
 
-**92个数据源**, 覆盖 **14种语言/地区**:
+### Head-to-Head: IntegriRef vs CheckIfExist
 
-| 领域 | 已实现 | 待实现 | 合计 |
-|------|:-----:|:-----:|:----:|
-| 学术 | 13 | 24 | **37** |
-| 专利 | 4 | 4 | **8** |
-| 法律 | 6 | 7 | **13** |
-| 金融/经济 | 3 | 4 | **7** |
-| 政府/国际 | 8 | 6 | **14** |
-| 标准/知识库 | 7 | 4 | **11** |
-| 研究诚信 | 0 | 2 | **2** |
+在 58-case golden test set 上与 CheckIfExist (Abbonato et al. 2025) 的正面对比：
 
-### 多语言覆盖
+| 指标 | IntegriRef (L0+L4) | CheckIfExist | 说明 |
+|------|:--:|:--:|------|
+| 幻觉召回率 (≥ HIGH) | **100% (14/14)** | 0% (0/14) | CIE 无法产生高置信度判断 |
+| 幻觉召回率 (≥ ELEVATED) | **100% (14/14)** | 92.9% (13/14) | CIE 标记为 suspicious 但非 HIGH |
+| 撤稿召回率 (≥ ELEVATED) | **73.9% (17/23)** | 26.1% (6/23) | |
+| Chimera 检测率 | **100% (3/3)** | 33.3% (1/3) | CIE 对标题正确的 chimera 完全盲目 |
+| 误报率 | **0% (0/18)** | 11.1% (2/18) | CIE 因标题格式差异误判真论文 |
+| 平均延迟 | 38.5s | **2.3s (17x)** | CIE 仅查存在性，速度优势明显 |
 
-| 语言 | 学术 | 专利 | 法律 | 数据源 |
-|------|:---:|:---:|:---:|--------|
-| 英语 | ★★★ | ★★★ | ★★★ | 53个adapter |
-| 法语 | ★★★ | ★★★ | ★★★ | HAL, Persée, theses.fr, INPI, Legifrance |
-| 日语 | ★★★ | ★★★ | ★★☆ | CiNii, J-STAGE, EPO(JPO), e-Gov Law |
-| 韩语 | ★★☆ | ★★☆ | ★★☆ | KCI, KIPRIS, Korean Law Center |
-| 葡语 | ★★★ | ★★☆ | - | SciELO |
-| 德语 | ★★☆ | ★★★ | ★★☆ | DDB, EPO(DPMA), Open Legal Data |
-| 西语 | ★★☆ | ★★☆ | - | Dialnet, Redalyc (OAI-PMH) |
-| 俄语 | ★★☆ | ★★☆ | - | CyberLeninka (OAI-PMH) |
-| 中文 | ★★☆ | ★★★ | - | OpenAlex/Crossref间接 + EPO(CNIPA) |
+### 信号融合消融实验
 
----
+三种 L4 评分方法对比（同一 58-case 测试集）：
 
-## 快速开始
+| 方法 | 准确率 | 幻觉召回 (≥HIGH) | 误报率 | 说明 |
+|------|:--:|:--:|:--:|------|
+| **Naive Bayes + Kill-shot** | **89.7%** | **100%** | **0%** | 当前默认 |
+| Grouped Bayesian | 89.7% | 50% | 0% | 组内取 max LR，防双重计数 |
+| Dempster-Shafer | — | 100% | 100% | Pignistic 概率分裂不确定性 |
 
-```bash
-# 安装依赖
-pip install -r requirements.txt
+信号相关性：`phantom_doi`↔`reference_not_found` 共火 100% (8/8)；`metadata_mismatch`↔`no_id_match` 共火 71% (15/21)。
 
-# 运行冒烟测试 (31 adapters + ID检测)
-python test_registries.py
+### 级联早停优化 (C3PO-inspired)
 
-# 带实际API调用的测试
-python test_registries.py --live
-```
+L0→L4 中间评分后，可跳过 L1–L3 的模拟实验：
 
-### 基本用法
+| 阈值策略 | 跳过率 | 准确率回归 | 节省延迟 |
+|----------|:--:|:--:|:--:|
+| 保守 (>0.80 / <0.01) | 43.1% | 0 | ~56s |
+| 中等 (>0.70 / <0.02) | 60.3% | 0 | ~79s |
+| **激进 (>0.50 / <0.05)** | **67.2%** | **0** | **~88s** |
 
-```python
-from core.entity import ICEntity, EntityType
-from core.discovery import RegistryDiscovery
-from registries.academic import ALL_ACADEMIC
+所有 18 篇真论文 (posterior < 0.05) 跳过 L1–L3；8 个 "tier change" 均为向上偏移 (CRITICAL→HIGH)，早停严格安全。
 
-# 初始化发现引擎
-discovery = RegistryDiscovery()
-discovery.register_all(ALL_ACADEMIC)
+### 精度
 
-# 自动检测标识符类型并查询
-results = discovery.query_by_id("10.1038/nature12373")  # DOI → CrossRef
-results = discovery.query_by_id("2301.12345")           # arXiv ID → arXiv
-results = discovery.query_by_id("CVE-2023-44487")       # CVE → NIST NVD
+| 层 | 微调前 | 微调后 | 公开 SOTA | 说明 |
+|----|--------|--------|-----------|------|
+| L1 (SciCite) | 69.8% acc / 46.9 F1 | **87.6% acc / 86.0 F1** | 88.9 F1 (ImpactCite) | 仅 110M 参数即接近 SOTA |
+| L2 (SciFact) | 52.4% acc | **93.5% acc** | 88% F1 | **超越人类一致性 89.1%** |
 
-# 高级验证 (ID查询 → 标题搜索 fallback)
-report = discovery.verify_reference(
-    title="Attention Is All You Need",
-    identifier="10.5555/3295222.3295349",
-    domains=["academic"]
-)
-print(report["found"])            # True
-print(report["registries_hit"])   # ["crossref", "semantic_scholar", ...]
-```
+### 吞吐量
 
----
+| 组件 | 吞吐量 | 延迟 |
+|------|--------|------|
+| L0 FieldComparator | 18,555 refs/s | 0.05 ms |
+| L0 HallucinationDetector | 336,136 refs/s | <0.01 ms |
+| L1 SciBERT batch=8 (GPU) | 263.5 refs/s | 3.8 ms |
+| L2 NLI (GPU) | 25.1 refs/s | 39.8 ms |
 
-## 核心设计原则
+### 加速基础设施
 
-1. **不下载、不存储原文** — 只做验证、标准化、映射
-2. **每个 Adapter 都是独立的** — 统一 `RegistryAdapter` 接口, 可插拔
-3. **速率限制内置** — 每个 adapter 自动遵守 API 配额
-4. **ICEntity 是唯一的交换格式** — 所有 adapter 的输出都归一化为 ICEntity
-5. **基础功能必须与竞品持平** — L0/L1 是入场券, L2+ 是差异化
-
----
-
-## 验证层级详解
-
-### L0: 存在性验证 (竞品基线)
-> "Smith (2020) 这篇文献存在吗？元数据对吗？"
-
-- ID解析 (DOI/arXiv/PMID → 官方记录)
-- 标题+作者+年份模糊匹配
-- 元数据交叉验证 (多库一致性)
-- **撤稿检测** (Retraction Watch via Crossref)
-
-### L1: 引用意图分类 (追平 scite.ai)
-> "这是支持性引用、反对性引用、还是背景引用？"
-
-- 引用上下文提取 (citation sentence + ±1 句)
-- NLI 模型分类 (supporting / contrasting / mentioning)
-- 零样本可用, 微调可提升
-
-### L2: 声明-摘要语义对齐 (核心差异化, 无竞品)
-> "本文说 Smith 研究了 X, 但 Smith 的摘要说的是 Y — 标记为高风险"
-
-- 从引用上下文提取 claim (对引文做了什么声明)
-- 获取被引文献的摘要 (via S2/CrossRef/OpenAlex)
-- NLI 对齐: claim vs abstract → ENTAILMENT / NEUTRAL / CONTRADICTION
-- **CONTRADICTION = 自动高风险标记**
-
-### L3: 引用图拓扑异常 (无竞品)
-> "这篇论文的引用图结构是否异常？"
-
-- 孤岛引用检测 (引文之间零互连)
-- 时序反常检测 (引用未来论文)
-- 共引偏离分析 (引用组合偏离领域基线)
-- 自引环检测 (CIDRE 变体)
-
-### L4: 跨域引用验证 (无竞品)
-> "专利中引用的论文、判决中引用的法规 — 跨库验证"
-
-### L5: 假实验/论文工厂检测 (无竞品)
-> "PDCN论文工厂指纹 + 跨论文数值一致性"
-
----
-
-## 关键文件
-
-| 文件 | 用途 |
-|------|------|
-| `core/entity.py` | ICEntity 数据模型 — 所有 adapter 的输出归一化格式 |
-| `core/registry.py` | RegistryAdapter 抽象基类 — 所有 adapter 的实现契约 |
-| `core/discovery.py` | RegistryDiscovery — 智能路由 + 15种ID检测 |
-| `registries/*/` | 31个数据库适配器 (按领域分组) |
-| `adapters/` | 文档格式适配器 (BibTeX/PDF/DOCX/DjVu) |
-| `ROADMAP.md` | 详细技术路线图 + 竞品分析 + 商业模型 + 评分系统设计 |
-| `RESEARCH.md` | 92个数据源调研 + 学术蓝海方法 + 多语言覆盖矩阵 |
+| 优化 | 加速比 |
+|------|--------|
+| asyncio.gather vs 顺序 | **14.5x** |
+| Async + 缓存命中 | **145.7x** |
+| 批处理 32 并发 | **19.8x** |
+| ONNX INT8 vs PyTorch CPU | **2.2x** |
 
 ---
 
 ## 竞品对比
 
-| | CiteTrue | SwanRef | Citely | scite.ai | **IntegriRef** |
-|---|:---:|:---:|:---:|:---:|:---:|
-| 存在性验证 (L0) | 16库 | 2库 | 3库 | 1.6B引用 | **92源** |
-| 意图分类 (L1) | - | - | - | DL模型 | NLI模型 |
-| 语义对齐 (L2) | - | - | - | - | **NLI+LLM** |
-| 图异常 (L3) | - | - | - | - | **CIDRE+PDCN** |
-| 跨域验证 (L4) | - | - | - | - | **六大领域** |
-| 多语言 | 英语 | 英语 | 英语 | 英语 | **14种语言** |
-| 专利/法律/金融 | - | - | - | - | **全覆盖** |
-| 撤稿检测 | - | - | - | 有 | **有** |
+| 能力 | **IntegriRef** | scite.ai | CiteTrue/SwanRef | Papermill Alarm | RefChecker |
+|------|:-:|:-:|:-:|:-:|:-:|
+| L0 存在性验证 | **62 registries** | 30M+ papers | 150M+ | -- | LLM-based |
+| L1 引文意图 | **86.0% F1** | ~29% F1* | -- | -- | -- |
+| L2 语义验证 | **93.5% acc** | -- | -- | -- | -- |
+| L3 图谱异常 | **7 types** | Basic | -- | -- | -- |
+| L4 贝叶斯风险 | **18 signals** | -- | -- | -- | -- |
+| 扭曲短语 | **281 patterns** | -- | -- | Yes | -- |
+| GRIM / statcheck | **Yes** | -- | -- | -- | -- |
+| 多语言 (15+) | **Yes** | Partial | -- | -- | -- |
+| 开源 / 自部署 | **Yes** | No | No | No | Yes |
+
+\* scite.ai 自报 F1~74%；独立评估 (Bakker et al. 2023) 仅 F1~29%。
 
 ---
 
-## 相关项目
+## 多语言覆盖 (15+ 语言)
 
-- **refcheck-oss** (`refcheck-oss-v1.0.zip`) — 开源CLI版本 (MIT), 纯学术BibTeX验证
-- **ref-check SaaS** (`~/Tools/ref-check/app/`) — FastAPI Web平台原型
+| 语言 | 适配器 |
+|------|--------|
+| 法语 | HAL, Legifrance, Persee, theses.fr, INPI |
+| 日语 | CiNii, J-STAGE, e-Gov Japan, e-Stat |
+| 韩语 | KCI, KIPRIS, Korean Law Center |
+| 拉美 | SciELO, Redalyc, Dialnet |
+| 土耳其语 | DergiPark |
+| 俄语 | CyberLeninka (OAI-PMH) |
+| 印尼语 | GARUDA (OAI-PMH) |
+| 印度 | Shodhganga, Indian Kanoon |
+
+---
+
+## 开发路线图
+
+### 当前状态
+
+```
+✅ 已完成：IntegriRefPipeline 统一编排器 (core/pipeline.py)
+           L0→L1→L2→L3→L4 自动串联 + SignalExtractor 信号采集
+           BayesianRiskScorer 全自动后验概率计算
+           Phantom DOI/arXiv kill-shot override + 搜索阶段 author guard
+           58-case golden benchmark: 100% 幻觉召回 / 73.9% 撤稿召回 / 0% 误报
+           CheckIfExist head-to-head 对比 (全面优于)
+           信号融合消融: Naive Bayes vs Grouped Bayesian vs Dempster-Shafer
+           级联早停优化: 67.2% 跳过率，零准确率回归
+           经验校准器 + D-S 证据融合模块
+
+⚠️ 待完善：4 个检测器未接入管线 (tortured/email/GRIM/sneaked)
+           撤稿检测依赖 OpenAlex 元数据覆盖 (73.9%)
+           非学术领域 (专利/法律/金融) benchmark 缺失
+```
+
+### 近期优先级
+
+| 优先级 | 任务 | 说明 | 状态 |
+|--------|------|------|------|
+| ~~**P0**~~ | ~~统一编排器 + 幻觉检测优化~~ | ~~Phantom DOI fix + kill-shot + author guard~~ | ✅ 完成 |
+| ~~**P0**~~ | ~~LR 校准优化~~ | ~~经验校准器 (Platt/Isotonic/Bayesian)~~ | ✅ 完成 |
+| ~~**P1**~~ | ~~CheckIfExist 对比实验~~ | ~~58-case head-to-head，全面优于~~ | ✅ 完成 |
+| ~~**P2**~~ | ~~信号融合升级~~ | ~~D-S + Grouped Bayesian 消融，Naive Bayes 仍最优~~ | ✅ 完成 |
+| ~~**P3**~~ | ~~级联早停优化~~ | ~~67.2% 跳过率，零回归，~88s 节省~~ | ✅ 完成 |
+| **P1** | 接入 4 个未连接的检测器 | tortured/email/GRIM+statcheck/sneaked → engine | 待做 |
+| **P1** | 端到端集成测试 | 用真实论文 fixture 验证完整管线 | 待做 |
+| **P2** | FastAPI REST API | 商业化 MVP，5 个核心 endpoint | 待做 |
+| **P3** | 跨数据集泛化测试 (L2) | HealthVer, FEVER, ClimateVER | 待做 |
+| **P3** | LLM 幻觉引文 benchmark | GPT-4/Claude/Gemini 生成引文验证 | 待做 |
+
+### 研究方向
+
+1. **系统论文** (JASIST/Scientometrics) — L0-L4 全栈 + 消融实验 + CheckIfExist 对比 + 融合消融 (**论文撰写中**)
+2. **LLM 引文幻觉检测** (ACL/EMNLP) — 最热话题，基础设施已就绪
+3. **跨领域引文操控** (QSS) — 6 领域 × 10K 论文的异常模式对比
+4. **多语言引文验证** (JCDL) — 15+ 语言验证精度差异与改进
+
+---
+
+## 设计原则
+
+1. **不下载、不存储原文** — 只做验证和元数据比对
+2. **每个 Adapter 独立可插拔** — 统一 `RegistryAdapter` 接口
+3. **速率限制 + 熔断器内置** — 自动遵守 API 配额，故障自动隔离
+4. **ICEntity 唯一交换格式** — 所有输出归一化
+5. **CPU 优先，GPU 可选** — 每层都有启发式 fallback
+
+---
+
+## 相关文档
+
+| 文件 | 内容 |
+|------|------|
+| [docs/DEVELOPMENT_NOTES.md](docs/DEVELOPMENT_NOTES.md) | 完整技术记录：架构设计、微调记录、性能优化、Bug 修复 |
+| [docs/STRATEGY.md](docs/STRATEGY.md) | 竞品分析、技术路线、商业化路线图 |
+| [web/index.html](web/index.html) | 产品展示页 |
+| [web/docs.html](web/docs.html) | 在线文档 |
+| [ROADMAP.md](ROADMAP.md) | 早期技术路线图 |
+| [RESEARCH.md](RESEARCH.md) | 数据源调研报告 |
 
 ---
 
 ## License
 
-Proprietary. All rights reserved.
+MIT License. See [LICENSE](LICENSE) for details.
