@@ -311,42 +311,47 @@ L0→L4 中间评分后，可跳过 L1–L3 的模拟实验：
 
 ## 开发路线图
 
-### 当前状态
+### 已完成 (v0.1 → v0.3)
 
-```
-✅ 已完成：IntegriRefPipeline 统一编排器 (core/pipeline.py)
-           L0→L1→L2→L3→L4 自动串联 + SignalExtractor 信号采集
-           BayesianRiskScorer 全自动后验概率计算
-           Phantom DOI/arXiv kill-shot override + 搜索阶段 author guard
-           58-case golden benchmark: 100% 幻觉召回 / 73.9% 撤稿召回 / 0% 误报
-           CheckIfExist head-to-head 对比 (全面优于)
-           信号融合消融: Naive Bayes vs Grouped Bayesian vs Dempster-Shafer
-           级联早停优化: 67.2% 跳过率，零准确率回归
-           经验校准器 + D-S 证据融合模块
+| 版本 | 里程碑 | 关键成果 |
+|------|--------|----------|
+| v0.1 | 基础设施 | 31 注册表适配器 + ICEntity 模型 + RegistryDiscovery 路由 |
+| v0.2 | L0-L4 全栈 | 5 层验证管线 + IntegriRefPipeline 编排器 + 信号融合 |
+| v0.3 | 扩展与优化 | 62 适配器 (6 领域 15+ 语言) + 异步/缓存/熔断基础设施 + Rust 加速 |
 
-⚠️ 待完善：4 个检测器未接入管线 (tortured/email/GRIM/sneaked)
-           撤稿检测依赖 OpenAlex 元数据覆盖 (73.9%)
-           非学术领域 (专利/法律/金融) benchmark 缺失
-```
+**核心指标** (58-case golden benchmark):
+- 幻觉召回 100% (14/14) · 误报率 0% (0/18) · 撤稿召回 73.9% (17/23)
+- CheckIfExist head-to-head 全面优于 · 级联早停 67.2% 跳过率零回归
 
-### 近期优先级
+### 当前进行中
 
 | 优先级 | 任务 | 说明 | 状态 |
 |--------|------|------|------|
-| ~~**P0**~~ | ~~统一编排器 + 幻觉检测优化~~ | ~~Phantom DOI fix + kill-shot + author guard~~ | ✅ 完成 |
-| ~~**P0**~~ | ~~LR 校准优化~~ | ~~经验校准器 (Platt/Isotonic/Bayesian)~~ | ✅ 完成 |
-| ~~**P1**~~ | ~~CheckIfExist 对比实验~~ | ~~58-case head-to-head，全面优于~~ | ✅ 完成 |
-| ~~**P2**~~ | ~~信号融合升级~~ | ~~D-S + Grouped Bayesian 消融，Naive Bayes 仍最优~~ | ✅ 完成 |
-| ~~**P3**~~ | ~~级联早停优化~~ | ~~67.2% 跳过率，零回归，~88s 节省~~ | ✅ 完成 |
+| **P0** | 数据集扩展 (爬虫) | 7 个爬虫就绪，需要扩充撤稿/幻觉/统计错误样本 | 🔄 进行中 |
+| **P0** | 系统论文撰写 | GEM 2026 投稿，L0-L4 全栈 + 消融 + 对比 | 🔄 进行中 |
 | **P1** | 接入 4 个未连接的检测器 | tortured/email/GRIM+statcheck/sneaked → engine | 待做 |
 | **P1** | 端到端集成测试 | 用真实论文 fixture 验证完整管线 | 待做 |
 | **P2** | FastAPI REST API | 商业化 MVP，5 个核心 endpoint | 待做 |
-| **P3** | 跨数据集泛化测试 (L2) | HealthVer, FEVER, ClimateVER | 待做 |
+| **P2** | 跨数据集泛化测试 (L2) | HealthVer, FEVER, ClimateVER | 待做 |
 | **P3** | LLM 幻觉引文 benchmark | GPT-4/Claude/Gemini 生成引文验证 | 待做 |
+
+### 数据集爬虫状态
+
+`benchmarks/crawlers/` 下 7 个爬虫：
+
+| 爬虫 | 数据源 | 输出 | 状态 |
+|------|--------|------|------|
+| `retracted_papers.py` | Crossref + PubMed retracted | 撤稿论文元数据 | ✅ 已有数据 |
+| `reference_verification.py` | Crossref API | 真实引用验证对 | ✅ 已有数据 |
+| `scifact_converter.py` | SciFact dataset | NLI claim-evidence 对 | ✅ 已有数据 |
+| `grim_crawler.py` | PMC full-text | GRIM 可检测论文 | 待扩展 |
+| `statcheck_crawler.py` | PMC full-text | 统计报告论文 | 待扩展 |
+| `pmc_fulltext.py` | PMC OA subset | 全文引用上下文 | 待扩展 |
+| `temporal_anomaly.py` | Crossref + OpenAlex | 时间异常引用 | 待扩展 |
 
 ### 研究方向
 
-1. **系统论文** (JASIST/Scientometrics) — L0-L4 全栈 + 消融实验 + CheckIfExist 对比 + 融合消融 (**论文撰写中**)
+1. **系统论文** (GEM 2026) — L0-L4 全栈 + 消融实验 + CheckIfExist 对比 (**撰写中**)
 2. **LLM 引文幻觉检测** (ACL/EMNLP) — 最热话题，基础设施已就绪
 3. **跨领域引文操控** (QSS) — 6 领域 × 10K 论文的异常模式对比
 4. **多语言引文验证** (JCDL) — 15+ 语言验证精度差异与改进
