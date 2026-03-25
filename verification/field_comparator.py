@@ -188,6 +188,14 @@ VENUE_ABBREVS = {
     "nejm": "new england journal of medicine",
     "lancet": "the lancet",
     "jama": "journal of the american medical association",
+    # Scientometrics / Library science (synced from bibguard v0.3.0)
+    "jasist": "journal of the association for information science and technology",
+    "scientometrics": "scientometrics",
+    "qss": "quantitative science studies",
+    "jcdl": "joint conference on digital libraries",
+    "joi": "journal of informetrics",
+    "wsdm": "web search and data mining",
+    "cikm": "conference on information and knowledge management",
 }
 
 # DBLP-style abbreviations → canonical forms
@@ -205,6 +213,13 @@ DBLP_VENUE_MAP = {
     "ieee trans. pattern anal. mach. intell.": "transactions on pattern analysis and machine intelligence",
     "ieee trans. knowl. data eng.": "transactions on knowledge and data engineering",
     "ieee trans. softw. eng.": "transactions on software engineering",
+    # Synced from bibguard v0.3.0
+    "sci. rep.": "scientific reports",
+    "inf. process. manag.": "information processing and management",
+    "j. assoc. inf. sci. technol.": "journal of the association for information science and technology",
+    "j. informetr.": "journal of informetrics",
+    "account. res.": "accountability in research",
+    "learn. publ.": "learned publishing",
 }
 
 
@@ -290,17 +305,20 @@ class FieldComparator:
 
     @staticmethod
     def match_year(bib_year: str, api_year: Optional[str]) -> tuple[str, str]:
-        """Compare years — exact or ±1."""
+        """Compare years — exact, ±1, ±2 (preprint vs published)."""
         if not api_year:
             return "WARN", "no year from API"
         try:
             by, ay = int(bib_year), int(api_year)
         except (ValueError, TypeError):
             return "WARN", f"unparseable years: bib={bib_year} api={api_year}"
-        if by == ay:
+        diff = abs(by - ay)
+        if diff == 0:
             return "OK", f"year exact match ({by})"
-        elif abs(by - ay) <= 1:
+        elif diff <= 1:
             return "WARN", f"year off by 1: bib={by} api={ay}"
+        elif diff <= 2:
+            return "WARN", f"year off by 2: bib={by} api={ay} (preprint vs published?)"
         else:
             return "FAIL", f"year mismatch: bib={by} api={ay}"
 
