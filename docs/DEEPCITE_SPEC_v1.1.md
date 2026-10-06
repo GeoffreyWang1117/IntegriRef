@@ -91,22 +91,29 @@ python -m deepcite annotate --paper <dir> --record <record_id> --opinion-file F
   "bibguard_version": "0.5.0",
   "generated_at": "<ISO8601>",
   "paper": {"root": "<abs>", "main_tex": "main.tex",
-            "files_sha256": {"sections/05_audit.tex": "<sha256>", ...}},
+            "files_sha256": {"sections/05_audit.tex": "<sha256>", ...},
+            # 0.2.0 起可选：review 模式 "kind": "pdf", "pdf", "pdf_sha256",
+            # "body_text"（抽取文本的路径，citing 的字节偏移指向它）
+           },
   "records": [{
     "record_id": "<sha256(bib_key|cited_id_or_empty|citing_file_relpath|context_sha256)[:16]>",
-    "bib_key": "...", "cited_id": "arXiv:2305.14795v3" | "doi:..." | null,
-    "artifact": {"kind": "arxiv_source|arxiv_pdf|pdf|data_file|url|none",
+    "bib_key": "...", "cited_id": "arXiv:2305.14795v3" | "doi:..." | "openreview:<id>" | null,
+    "cited_title": "..." | null,                       # 0.2.0 起，附加字段
+    "artifact": {"kind": "arxiv_source|arxiv_pdf|acl_anthology_pdf|openreview_pdf|data_file|url|none",
                  "ref": "<path or url>", "sha256": "<工件哈希>" | null},
     "citing": {"file": "...", "line": N, "byte_start": N, "byte_end": M,
-               "sentence": "<raw>", "context_sha256": "..."},
-    "selection": {"family": "using|attribution", "pattern_id": "U3|A2|...",
-                  "claim_type": "protocol|metric|setup|dataset|split|number|other"},
-    "status": "CANDIDATE_EVIDENCE|CLAIM_ABSENT_FROM_ARTIFACT|NO_FULLTEXT|WRONG_ARTIFACT_KIND|UNRESOLVED",
+               "sentence": "<raw>", "context_sha256": "..."},   # review 模式另有 "page", "marker"
+    "selection": {"family": "using|attribution|finding", "pattern_id": "U3|A2|A3T|F1|FB:quantity|AQ|...",
+                  "claim_type": "protocol|metric|setup|dataset|split|number|finding|quote|other"},
+    "status": "CANDIDATE_EVIDENCE|CLAIM_ABSENT_FROM_ARTIFACT|NO_FULLTEXT|WRONG_ARTIFACT_KIND|UNRESOLVED|SOURCE_UNAVAILABLE",
+    "quotes_checked": [{"text": "...", "found": bool, "file": "..."|null, "line": N|null}],  # 0.2.0 起，仅当句中有引文
     "search_terms": ["..."],
     "passages": [{"file": "...", "line_start": N, "line_end": M,
                   "text": "<展示用规范化，<=60 词>", "rank_score": float}],
     "llm_opinion": null | {"text": "...", "quotes": [{"text": "...", "file": "...",
-                                                      "line": N, "verified": true}]},
+                                                      "line": N, "verified": true}],
+                           "assessment": "mismatch|no_mismatch_found|unclear",   # 0.2.0 起，可选
+                           "searched": ["..."]},       # 仅 unclear 且无引文时
     "error": null | "..."
   }]
 }
@@ -312,3 +319,80 @@ rebuttal Exp1 的两个结论都指向不用：
 **精度初判（§10.1 的小规模验证，尚未做成正式指标）：** 人工看了 5 条，4 条是真可核查断言，
 1 条假阳性（已修，即上面第 3 条）。这不构成 precision/recall 数字 ——
 要给出数字还需要在 ROA-LLM 和 crystleLLM 上标注，属未完成项。
+
+---
+
+## 12. 0.2.0 修订（2026-10-06，format_version 仍为 1）
+
+用户要求本机可用、覆盖"自己写论文"和"审高水平会议的稿"两种用法。以下改动**都在本节和 §5 里写明**；
+除 `WRONG_ARTIFACT_KIND` 的含义变化外都是附加字段/取值，旧读方不会崩，但会漏看新字段。
+
+**行为变化（不是附加）：**
+1. **`WRONG_ARTIFACT_KIND` 收窄。** 0.1.0 里 arXiv 只有 PDF 的 e-print 一律判这个状态。现在用
+   `pdftotext` 抽出文本照常检索（`artifact.kind = arxiv_pdf`），只有**没有文字层**的 PDF
+   （扫描件）才判 `WRONG_ARTIFACT_KIND`。`--artifact` 给的 PDF 同理：以前按字节当文本读（乱码），现在读其文本。
+2. **新状态 `SOURCE_UNAVAILABLE`：** 查找或下载源拒绝回答（HTTP 429/5xx、超时）。可重试，**不构成任何证据**。
+   0.1.0 把 arXiv 的 429 报成 `UNRESOLVED`"找不到 arXiv 工件，请用 --artifact 手工提供" ——
+   与 bibguard 0.6.0 之前把限流报成"可能是幻觉引用"同一类错误。实测：当天 arXiv API 对本机持续 429。
+3. **只扫主文件 `\input`/`\include` 到的 .tex。** 0.1.0 扫目录下所有 .tex，ICML 模板自带的
+   `example_paper.tex` 因此把"Use the et al. construct …"放进了 worklist。`files_sha256` 仍是完整的扫描集合。
+4. **分句：** 花括号里带句号的标题行（`\paragraph{X.}`）不再当正文；行首 run-in 标题
+   （`\paragraph{X.} 正文`、`\textbf{X.} 正文`）从句首切掉。会改变这类句子的 `context_sha256`（由 IntegriRef 会话报告）。
+
+**选择（patterns `6a73406f` → `ab0e1801`）：**
+- 新族 `finding`（F1–F5 显式"X 发现/表明"，FB 裸陈述须带具体性信号：数量、比较、因果/效应、范围词；
+  第一人称、指引词 see/e.g.、关联词 relates to/parallels、>3 个 key 的引用列表一律不选）。
+- A2/A3 补"引用在后"的位置（A2T/A3T）；A7–A10 补机制动词、"is bounded/built …"、命名归属
+  （"is the naive Bayes combiner … [X]"）；AQ：句中有 ≥4 词的引文即选。
+- LaTeX 的 `~` 视为空格（以前 `in~\cite{x}` 让 A4/A5 永远不中）；U1/U5/A5 结尾补 `\b`
+  （以前 "prompt injection [X]" 被读成 "prompt in [X]"）；A3 加第一人称与括号旁注保护。
+- 新 claim_type：`finding`、`quote`。retrieve 的 `_TYPE_CUES["finding"]` 里第一人称是**正**信号、
+  select 里是**负**信号，两处都有注释，别"统一"。
+
+**度量（全部带 patterns 哈希，见 `benchmarks/results/*_ab0e1801.json`）：**
+
+| | 0.1.0 (`6a73406f`) | 0.2.0 (`ab0e1801`) |
+|---|---|---|
+| Citation-Integrity dev：可核查声明召回 | 0.0275 | 0.5725 |
+| Citation-Integrity test：可核查声明召回 | 0.0513 | 0.5934 |
+| Citation-Integrity dev/test：错误引用召回 | 0.0109 / 0.0397 | 0.5217 / 0.6225 |
+| 检索 recall@5（>5 句文档，dev/test） | 0.806 / 0.726 | 不变 |
+| 作者 CS 论文 held-out（3 篇 94 句，盲标）：召回 / 精确率 / 误选率 | 0.17 / 0.53 / 0.25 | 0.38 / 0.73 / 0.22 |
+| 作者 CS 论文 dev（4 篇 67 句，调参用）：召回 / 精确率 | 0.12 / 0.45 | 0.73 / 0.81 |
+
+Citation-Integrity 测不了精确率："无证据"指摘要里没有支撑，恰恰是 deepcite 要管的情形（IntegriRef 会话同意并撤回了
+≤15% 的护栏）。精确率只看手标集；标注者是 Claude（LLM），不是人；held-out 是对选择器盲标的，dev 不是。
+句子来自作者未发表论文，标注文件留在本机 `~/.cache/integriref/deepcite/eval_labels/`，不进仓库；
+`deepcite/eval/labeled_sentences.py` 可复现。
+
+**确定性的引文核对（`quotes_checked`）：** 句中每段 ≥4 词的引文在工件里逐字查找（空白、破折号、LaTeX 命令、
+行尾连字符规范化；词不规范化；`.tex` 里注释掉的行不算）。这是 deepcite 唯一陈述事实的地方。
+正例：Replay-V 826bb73 之前把 arnal2026replay 引成 "drastically **reduces** inference compute without
+degrading"，原文是 "drastically reduce inference compute without degrading---and in some cases even
+improving---final model performance"：改过的版本判未找到，改正后的版本在 `meta_main.tex:86` 找到。
+
+**取原文：** DataCite（arXiv DOI 10.48550 的登记处，带最新版本号；与 arXiv abs 页核对 4 例一致）→ arXiv 标题检索
+→ ACL Anthology（10.18653 DOI）→ OpenReview（只在 OpenReview 的 ICLR/NeurIPS 论文，如 MQuAKE-Remastered）。
+标题匹配：规范化后相等/包含，或 token Jaccard ≥0.85（场馆版与 arXiv 版差一个词，如 HackAPrompt），
+连字符两种归一都试（PDF 参考文献的行尾断词 "Com-promising"）。成功的查找缓存在本机（命中 30 天、确定未命中 7 天、拒绝不缓存）。
+bibguard 只对**被选中的 key** 跑（以前对整份 .bib，55 s）。
+
+**review 模式（`deepcite review <submission.pdf>`）：** 无 .tex/.bib。`pdfscan.py` 用 `pdftotext -tsv` 的版面信息
+处理双栏、页眉页脚、审稿行号、脚注图注，切参考文献，映射 numeric 与 author-year 引用（15 篇真实 PDF 的条目数全对）。
+记录的 `citing.file = "body.txt"`（抽取文本），`paper.kind = "pdf"`。出机器的只有被引文献的标题与 id；
+用 LLM 判 worklist（`packet`/`annotate`）受会议审稿 LLM 政策约束，由审稿人自己决定。
+
+**同日后续三处修正（都有测试）：**
+- OpenReview 自 2026-10 起对任何非浏览器的 PDF 请求回 403 "Challenge verification required"（检索 API 仍可用）。
+  deepcite 不绕过这类验证：此时记为 `UNRESOLVED`，`error` 给出 forum 链接并提示手工下载后用 `--artifact`；
+  不记为 `SOURCE_UNAVAILABLE`，因为重跑没用。
+- 引文规范化把 LaTeX 转义当作字符本身（源码 `1\%` 等于读者引的 `1%`）。之前反斜杠变空格，
+  一条真实的 TemporalWiki 引文（Rule #3 的 5% 上限）被误拒。
+- 同一 e-print 里逐字节相同的文件只检索一次（ReAct 2210.03629v3 带两份论文副本，会抬高 df、让 top-5 被同一段占满；
+  IntegriRef 会话发现）。`retrieve._windows` 读 `.tex` 时剥掉注释行（IntegriRef 会话修复，`c64ac90`），
+  `annotate.locate` 同样处理：被注释掉的文字是作者删掉的，不是证据。
+
+**判读：** `report` 出 Markdown（引文未找到/判定 mismatch 最前，其次 CLAIM_ABSENT，其次未判的 CANDIDATE_EVIDENCE）；
+`packet` 给判读者（人或 agent）每条记录的上下文、工件本地路径和 JSONL 模板；`annotate --opinions` 批量回填，
+每条引文机械核对，`assessment` 只能是 mismatch / no_mismatch_found / unclear，永远没有 supported。
+
