@@ -1,0 +1,18 @@
+\documentclass[twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\begin{document}
+
+\section{Introduction}
+Knowledge editing changes what a language model believes about the world, and evaluating it requires benchmarks whose metrics are defined precisely enough that two papers reporting the same number mean the same thing.
+This paragraph is padding so that the two columns fill and a sentence has to cross from the first column into the second one, which is the case the scanner must survive without splitting the sentence in two.
+We repeat the point once more to push the text further down the first column of the first page of this short document.
+
+MQuAKE~\cite{zhong2023mquake} evaluates whether an edit propagates to its multi-hop consequences.
+Earlier benchmarks~\cite{jang2022temporalwiki,cover2006elements,smith2020first} track how facts change over time.
+We follow the evaluation protocol of~\cite{bao2023tallrec} for all ranking runs.
+Scores lie in the interval [0, 1] and the median was 3.3 [2,5] across seeds.
+For the vector we set $c_0 = [1]$ before the first round.
+\bibliographystyle{ieeetr}
+\bibliography{refs}
+\end{document}

@@ -59,6 +59,8 @@ def _bucket(r: dict) -> tuple[int, str]:
     a = (r.get("llm_opinion") or {}).get("assessment")
     if a == "mismatch":
         return 0, "Judged: mismatch"
+    if any(not q["found"] for q in r.get("quotes_checked") or []) and a != "no_mismatch_found":
+        return 0, "Quotation not found verbatim in the cited work"
     if r["status"] == K.CLAIM_ABSENT_FROM_ARTIFACT and not r.get("llm_opinion"):
         return 1, K.CLAIM_ABSENT_FROM_ARTIFACT
     if r["status"] == K.CANDIDATE_EVIDENCE and not r.get("llm_opinion"):
@@ -76,13 +78,16 @@ def _entry(r: dict, lines: list[str], full: bool) -> None:
     title = r.get("cited_title") or ""
     lines.append(f"### `{r['bib_key']}` {('-- ' + title) if title else ''}")
     meta = [x for x in (_link(r.get("cited_id")),
-                        f"`{c.get('file')}:{c.get('line')}`",
+                        (f"p. {c['page']}" if c.get("page") else f"`{c.get('file')}:{c.get('line')}`"),
                         f"{sel.get('family')}/{sel.get('pattern_id')}, {sel.get('claim_type')}",
                         f"record `{r['record_id']}`") if x]
     lines.append(" · ".join(meta) + "\n")
     lines.append(f"> {_sentence(c.get('sentence', ''))}\n")
     if r.get("error"):
         lines.append(f"- {r['error']}")
+    for q in r.get("quotes_checked") or []:
+        where = f"found at `{q['file']}:{q['line']}`" if q["found"] else "**NOT FOUND verbatim**"
+        lines.append(f"- quotation \"{q['text']}\": {where}")
     op = r.get("llm_opinion")
     if op:
         lines.append(f"- **opinion ({op.get('assessment', 'no assessment')})**: {op.get('text', '')}")

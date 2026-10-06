@@ -17,6 +17,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from .contract import strip_comments
+
 MAX_PASSAGES = 5          # enforced here, in the tool, not asked of a prompt
 MAX_WORDS = 60
 
@@ -85,9 +87,16 @@ _TYPE_CUES = {
 
 def _windows(path: Path, root: Path, size: int = 6, stride: int = 3):
     try:
-        lines = path.read_text(encoding="utf-8", errors="replace").split("\n")
+        text = path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return
+    if path.suffix.lower() == ".tex":
+        # Commented-out LaTeX is not evidence. Its authors deleted it, and a
+        # retrieved comment can support a claim the paper no longer makes --
+        # the precise failure deepcite exists to prevent. strip_comments keeps
+        # newlines, so line numbers still point into the real file.
+        text = strip_comments(text)
+    lines = text.split("\n")
     rel = str(path.relative_to(root)) if root in path.parents or root == path.parent \
         else path.name
     for i in range(0, max(1, len(lines)), stride):

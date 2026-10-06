@@ -1,0 +1,23 @@
+\documentclass[twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[round]{natbib}
+\begin{document}
+
+\section{Introduction}
+Knowledge editing changes what a language model believes about the world, and evaluating it requires benchmarks whose metrics are defined precisely enough that two papers reporting the same number mean the same thing.
+This paragraph is padding so that the two columns fill and a sentence has to cross from the first column into the second one, which is the case the scanner must survive without splitting the sentence in two.
+We repeat the point once more to push the text further down the first column of the first page of this short document.
+
+\citet{zhong2023mquake} define multi-hop accuracy as correct if any of three paraphrased questions is answered.
+MQuAKE~\citep{zhong2023mquake} evaluates whether an edit propagates to its multi-hop consequences.
+Temporal benchmarks \citep{jang2022temporalwiki,zhong2023mquake} track how facts change over time.
+Mutual information follows the definition in \citet{cover2006elements}.
+The scaling result of \citet{smith2020first} was later revisited under distribution shift \citep{smith2020second}.
+We follow the evaluation protocol of \citet{bao2023tallrec} for all ranking runs.
+A claim attributed to an unknown source (Nobody et al., 2019) has no entry in the list.
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\appendix
+\section{Extra Results}
+The appendix repeats the protocol of \citet{bao2023tallrec} on a second dataset.
+\end{document}

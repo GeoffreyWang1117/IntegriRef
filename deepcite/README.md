@@ -31,28 +31,51 @@ resolve against it. A summary is not evidence.
 ## Usage
 
 ```bash
-# Build the worklist. Deterministic; never calls an LLM.
-python -m deepcite run --paper paper/nlpcc2026 --bib paper/refs.bib --main main.tex
+# Your own paper. Main file and .bib are found from the directory (\bibliography /
+# \addbibresource); only files the main .tex \inputs are scanned. Deterministic, no LLM.
+deepcite run --paper paper/          # writes paper/.cache/ref_check_deep.json and .md
+
+# A submission you are reviewing: the PDF is all you need.
+deepcite review submission.pdf       # writes submission_deepcite/{ref_check_deep.json,.md,body.txt}
 
 # For a claim whose evidence lives in a released data file, not a paper:
-python -m deepcite run --paper . --bib refs.bib \
-       --artifact park2025chroknowledge=~/data/chroknowbench/temporal.jsonl
+deepcite run --paper . --artifact park2025chroknowledge=~/data/chroknowbench/temporal.jsonl
 
-# Attach an opinion. Every quote must appear in the cached artifact or the whole
-# opinion is rejected (exit 5).
-python -m deepcite annotate --paper . --record a1b2c3d4e5f6a7b8 --opinion-file op.json
+# Read it, then judge it (a human, or an agent following the packet's instructions):
+deepcite report --paper paper/
+deepcite packet --paper paper/ --out packet.md
+deepcite annotate --paper paper/ --opinions opinions.jsonl   # every quote checked; exit 5 if any is not there
 ```
+
+`deepcite` is `python -m deepcite` with this repository on `PYTHONPATH`.
+
+What a record is: one citing sentence that makes a checkable claim about one cited work
+(three families -- `using` "we follow X's protocol", `attribution` "X's metric is ...",
+`finding` "X showed that ..." -- see `select.py`). For each, deepcite finds the cited
+work's own text -- arXiv source (versioned id via DataCite, then arXiv search), the
+ACL Anthology, OpenReview, or your `--artifact` -- ranks candidate passages, and checks
+every quotation in the sentence verbatim against it. The report lists, in order:
+quotations not found in the cited work and judged mismatches; claims whose terms the
+cited work never mentions (`CLAIM_ABSENT_FROM_ARTIFACT`); candidate evidence nobody has
+judged; then what could not be checked and why.
+
+`SOURCE_UNAVAILABLE` means a lookup source refused (rate limit, timeout). It is retryable
+and says nothing about the citation; successful lookups are cached, so a re-run only asks
+again for what was refused.
 
 Exit codes: `0` ran (including nothing-in-scope, which still writes a cache so a
 reader can tell that from "never ran") · `2` bib missing or unparseable · `3`
-bibguard older than 0.5.0 — it fails loudly and never falls back to resolving ids
-itself · `4` every record failed · `5` `annotate` rejected an opinion · `1`
-reserved for unexpected failures.
+bibguard older than 0.5.0 -- it fails loudly and never falls back to resolving ids
+itself · `4` every record failed (including every source refusing) · `5` `annotate`
+rejected an opinion · `1` reserved for unexpected failures.
 
-Output goes to `<paper>/.cache/ref_check_deep.json`. Fetched e-prints are cached
-separately under `${XDG_CACHE_HOME:-~/.cache}/integriref/deepcite/eprints/`,
-keyed by versioned arXiv id, shared across papers because artifacts are immutable
-per version.
+Output goes to `<paper>/.cache/ref_check_deep.json` (or the `review` output directory).
+Fetched artifacts are cached under `${XDG_CACHE_HOME:-~/.cache}/integriref/deepcite/eprints/`,
+keyed by versioned arXiv id (or Anthology / OpenReview id), shared across papers because
+artifacts are immutable per version.
+
+Measured selection quality, with the patterns hash that produced it, is in
+`../docs/DEEPCITE_SPEC_v1.1.md` §12 and `../benchmarks/results/deepcite_*_<hash>.json`.
 
 ## Design constraints worth knowing
 
@@ -93,7 +116,7 @@ know what will be edited after it runs. Offsets are **UTF-8 bytes**
 ## Tests
 
 ```bash
-python -m pytest deepcite/tests/ -q                       # 48 offline tests
+python -m pytest deepcite/tests/ -q                       # 111 offline tests
 DEEPCITE_NETWORK=1 python -m pytest deepcite/tests/test_acceptance.py -v
 ```
 

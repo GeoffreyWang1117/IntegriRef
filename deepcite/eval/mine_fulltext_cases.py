@@ -51,7 +51,7 @@ from pathlib import Path
 from .. import fetch as F
 from .. import retrieve as V
 from .. import select as S
-from ..contract import CITE_RE
+from ..contract import CITE_RE, strip_comments
 
 OPENALEX = "https://api.openalex.org/works"
 # No mailto: that would put the user's address into a third-party URL. OpenAlex
@@ -289,7 +289,7 @@ def mine_local(paper: Path, bib: Path, cache_dir: Path | None,
                 continue
             full = "\n".join(p.read_text(encoding="utf-8", errors="replace")
                              for p in art.files[:40])
-            full = CITE_RE.sub(" ", full)
+            full = CITE_RE.sub(" ", strip_comments(full))   # comments are not evidence
             ok, f_score, passage, loc = body_only(terms, abstract, full,
                                                   sel.claim_type)
             if not ok:
@@ -393,7 +393,7 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
             full = "\n".join(
                 p.read_text(encoding="utf-8", errors="replace")
                 for p in art.files[:40])
-            full = CITE_RE.sub(" ", full)
+            full = CITE_RE.sub(" ", strip_comments(full))   # comments are not evidence
             ok, f_score, passage, loc = body_only(terms, info["abstract"], full,
                                                   sel.claim_type)
             if not ok:

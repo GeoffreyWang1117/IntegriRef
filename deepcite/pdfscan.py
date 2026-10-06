@@ -256,13 +256,23 @@ _HYPHENATED = re.compile(r"\b([A-Za-z]+)-([A-Za-z]+)\b")
 
 
 class _Vocab:
-    """Words seen in the document, for deciding what a line-end hyphen was."""
+    """Words seen in the document, for deciding what a line-end hyphen was.
+
+    The two halves of a broken word ("propa-" / "gates") are left out, or
+    every split word would vouch for itself.
+    """
 
     def __init__(self, lines: list[str]):
         self.words: set[str] = set()
         self.hyph: set[str] = set()
+        broke = False
         for t in lines:
-            body = t[:-1] if t.endswith("-") else t
+            body = t.strip()
+            if broke:                                  # drop the continuation half
+                body = re.sub(r"^[A-Za-z0-9]+", " ", body)
+            broke = body.endswith("-")
+            if broke:                                  # drop the broken half
+                body = re.sub(r"[A-Za-z0-9]+-$", " ", body)
             self.words.update(w.lower() for w in _WORDS.findall(body))
             self.hyph.update(f"{a}-{b}".lower() for a, b in _HYPHENATED.findall(body))
 
@@ -314,6 +324,10 @@ def _continues(prev: str, nxt: str) -> bool:
         return False
     if prev.endswith("-") and nxt[:1].isalpha():
         return True
+    tail = prev[-300:]
+    # Inside an open citation group: "(Smith et al., 2023; Jones" | "et al., 2024)".
+    if tail.count("(") > tail.count(")") or tail.count("[") > tail.count("]"):
+        return True
     return not _TERMINAL.search(prev) and nxt[:1].islower()
 
 
@@ -360,7 +374,13 @@ _CONT_SURNAME_FIRST = re.compile(rf"^{_NM}(?:\s{_NM})?,\s*[A-Z][a-z]?\.")
 # First-last ("David F. Ransohoff and Alvan R. Feinstein."): the list goes on while a
 # piece ends on an initial, is a lone surname, or opens with "Name," / "Name and".
 _CONT_FIRST_LAST = re.compile(rf"^(?:{_NM}\.$|{_NM}(?:,|\s+and\s|\s+&\s)|[A-Z].*\s[A-Z]\.$)")
-_SURNAME_FIRST = re.compile(r"^[^,.]+,\s*[A-Z][a-z]?\.")
+_INITIALS = r"(?:[A-Z][a-z]?\.\s?-?)+"
+_IEEE_NAME = rf"{_INITIALS}\s*(?:(?:van|von|de|der|den|da|di|del|la|le|du)\s+)*{_NM}(?:\s{_NM})?"
+_IEEE_AUTHORS = re.compile(
+    rf"^({_IEEE_NAME}(?:(?:,\s*(?:and\s+)?|\s+and\s+){_IEEE_NAME})*(?:,?\s+et al\.)?)\s*,\s*(.+)$")
+# "Bai, Y., Kadavath, S." / "Cover, T. M. and Thomas" -- the initials are followed by
+# the next author. "Shibhansh Dohare, J. Fernando Hernandez-Garcia" is first-last.
+_SURNAME_FIRST = re.compile(r"^[^,.]+,\s*(?:[A-Z][a-z]?\.\s?-?)+(?:,|\s+and\b|\s+&)")
 _PARTICLES = {"van", "von", "de", "der", "den", "da", "di", "del", "la", "le", "du", "dos", "das"}
 
 
@@ -384,6 +404,10 @@ def _author_block(entry: str) -> tuple[str, list[str]]:
     q = re.match(r"^(.*?),\s*[\u201c\"]", entry)
     if q and len(q.group(1)) < 400 and "(" not in q.group(1):
         return q.group(1), _pieces(entry[q.end() - 1:])
+    # IEEE without quotes (books): "T. M. Cover and J. A. Thomas, Elements of ..."
+    ie = _IEEE_AUTHORS.match(entry)
+    if ie:
+        return ie.group(1), _pieces(ie.group(2))
     ps = _pieces(entry)
     if not ps:
         return "", []
@@ -400,7 +424,8 @@ def _surnames(authors: str) -> list[str]:
     a = re.sub(r",?\s*\bet al\.?", "", authors).strip().rstrip(", ")
     # Surname-first: "Cover, T. M. and Thomas, J. A." / "Devarangadi Sunil, B."
     pairs = re.findall(r"(?:^|,\s*|\band\s+|&\s*)([^,]+?),\s*((?:[A-Z][a-z]?\.\s?-?)+)", a)
-    if pairs and re.match(r"^[^,.]+,\s*[A-Z][a-z]?\.", a):
+    if pairs and (_SURNAME_FIRST.match(a) or len(pairs) == 1 and re.fullmatch(
+            r"[^,.]+,\s*(?:[A-Z][a-z]?\.\s?-?)+", a + ".")):
         return [_fold(re.sub(r"^(?:and|&)\s+", "", s)) for s, _ in pairs]
     out = []
     for name in re.split(r",\s*(?:and\s+|&\s*)?|\s+and\s+|\s+&\s+", a.rstrip(".")):
@@ -504,6 +529,10 @@ def _split_refs(lines: list[_Line], vocab: _Vocab) -> tuple[list[RefEntry], str]
         if len(raw) < 12:
             continue
         entries.append(_make_entry(len(entries) + 1, label, raw))
+    # An appendix table that follows the list without a heading reads as a few
+    # yearless "entries" at the end; real entries almost always carry a year.
+    while entries and entries[-1].year is None and entries[-1].label is None:
+        entries.pop()
     return entries, style
 
 
@@ -604,9 +633,10 @@ def _interval_context(body: str, pos: int, is_interval) -> bool:
     # "3.3 [2,7]" / "95.0 [91,97]": a value followed by its interval.
     if re.search(r"\d(?:\.\d+)?\s*%?\s*$", body[max(0, pos - 12):pos]):
         return True
-    a = body.rfind("\n\n", 0, pos)
-    b = body.find("\n\n", pos)
-    para = body[a + 2 if a >= 0 else 0: b if b >= 0 else len(body)]
+    # The sentence around the bracket (a table cell is its own paragraph).
+    a = max(body.rfind("\n\n", 0, pos), body.rfind(". ", 0, pos))
+    ends = [x for x in (body.find("\n\n", pos), body.find(". ", pos)) if x >= 0]
+    para = body[a + 2 if a >= 0 else 0: min(ends) if ends else len(body)]
     if any(is_interval(_expand_numeric(m.group(1))) for m in _NUM_MARKER.finditer(para)):
         return True
     toks = re.findall(r"[A-Za-z]{2,}|\d+(?:\.\d+)?", _NUM_MARKER.sub(" ", para))
@@ -625,6 +655,13 @@ def _find_markers(body: str, refs: list[RefEntry], style: str) -> tuple[list[_Ma
 
         for m in _NUM_MARKER.finditer(body):
             labels = _expand_numeric(m.group(1))
+            before = body[max(0, m.start() - 4):m.start()]
+            # "c0 = [1]", "x[1]", "predict_proba(X)[1]": an index or a vector,
+            # not a citation -- a citation follows a space after a word. An
+            # operator counts only standing alone: "MESS+ [23]" is a name.
+            if re.search(r"(?:^|\s)[=+\-\u2212*/\u00b7\u00d7^_]\s*$", before) or \
+                    (before[-1:].isalnum() or before[-1:] in ")]"):
+                continue
             if len(labels) >= 2 and _interval_context(body, m.start(), is_interval):
                 continue        # "[44,59] ... [1,5]" in a results table: intervals
             if labels and all(l in by_label for l in labels):
@@ -642,6 +679,11 @@ def _find_markers(body: str, refs: list[RefEntry], style: str) -> tuple[list[_Ma
         found: list[int] = []
         prev_authors = None
         any_cite = False
+        # natbib separates with ";" -- NeurIPS's square-bracket style with ","
+        # ("[Kumar et al., 2021, Lyle et al., 2023]"): split after a year that
+        # is followed by another name.
+        inner = re.sub(r"((?:19|20)\d{2}[a-z]?)\s*,\s*(?=(?:(?:van|von|de|der|den|da|di|"
+                       r"del|la|le|du)\s+)*[A-Z])", r"\1; ", inner)
         for part in re.split(r"\s*;\s*", inner):
             pm = _PART_RX.search(part)
             if pm:
@@ -734,27 +776,50 @@ def scan_pdf(pdf: Path) -> ScannedPdf:
 
     # Body: per page, small-font blocks (footnotes, captions, table cells) go
     # last so they do not split a sentence running from one column to the next.
-    def parts(blocks_: list[_Block]) -> list[tuple[int, str]]:
-        out: list[tuple[int, str]] = []
+    def aside(b: _Block, colw: float) -> bool:
+        """Footnote, caption, table, figure label, heading: not running prose."""
+        if b.h < 0.88 * body_h:
+            return True
+        if b.x1 - b.x0 < 0.45 * colw and not _TERMINAL.search(b.text):
+            return True
+        letters = sum(c.isalpha() for c in b.text)
+        if len(b.text) > 20 and letters < 0.5 * len(b.text):
+            return True
+        # A table typeset at body size: most of its lines are short. A paragraph's
+        # lines run the full column except the last.
+        short = sum(1 for l in b.lines if l.x1 - l.x0 < 0.6 * colw)
+        return len(b.lines) >= 3 and short > 0.5 * len(b.lines)
+
+    def parts(blocks_: list[_Block]) -> list[tuple[int, str, bool]]:
+        """(page, text, is_aside) for running prose first, then every aside.
+
+        Asides go to the END of the section, not the end of their page: a
+        sentence -- or a citation group -- that runs across a page break must
+        not have a caption or a heading spliced into it.
+        """
+        flow: list[tuple[int, str, bool]] = []
+        asides: list[tuple[int, str, bool]] = []
         by_page: dict[int, list[_Block]] = defaultdict(list)
         for b in blocks_:
             by_page[b.page].append(b)
         for page in sorted(by_page):
             bs = by_page[page]
-            main = [b for b in bs if b.h >= 0.88 * body_h]
-            small = [b for b in bs if b.h < 0.88 * body_h]
-            for b in main + small:
-                out.append((page, _join_lines([l.text for l in b.lines], vocab)))
-        return out
+            w, _ = sizes.get(page, (612.0, 792.0))
+            colw = 0.42 * w if any(b.col == 1 for b in bs) else 0.75 * w
+            for b in bs:
+                text = _join_lines([l.text for l in b.lines], vocab)
+                (asides if aside(b, colw) else flow).append((page, text, False))
+        return flow + [(pg, tx, True) for pg, tx, _ in asides]
 
     body = ""
     page_spans: list[tuple[int, int]] = []
     appendix_start = -1
     for section, blocks_ in (("main", body_blocks), ("appendix", appendix_blocks)):
-        for k, (page, text) in enumerate(parts(blocks_)):
+        prev_aside = True
+        for page, text, is_aside in parts(blocks_):
             if not text:
                 continue
-            if body and k and _continues(body, text):
+            if body and not is_aside and not prev_aside and _continues(body, text):
                 body = _join_hyphen(body, text, vocab) if body.endswith("-") else body + "\n" + text
             else:
                 start = len(body) + (2 if body else 0)
@@ -762,6 +827,7 @@ def scan_pdf(pdf: Path) -> ScannedPdf:
                     appendix_start = start
                 page_spans.append((start, page))
                 body = body + "\n\n" + text if body else text
+            prev_aside = is_aside
 
     # References.
     ref_lines: list[_Line] = []
@@ -780,7 +846,7 @@ def scan_pdf(pdf: Path) -> ScannedPdf:
         warnings.append(f"{len(refs)} reference entries parsed but no in-text marker "
                         f"mapped to one ({ref_style} style assumed)")
     if unmatched:
-        ex = "; ".join(dict.fromkeys(unmatched))
+        ex = "; ".join(dict.fromkeys(re.sub(r"\s+", " ", u) for u in unmatched))
         warnings.append(f"{len(unmatched)} citation marker(s) matched no single reference "
                         f"entry and were skipped: {ex[:300]}")
 

@@ -33,7 +33,7 @@ from . import retrieve as V
 from . import select as S
 from . import report as REP
 from . import texscan as T
-from .annotate import QuoteRejected, verify_opinion
+from .annotate import QuoteRejected, locate, verify_opinion
 from .net import SourceRefused
 
 # A monthly backup snapshot is not a scratch directory. Running with --paper
@@ -268,6 +268,7 @@ def _records_for(selected, resolved, entries, manual, art_cache, memo, rank_mode
                          "line_end": p.line_end, "text": p.text,
                          "rank_score": p.rank_score} for p in ps[:V.MAX_PASSAGES]]
             status = K.CANDIDATE_EVIDENCE if passages else K.CLAIM_ABSENT_FROM_ARTIFACT
+        quotes = _check_quotes(sent.text, loc)
         records.append(K.record(
             bib_key=key, cited_id=loc.cited_id,
             artifact=loc.artifact or {"kind": "none", "ref": "", "sha256": None},
@@ -279,7 +280,27 @@ def _records_for(selected, resolved, entries, manual, art_cache, memo, rank_mode
             status=status or K.UNRESOLVED, search_terms=terms, passages=passages,
             record_id=C.record_id(key, loc.cited_id, rel, ctx), error=loc.error,
             cited_title=loc.cited_title))
+        if quotes is not None:
+            records[-1]["quotes_checked"] = quotes
     return records
+
+
+def _check_quotes(sentence: str, loc: Located) -> list[dict] | None:
+    """Every quotation in the citing sentence, looked up verbatim in the artifact.
+
+    Deterministic, and the one place deepcite states a fact about a citation: a
+    quotation either occurs in the cited work's text or it does not. Whitespace,
+    dashes, LaTeX commands and line-end hyphens are normalized; words are not.
+    """
+    spans = S.quoted_spans(sentence)
+    if not spans or not loc.files:
+        return None
+    out = []
+    for q in spans:
+        hit = locate(q, loc.files, loc.root)
+        out.append({"text": q, "found": bool(hit),
+                    "file": hit.file if hit else None, "line": hit.line if hit else None})
+    return out
 
 
 def _finish(paper: Path, payload: dict, cache_dir: Path | None, records: list) -> int:
@@ -388,7 +409,132 @@ def cmd_run(a: argparse.Namespace) -> int:
     return _finish(paper, payload, cache_dir, records)
 
 
+# --- review: someone else's submission, PDF only -------------------------------
+
+class _PdfRef:
+    """What _locate needs from a reference-list entry (bibguard is not involved:
+    there is no .bib, only the printed list)."""
+
+    def __init__(self, e):
+        self.title = e.title
+        self.arxiv_id = e.arxiv_id
+        self.doi = e.doi
+
+
+def cmd_review(a: argparse.Namespace) -> int:
+    """Build the worklist for a submission PDF you are reviewing.
+
+    Only the titles and identifiers of the CITED works leave this machine (to
+    DataCite, arXiv, the ACL Anthology and OpenReview); the submission's text
+    does not. Judging the worklist with an LLM is a separate step (packet /
+    annotate) and is subject to the venue's reviewing policy on LLM use.
+    """
+    from . import pdfscan as P
+    pdf = Path(a.pdf).expanduser().resolve()
+    if not pdf.is_file():
+        print(f"deepcite: not a file: {pdf}", file=sys.stderr)
+        return C.EXIT_NO_BIB
+    out_dir = Path(a.out).expanduser().resolve() if a.out else pdf.with_name(pdf.stem + "_deepcite")
+    _refuse_protected(out_dir, "the review worklist")
+    art_cache = Path(a.artifact_cache).expanduser() if a.artifact_cache \
+        else F.default_cache_dir()
+    _refuse_protected(art_cache, "fetched artifacts")
+
+    scan = P.scan_pdf(pdf)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    body = out_dir / "body.txt"
+    body.write_text(scan.body, encoding="utf-8")
+    for w in scan.warnings:
+        print(f"  note: {w}")
+    refs = {e.index: e for e in scan.refs}
+    # Keys per marker, for the long-list guard ("[3-9]" is background).
+    per_marker: dict[tuple[int, str], int] = {}
+    for c in scan.citations:
+        k = (c.sentence.byte_start, c.marker)
+        per_marker[k] = per_marker.get(k, 0) + 1
+    selected = []
+    for c in scan.citations:
+        sel = S.select(c.sentence.text, masked=c.masked,
+                       max_keys_per_marker=per_marker[(c.sentence.byte_start, c.marker)])
+        if sel:
+            selected.append((c, sel))
+    print(f"  {len(scan.refs)} references ({scan.style}), {len(scan.citations)} citation(s); "
+          f"{len(selected)} make a checkable claim")
+
+    def key_of(e) -> str:
+        return f"ref{e.index}" + (f"[{e.label}]" if e.label and e.label != str(e.index) else "")
+
+    manual = dict(kv.split("=", 1) for kv in (a.artifact or []) if "=" in kv)
+    memo = R._memo_load()
+    located: dict[int, Located] = {}
+    records = []
+    for c, sel in selected:
+        e = refs.get(c.ref_index)
+        if e is None:
+            continue
+        key = key_of(e)
+        if e.index not in located:
+            located[e.index] = _locate(key, _PdfRef(e), "", manual.get(key) or manual.get(str(e.index)),
+                                       art_cache, memo)
+            if not located[e.index].cited_title:
+                located[e.index].cited_title = e.title or e.raw[:120]
+        loc = located[e.index]
+        sent = c.sentence
+        ctx = C.context_sha256(sent.text)
+        terms = S.search_terms(c.masked.replace(S.CITE_TOKEN, " "))
+        status, passages = loc.status, []
+        if loc.files:
+            ps = V.rank(terms, loc.files, loc.root, claim_type=sel.claim_type)
+            passages = [{"file": q.file, "line_start": q.line_start, "line_end": q.line_end,
+                         "text": q.text, "rank_score": q.rank_score} for q in ps[:V.MAX_PASSAGES]]
+            status = K.CANDIDATE_EVIDENCE if passages else K.CLAIM_ABSENT_FROM_ARTIFACT
+        rec = K.record(
+            bib_key=key, cited_id=loc.cited_id,
+            artifact=loc.artifact or {"kind": "none", "ref": "", "sha256": None},
+            citing={"file": "body.txt", "line": sent.line, "page": scan.page_of(sent.char_start),
+                    "byte_start": sent.byte_start, "byte_end": sent.byte_end,
+                    "sentence": sent.text, "context_sha256": ctx, "marker": c.marker},
+            selection={"family": sel.family, "pattern_id": sel.pattern_id,
+                       "claim_type": sel.claim_type},
+            status=status or K.UNRESOLVED, search_terms=terms, passages=passages,
+            record_id=C.record_id(key, loc.cited_id, "body.txt", ctx), error=loc.error,
+            cited_title=loc.cited_title)
+        q = _check_quotes(sent.text, loc)
+        if q is not None:
+            rec["quotes_checked"] = q
+        records.append(rec)
+    R._memo_save(memo)
+
+    payload = K.build(out_dir, None, {"body.txt": C.file_sha256(body.read_bytes())}, records,
+                      S.patterns_sha256(), "not used (review of a PDF)")
+    payload["paper"].update({"kind": "pdf", "pdf": str(pdf), "pdf_sha256": scan.pdf_sha256,
+                             "body_text": str(body), "reference_style": scan.style,
+                             "references": len(scan.refs)})
+    out = K.write(out_dir, payload, out_dir)
+    md = out.with_suffix(".md")
+    md.write_text(REP.render(payload), encoding="utf-8")
+    by_status: dict[str, int] = {}
+    for r in records:
+        by_status[r["status"]] = by_status.get(r["status"], 0) + 1
+    for st in sorted(by_status):
+        print(f"    {st:28} {by_status[st]}")
+    print(f"  wrote {out}\n  report {md}")
+    if records and all(r["status"] in K.FAILED_STATUSES for r in records):
+        return C.EXIT_ALL_RECORDS_FAILED
+    return C.EXIT_OK
+
+
 # --- annotate ---------------------------------------------------------------
+
+def _cache_dir_for(paper: Path, cache_dir: Path | None) -> Path | None:
+    """Where the cache is: --cache-dir, else <paper>/.cache, else <paper> itself
+    (a `review` output directory holds ref_check_deep.json at its top)."""
+    if cache_dir:
+        return cache_dir
+    if not K.cache_path(paper).exists() and (paper / "ref_check_deep.json").exists():
+        return paper
+    return None
+
 
 def _apply_opinion(paper: Path, data: dict, rec: dict, opinion: dict,
                    art_cache: Path) -> str | None:
@@ -421,7 +567,7 @@ def _apply_opinion(paper: Path, data: dict, rec: dict, opinion: dict,
 
 def cmd_annotate(a: argparse.Namespace) -> int:
     paper = Path(a.paper).expanduser().resolve()
-    cache_dir = Path(a.cache_dir).expanduser().resolve() if a.cache_dir else None
+    cache_dir = _cache_dir_for(paper, Path(a.cache_dir).expanduser().resolve() if a.cache_dir else None)
     try:
         data = K.read(paper, cache_dir)
     except Exception as e:
@@ -463,7 +609,7 @@ def cmd_annotate(a: argparse.Namespace) -> int:
 
 def cmd_report(a: argparse.Namespace) -> int:
     paper = Path(a.paper).expanduser().resolve()
-    cache_dir = Path(a.cache_dir).expanduser().resolve() if a.cache_dir else None
+    cache_dir = _cache_dir_for(paper, Path(a.cache_dir).expanduser().resolve() if a.cache_dir else None)
     try:
         data = K.read(paper, cache_dir)
     except Exception as e:
@@ -480,7 +626,7 @@ def cmd_report(a: argparse.Namespace) -> int:
 
 def cmd_packet(a: argparse.Namespace) -> int:
     paper = Path(a.paper).expanduser().resolve()
-    cache_dir = Path(a.cache_dir).expanduser().resolve() if a.cache_dir else None
+    cache_dir = _cache_dir_for(paper, Path(a.cache_dir).expanduser().resolve() if a.cache_dir else None)
     try:
         data = K.read(paper, cache_dir)
     except Exception as e:
@@ -522,6 +668,14 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("--bibguard", default=None,
                    help="command to invoke bibguard (default: bibguard)")
     r.set_defaults(func=cmd_run)
+
+    v = sub.add_parser("review", help="worklist for a submission PDF (no .tex/.bib needed)")
+    v.add_argument("pdf")
+    v.add_argument("--out", default=None, help="output directory (default <pdf stem>_deepcite/ beside it)")
+    v.add_argument("--artifact", action="append", metavar="KEY=PATH_OR_URL",
+                   help="primary artifact for a reference, KEY = ref<N> or N")
+    v.add_argument("--artifact-cache", default=None)
+    v.set_defaults(func=cmd_review)
 
     n = sub.add_parser("annotate", help="attach opinions; every quote is verified")
     n.add_argument("--paper", default=".")

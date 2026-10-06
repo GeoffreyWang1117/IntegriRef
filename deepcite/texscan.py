@@ -73,8 +73,21 @@ _STRUCTURAL = re.compile(
     r"|title|author|institute|date|maketitle|item|caption|label|bibliography"
     r"|bibliographystyle|newcommand|renewcommand|def|setlength|setcounter"
     r"|keywords|titlerunning|authorrunning|tableofcontents|clearpage|newpage"
-    r"|vspace|hspace|noindent|centering|footnotesize|small|normalsize)\b[^.!?]*$"
+    r"|vspace|hspace|noindent|centering|footnotesize|small|normalsize)\b"
+    # Braced arguments may hold a period ("\paragraph{Self-Consistency variants.}");
+    # only text AFTER them decides whether the line also carries prose. Until
+    # 2026-10-06 the period inside the braces made such a line prose, and the
+    # heading was glued onto the next sentence (reported by the IntegriRef session).
+    r"\*?(?:\[[^\]]*\])?(?:\{[^{}]*\})*[^.!?]*$"
 )
+
+# A run-in heading at the start of a prose line: "\paragraph{Knowledge editing.} ROME
+# and MEMIT edit ..." or "\textbf{Tool-Augmented LLM Agents.} The ReAct paradigm ...".
+# The sentence starts after it. \textbf/\emph count only when the braced text ends
+# in "." or ":" -- otherwise it is emphasis inside a sentence.
+_RUNIN = re.compile(
+    r"^\s*(?:\\noindent\s*)?(?:\\(?:paragraph|subparagraph|subsubsection|subsection|section)"
+    r"\*?(?:\[[^\]]*\])?\{[^{}]*\}|\\(?:textbf|emph|textit|textsc)\{[^{}]*[.:]\})\s*:?\s*")
 
 
 def _prose_blocks(stripped: str) -> list[tuple[int, int]]:
@@ -90,7 +103,13 @@ def _prose_blocks(stripped: str) -> list[tuple[int, int]]:
     for line in stripped.split("\n"):
         end = pos + len(line)
         prose = bool(line.strip()) and not _STRUCTURAL.match(line)
-        if prose:
+        head = _RUNIN.match(line) if prose else None
+        if head:
+            # a heading closes the running block; prose resumes after it
+            if cur is not None:
+                blocks.append((cur, pos - 1 if pos > cur else pos))
+            cur = pos + head.end() if line[head.end():].strip() else None
+        elif prose:
             cur = pos if cur is None else cur
         elif cur is not None:
             blocks.append((cur, pos - 1 if pos > cur else pos))
@@ -178,7 +197,16 @@ def find_main(root: Path) -> str | None:
             cands.append(p.name)
     if "main.tex" in cands:
         return "main.tex"
-    return cands[0] if len(cands) == 1 else None
+    if len(cands) == 1:
+        return cands[0]
+    # Several documents (replay-V: main_aistats.tex beside main_aistats_probe.tex):
+    # the paper is the one that was compiled -- a same-named PDF exists -- and,
+    # among those, the most recently compiled.
+    built = [(root / c).with_suffix(".pdf") for c in cands]
+    built = [b for b in built if b.is_file()]
+    if built:
+        return max(built, key=lambda b: b.stat().st_mtime).with_suffix(".tex").name
+    return None
 
 
 def reachable(root: Path, main_tex: str) -> list[str]:

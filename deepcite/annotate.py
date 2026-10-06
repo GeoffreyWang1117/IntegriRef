@@ -16,6 +16,8 @@ import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
+from .contract import strip_comments
+
 
 class QuoteRejected(RuntimeError):
     pass
@@ -25,6 +27,8 @@ def qnorm(s: str) -> str:
     """Normalization for quote matching: tolerant of whitespace and LaTeX noise,
     intolerant of different words."""
     s = unicodedata.normalize("NFKC", s)
+    # Dashes are punctuation, not words: LaTeX "---" and a PDF's em dash must match.
+    s = re.sub(r"-{2,}|[\u2012-\u2015\u2212]", " ", s)
     s = re.sub(r"\\[a-zA-Z@]+\*?(?:\[[^\]]*\])?", " ", s)
     s = re.sub(r"[{}$~\\]", " ", s)
     s = re.sub(r"[\u2018\u2019\u201c\u201d]", "'", s)
@@ -49,8 +53,17 @@ def locate(quote: str, files: list[Path], root: Path) -> VerifiedQuote | None:
             text = path.read_text(encoding="utf-8", errors="replace")
         except OSError:
             continue
+        if path.suffix == ".tex":
+            # A commented-out line is text the cited authors removed; a quote that
+            # only matches there is not in the work. strip_comments keeps newlines,
+            # so reported line numbers are unchanged.
+            text = strip_comments(text)
         if needle not in qnorm(text):
-            continue
+            # A PDF's text breaks words at line ends ("evalu-\nate").
+            joined = re.sub(r"(\w)-\n\s*(\w)", r"\1\2", text)
+            if needle not in qnorm(joined):
+                continue
+            text = joined
         lines = text.split("\n")
         # Report the first line of the smallest window that contains the quote.
         for size in (1, 2, 3, 5, 8):

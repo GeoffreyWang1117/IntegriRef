@@ -121,12 +121,50 @@ _ATTR_VERBS = (r"uses|used|reports|reported|contains|includes|provides|defines"
                r"|introduces|introduced|adopts|evaluates|evaluated|measures|spans"
                r"|covers|consists|comprises|releases|released|achieves|achieved"
                r"|attains|obtains|obtained|reaches|reached|scores|scored")
+# Verbs that state what a cited work, system or theorem DOES. Measured 2026-10-06 on
+# 67 hand-labelled citing sentences from four of the user's CS papers: with only
+# _ATTR_VERBS, "AutoGPT's plugin system [X] allows third-party extensions to execute
+# arbitrary code", "empirical Bernstein [X] gives ... the one-sided bound" and "[X]
+# ask whether a test set is large enough" were all missed.
+_MECH_VERBS = (_ATTR_VERBS + r"|allows|allow|enables|executes|execute|persists|persist|stores"
+               r"|states|state|gives|give|yields|yield|implies|guarantees|asks|ask|assumes"
+               r"|requires|caps|limits|restricts|formalizes|formalises|formalize|frames|models"
+               r"|estimates|computes|bounds|inverts|corrects|elicits|elicit|probes|characterises"
+               r"|characterizes|characterise|characterize|optimises|optimizes|audits|edits|edit"
+               r"|discretises|discretizes|calls|names|terms|predicts|selects|samples|filters"
+               r"|retrieves|ranks|scores|penalizes|penalises|normalizes|normalises|standardizes")
+# Words that are as often nouns as verbs ("language models have", "the bounds are")
+# may follow a citation ("[X] bounds the error") but must not be matched anywhere in
+# a sentence, which the trailing pattern A10 would do.
+_NOUNISH = {"models", "samples", "scores", "names", "calls", "terms", "states", "state",
+            "bounds", "ranks", "filters", "limits", "caps", "estimates", "frames",
+            "requires", "edits", "edit", "audits", "probes", "give", "yield", "ask",
+            "allow", "execute", "persist", "formalize", "characterise", "characterize",
+            "elicit", "use", "used", "report", "reported", "scored", "include"}
+_MECH_VERBS_STRICT = "|".join(v for v in _MECH_VERBS.split("|") if v not in _NOUNISH)
 _ATTRIBUTION_TRAILING: list[tuple[str, str]] = [
     # "MQuAKE evaluates whether edits propagate ... [X]" / "registries reported ... [X]"
     ("A2T", rf"\b(?:{_ATTR_VERBS})\b[^.;]{{0,160}}?{CITE_TOKEN}"),
     # "... a case fatality rate of 38% [X]" -- a number in the clause the citation closes
     ("A3T", rf"(?<![\w.\-])\d+(?:\.\d+)?\s*(?:\\%|%|×|\\times|x\b|-?fold|times"
             rf"|percent|points?|pp\b)[^.;]{{0,100}}?{CITE_TOKEN}"),
+    # "AutoGPT's plugin system [X] allows ..." / "\citet{x} ask whether ..."
+    ("A7", rf"{CITE_TOKEN}\s*(?:\w+\s+){{0,2}}?(?:{_MECH_VERBS})\b"),
+    # "prompt injection [X] is bounded by ..." / "[X] is built from the same problems"
+    # Participles that say what the work IS, not what the citing paper did with it
+    # ("ESC [X] ... are faithfully replayed" is the citing paper's own usage).
+    ("A8", rf"{CITE_TOKEN}\s*(?:is|are|was|were)\s+(?:\w+ly\s+)?(?:bounded|built|bound|known"
+           rf"|designed|defined|limited|restricted|derived|constructed|drawn|taken|based"
+           rf"|trained|composed|collected|annotated|labell?ed|curated|proposed|introduced"
+           rf"|formulated|parameteri[sz]ed|optimi[sz]ed|computed|capped)\b"),
+    # naming: "... is the naive Bayes combiner, also called ..., of the literature [X]"
+    ("A9", rf"\b(?:is|are|known\s+as|called|termed|named|dubbed)\s+(?:the\s+|an?\s+)?"
+           rf"(?:[\w-]+\s+){{0,5}}?(?:combiner|estimator|bound|inequality|algorithm|rule|test"
+           rf"|theorem|lemma|property|criterion|metric|loss|objective|procedure|model|method"
+           rf"|framework|benchmark|dataset|protocol|estimand|statistic|scheme|heuristic)\b"
+           rf"[^.;]{{0,90}}?{CITE_TOKEN}"),
+    # trailing mechanism verb: "... selective retention optimises utility under a budget [X]"
+    ("A10", rf"\b(?:{_MECH_VERBS_STRICT})\b[^.;]{{0,120}}?{CITE_TOKEN}"),
 ]
 
 # --- finding family (NEW 2026-10-06) ----------------------------------------
@@ -174,7 +212,7 @@ _SPECIFIC: list[tuple[str, str]] = [
                r"\s+in|due\s+to|because|increase[sd]?|decrease[sd]?|reduce[sd]?|reduction"
                r"|improve[sd]?|improvement|degrade[sd]?|degradation|enable[sd]?|prevent[sd]?"
                r"|induce[sd]?|trigger(?:s|ed)?|drives?|drove|harms?|hurts?|boosts?|mitigate[sd]?"
-               r"|associated\s+with|correlat\w+|linked\s+to|predicts?|predictive|risk\w*"
+               r"|associated\s+with|correlat(?:es|ed|ing)\s+with|linked\s+to|predicts?|predictive|risk\w*"
                r"|vulnerab\w+|robust\w*|fail(?:s|ed|ure)?|collapse[sd]?|converge[sd]?|diverge[sd]?)\b"),
     ("scope", r"\b(?:most|majority|all|none|only|never|always|consistently|significantly"
               r"|substantially|dramatically|rarely|frequently|universally|cannot|impossible"
@@ -203,6 +241,16 @@ _RELATIONAL = re.compile(r"\b(?:relates?\s+to|related\s+to|connects?\s+to|parall
 _PAREN = re.compile(r"\([^()]*\)")
 MAX_KEYS_BARE = 3        # "many works do X [a,b,c,d,e]" is background, not one checkable claim
 
+# A quotation beside a citation is the most checkable claim there is: the words
+# must appear in the cited work. Replay-V (2026-10-06) quoted a cited paper as
+# ``drastically reduces inference compute without degrading'' where the paper says
+# "drastically reduce inference compute without degrading---and in some cases even
+# improving---final model performance"; a hand check found it, deepcite selected
+# nothing in that paragraph.
+_QUOTE = re.compile(r"``(.+?)''|\\enquote\*?\{([^{}]+)\}|\u201c([^\u201d]+)\u201d"
+                    r"|(?<![\w\\])\"([^\"]{10,})\"", re.DOTALL)
+MIN_QUOTE_WORDS = 4      # shorter is a term or a scare quote, not a quotation
+
 _C_USING = [(pid, re.compile(p, re.IGNORECASE)) for pid, p in _USING]
 _C_ATTR = [(pid, re.compile(p, re.IGNORECASE)) for pid, p in _ATTRIBUTION]
 _C_ATTR_T = [(pid, re.compile(p, re.IGNORECASE)) for pid, p in _ATTRIBUTION_TRAILING]
@@ -222,7 +270,7 @@ def patterns_sha256() -> str:
            + sorted(p for _, p in _ATTRIBUTION_TRAILING) + sorted(p for _, p in _FINDING)
            + sorted(p for _, p in _SPECIFIC)
            + [_FIRST_PERSON.pattern, _POINTER.pattern, _RELATIONAL.pattern,
-              _PAREN.pattern, str(MAX_KEYS_BARE)])
+              _PAREN.pattern, str(MAX_KEYS_BARE), _QUOTE.pattern, str(MIN_QUOTE_WORDS)])
     return hashlib.sha256("\x00".join(src).encode("utf-8")).hexdigest()
 
 
@@ -244,6 +292,16 @@ def classify_claim_type(masked: str) -> str:
     if _NUMBER.search(masked):
         return "number"
     return "other"
+
+
+def quoted_spans(sentence: str) -> list[str]:
+    """Quotations of at least MIN_QUOTE_WORDS words in a citing sentence."""
+    out = []
+    for m in _QUOTE.finditer(sentence):
+        q = next(g for g in m.groups() if g is not None)
+        if len(re.findall(r"[A-Za-z0-9]+", q)) >= MIN_QUOTE_WORDS:
+            out.append(re.sub(r"\s+", " ", q).strip())
+    return out
 
 
 def _clause_before(masked: str, pos: int) -> str:
@@ -280,14 +338,26 @@ def select(sentence: str, masked: str | None = None,
         if rx.search(masked):
             return Selection("using", pid, classify_claim_type(masked))
     for pid, rx in _C_ATTR:
-        if rx.search(masked):
+        text = masked
+        if pid == "A3":
+            # 2026-10-06, held-out CS sample: 7 of 13 false selections were A3 firing on
+            # the citing paper's own numbers ("MovieLens-25M [X]: 10,000-user sample",
+            # "Applying IPS [X] to our Beauty data ... 10x lower").
+            text = _drop_asides(masked)
+            m = rx.search(text)
+            if not m or not _third_person(text, m) or _FIRST_PERSON.search(text[m.start():]):
+                continue
+        if rx.search(text):
             ct = classify_claim_type(masked)
             # A3 exists to catch numbers attributed to the cited work; if no
             # artifact noun is present, the claim type is the number itself.
             if pid == "A3" and ct == "other":
                 ct = "number"
             return Selection("attribution", pid, ct)
+    long_list = max_keys_per_marker is not None and max_keys_per_marker > MAX_KEYS_BARE
     for pid, rx in _C_ATTR_T:
+        if long_list and pid in ("A2T", "A7", "A10"):
+            continue        # "Modern frameworks [7 keys] manage state ..." is background
         text = _drop_asides(masked) if pid == "A3T" else masked
         m = rx.search(text)
         if (m and _third_person(text, m) and not _POINTER.search(text)
@@ -301,6 +371,8 @@ def select(sentence: str, masked: str | None = None,
         if m and (pid == "F1" or _third_person(masked, m)):
             ct = classify_claim_type(masked)
             return Selection("finding", pid, "finding" if ct == "other" else ct)
+    if quoted_spans(sentence or masked):
+        return Selection("attribution", "AQ", "quote")
     return _bare_finding(masked, max_keys_per_marker)
 
 

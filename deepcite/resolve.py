@@ -117,16 +117,53 @@ def _tnorm(s: str) -> str:
     return _NORM_T.sub(" ", s.lower()).strip()
 
 
+def _tjoin(s: str) -> str:
+    """Like _tnorm but hyphens JOIN: a PDF reference list breaks "Compromising" into
+    "Com-promising", and "Real-World" must equal "Real-World" either way."""
+    s = re.sub(r"\\[a-zA-Z]+\s*", " ", s or "").replace("{", "").replace("}", "")
+    return _NORM_T.sub(" ", re.sub(r"(?<=\w)-\s*(?=\w)", "", s.lower())).strip()
+
+
 def _titles_match(want: str, got: str) -> bool:
-    # Require a tight match: relevance search will happily return a different
-    # paper, and fetching the wrong artifact is worse than none.
-    return got == want or ((want in got or got in want) and abs(len(got) - len(want)) < 15)
+    """Same paper? Takes raw titles.
+
+    Tight on purpose -- relevance search will happily return a different paper,
+    and fetching the wrong artifact is worse than none -- but a one-word edit
+    between the venue and arXiv versions ("a global prompt hacking competition"
+    vs "a Global Scale Prompt Hacking Competition", HackAPrompt) is still the
+    same paper: token Jaccard >= 0.85 on titles of five or more tokens.
+    """
+    for norm in (_tnorm, _tjoin):
+        a, b = norm(want), norm(got)
+        if not a or not b:
+            continue
+        if a == b or ((a in b or b in a) and abs(len(a) - len(b)) < 15):
+            return True
+        ta, tb = set(a.split()), set(b.split())
+        if min(len(ta), len(tb)) >= 5 and len(ta & tb) / len(ta | tb) >= 0.85:
+            return True
+    return False
+
+
+# Words that cannot narrow a title search: stopwords, and the boolean operators of
+# the search syntax itself.
+_QUERY_STOP = {"and", "or", "not", "the", "for", "with", "from", "into", "via", "you",
+               "what", "this", "that", "are", "its", "their", "how", "why", "can"}
+
+
+def _query_words(title: str, limit: int = 10) -> list[str]:
+    """Distinctive words for a search, skipping fragments of hyphenated tokens
+    (a line-break hyphen makes them unreliable) unless nothing else is left."""
+    clean = re.sub(r"\\[a-zA-Z]+\s*", " ", title or "").replace("{", "").replace("}", "")
+    hyph = {w for tok in re.findall(r"\w+(?:-\w+)+", clean.lower()) for w in tok.split("-")}
+    words = [w for w in _tnorm(clean).split() if len(w) > 2 and w not in _QUERY_STOP]
+    solid = [w for w in words if w not in hyph]
+    return (solid if len(solid) >= 3 else words)[:limit]
 
 
 def datacite_lookup(title: str, timeout: int = 60) -> str | None:
     """Versioned arXiv id for a title via DataCite, or None if it has no match."""
-    want = _tnorm(title)
-    words = [w for w in want.split() if len(w) > 2][:12]
+    words = _query_words(title)
     if not words:
         return None
     q = urllib.parse.urlencode({
@@ -142,7 +179,7 @@ def datacite_lookup(title: str, timeout: int = 60) -> str | None:
     for item in data:
         a = item.get("attributes") or {}
         titles = [x.get("title", "") for x in a.get("titles") or []]
-        if not any(_titles_match(want, _tnorm(x)) for x in titles):
+        if not any(_titles_match(title, x) for x in titles):
             continue
         m = re.search(r"arxiv\.(.+)$", (a.get("doi") or "").lower())
         ver = str(a.get("version") or "").strip()
@@ -175,13 +212,12 @@ def arxiv_api_lookup(title: str, timeout: int = 60) -> str | None:
     if body is None:
         return None
     xml = body.decode("utf-8", "replace")
-    want = _tnorm(title)
     for ent in re.findall(r"<entry>(.*?)</entry>", xml, re.S):
         t = re.search(r"<title>(.*?)</title>", ent, re.S)
         i = re.search(r"<id>https?://arxiv\.org/abs/([^<]+)</id>", ent)
         if not (t and i):
             continue
-        if _titles_match(want, _tnorm(re.sub(r"\s+", " ", t.group(1)))):
+        if _titles_match(title, re.sub(r"\s+", " ", t.group(1))):
             vid = i.group(1)
             return vid if re.search(r"v\d+$", vid) else None
     return None
@@ -320,7 +356,7 @@ def openreview_lookup(title: str, timeout: int = 60,
     best = None
     for n in notes:
         c = n.get("content") or {}
-        if not _titles_match(want, _tnorm(_or_value(c.get("title")) or "")):
+        if not _titles_match(title, _or_value(c.get("title")) or ""):
             continue
         pdf = _or_value(c.get("pdf"))
         if not pdf or not str(pdf).startswith("/pdf"):
