@@ -105,7 +105,55 @@ Measure how many Citation-Integrity and MultiCite contexts are unreachable from 
 citing sentence alone, and if the loss is large, widen selection to ±1 sentence — which
 changes `context_sha256` and so is a cache-format decision, not just a tuning knob.
 
-## Part C — the full-text claim (not started, and it is the one that matters)
+## Part C — the full-text claim (started 2026-10-06; the one that matters)
+
+Harness: `deepcite/eval/mine_fulltext_cases.py`, two sources.
+
+**The unarXive route is blocked today, not abandoned.** `saier/unarXive_citrec`
+gives 2.5M (citing paragraph, cited OpenAlex id) pairs, but turning a label into an
+abstract and an arXiv id needs OpenAlex, whose unauthenticated budget is **per-IP
+and per-day** and is exhausted on this machine (`$0 remaining; resets at midnight
+UTC`). Resumes with an API key or tomorrow.
+
+**The arXiv-only route works and is cheaper than the original design.** The title
+is already in the `.bib`, so no id-resolution service is needed, and one arXiv API
+query returns the versioned id *and* the abstract together — the original step 3
+costs no extra request. Only the e-print fetch is rate-limited.
+
+### A methodology error, found by reading the first candidates
+
+The first filter kept a pair when the abstract scored ≤2.0 and the full text scored
+≥4.0. **That comparison is unsound.** BM25's idf depends on `n` and `df` within the
+corpus being ranked, so a score over a 2-sentence abstract and a score over a
+400-sentence body are not on the same scale, and the body wins for being bigger.
+The observed gap (0.947 vs 11.342) was mostly corpus size.
+
+Fixed: abstract sentences and body sentences are ranked **together in one call**,
+one idf space, and the decision is about **ordering** — a pair is kept only when no
+abstract sentence appears in the top 3 and the top passage is from the body. The
+old threshold survives only as a pre-filter that avoids fetching an e-print when
+the abstract obviously already answers the claim; it never decides what is kept.
+
+### What the first run showed about selection, not about full text
+
+ROA-LLM, 37 bib entries → 3 candidates, 13 rejected (9 cited works not on arXiv,
+3 answered by the abstract, 1 not answered anywhere), 58 s. Reading the three:
+
+* Two came from the **same background-list sentence** ("AgentDojo~\cite{},
+  InjecAgent~\cite{}, and …"), one candidate per cited work. Selection fired on a
+  list, which asserts nothing about any single entry. Now rejected by a
+  `MAX_CITES_IN_SENTENCE = 2` guard.
+* The third, "The ReAct paradigm established agents combining reasoning with tool
+  use", retrieved ReAct's *future-work* paragraph. High BM25, no evidential
+  bearing on the claim — and the claim itself is a vague characterization rather
+  than something checkable.
+
+So the full-text filter does **not** compensate for permissive selection: a high
+body score only means the terms occur somewhere. This is the same bottleneck Part A
+found from the other direction, which is worth stating in the paper as one finding
+rather than two.
+
+### Original design notes
 
 No public corpus labels errors that are only visible in the full text, so build one:
 
