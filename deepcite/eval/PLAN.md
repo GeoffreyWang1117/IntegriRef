@@ -144,9 +144,12 @@ ROA-LLM, 37 bib entries → 3 candidates, 13 rejected (9 cited works not on arXi
   list, which asserts nothing about any single entry. Now rejected by a
   `MAX_CITES_IN_SENTENCE = 2` guard.
 * The third, "The ReAct paradigm established agents combining reasoning with tool
-  use", retrieved ReAct's *future-work* paragraph. High BM25, no evidential
-  bearing on the claim — and the claim itself is a vague characterization rather
-  than something checkable.
+  use", retrieved ReAct's future-work sentence from its introduction
+  (`iclr2023/text/intro.tex:34` — live text, not a comment; an earlier note here
+  said otherwise and was wrong). High BM25, no evidential bearing on the claim,
+  and the claim itself is a vague characterization rather than something
+  checkable. It survives every mechanical guard, which is the point: the filter
+  raises the hit rate and cannot replace a human.
 
 So the full-text filter does **not** compensate for permissive selection: a high
 body score only means the terms occur somewhere. This is the same bottleneck Part A

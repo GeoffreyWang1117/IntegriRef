@@ -27,6 +27,11 @@ def qnorm(s: str) -> str:
     """Normalization for quote matching: tolerant of whitespace and LaTeX noise,
     intolerant of different words."""
     s = unicodedata.normalize("NFKC", s)
+    # Escaped characters are the character: the source's "1\\%" is the "1%" a reader
+    # quotes. Until 2026-10-06 the backslash became a space and "1 %" never matched
+    # (a real TemporalWiki quote was rejected).
+    s = re.sub(r"\\([%&_#$])", r"\1", s)
+    s = re.sub(r"(\d)\s+%", r"\1%", s)
     # Dashes are punctuation, not words: LaTeX "---" and a PDF's em dash must match.
     s = re.sub(r"-{2,}|[\u2012-\u2015\u2212]", " ", s)
     s = re.sub(r"\\[a-zA-Z@]+\*?(?:\[[^\]]*\])?", " ", s)

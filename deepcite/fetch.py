@@ -125,6 +125,7 @@ def artifact_files(path: Path, text_dir: Path) -> tuple[list[Path], Path] | None
                     files.append(txt)
             else:
                 files.append(q)
+        files = unique_files(files)
         return (files, path) if files else None
     if _is_pdf(path):
         txt = text_dir / (path.name + ".txt")
@@ -196,10 +197,31 @@ def fetch_eprint(arxiv_id: str, cache_dir: Path | None = None,
             return None
         stamp.write_text(size)
 
-    tex = sorted(p for p in src.rglob("*.tex") if p.is_file())
+    tex = unique_files([p for p in src.rglob("*.tex") if p.is_file()])
     if not tex:
         return None
     return Artifact(KIND_TEX, src, tex, blob)
+
+
+def unique_files(paths: list[Path]) -> list[Path]:
+    """Drop byte-identical copies, keeping the first in sorted order.
+
+    Some e-prints ship the paper twice (ReAct 2210.03629v3 has src/iclr2023/ and
+    src/iclr2023 2_arXiv/): scored twice, a rare term's df doubles and the top
+    five fill with the same passage. Found by the IntegriRef session, 2026-10-06.
+    """
+    import hashlib
+    seen: set[str] = set()
+    out = []
+    for p in sorted(paths):
+        try:
+            h = hashlib.sha256(p.read_bytes()).hexdigest()
+        except OSError:
+            continue
+        if h not in seen:
+            seen.add(h)
+            out.append(p)
+    return out
 
 
 def _safe_extract(tf: tarfile.TarFile, dest: Path) -> None:
@@ -252,6 +274,15 @@ def fetch_acl(anthology_id: str, cache_dir: Path | None = None,
 KIND_OPENREVIEW = "openreview_pdf"
 
 
+class NeedsBrowser(RuntimeError):
+    """The source has the paper but serves it only to a browser that passes a
+    challenge. deepcite does not work around that; the user downloads the file."""
+
+    def __init__(self, url: str):
+        super().__init__(url)
+        self.url = url
+
+
 def fetch_openreview(note_id: str, pdf_path: str, cache_dir: Path | None = None,
                      timeout: int = 120) -> Artifact | None:
     """The PDF an OpenReview note links, searched as text. Raises SourceRefused."""
@@ -260,8 +291,16 @@ def fetch_openreview(note_id: str, pdf_path: str, cache_dir: Path | None = None,
     slot.mkdir(parents=True, exist_ok=True)
     blob = slot / "paper.pdf"
     if not (blob.exists() and sniff(blob) == "pdf"):
-        body = http_get(f"https://openreview.net{pdf_path}", "openreview", timeout,
-                        max_bytes=MAX_BYTES)
+        try:
+            body = http_get(f"https://openreview.net{pdf_path}", "openreview", timeout,
+                            max_bytes=MAX_BYTES)
+        except SourceRefused as e:
+            # Since 2026-10 OpenReview answers every non-browser PDF request with 403
+            # "Challenge verification required"; its search API still answers. That is
+            # not a rate limit, and re-running will not help.
+            if e.reason.startswith("HTTP 403"):
+                raise NeedsBrowser(f"https://openreview.net/forum?id={note_id}")
+            raise
         if body is None or body[:4] != b"%PDF":
             return None
         blob.write_bytes(body)
@@ -305,5 +344,5 @@ def local_files(artifact: dict, cited_id: str | None,
         files = sorted(root.glob("*.txt")) if root.is_dir() else []
     else:
         root = slot / "src"
-        files = sorted(p for p in root.rglob("*.tex") if p.is_file()) if root.is_dir() else []
+        files = unique_files([p for p in root.rglob("*.tex") if p.is_file()]) if root.is_dir() else []
     return (files, root) if files else None

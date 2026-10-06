@@ -312,3 +312,48 @@ def test_a_quote_found_only_in_a_commented_out_line_is_not_found(tmp_path):
                  "Our method reduces compute in most settings.\n")
     assert locate("drastically reduces compute in every setting", [f], tmp_path) is None
     assert locate("reduces compute in most settings", [f], tmp_path).line == 2
+
+
+def test_duplicate_copies_in_an_eprint_are_searched_once(tmp_path):
+    from deepcite.fetch import unique_files
+    a = tmp_path / "iclr2023" / "main.tex"
+    b = tmp_path / "iclr2023 2_arXiv" / "main.tex"
+    c = tmp_path / "iclr2023" / "appendix.tex"
+    for f, s in ((a, "same text"), (b, "same text"), (c, "other text")):
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(s)
+    assert unique_files([b, c, a]) == [c, a]
+
+
+def test_openreview_browser_challenge_is_unresolved_with_a_download_hint(monkeypatch, stub, tmp_path):
+    import deepcite.fetch as F
+    monkeypatch.setattr(R, "_memo_load", lambda: {})
+    monkeypatch.setattr(R, "_memo_save", lambda memo: None)
+    monkeypatch.setattr(R, "locate_arxiv", lambda title, memo=None: (None, "no arXiv paper"))
+    monkeypatch.setattr(R, "openreview_lookup", lambda title, memo=None: ("abc123", "/pdf/x.pdf"))
+
+    def challenge(url, source, *a, **k):
+        raise N.SourceRefused("openreview", "HTTP 403")
+    monkeypatch.setattr(F, "http_get", challenge)
+    d = tmp_path / "p"
+    d.mkdir()
+    (d / "main.tex").write_text("\\documentclass{article}\\begin{document}\n"
+                                "\\citet{k} show that the remastered labels remove most errors.\n"
+                                "\\end{document}\n")
+    (d / "refs.bib").write_text("@inproceedings{k,title={A Paper Only On OpenReview},year={2025}}\n")
+    _run(["run", "--paper", str(d), "--bibguard", stub[0], "--cache-dir", str(tmp_path / "c"),
+          "--artifact-cache", str(tmp_path / "a")])
+    rec = json.loads((tmp_path / "c" / "ref_check_deep.json").read_text())["records"][0]
+    assert rec["status"] == K.UNRESOLVED                    # re-running would not help
+    assert "openreview.net/forum?id=abc123" in rec["error"] and "--artifact k=" in rec["error"]
+
+
+def test_escaped_percent_in_the_source_matches_a_plain_quote(tmp_path):
+    from deepcite.annotate import locate
+    f = tmp_path / "twiki.tex"
+    f.write_text("\\textbf{Rule \\#3}: We limit the proportion of single \\textsc{Subject} to "
+                 "have 1\\% of the total, and \\textsc{Relation} and \\textsc{Object} by 5\\% of the total.\n")
+    q = ("We limit the proportion of single Subject to have 1% of the total, "
+         "and Relation and Object by 5% of the total")
+    assert locate(q, [f], tmp_path) is not None
+    assert locate(q.replace("5%", "10%"), [f], tmp_path) is None

@@ -1,5 +1,4 @@
 {"id": "paper_icml:sections/introduction.tex:9:autogpt2023", "reason": "cited work not on arXiv", "title": "AutoGPT: An Autonomous GPT-4 Experiment"}
-{"id": "paper_icml:sections/related_work.tex:5:yao2023react", "reason": "abstract ranks within the top passages", "abstract_best": 0.947, "top_score": 11.211, "top_from": "body", "arxiv_id": "2210.03629v3"}
 {"id": "paper_icml:sections/related_work.tex:9:debenedetti2024agentdojo", "reason": "background citation list", "n_cites": 3}
 {"id": "paper_icml:sections/related_work.tex:9:zhan2024injecagent", "reason": "background citation list", "n_cites": 3}
 {"id": "paper_icml:sections/related_work.tex:9:yang2025agentsecuritybench", "reason": "background citation list", "n_cites": 3}

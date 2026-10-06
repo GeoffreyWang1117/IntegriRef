@@ -13,13 +13,13 @@
 {"id": "paper:main.tex:654:dsc2025", "reason": "background citation list", "n_cites": 5}
 {"id": "paper:main.tex:654:feng2025optimal", "reason": "background citation list", "n_cites": 5}
 {"id": "paper:main.tex:654:taubenfeld2025cisc", "reason": "background citation list", "n_cites": 5}
-{"id": "paper:main.tex:656:farquhar2024semantic", "reason": "background citation list", "n_cites": 3}
-{"id": "paper:main.tex:656:niklaus2024kle", "reason": "background citation list", "n_cites": 3}
-{"id": "paper:main.tex:656:nguyen2025beyond", "reason": "background citation list", "n_cites": 3}
+{"id": "paper:main.tex:657:farquhar2024semantic", "reason": "background citation list", "n_cites": 3}
+{"id": "paper:main.tex:657:niklaus2024kle", "reason": "background citation list", "n_cites": 3}
+{"id": "paper:main.tex:657:nguyen2025beyond", "reason": "background citation list", "n_cites": 3}
 {"id": "paper:main.tex:657:lee2025lsc", "reason": "abstract answers it", "abstract_best": 3.124, "arxiv_id": "2506.00344v1"}
-{"id": "paper:main.tex:659:snell2025scaling", "reason": "abstract answers it", "abstract_best": 4.268, "arxiv_id": "2408.03314v1"}
-{"id": "paper:main.tex:659:wu2025rebase", "reason": "abstract answers it", "abstract_best": 2.725, "arxiv_id": "2408.00724v3"}
-{"id": "paper:main.tex:662:xiong2024llm", "reason": "abstract answers it", "abstract_best": 4.41, "arxiv_id": "2306.13063v2"}
+{"id": "paper:main.tex:660:snell2025scaling", "reason": "abstract answers it", "abstract_best": 4.268, "arxiv_id": "2408.03314v1"}
+{"id": "paper:main.tex:660:wu2025rebase", "reason": "abstract answers it", "abstract_best": 2.725, "arxiv_id": "2408.00724v3"}
+{"id": "paper:main.tex:663:xiong2024llm", "reason": "abstract answers it", "abstract_best": 4.41, "arxiv_id": "2306.13063v2"}
 {"id": "paper:main.tex:674:taubenfeld2025cisc", "reason": "background citation list", "n_cites": 4}
 {"id": "paper:main.tex:674:zhao2025agglm", "reason": "background citation list", "n_cites": 4}
 {"id": "paper:main.tex:674:yao2024tree", "reason": "background citation list", "n_cites": 4}

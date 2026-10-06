@@ -226,6 +226,12 @@ def _locate(key: str, res, entry: str, manual_spec: str | None, art_cache: Path,
         except SourceRefused as e:
             refused.append(f"{e.source}: {e.reason}")
             orv, art = None, None
+        except F.NeedsBrowser as e:
+            loc.cited_id = f"openreview:{orv[0]}"
+            loc.status = K.UNRESOLVED
+            loc.error = (f"on OpenReview ({e.url}), which serves PDFs only to a browser: download "
+                         f"it and re-run with --artifact {key}=<path to the pdf>")
+            return loc
         if orv and art and art.files:
             loc.cited_id = f"openreview:{orv[0]}"
             loc.artifact = {"kind": art.kind, "ref": f"https://openreview.net/forum?id={orv[0]}",

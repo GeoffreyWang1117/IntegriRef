@@ -1,0 +1,198 @@
+{
+ "note": "Selection on hand-labelled citing sentences from the user's own unpublished CS papers (labels kept locally, ~/.cache/integriref/deepcite/eval_labels/, never committed). Labelled by Claude (an LLM), not by a human. 'dev' = 4 papers / 67 sentences that the 2026-10-06 patterns were tuned on (about 30 of them seen before labelling). 'heldout' = 3 other papers / 94 sentences labelled blind to the selector; its first measurement (patterns eda6b50a) preceded the last guard change, and is kept below.",
+ "label_definition": "checkable = the sentence attributes something specific to the cited work (finding, number, protocol, mechanism, definition) that reading that work could confirm or refute; not = background, pointer, or the citing paper's own usage",
+ "dev": {
+  "baseline": {
+   "selection_regex_sha256": "6a73406fe2285ff16f6e515c95219342646509f543c3a64467891df698dabb56",
+   "tool_version": "0.2.0",
+   "sentences": 67,
+   "checkable": 41,
+   "not_checkable": 26,
+   "selected": 11,
+   "recall": 0.122,
+   "precision": 0.4545,
+   "false_fire_rate": 0.2308,
+   "by_pattern_true_false": {
+    "A1": [
+     0,
+     1
+    ],
+    "A2": [
+     1,
+     2
+    ],
+    "A3": [
+     3,
+     0
+    ],
+    "U2": [
+     1,
+     0
+    ],
+    "U4": [
+     0,
+     1
+    ],
+    "U5": [
+     0,
+     2
+    ]
+   }
+  },
+  "current": {
+   "selection_regex_sha256": "ab0e180155dba520f815f15b27a1b835f316f1acec1accb3fabd8307edade84d",
+   "tool_version": "0.2.0",
+   "sentences": 67,
+   "checkable": 41,
+   "not_checkable": 26,
+   "selected": 37,
+   "recall": 0.7317,
+   "precision": 0.8108,
+   "false_fire_rate": 0.2692,
+   "by_pattern_true_false": {
+    "A1": [
+     0,
+     1
+    ],
+    "A10": [
+     3,
+     0
+    ],
+    "A2": [
+     1,
+     2
+    ],
+    "A2T": [
+     3,
+     1
+    ],
+    "A3": [
+     3,
+     0
+    ],
+    "A3T": [
+     1,
+     0
+    ],
+    "A7": [
+     7,
+     0
+    ],
+    "A8": [
+     2,
+     0
+    ],
+    "A9": [
+     4,
+     0
+    ],
+    "F1": [
+     3,
+     0
+    ],
+    "FB": [
+     2,
+     0
+    ],
+    "U2": [
+     1,
+     0
+    ],
+    "U4": [
+     0,
+     1
+    ],
+    "U5": [
+     0,
+     2
+    ]
+   }
+  }
+ },
+ "holdout": {
+  "baseline": {
+   "selection_regex_sha256": "6a73406fe2285ff16f6e515c95219342646509f543c3a64467891df698dabb56",
+   "tool_version": "0.2.0",
+   "sentences": 94,
+   "checkable": 58,
+   "not_checkable": 36,
+   "selected": 19,
+   "recall": 0.1724,
+   "precision": 0.5263,
+   "false_fire_rate": 0.25,
+   "by_pattern_true_false": {
+    "A2": [
+     4,
+     0
+    ],
+    "A3": [
+     4,
+     8
+    ],
+    "A5": [
+     2,
+     0
+    ],
+    "U6": [
+     0,
+     1
+    ]
+   }
+  },
+  "current": {
+   "selection_regex_sha256": "ab0e180155dba520f815f15b27a1b835f316f1acec1accb3fabd8307edade84d",
+   "tool_version": "0.2.0",
+   "sentences": 94,
+   "checkable": 58,
+   "not_checkable": 36,
+   "selected": 30,
+   "recall": 0.3793,
+   "precision": 0.7333,
+   "false_fire_rate": 0.2222,
+   "by_pattern_true_false": {
+    "A2": [
+     4,
+     0
+    ],
+    "A2T": [
+     4,
+     1
+    ],
+    "A3": [
+     3,
+     2
+    ],
+    "A5": [
+     2,
+     0
+    ],
+    "A7": [
+     2,
+     0
+    ],
+    "A9": [
+     0,
+     1
+    ],
+    "F1": [
+     2,
+     0
+    ],
+    "FB": [
+     5,
+     3
+    ],
+    "U6": [
+     0,
+     1
+    ]
+   }
+  },
+  "first_measurement_eda6b50a": {
+   "recall": 0.3966,
+   "precision": 0.6389,
+   "false_fire_rate": 0.3611,
+   "selected": 36
+  }
+ }
+}
