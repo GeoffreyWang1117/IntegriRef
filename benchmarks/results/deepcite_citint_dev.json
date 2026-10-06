@@ -1,0 +1,31 @@
+{
+ "split": "dev",
+ "claims": 316,
+ "top_k": 5,
+ "selection_regex_sha256": "6a73406fe2285ff16f6e515c95219342646509f543c3a64467891df698dabb56",
+ "tool_version": "0.1.0",
+ "selection": {
+  "recall_on_checkable": 0.0275,
+  "fired/with_evidence": "7/255",
+  "fire_rate_on_no_evidence": 0.0164,
+  "fired/no_evidence": "1/61",
+  "by_label": {
+   "ACCURATE": "7/269",
+   "CONTRADICT": "1/23",
+   "ETIQUETTE": "0/4",
+   "INDIRECT": "0/8",
+   "MISQUOTE": "0/11",
+   "NOT_SUBSTANTIATE": "0/35",
+   "OVERSIMPLIFY": "0/11"
+  },
+  "recall_on_erroneous": 0.0109
+ },
+ "retrieval": {
+  "recall@5": 0.759,
+  "hit/total": "274/361",
+  "recall@5_discriminative": 0.8059,
+  "hit/total_discriminative": "137/170",
+  "note": "'discriminative' = cited documents with more than 5 sentences, where a top-5 retrieval can actually miss",
+  "median_rank_of_first_gold_hit": 1.0
+ }
+}
