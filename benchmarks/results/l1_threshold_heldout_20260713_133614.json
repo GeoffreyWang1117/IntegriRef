@@ -1,0 +1,140 @@
+{
+  "created": "2026-07-13T13:36:14",
+  "protocol": {
+    "dev": "ACL-ARC train+validation (n=1802, 326 contrast)",
+    "test": "ACL-ARC test (n=139, 25 contrast)",
+    "final_eval": "Borderline-L1 (n=40) evaluated once at dev-chosen threshold"
+  },
+  "dev_sensitivity_curve": [
+    {
+      "threshold": 0.3,
+      "precision": 0.413,
+      "recall": 0.058,
+      "f1": 0.102,
+      "fpr": 0.0183,
+      "tp": 19,
+      "fp": 27,
+      "fn": 307
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.413,
+      "recall": 0.058,
+      "f1": 0.102,
+      "fpr": 0.0183,
+      "tp": 19,
+      "fp": 27,
+      "fn": 307
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.413,
+      "recall": 0.058,
+      "f1": 0.102,
+      "fpr": 0.0183,
+      "tp": 19,
+      "fp": 27,
+      "fn": 307
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.413,
+      "recall": 0.058,
+      "f1": 0.102,
+      "fpr": 0.0183,
+      "tp": 19,
+      "fp": 27,
+      "fn": 307
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.433,
+      "recall": 0.04,
+      "f1": 0.073,
+      "fpr": 0.0115,
+      "tp": 13,
+      "fp": 17,
+      "fn": 313
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.407,
+      "recall": 0.034,
+      "f1": 0.062,
+      "fpr": 0.0108,
+      "tp": 11,
+      "fp": 16,
+      "fn": 315
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.423,
+      "recall": 0.034,
+      "f1": 0.062,
+      "fpr": 0.0102,
+      "tp": 11,
+      "fp": 15,
+      "fn": 315
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.455,
+      "recall": 0.015,
+      "f1": 0.03,
+      "fpr": 0.0041,
+      "tp": 5,
+      "fp": 6,
+      "fn": 321
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "fpr": 0.0014,
+      "tp": 0,
+      "fp": 2,
+      "fn": 326
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "fpr": 0.0007,
+      "tp": 0,
+      "fp": 1,
+      "fn": 326
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "fpr": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 326
+    }
+  ],
+  "dev_best_threshold": 0.3,
+  "acl_arc_test_at_best": {
+    "precision": 0.5,
+    "recall": 0.08,
+    "f1": 0.138,
+    "fpr": 0.0175,
+    "tp": 2,
+    "fp": 2,
+    "fn": 23
+  },
+  "borderline_l1_at_best": {
+    "precision": 0.833,
+    "recall": 0.5,
+    "f1": 0.625,
+    "fpr": 0.0333,
+    "tp": 5,
+    "fp": 1,
+    "fn": 5
+  },
+  "borderline_contrast_subpattern_fired": "5/10"
+}

@@ -1,0 +1,19 @@
+{
+  "created": "2026-07-13T13:43:05",
+  "detector": "ACL-ARC-trained SciBERT contrast detector",
+  "threshold": 0.7,
+  "pool": {
+    "positives(border_contrast)": 10,
+    "negatives(matched_controls)": 85
+  },
+  "matched_prf": {
+    "precision": 0.909,
+    "recall": 1.0,
+    "f1": 0.952,
+    "fpr": 0.0118,
+    "tp": 10,
+    "fp": 1,
+    "fn": 0,
+    "tn": 84
+  }
+}

@@ -1,0 +1,964 @@
+{
+  "summary": {
+    "split": "natural_chimeras_v1.jsonl",
+    "registries": [
+      "CrossRefRegistry"
+    ],
+    "recall_elevated": {
+      "hit": 33,
+      "n": 33,
+      "rate": 1.0
+    },
+    "recall_high": {
+      "hit": 33,
+      "n": 33,
+      "rate": 1.0
+    },
+    "recall_critical": {
+      "hit": 32,
+      "n": 33,
+      "rate": 0.9697
+    },
+    "fpr_elevated": {
+      "hit": 0,
+      "n": 60,
+      "rate": 0.0
+    },
+    "fpr_high": {
+      "hit": 0,
+      "n": 60,
+      "rate": 0.0
+    },
+    "recall_by_reason": {
+      "year": {
+        "hit": 18,
+        "n": 18,
+        "rate": 1.0
+      },
+      "author": {
+        "hit": 16,
+        "n": 16,
+        "rate": 1.0
+      }
+    },
+    "signal_fire_counts_positives": {
+      "metadata_mismatch": 32,
+      "chimera_detected": 32,
+      "reference_not_found": 1,
+      "phantom_doi": 1
+    },
+    "signal_fire_counts_controls": {}
+  },
+  "results": [
+    {
+      "id": "natchim_000",
+      "category": "chimera",
+      "reasons": [
+        "year printed=2009 crossref=2013 openalex=2013"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_001",
+      "category": "chimera",
+      "reasons": [
+        "year printed=2015 crossref=2010 openalex=2010"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_002",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1967 crossref=1969 openalex=1969"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_003",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1982 crossref=2009 openalex=2009"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_004",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1997 crossref=2009 openalex=2009"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_005",
+      "category": "chimera",
+      "reasons": [
+        "author printed=sanfelm crossref=sanfeliu openalex=sanfeliu"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_006",
+      "category": "chimera",
+      "reasons": [
+        "year printed=2000 crossref=2008 openalex=2008"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_007",
+      "category": "chimera",
+      "reasons": [
+        "year printed=2016 crossref=2012 openalex=2012"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_008",
+      "category": "chimera",
+      "reasons": [
+        "author printed=devito crossref=kline openalex=kline"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_009",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1968 crossref=1958 openalex=1958"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_010",
+      "category": "chimera",
+      "reasons": [
+        "author printed=galve-gorriz crossref=whynes openalex=whynes"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_011",
+      "category": "chimera",
+      "reasons": [
+        "author printed=hubert crossref=chan openalex=chan"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_012",
+      "category": "chimera",
+      "reasons": [
+        "author printed=dekleer crossref=bobrow openalex=bobrow"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_013",
+      "category": "chimera",
+      "reasons": [
+        "author printed=madrgael crossref=garcia-luna-aceves openalex=aceves"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_014",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1987 crossref=2008 openalex=2008"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_015",
+      "category": "chimera",
+      "reasons": [
+        "author printed=smith crossref=leon openalex=leon"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_016",
+      "category": "chimera",
+      "reasons": [
+        "year printed=2008 crossref=2002 openalex=2002"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_017",
+      "category": "chimera",
+      "reasons": [
+        "author printed=hodges crossref=datta openalex=datta"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_018",
+      "category": "chimera",
+      "reasons": [
+        "author printed=lawrence crossref=cummings openalex=cummings"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_019",
+      "category": "chimera",
+      "reasons": [
+        "author printed=michael crossref=aiken openalex=aiken"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_020",
+      "category": "chimera",
+      "reasons": [
+        "author printed=augustus crossref=abbey openalex=abbey"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_021",
+      "category": "chimera",
+      "reasons": [
+        "author printed=alpert crossref=holstein openalex=holstein"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_022",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1997 crossref=1986 openalex=1986"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_023",
+      "category": "chimera",
+      "reasons": [
+        "author printed=nirmalya crossref=kumar openalex=kumar"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_024",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1999 crossref=1996 openalex=1996"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_025",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1991 crossref=1999 openalex=1999"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_026",
+      "category": "chimera",
+      "reasons": [
+        "author printed=chidambaram crossref=zwass openalex=zwass"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_027",
+      "category": "chimera",
+      "reasons": [
+        "author printed=brachman crossref=faltings openalex=faltings"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_028",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1983 crossref=2008 openalex=2008"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_029",
+      "category": "chimera",
+      "reasons": [
+        "year printed=2015 crossref=2012 openalex=2012"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_030",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1984 crossref=2010 openalex=2008",
+        "author printed=meerakkan crossref=khan openalex=khan"
+      ],
+      "tier": "high",
+      "posterior": 0.684642,
+      "fired": [
+        "reference_not_found",
+        "phantom_doi"
+      ]
+    },
+    {
+      "id": "natchim_031",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1975 crossref=1968 openalex=1968"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natchim_032",
+      "category": "chimera",
+      "reasons": [
+        "year printed=1968 crossref=1975 openalex=1975"
+      ],
+      "tier": "critical",
+      "posterior": 0.525248,
+      "fired": [
+        "metadata_mismatch",
+        "chimera_detected"
+      ]
+    },
+    {
+      "id": "natreal_000",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_001",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_002",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_003",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_004",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_005",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_006",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_007",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_008",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_009",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_010",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_011",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_012",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_013",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_014",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_015",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_016",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_017",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_018",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_019",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_020",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_021",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_022",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_023",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_024",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_025",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_026",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_027",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_028",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_029",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_030",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_031",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_032",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_033",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_034",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_035",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_036",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_037",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_038",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_039",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_040",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_041",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_042",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_043",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_044",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_045",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_046",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_047",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_048",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_049",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_050",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_051",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_052",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_053",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_054",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_055",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_056",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_057",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_058",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    },
+    {
+      "id": "natreal_059",
+      "category": "real_control",
+      "reasons": [],
+      "tier": "low",
+      "posterior": 0.021722,
+      "fired": []
+    }
+  ]
+}

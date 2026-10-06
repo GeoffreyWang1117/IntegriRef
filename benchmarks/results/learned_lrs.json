@@ -1,0 +1,107 @@
+{
+  "n_cases": 700,
+  "n_positive": 273,
+  "n_negative": 427,
+  "direct_empirical": {
+    "chimera_detected": {
+      "fired_pos": 0,
+      "n_pos": 273,
+      "fired_neg": 4,
+      "n_neg": 427,
+      "lr_plus": 0.174,
+      "lr_minus": 1.009
+    },
+    "metadata_mismatch": {
+      "fired_pos": 249,
+      "n_pos": 273,
+      "fired_neg": 2,
+      "n_neg": 427,
+      "lr_plus": 155.892,
+      "lr_minus": 0.09
+    },
+    "no_id_match": {
+      "fired_pos": 15,
+      "n_pos": 273,
+      "fired_neg": 16,
+      "n_neg": 427,
+      "lr_plus": 1.467,
+      "lr_minus": 0.981
+    },
+    "phantom_doi": {
+      "fired_pos": 10,
+      "n_pos": 273,
+      "fired_neg": 0,
+      "n_neg": 427,
+      "lr_plus": 32.803,
+      "lr_minus": 0.963
+    },
+    "reference_not_found": {
+      "fired_pos": 15,
+      "n_pos": 273,
+      "fired_neg": 0,
+      "n_neg": 427,
+      "lr_plus": 48.423,
+      "lr_minus": 0.945
+    },
+    "retracted_citation": {
+      "fired_pos": 241,
+      "n_pos": 273,
+      "fired_neg": 0,
+      "n_neg": 427,
+      "lr_plus": 754.467,
+      "lr_minus": 0.119
+    }
+  },
+  "logistic_regression": {
+    "chimera_detected": {
+      "beta": -0.107,
+      "odds_mult_when_fires": 0.898
+    },
+    "metadata_mismatch": {
+      "beta": 3.7,
+      "odds_mult_when_fires": 40.452
+    },
+    "no_id_match": {
+      "beta": 1.853,
+      "odds_mult_when_fires": 6.38
+    },
+    "phantom_doi": {
+      "beta": 1.511,
+      "odds_mult_when_fires": 4.529
+    },
+    "reference_not_found": {
+      "beta": 3.707,
+      "odds_mult_when_fires": 40.73
+    },
+    "retracted_citation": {
+      "beta": 3.907,
+      "odds_mult_when_fires": 49.769
+    }
+  },
+  "hand_set": {
+    "chimera_detected": {
+      "lr_plus": 8.0,
+      "lr_minus": 0.95
+    },
+    "metadata_mismatch": {
+      "lr_plus": 10.0,
+      "lr_minus": 0.85
+    },
+    "no_id_match": {
+      "lr_plus": 6.0,
+      "lr_minus": 0.92
+    },
+    "phantom_doi": {
+      "lr_plus": 25.0,
+      "lr_minus": 0.99
+    },
+    "reference_not_found": {
+      "lr_plus": 15.0,
+      "lr_minus": 0.95
+    },
+    "retracted_citation": {
+      "lr_plus": 8.0,
+      "lr_minus": 0.99
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "n_cases": 7091,
+  "n_positive": 5761,
+  "n_negative": 1330,
+  "direct_empirical": {
+    "chimera_detected": {
+      "fired_pos": 226,
+      "n_pos": 5761,
+      "fired_neg": 22,
+      "n_neg": 1330,
+      "lr_plus": 2.325,
+      "lr_minus": 0.977
+    },
+    "metadata_mismatch": {
+      "fired_pos": 5419,
+      "n_pos": 5761,
+      "fired_neg": 2,
+      "n_neg": 1330,
+      "lr_plus": 500.754,
+      "lr_minus": 0.06
+    },
+    "no_id_match": {
+      "fired_pos": 225,
+      "n_pos": 5761,
+      "fired_neg": 36,
+      "n_neg": 1330,
+      "lr_plus": 1.427,
+      "lr_minus": 0.988
+    },
+    "phantom_doi": {
+      "fired_pos": 11,
+      "n_pos": 5761,
+      "fired_neg": 0,
+      "n_neg": 1330,
+      "lr_plus": 5.313,
+      "lr_minus": 0.998
+    },
+    "reference_not_found": {
+      "fired_pos": 16,
+      "n_pos": 5761,
+      "fired_neg": 0,
+      "n_neg": 1330,
+      "lr_plus": 7.623,
+      "lr_minus": 0.998
+    },
+    "retracted_citation": {
+      "fired_pos": 5612,
+      "n_pos": 5761,
+      "fired_neg": 0,
+      "n_neg": 1330,
+      "lr_plus": 2592.932,
+      "lr_minus": 0.026
+    }
+  },
+  "logistic_regression": {
+    "chimera_detected": {
+      "beta": 1.978,
+      "odds_mult_when_fires": 7.229
+    },
+    "metadata_mismatch": {
+      "beta": 3.559,
+      "odds_mult_when_fires": 35.137
+    },
+    "no_id_match": {
+      "beta": 1.178,
+      "odds_mult_when_fires": 3.247
+    },
+    "phantom_doi": {
+      "beta": 1.513,
+      "odds_mult_when_fires": 4.541
+    },
+    "reference_not_found": {
+      "beta": 3.036,
+      "odds_mult_when_fires": 20.831
+    },
+    "retracted_citation": {
+      "beta": 5.986,
+      "odds_mult_when_fires": 397.643
+    }
+  },
+  "hand_set": {
+    "chimera_detected": {
+      "lr_plus": 8.0,
+      "lr_minus": 0.95
+    },
+    "metadata_mismatch": {
+      "lr_plus": 10.0,
+      "lr_minus": 0.85
+    },
+    "no_id_match": {
+      "lr_plus": 6.0,
+      "lr_minus": 0.92
+    },
+    "phantom_doi": {
+      "lr_plus": 25.0,
+      "lr_minus": 0.99
+    },
+    "reference_not_found": {
+      "lr_plus": 15.0,
+      "lr_minus": 0.95
+    },
+    "retracted_citation": {
+      "lr_plus": 8.0,
+      "lr_minus": 0.99
+    }
+  }
+}

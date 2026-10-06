@@ -1,0 +1,2613 @@
+{
+  "domains": [
+    "quantum_computing",
+    "climate_change",
+    "materials_science"
+  ],
+  "metrics": {
+    "quantum_computing": {
+      "n_bibs": 5,
+      "L0+L4": {
+        "n_refs": 35,
+        "ref_fp_elevated": 1,
+        "ref_fpr_elevated": 0.02857142857142857,
+        "bibs_at_critical": 0,
+        "bib_crit_rate": 0.0
+      },
+      "L0+L4+L3": {
+        "n_refs": 35,
+        "ref_fp_elevated": 24,
+        "ref_fpr_elevated": 0.6857142857142857,
+        "bibs_at_critical": 2,
+        "bib_crit_rate": 0.4
+      },
+      "l3_anomaly_counts": {
+        "orphan_cluster": 32,
+        "temporal_anomaly": 72,
+        "reciprocal_citation": 338,
+        "excessive_self_citation": 8,
+        "benford_violation": 4
+      }
+    },
+    "climate_change": {
+      "n_bibs": 6,
+      "L0+L4": {
+        "n_refs": 42,
+        "ref_fp_elevated": 0,
+        "ref_fpr_elevated": 0.0,
+        "bibs_at_critical": 0,
+        "bib_crit_rate": 0.0
+      },
+      "L0+L4+L3": {
+        "n_refs": 42,
+        "ref_fp_elevated": 30,
+        "ref_fpr_elevated": 0.7142857142857143,
+        "bibs_at_critical": 5,
+        "bib_crit_rate": 0.8333333333333334
+      },
+      "l3_anomaly_counts": {
+        "orphan_cluster": 41,
+        "temporal_anomaly": 69,
+        "benford_violation": 6,
+        "reciprocal_citation": 510,
+        "excessive_self_citation": 10
+      }
+    },
+    "materials_science": {
+      "n_bibs": 6,
+      "L0+L4": {
+        "n_refs": 42,
+        "ref_fp_elevated": 0,
+        "ref_fpr_elevated": 0.0,
+        "bibs_at_critical": 0,
+        "bib_crit_rate": 0.0
+      },
+      "L0+L4+L3": {
+        "n_refs": 42,
+        "ref_fp_elevated": 26,
+        "ref_fpr_elevated": 0.6190476190476191,
+        "bibs_at_critical": 5,
+        "bib_crit_rate": 0.8333333333333334
+      },
+      "l3_anomaly_counts": {
+        "orphan_cluster": 41,
+        "temporal_anomaly": 48,
+        "excessive_self_citation": 7,
+        "reciprocal_citation": 125,
+        "benford_violation": 2
+      }
+    },
+    "ALL": {
+      "n_bibs": 17,
+      "L0+L4": {
+        "n_refs": 119,
+        "ref_fp_elevated": 1,
+        "ref_fpr_elevated": 0.008403361344537815,
+        "bibs_at_critical": 0,
+        "bib_crit_rate": 0.0
+      },
+      "L0+L4+L3": {
+        "n_refs": 119,
+        "ref_fp_elevated": 80,
+        "ref_fpr_elevated": 0.6722689075630253,
+        "bibs_at_critical": 12,
+        "bib_crit_rate": 0.7058823529411765
+      },
+      "l3_anomaly_counts": {
+        "orphan_cluster": 114,
+        "temporal_anomaly": 189,
+        "reciprocal_citation": 973,
+        "excessive_self_citation": 25,
+        "benford_violation": 12
+      }
+    }
+  },
+  "outcomes": [
+    {
+      "id": "nonbio_quantum_computing_00",
+      "domain": "quantum_computing",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "elevated",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "low",
+          "low",
+          "high",
+          "low",
+          "elevated",
+          "critical",
+          "critical"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            "metadata_mismatch"
+          ],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "orphan_cluster"
+          ],
+          [],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "metadata_mismatch",
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "benford_violation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "benford_violation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_quantum_computing_01",
+      "domain": "quantum_computing",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "low",
+          "low",
+          "high",
+          "low",
+          "elevated",
+          "high",
+          "high"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "benford_violation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "orphan_cluster",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "benford_violation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_quantum_computing_02",
+      "domain": "quantum_computing",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "critical",
+          "elevated",
+          "low",
+          "critical",
+          "high",
+          "high",
+          "high"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_quantum_computing_03",
+      "domain": "quantum_computing",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "low",
+          "high",
+          "high",
+          "high",
+          "low",
+          "high",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_quantum_computing_04",
+      "domain": "quantum_computing",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "elevated",
+          "high",
+          "elevated",
+          "high",
+          "high",
+          "low",
+          "high"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "excessive_self_citation",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "excessive_self_citation",
+          "orphan_cluster",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_climate_change_00",
+      "domain": "climate_change",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "low",
+          "low",
+          "critical",
+          "low",
+          "critical",
+          "low",
+          "elevated"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "reciprocal_citation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_climate_change_01",
+      "domain": "climate_change",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "low",
+          "high",
+          "high",
+          "elevated",
+          "critical",
+          "low",
+          "elevated"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "benford_violation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_climate_change_02",
+      "domain": "climate_change",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "critical",
+          "elevated",
+          "critical",
+          "high",
+          "critical",
+          "elevated",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_climate_change_03",
+      "domain": "climate_change",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "elevated",
+          "high",
+          "low",
+          "critical",
+          "high",
+          "high",
+          "critical"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "benford_violation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_climate_change_04",
+      "domain": "climate_change",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "critical",
+          "elevated",
+          "low",
+          "elevated",
+          "low",
+          "high",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster",
+            "benford_violation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "excessive_self_citation",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "benford_violation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_climate_change_05",
+      "domain": "climate_change",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "high",
+          "elevated",
+          "high",
+          "high",
+          "high",
+          "high",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_materials_science_00",
+      "domain": "materials_science",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "high",
+          "high",
+          "high",
+          "low",
+          "high",
+          "high",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_materials_science_01",
+      "domain": "materials_science",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "low",
+          "low",
+          "high",
+          "low",
+          "critical",
+          "high",
+          "high"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_materials_science_02",
+      "domain": "materials_science",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "elevated",
+          "low",
+          "low",
+          "critical",
+          "elevated",
+          "low",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_materials_science_03",
+      "domain": "materials_science",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "critical",
+          "high",
+          "low",
+          "low",
+          "critical",
+          "high",
+          "critical"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_materials_science_04",
+      "domain": "materials_science",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "critical",
+          "low",
+          "high",
+          "low",
+          "elevated",
+          "elevated",
+          "elevated"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "benford_violation",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster",
+            "reciprocal_citation"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "benford_violation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "orphan_cluster",
+          "reciprocal_citation"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "nonbio_materials_science_05",
+      "domain": "materials_science",
+      "ref_tiers": {
+        "L0+L4": [
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low",
+          "low"
+        ],
+        "L0+L4+L3": [
+          "critical",
+          "high",
+          "high",
+          "high",
+          "low",
+          "low",
+          "low"
+        ]
+      },
+      "ref_signals": {
+        "L0+L4": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "L0+L4+L3": [
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster"
+          ],
+          [
+            "excessive_self_citation",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "temporal_anomaly",
+            "orphan_cluster",
+            "reciprocal_citation"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ],
+          [
+            "orphan_cluster"
+          ]
+        ]
+      },
+      "anomalies": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "orphan_cluster",
+          "orphan_cluster"
+        ]
+      },
+      "errors": []
+    }
+  ]
+}

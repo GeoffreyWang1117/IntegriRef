@@ -1,0 +1,40 @@
+{
+  "created": "2026-07-13T13:48:08",
+  "eval_set": "SciFact dev (bare claim vs full cited abstract)",
+  "caveat": "scifact_nli used SciFact dev for epoch selection; numbers mildly optimistic. Public test labels unavailable.",
+  "n_positive_contradict": 64,
+  "n_negative_support": 124,
+  "l2_signal_fires_if_label_in": [
+    "contradicted",
+    "unsupported"
+  ],
+  "matched_prf": {
+    "precision": 0.421,
+    "recall": 0.953,
+    "f1": 0.584,
+    "fpr": 0.6774,
+    "tp": 61,
+    "fp": 84,
+    "fn": 3,
+    "tn": 40
+  },
+  "positive_label_distribution": {
+    "contradicted": 49,
+    "unsupported": 12,
+    "supported": 3
+  },
+  "negative_label_distribution": {
+    "contradicted": 45,
+    "unsupported": 39,
+    "supported": 39,
+    "partially_supported": 1
+  },
+  "variant_contradicted_only": {
+    "recall": 0.766,
+    "fpr": 0.3629,
+    "precision": 0.521,
+    "f1": 0.62,
+    "tp": 49,
+    "fp": 45
+  }
+}

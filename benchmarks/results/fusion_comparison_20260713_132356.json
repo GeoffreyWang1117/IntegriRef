@@ -1,0 +1,134 @@
+{
+  "created": "2026-07-13T13:23:56",
+  "pool": {
+    "n": 8317,
+    "n_pos": 7065,
+    "n_neg": 1252,
+    "splits": {
+      "ret-6391": 6391,
+      "rv-1926": 1926
+    }
+  },
+  "sanity_mean_abs_diff_vs_cached": 0.0943,
+  "methods": [
+    {
+      "method": "hand-set NB (paper L4)",
+      "auc": 0.9893,
+      "recall@fpr=0%": 0.0303,
+      "recall@fpr=1%": 0.9362,
+      "recall@fpr=5%": 0.9865,
+      "auc[ret-6391]": 0.9909,
+      "auc[rv-1926]": 0.9878
+    },
+    {
+      "method": "empirical-LR NB (5-fold CV)",
+      "auc": 0.9915,
+      "recall@fpr=0%": 0.7679,
+      "recall@fpr=1%": 0.9433,
+      "recall@fpr=5%": 0.9865,
+      "auc[ret-6391]": 0.9909,
+      "auc[rv-1926]": 0.9866
+    },
+    {
+      "method": "L1-logistic regression (5-fold CV)",
+      "auc": 0.9915,
+      "recall@fpr=0%": 0.7639,
+      "recall@fpr=1%": 0.9473,
+      "recall@fpr=5%": 0.9865,
+      "auc[ret-6391]": 0.9905,
+      "auc[rv-1926]": 0.99
+    }
+  ],
+  "hand_set_operating_point": {
+    "threshold": 0.05,
+    "recall": 0.9864,
+    "fpr": 0.0431
+  },
+  "signal_fire_counts": {
+    "chimera_detected": 248,
+    "metadata_mismatch": 5225,
+    "no_id_match": 613,
+    "phantom_doi": 1183,
+    "reference_not_found": 1191,
+    "retracted_citation": 5385
+  },
+  "phi_correlation": {
+    "chimera_detected ~ metadata_mismatch": 0.078,
+    "chimera_detected ~ no_id_match": -0.049,
+    "chimera_detected ~ phantom_doi": -0.071,
+    "chimera_detected ~ reference_not_found": -0.072,
+    "chimera_detected ~ retracted_citation": 0.072,
+    "metadata_mismatch ~ no_id_match": -0.324,
+    "metadata_mismatch ~ phantom_doi": -0.529,
+    "metadata_mismatch ~ reference_not_found": -0.531,
+    "metadata_mismatch ~ retracted_citation": 0.938,
+    "no_id_match ~ phantom_doi": -0.115,
+    "no_id_match ~ reference_not_found": -0.115,
+    "no_id_match ~ retracted_citation": -0.184,
+    "phantom_doi ~ reference_not_found": 0.996,
+    "phantom_doi ~ retracted_citation": -0.552,
+    "reference_not_found ~ retracted_citation": -0.554
+  },
+  "conditional_cofire": {
+    "chimera_detected ~ metadata_mismatch": {
+      "P(b|a)": 0.843,
+      "P(a|b)": 0.04
+    },
+    "chimera_detected ~ no_id_match": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "chimera_detected ~ phantom_doi": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "chimera_detected ~ reference_not_found": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "chimera_detected ~ retracted_citation": {
+      "P(b|a)": 0.843,
+      "P(a|b)": 0.039
+    },
+    "metadata_mismatch ~ no_id_match": {
+      "P(b|a)": 0.009,
+      "P(a|b)": 0.073
+    },
+    "metadata_mismatch ~ phantom_doi": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "metadata_mismatch ~ reference_not_found": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "metadata_mismatch ~ retracted_citation": {
+      "P(b|a)": 0.992,
+      "P(a|b)": 0.963
+    },
+    "no_id_match ~ phantom_doi": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "no_id_match ~ reference_not_found": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "no_id_match ~ retracted_citation": {
+      "P(b|a)": 0.336,
+      "P(a|b)": 0.038
+    },
+    "phantom_doi ~ reference_not_found": {
+      "P(b|a)": 1.0,
+      "P(a|b)": 0.993
+    },
+    "phantom_doi ~ retracted_citation": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    },
+    "reference_not_found ~ retracted_citation": {
+      "P(b|a)": 0.0,
+      "P(a|b)": 0.0
+    }
+  }
+}

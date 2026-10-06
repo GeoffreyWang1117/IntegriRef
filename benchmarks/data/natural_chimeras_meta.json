@@ -1,0 +1,24 @@
+{
+  "n_chimeras": 60,
+  "n_controls": 60,
+  "citing_works_scanned": 1341,
+  "candidates_rejected_by_openalex": 1,
+  "breakdown": {
+    "year_only": 19,
+    "author_only": 40,
+    "both": 1
+  },
+  "elapsed_s": 3634.4,
+  "source": "Crossref publisher-deposited reference lists, confirmed against OpenAlex",
+  "filters": {
+    "name_similarity_threshold": 0.85,
+    "title_similarity_threshold": 0.55,
+    "year_window": "2..60 years",
+    "excluded": [
+      "corporate/consortium bylines",
+      "bare initials",
+      "DOIs embedding the printed year (legacy backfiles)",
+      "mismatches OpenAlex does not corroborate"
+    ]
+  }
+}

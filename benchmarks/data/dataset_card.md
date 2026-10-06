@@ -48,13 +48,40 @@ misconduct literature, making it suitable as a paper contribution.
 
 | Split | Records | Description |
 |---|---|---|
-| `reference_verification` | 58 | Golden test set: retracted, real, hallucinated, chimera |
-| `signal_unit_tests` | 86 | One test case per verifiable signal |
+| `reference_verification` | 1,926 | Retracted, real, hallucinated and chimera references |
+| `signal_unit_tests` | 403 | Each of the 21 signals exercised in isolation |
 | `l1_intent` | 20 | Citing sentence ↔ abstract pairs for intent classification |
 | `l2_nli` | 20 | Claim ↔ source-text pairs for NLI alignment |
-| `graph_anomaly` | 30 | Citation-ring / self-citation / temporal / orphan cases |
-| `retracted_papers` | 250 | Fetched retraction data from Crossref and PubMed |
-| **Total** | **464** | |
+| `graph_anomaly` | 3,030 | Citation-ring / self-citation / temporal / orphan cases |
+| `retracted_papers` | 6,391 | Retraction Watch via Crossref + PubMed |
+| `natchim` | 93 | 33 chimeras mined from real bibliographies + 60 matched controls |
+| **Subtotal (distributed here)** | **11,883** | |
+| `borderline_l1_v2` | 289 | Rebuilt from ACL-ARC by script — not redistributed |
+| `borderline_l2_v2` | 209 | Rebuilt from SciFact dev by script — not redistributed |
+| **Total** | **12,381** | across nine splits |
+
+### Two splits are rebuilt, not shipped
+
+`borderline_l1_v2` and `borderline_l2_v2` are deterministic, fixed-seed selections
+over third-party corpora, so they are reconstructed rather than redistributed:
+
+```bash
+python benchmarks/exp_borderline_expanded.py --task l1   # held-out ACL-ARC slice + ACL-ARC test
+python benchmarks/exp_borderline_expanded.py --task l2   # every (claim, abstract) pair in SciFact dev
+```
+
+`l1_intent` and `l2_nli` are small probes, not training data; L1 trains on SciCite
+(11K) and L2 on SciFact (6.6K), neither of which is redistributed here.
+
+### NatChim provenance
+
+`natchim` is the only split mined for this work rather than assembled from existing
+resources. Walking 845 publisher-deposited Crossref bibliographies yielded 33
+references whose printed year or first author contradicts the record their DOI
+resolves to, confirmed against OpenAlex, plus 60 matched controls from the same
+bibliographies. `natural_chimeras_rejected.json` records the discarded candidates:
+precision required throwing away far more than was kept, and the rejections are
+included so that filter can be audited rather than taken on trust.
 
 ## Supported Tasks and Leaderboards
 

@@ -1,0 +1,1051 @@
+{
+  "metrics": {
+    "total_cases": 40,
+    "errors": 0,
+    "by_config": {
+      "L0": {
+        "tier_distribution": {
+          "high": 16,
+          "low": 14,
+          "elevated": 10
+        },
+        "exact_tier_match": "12/40",
+        "escalated_at_all": "26/40"
+      },
+      "L0+L4": {
+        "tier_distribution": {
+          "critical": 3,
+          "elevated": 7,
+          "low": 17,
+          "high": 13
+        },
+        "exact_tier_match": "11/40",
+        "escalated_at_all": "23/40"
+      },
+      "L0+L1+L4": {
+        "tier_distribution": {
+          "critical": 3,
+          "elevated": 9,
+          "low": 13,
+          "high": 15
+        },
+        "exact_tier_match": "13/40",
+        "escalated_at_all": "27/40"
+      }
+    },
+    "tier_flips": {
+      "with_addition_of_L1": {
+        "no_change": 34,
+        "escalated": 6,
+        "  toward_ground_truth": 4,
+        "  past_ground_truth": 2,
+        "de-escalated": 0
+      }
+    },
+    "by_sub_pattern": {
+      "supporting_misrepresents": {
+        "L0": "6/15 escalated",
+        "L0+L4": "7/15 escalated",
+        "L0+L1+L4": "8/15 escalated",
+        "l1_intent_fired": "1/15"
+      },
+      "contrasting_misrepresents": {
+        "L0": "7/10 escalated",
+        "L0+L4": "2/10 escalated",
+        "L0+L1+L4": "5/10 escalated",
+        "l1_intent_fired": "5/10"
+      },
+      "citation_drift": {
+        "L0": "13/15 escalated",
+        "L0+L4": "14/15 escalated",
+        "L0+L1+L4": "14/15 escalated",
+        "l1_intent_fired": "0/15"
+      }
+    },
+    "by_target_layer": {
+      "L1": {
+        "L0": "7/10",
+        "L0+L4": "2/10",
+        "L0+L1+L4": "5/10"
+      },
+      "L2": {
+        "L0": "17/27",
+        "L0+L4": "18/27",
+        "L0+L1+L4": "19/27"
+      },
+      "L1+L2": {
+        "L0": "2/3",
+        "L0+L4": "3/3",
+        "L0+L1+L4": "3/3"
+      }
+    },
+    "l1_intent_distribution": {
+      "mentioning": 29,
+      "contrasting": 6,
+      "supporting": 2,
+      "using": 3
+    }
+  },
+  "cases": [
+    {
+      "case_id": "border_l1_a04",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "critical",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "critical",
+        "L0+L1+L4": "critical"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.5672,
+        "L0+L1+L4": 0.5274
+      },
+      "latency_ms": {
+        "L0": 1225.8,
+        "L0+L4": 1061.7,
+        "L0+L1+L4": 1026.7
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a05",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "high",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1316,
+        "L0+L1+L4": 0.1142
+      },
+      "latency_ms": {
+        "L0": 815.0,
+        "L0+L4": 987.3,
+        "L0+L1+L4": 1076.6
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a01",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0186
+      },
+      "latency_ms": {
+        "L0": 583.1,
+        "L0+L4": 5091.6,
+        "L0+L1+L4": 630.0
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a02",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1395,
+        "L0+L1+L4": 0.1212
+      },
+      "latency_ms": {
+        "L0": 1703.5,
+        "L0+L4": 2701.4,
+        "L0+L1+L4": 3040.4
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a06",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 911.8,
+        "L0+L4": 1041.3,
+        "L0+L1+L4": 1043.1
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a08",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "critical",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "critical",
+        "L0+L1+L4": "critical"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.5672,
+        "L0+L1+L4": 0.5271
+      },
+      "latency_ms": {
+        "L0": 782.4,
+        "L0+L4": 914.8,
+        "L0+L1+L4": 1000.2
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a09",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 912.1,
+        "L0+L4": 1054.5,
+        "L0+L1+L4": 1041.7
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a03",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "contrasting",
+      "intent_fired": true,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0858
+      },
+      "latency_ms": {
+        "L0": 6308.5,
+        "L0+L4": 790.1,
+        "L0+L1+L4": 5216.8
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a12",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "high",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 831.4,
+        "L0+L4": 981.5,
+        "L0+L1+L4": 1050.3
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a11",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 908.1,
+        "L0+L4": 1004.4,
+        "L0+L1+L4": 1074.9
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a10",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0186
+      },
+      "latency_ms": {
+        "L0": 999.6,
+        "L0+L4": 5653.2,
+        "L0+L1+L4": 355.2
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a07",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 5102.1,
+        "L0+L4": 747.0,
+        "L0+L1+L4": 5421.1
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b01",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "contrasting",
+      "intent_fired": true,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0598
+      },
+      "latency_ms": {
+        "L0": 569.9,
+        "L0+L4": 962.5,
+        "L0+L1+L4": 1040.5
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a15",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "critical",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "critical",
+        "L0+L1+L4": "critical"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.5672,
+        "L0+L1+L4": 0.5274
+      },
+      "latency_ms": {
+        "L0": 5073.9,
+        "L0+L4": 924.2,
+        "L0+L1+L4": 990.5
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b03",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "contrasting",
+      "intent_fired": true,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1029,
+        "L0+L1+L4": 0.2577
+      },
+      "latency_ms": {
+        "L0": 2154.4,
+        "L0+L4": 1948.0,
+        "L0+L1+L4": 3036.2
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b04",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "contrasting",
+      "intent_fired": true,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0692
+      },
+      "latency_ms": {
+        "L0": 230.4,
+        "L0+L4": 863.2,
+        "L0+L1+L4": 1033.3
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b05",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "supporting",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0188
+      },
+      "latency_ms": {
+        "L0": 972.5,
+        "L0+L4": 993.7,
+        "L0+L1+L4": 1037.4
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b06",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "supporting",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0186
+      },
+      "latency_ms": {
+        "L0": 956.1,
+        "L0+L4": 224.5,
+        "L0+L1+L4": 526.0
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b07",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "using",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 478.8,
+        "L0+L4": 488.9,
+        "L0+L1+L4": 526.8
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b08",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "contrasting",
+      "intent_fired": true,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0825
+      },
+      "latency_ms": {
+        "L0": 527.4,
+        "L0+L4": 430.8,
+        "L0+L1+L4": 625.2
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b09",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 380.6,
+        "L0+L4": 486.0,
+        "L0+L1+L4": 552.3
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b10",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "using",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0186
+      },
+      "latency_ms": {
+        "L0": 497.1,
+        "L0+L4": 438.5,
+        "L0+L1+L4": 554.4
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a14",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1029,
+        "L0+L1+L4": 0.089
+      },
+      "latency_ms": {
+        "L0": 30804.0,
+        "L0+L4": 1660.8,
+        "L0+L1+L4": 2980.5
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c01",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L1+L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1029,
+        "L0+L1+L4": 0.089
+      },
+      "latency_ms": {
+        "L0": 1237.1,
+        "L0+L4": 2251.0,
+        "L0+L1+L4": 3108.7
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_a13",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "elevated"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1029,
+        "L0+L1+L4": 0.0889
+      },
+      "latency_ms": {
+        "L0": 31487.4,
+        "L0+L4": 1306.7,
+        "L0+L1+L4": 2746.4
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c02",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "elevated",
+        "L0+L4": "low",
+        "L0+L1+L4": "low"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.0217,
+        "L0+L1+L4": 0.0185
+      },
+      "latency_ms": {
+        "L0": 167.9,
+        "L0+L4": 468.8,
+        "L0+L1+L4": 552.5
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_b02",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "elevated",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "contrasting",
+      "intent_fired": true,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.1029,
+        "L0+L1+L4": 0.3264
+      },
+      "latency_ms": {
+        "L0": 30529.8,
+        "L0+L4": 3004.4,
+        "L0+L1+L4": 2974.0
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c03",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "low",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6487
+      },
+      "latency_ms": {
+        "L0": 604.9,
+        "L0+L4": 2611.5,
+        "L0+L1+L4": 2743.6
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c05",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6487
+      },
+      "latency_ms": {
+        "L0": 2098.2,
+        "L0+L4": 2681.4,
+        "L0+L1+L4": 3051.6
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c04",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.0,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6489
+      },
+      "latency_ms": {
+        "L0": 3250.7,
+        "L0+L4": 2628.0,
+        "L0+L1+L4": 3055.0
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c06",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6502
+      },
+      "latency_ms": {
+        "L0": 3113.1,
+        "L0+L4": 2822.7,
+        "L0+L1+L4": 3071.6
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c07",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6487
+      },
+      "latency_ms": {
+        "L0": 3136.9,
+        "L0+L4": 2798.1,
+        "L0+L1+L4": 3078.9
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c08",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6488
+      },
+      "latency_ms": {
+        "L0": 3150.5,
+        "L0+L4": 2796.8,
+        "L0+L1+L4": 3059.1
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c09",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6488
+      },
+      "latency_ms": {
+        "L0": 3129.8,
+        "L0+L4": 2814.2,
+        "L0+L1+L4": 3062.6
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c10",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6488
+      },
+      "latency_ms": {
+        "L0": 3176.7,
+        "L0+L4": 2759.3,
+        "L0+L1+L4": 3090.9
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c11",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "high",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "using",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6589
+      },
+      "latency_ms": {
+        "L0": 3192.3,
+        "L0+L4": 2735.8,
+        "L0+L1+L4": 3091.1
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c12",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L1+L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6487
+      },
+      "latency_ms": {
+        "L0": 3127.2,
+        "L0+L4": 2830.0,
+        "L0+L1+L4": 3042.0
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c13",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6491
+      },
+      "latency_ms": {
+        "L0": 3141.5,
+        "L0+L4": 2815.0,
+        "L0+L1+L4": 3041.3
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c15",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L1+L2",
+      "ground_truth_risk": "elevated",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6493
+      },
+      "latency_ms": {
+        "L0": 3096.4,
+        "L0+L4": 2810.2,
+        "L0+L1+L4": 3096.3
+      },
+      "error": null
+    },
+    {
+      "case_id": "border_l1_c14",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "ground_truth_risk": "high",
+      "actual_tier": {
+        "L0": "high",
+        "L0+L4": "high",
+        "L0+L1+L4": "high"
+      },
+      "intent_label": "mentioning",
+      "intent_fired": false,
+      "posterior": {
+        "L0": 0.59,
+        "L0+L4": 0.6846,
+        "L0+L1+L4": 0.6488
+      },
+      "latency_ms": {
+        "L0": 3102.1,
+        "L0+L4": 2813.6,
+        "L0+L1+L4": 3094.2
+      },
+      "error": null
+    }
+  ]
+}

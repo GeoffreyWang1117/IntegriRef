@@ -1,0 +1,403 @@
+{
+  "metrics": {
+    "total_bibs": 22,
+    "errors": 0,
+    "by_config": {
+      "L0+L4": "22/22 escalated",
+      "L0+L4+L3": "22/22 escalated"
+    },
+    "by_category": {
+      "citation_ring": {
+        "L0+L4": "8/8",
+        "L0+L4+L3": "8/8"
+      },
+      "self_citation": {
+        "L0+L4": "8/8",
+        "L0+L4+L3": "8/8"
+      },
+      "orphan_cluster": {
+        "L0+L4": "6/6",
+        "L0+L4+L3": "6/6"
+      }
+    },
+    "l3_anomaly_fire_rate": {
+      "citation_ring": "6/8 bibs with any L3 anomaly detected",
+      "self_citation": "6/8 bibs with any L3 anomaly detected",
+      "orphan_cluster": "2/6 bibs with any L3 anomaly detected"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "ring_001",
+      "category": "citation_ring",
+      "description": "Brazilian citation stacking cartel \u2014 Clinics (USP) and partner journals, 2009-2013",
+      "n_refs_processed": 4,
+      "max_tier": {
+        "L0+L4": "critical",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_002",
+      "category": "citation_ring",
+      "description": "Ji-Huan He / IJNSNS editor-orchestrated citation ring \u2014 conference proceedings cite own journal",
+      "n_refs_processed": 4,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "excessive_self_citation",
+          "orphan_cluster",
+          "excessive_self_citation",
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_003",
+      "category": "citation_ring",
+      "description": "IOP Journal of Physics: Conference Series paper mill citation cluster \u2014 2021 retraction batch",
+      "n_refs_processed": 5,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_004",
+      "category": "citation_ring",
+      "description": "Hindawi special-issue peer-review ring \u2014 mutual citations among paper-mill cluster papers (2022)",
+      "n_refs_processed": 4,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_005",
+      "category": "citation_ring",
+      "description": "Korean university plagiarism and citation scheme \u2014 large-scale professor-coordinated citation inflat",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "reciprocal_citation"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_006",
+      "category": "citation_ring",
+      "description": "NEGATIVE CONTROL \u2014 Legitimate cross-citation within progressive research series (normal)",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "benford_violation",
+          "orphan_cluster",
+          "temporal_anomaly",
+          "temporal_anomaly",
+          "reciprocal_citation",
+          "orphan_cluster",
+          "temporal_anomaly"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_007",
+      "category": "citation_ring",
+      "description": "NEGATIVE CONTROL \u2014 Review paper citing multiple papers from one prolific lab (normal)",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "ring_008",
+      "category": "citation_ring",
+      "description": "NEGATIVE CONTROL \u2014 Multi-part longitudinal study series cross-referencing (normal)",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_001",
+      "category": "self_citation",
+      "description": "An elementary introduction to recently developed asymptotic methods and nanomechanics in textile eng",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_002",
+      "category": "self_citation",
+      "description": "An overview of recently published medical papers in Brazilian scientific journals",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "critical",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_003",
+      "category": "self_citation",
+      "description": "Novel optimization methods for network clustering with applications to scientific communities",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_004",
+      "category": "self_citation",
+      "description": "Chaotic attractors in nonlinear dynamical systems: new findings in the El Naschie E-infinity framewo",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_005",
+      "category": "self_citation",
+      "description": "Sustainable urban transport planning: a bibliometric analysis and future directions",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_006",
+      "category": "self_citation",
+      "description": "Structural basis of RNA-guided DNA integration by Tn7-like transposons",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_007",
+      "category": "self_citation",
+      "description": "A SARS-CoV-2 protein interaction map reveals targets for drug repurposing",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly",
+          "excessive_self_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation",
+          "reciprocal_citation"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "self_008",
+      "category": "self_citation",
+      "description": "A comprehensive review of machine learning methods applied to COVID-19 prognosis",
+      "n_refs_processed": 1,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "orphan_001",
+      "category": "orphan_cluster",
+      "description": "IOP paper-mill cluster \u2014 fully self-referential conference proceedings papers",
+      "n_refs_processed": 5,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "orphan_002",
+      "category": "orphan_cluster",
+      "description": "Hindawi special-issue paper mill cluster \u2014 mutual citation isolation from mainstream literature",
+      "n_refs_processed": 4,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "orphan_003",
+      "category": "orphan_cluster",
+      "description": "Small predatory-journal cluster \u2014 papers cite only each other with no external engagement",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    },
+    {
+      "case_id": "orphan_004",
+      "category": "orphan_cluster",
+      "description": "Author-coordinated micro-cluster \u2014 co-author group citing exclusively own papers across journals",
+      "n_refs_processed": 4,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "critical"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster",
+          "temporal_anomaly"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "orphan_005",
+      "category": "orphan_cluster",
+      "description": "NEGATIVE CONTROL \u2014 Niche subfield with naturally sparse external connections (legitimate)",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": [
+          "orphan_cluster"
+        ]
+      },
+      "error": null
+    },
+    {
+      "case_id": "orphan_006",
+      "category": "orphan_cluster",
+      "description": "NEGATIVE CONTROL \u2014 Research group's paper series: high internal citation is expected (legitimate)",
+      "n_refs_processed": 3,
+      "max_tier": {
+        "L0+L4": "high",
+        "L0+L4+L3": "high"
+      },
+      "anomalies_detected": {
+        "L0+L4+L3": []
+      },
+      "error": null
+    }
+  ]
+}

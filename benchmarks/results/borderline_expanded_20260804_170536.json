@@ -1,0 +1,89 @@
+{
+  "created": "2026-08-04T16:58:19",
+  "commitment": "3tFe-S1b: expanded >=200-case borderline splits",
+  "borderline_l1_v2": {
+    "split": "Borderline-L1-v2 (ACL-ARC held-out train slice + test)",
+    "protocol": {
+      "train": "ACL-ARC train minus 150 held-out (1538 rows)",
+      "threshold_selection": "ACL-ARC validation (max F1), disjoint",
+      "final_eval": "held-out slice + ACL-ARC test, scored once"
+    },
+    "n_eval": 289,
+    "val_best_f1": 0.783,
+    "chosen_threshold": 0.5,
+    "detector": {
+      "n": 289,
+      "n_pos": 52,
+      "n_neg": 237,
+      "precision": 0.594,
+      "recall": 0.731,
+      "f1": 0.655,
+      "fpr": 0.1097,
+      "tp": 38,
+      "fp": 26,
+      "fn": 14,
+      "tn": 211
+    },
+    "lexical_heuristic_baseline": {
+      "n": 289,
+      "n_pos": 52,
+      "n_neg": 237,
+      "precision": 0.333,
+      "recall": 0.038,
+      "f1": 0.069,
+      "fpr": 0.0169,
+      "tp": 2,
+      "fp": 4,
+      "fn": 50,
+      "tn": 233
+    },
+    "lexical_heuristic_best_threshold": 0.4,
+    "model_saved_to": "models/contrast_detector_v2"
+  },
+  "borderline_l2_v2": {
+    "split": "Borderline-L2-v2 (all SciFact dev claim-evidence pairs)",
+    "n_eval": 209,
+    "n_positive_contradict": 71,
+    "n_control_support": 138,
+    "caveat": "the scifact_nli checkpoint used SciFact dev for epoch selection, so these numbers are mildly optimistic; public test labels are unavailable",
+    "firing_variants": {
+      "contradicted_or_unsupported": {
+        "n": 209,
+        "n_pos": 71,
+        "n_neg": 138,
+        "precision": 0.428,
+        "recall": 0.958,
+        "f1": 0.591,
+        "fpr": 0.6594,
+        "tp": 68,
+        "fp": 91,
+        "fn": 3,
+        "tn": 47
+      },
+      "contradicted_only": {
+        "n": 209,
+        "n_pos": 71,
+        "n_neg": 138,
+        "precision": 0.544,
+        "recall": 0.789,
+        "f1": 0.644,
+        "fpr": 0.3406,
+        "tp": 56,
+        "fp": 47,
+        "fn": 15,
+        "tn": 91
+      }
+    },
+    "positive_label_distribution": {
+      "contradicted": 56,
+      "unsupported": 12,
+      "supported": 3
+    },
+    "control_label_distribution": {
+      "contradicted": 47,
+      "unsupported": 44,
+      "supported": 44,
+      "partially_supported": 3
+    }
+  }
+}

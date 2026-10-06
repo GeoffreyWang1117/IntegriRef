@@ -8,24 +8,132 @@ build/
 *.egg
 
 # Models (too large for git, use HuggingFace Hub)
-models/intent_classifier/model.safetensors
-models/scifact_nli/model.safetensors
-models/scifact_nli/model.onnx
-models/scifact_nli/model_int8.onnx
+models/**/*.safetensors
+models/**/*.onnx
+models/**/*.bin
+models/**/*.pt
+models/**/*.pth
+models/**/*.ckpt
+models/**/*.h5
+models/**/*.msgpack
 models/scifact_nli/spm.model
 models/scifact_nli/tokenizer.json
 
-# Benchmark data (large crawled datasets)
+# Benchmark data: third-party corpora and crawl caches stay out of the tree.
+# hf_export/ is deliberately NOT ignored -- it is the released IntegriRef-Bench.
 benchmarks/data/crawled/
-benchmarks/data/hf_export/
 benchmarks/data/scifact/
 benchmarks/data/scicite/
 
 # Rust build artifacts
 rust_core/target/
 
-# Environment
+# ---------------------------------------------------------------------------
+# Secrets and credentials — never commit these.
+# .env alone is not enough: editors, tools and shells write many variants.
+# ---------------------------------------------------------------------------
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+!**/public*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+*.ppk
+credentials
+credentials.json
+client_secret*.json
+service-account*.json
+service_account*.json
+gcloud-*.json
+.netrc
+.npmrc
+.pypirc
+.aws/
+.ssh/
+secrets.*
+*secret*.json
+*secret*.yaml
+*secret*.yml
+token.json
+*.token
+.huggingface/
+.cache/huggingface/
+
+# ---------------------------------------------------------------------------
+# Assistant / agent local state — machine-specific, and can carry transcripts,
+# absolute paths and prompts. The user-level memory store lives outside the
+# repo (~/.claude/projects/...) and is not affected by these rules.
+# ---------------------------------------------------------------------------
+.claude/
+.cursor/
+.aider*
+.continue/
+CLAUDE.local.md
+AGENTS.local.md
+MEMORY.md
+memory/
+*.memory.md
+
+# ---------------------------------------------------------------------------
+# Peer review is confidential. Reviewer text, scores and rebuttal drafts must
+# not go into a public repository. Drop a rule if a venue has made a given
+# thread public and you intend to publish it.
+# ---------------------------------------------------------------------------
+paper/**/rebuttal*
+paper/**/review_round_*.json
+paper/**/reviews*.json
+paper/**/meta_review*
+paper/**/*_reviews.md
+
+# ---------------------------------------------------------------------------
+# Submissions still under review elsewhere. Publishing these can break the
+# double-blind anonymity of an active submission. Un-ignore a directory once
+# that paper is public.
+# ---------------------------------------------------------------------------
+paper/ase2026/
+paper/gem2026/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+# ...but a camera-ready package ships its .bbl: Springer compiles from source
+# and does not run BibTeX.
+!**/camera_ready/*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.out
+*.nav
+*.snm
+*.vrb
+*.brf
+*.idx
+*.ind
+*.ilg
+texput.log
+*.log
+
+# Scratch and local working files
+scratch/
+scratchpad/
+tmp/
+*.tmp
+*.bak
+*.orig
+*.rej
+nohup.out
+
+# Environment
 .venv/
 venv/
 
@@ -39,6 +147,5 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Misc
-texput.log
-*.log
+# deepcite worklist cache (regenerable; keyed on tool + selection-regex hash)
+.cache/
