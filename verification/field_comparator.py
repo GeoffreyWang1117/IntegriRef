@@ -304,8 +304,13 @@ class FieldComparator:
                             f"bib='{bib_surname}' api='{api_surname}'")
 
     @staticmethod
-    def match_year(bib_year: str, api_year: Optional[str]) -> tuple[str, str]:
-        """Compare years — exact, ±1, ±2 (preprint vs published)."""
+    def match_year(bib_year: str, api_year: Optional[str],
+                   found_by_id: bool = False) -> tuple[str, str]:
+        """Compare years — exact, ±1, ±2 (preprint vs published).
+
+        When found_by_id=True (DOI/arXiv resolved), stricter thresholds
+        apply because ID-matched papers should have near-exact years.
+        """
         if not api_year:
             return "WARN", "no year from API"
         try:
@@ -318,6 +323,9 @@ class FieldComparator:
         elif diff <= 1:
             return "WARN", f"year off by 1: bib={by} api={ay}"
         elif diff <= 2:
+            if found_by_id:
+                # ID-resolved papers with year off by 2+ are likely chimeras
+                return "FAIL", f"year mismatch (ID match): bib={by} api={ay}"
             return "WARN", f"year off by 2: bib={by} api={ay} (preprint vs published?)"
         else:
             return "FAIL", f"year mismatch: bib={by} api={ay}"

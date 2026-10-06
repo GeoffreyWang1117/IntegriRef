@@ -25,6 +25,15 @@ from enum import Enum
 from typing import Optional
 
 
+from pathlib import Path as _Path
+
+# Decision threshold for the binary CompareOrContrast detector, selected on
+# ACL-ARC validation (disjoint from every IntegriRef evaluation split).
+CONTRAST_THRESHOLD = 0.7
+_DEFAULT_CONTRAST_PATH = (_Path(__file__).resolve().parent.parent
+                          / "models" / "contrast_detector")
+
+
 class CitationIntent(str, Enum):
     """Citation intent categories."""
     SUPPORTING = "supporting"      # Evidence, confirmation, building upon
@@ -148,19 +157,68 @@ class IntentClassifier:
     (vs 85%+ for fine-tuned models), but requires no GPU or model download.
     """
 
-    def __init__(self, use_model: bool = True):
+    def __init__(self, use_model: bool = True, use_contrast_model: bool = True):
         """Initialize the classifier.
 
         Args:
             use_model: If True, try to load a transformer model first.
                       Falls back to heuristic if model unavailable.
+            use_contrast_model: If True, try to load the binary
+                      CompareOrContrast detector that supplies the CONTRASTING
+                      label. The SciCite label space has no contrast class, so
+                      without it CONTRASTING falls back to lexical cues.
         """
         self._model = None
         self._tokenizer = None
         self._model_loaded = False
+        self._contrast_model = None
+        self._contrast_tokenizer = None
+        self._contrast_loaded = False
+        self._contrast_threshold = CONTRAST_THRESHOLD
 
         if use_model:
             self._try_load_model()
+        if use_contrast_model:
+            self._try_load_contrast_model()
+
+    def _try_load_contrast_model(self):
+        """Load the ACL-ARC-trained binary contrast detector, if present."""
+        try:
+            import os
+
+            import torch  # noqa: F401 — probe availability before loading
+            from transformers import (
+                AutoModelForSequenceClassification,
+                AutoTokenizer,
+            )
+            checkpoint = os.environ.get("CONTRAST_MODEL_PATH",
+                                        str(_DEFAULT_CONTRAST_PATH))
+            if not os.path.exists(checkpoint):
+                return
+            self._contrast_threshold = float(
+                os.environ.get("CONTRAST_THRESHOLD", CONTRAST_THRESHOLD))
+            self._contrast_tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+            self._contrast_model = AutoModelForSequenceClassification.\
+                from_pretrained(checkpoint)
+            self._contrast_model.eval()
+            self._contrast_loaded = True
+        except (ImportError, OSError, ValueError):
+            pass
+
+    def _contrast_probability(self, citing_sentence: str) -> float:
+        """P(CompareOrContrast) for a citing sentence, or -1 if unavailable."""
+        if not self._contrast_loaded:
+            return -1.0
+        try:
+            import torch
+            enc = self._contrast_tokenizer(citing_sentence, truncation=True,
+                                           max_length=256, padding=True,
+                                           return_tensors="pt")
+            with torch.no_grad():
+                logit = self._contrast_model(**enc).logits.squeeze(-1)
+            return float(torch.sigmoid(logit).item())
+        except Exception:  # noqa: BLE001 — never let L1 break the pipeline
+            return -1.0
 
     def load_model(self, model_path: str = None):
         """Explicitly load the transformer model.
@@ -210,8 +268,26 @@ class IntentClassifier:
             IntentResult with classified intent and confidence.
         """
         if self._model_loaded:
-            return self._classify_with_model(citing_sentence, citation_key)
-        return self._classify_heuristic(citing_sentence, citation_key)
+            result = self._classify_with_model(citing_sentence, citation_key)
+        else:
+            result = self._classify_heuristic(citing_sentence, citation_key)
+
+        # The SciCite label space (background/method/result) cannot express
+        # contrast, so the dedicated detector owns that decision when loaded.
+        # Its threshold comes from ACL-ARC validation, never from an
+        # IntegriRef evaluation split.
+        prob = self._contrast_probability(citing_sentence)
+        if prob >= 0.0:
+            if prob > self._contrast_threshold:
+                result.intent = CitationIntent.CONTRASTING
+                result.confidence = prob
+                result.cue_phrase = f"contrast detector p={prob:.2f}"
+            elif result.intent == CitationIntent.CONTRASTING:
+                # Detector overrules a lexical false positive.
+                result.intent = CitationIntent.MENTIONING
+                result.confidence = 1.0 - prob
+                result.cue_phrase = f"contrast detector p={prob:.2f} (below thr)"
+        return result
 
     def classify_batch(self, sentences: list[tuple[str, str]]) -> list[IntentResult]:
         """Classify intent for multiple citations.
@@ -346,10 +422,13 @@ class IntentClassifier:
         confidence = probs[pred_idx].item()
 
         # Check for contrasting — model may not distinguish this well
-        # Use heuristic as a secondary check
+        # Use heuristic as a secondary check. Threshold is 0.45 because
+        # the heuristic dampens strong-cue scores (max_weight<1.5 path),
+        # producing confidences in the 0.49–0.62 range even for explicit
+        # "Unlike X" / "In contrast to X" / "Contrary to X" openers.
         heuristic = self._classify_heuristic(sentence, citation_key)
         if (heuristic.intent == CitationIntent.CONTRASTING
-                and heuristic.confidence > 0.7):
+                and heuristic.confidence > 0.45):
             intent = CitationIntent.CONTRASTING
             confidence = max(confidence, heuristic.confidence) * 0.9
 

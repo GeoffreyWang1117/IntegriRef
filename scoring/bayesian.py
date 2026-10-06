@@ -68,8 +68,12 @@ SIGNAL_DEFINITIONS: dict[str, SignalDef] = {
         description="Author/title/year disagrees with registry record",
     ),
     "no_id_match": SignalDef(
-        lr_positive=2.0, lr_negative=0.92, category="L0",
-        description="Found by search only — DOI/arXiv ID did not resolve",
+        lr_positive=6.0, lr_negative=0.92, category="L0",
+        description="Found by search only — provided DOI/arXiv ID did not resolve",
+    ),
+    "chimera_detected": SignalDef(
+        lr_positive=8.0, lr_negative=0.95, category="L0",
+        description="ID resolves but author/year fields contradict registry record",
     ),
     "retracted_citation": SignalDef(
         lr_positive=8.0, lr_negative=0.99, category="L0",
@@ -112,6 +116,19 @@ SIGNAL_DEFINITIONS: dict[str, SignalDef] = {
     "orphan_cluster": SignalDef(
         lr_positive=2.5, lr_negative=0.92, category="L3",
         description="Group of papers cite only each other",
+    ),
+
+    "benford_violation": SignalDef(
+        lr_positive=6.0, lr_negative=0.95, category="L3",
+        description="Citation count first-digit distribution violates Benford's law",
+    ),
+    "reciprocal_citation": SignalDef(
+        lr_positive=5.0, lr_negative=0.92, category="L3",
+        description="Bidirectional citation pattern between authors",
+    ),
+    "citation_burst": SignalDef(
+        lr_positive=3.0, lr_negative=0.95, category="L3",
+        description="Sudden spike of citations from concentrated sources",
     ),
 
     # -- Text signals --------------------------------------------------------

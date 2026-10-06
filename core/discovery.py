@@ -179,7 +179,7 @@ class RegistryDiscovery:
                 for future in as_completed(futures, timeout=timeout):
                     adapter = futures[future]
                     try:
-                        entity = future.result(timeout=1.0)
+                        entity = future.result(timeout=2.0)
                         if entity:
                             results.append((adapter, entity))
                     except Exception as exc:
@@ -237,7 +237,7 @@ class RegistryDiscovery:
                 for future in as_completed(futures, timeout=timeout):
                     adapter = futures[future]
                     try:
-                        hits = future.result(timeout=1.0)
+                        hits = future.result(timeout=2.0)
                         if hits:
                             results.append((adapter, hits))
                     except Exception as exc:

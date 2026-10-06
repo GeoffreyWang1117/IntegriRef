@@ -192,14 +192,15 @@ class TestSignalExtractorL3:
     def test_with_anomalies(self):
         anomaly = MagicMock()
         anomaly.anomaly_type = MagicMock()
-        anomaly.anomaly_type.value = "SELF_CITATION_RING"
-        anomaly.severity = 0.8
+        anomaly.anomaly_type.value = "self_citation_ring"
+        anomaly.severity = "high"
+        anomaly.score = 0.8
         anomaly.description = "test ring"
 
         signals = SignalExtractor.from_l3([anomaly])
         names = {s.signal_name: s for s in signals}
         assert names["citation_ring_detected"].fired is True
-        assert names["citation_ring_detected"].confidence == 0.8
+        assert names["citation_ring_detected"].confidence == 0.85  # "high" → 0.85
 
 
 # ── Pipeline tests ────────────────────────────────────────────────────────

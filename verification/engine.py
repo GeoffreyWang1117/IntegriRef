@@ -619,9 +619,17 @@ class VerificationEngine:
                 result.sources_hit.append(info.name)
 
             # Early stop if we have a confirmed match from 2+ sources
+            # BUT do not exit if any field has FAIL (possible chimera)
             confirmed = sum(1 for m in result.source_matches if m.is_confirmed)
             if confirmed >= 2:
-                break
+                has_field_fail = any(
+                    c.status == "FAIL"
+                    for m in result.source_matches
+                    for c in m.checks
+                    if c.field not in ("retraction",)
+                )
+                if not has_field_fail:
+                    break
 
     def _verify_by_id_parallel(self, ref: dict, result: ReferenceResult,
                                entities: list, names: list,
@@ -839,7 +847,8 @@ class VerificationEngine:
         ref_year = ref.get("year", "")
         year_penalty = 1.0
         if ref_year and entity.year:
-            status, detail = FieldComparator.match_year(ref_year, entity.year)
+            status, detail = FieldComparator.match_year(
+                ref_year, entity.year, found_by_id=found_by_id)
             try:
                 year_diff = abs(int(ref_year) - int(entity.year))
                 year_penalty = max(0.0, 1.0 - 0.5 * year_diff)
@@ -1002,19 +1011,21 @@ class VerificationEngine:
                         result.overall = "WARN"
 
             # If a confirmed source has year FAIL but title+author OK,
-            # downgrade to WARN (preprint/publication date difference)
+            # downgrade to WARN (preprint/publication date difference).
+            # The preprint tolerance only applies to search-matched sources:
+            # when the DOI/arXiv ID resolved, a year FAIL is a genuine metadata
+            # inconsistency (year-only chimera), so it must survive here and
+            # reach the chimera_detected signal in L4.
             if result.overall == "FAIL":
-                all_year_fail = all(
-                    c.field == "year" for m in confirmed_sources
-                    for c in m.checks if c.status == "FAIL"
-                )
-                if all_year_fail:
+                fail_checks = [(m, c) for m in confirmed_sources
+                               for c in m.checks if c.status == "FAIL"]
+                downgradable = all(c.field == "year" and not m.found_by_id
+                                   for m, c in fail_checks)
+                if downgradable:
                     result.overall = "WARN"
-                    for m in confirmed_sources:
-                        for c in m.checks:
-                            if c.field == "year" and c.status == "FAIL":
-                                c.status = "WARN"
-                                c.detail += " (downgraded: title+author match)"
+                    for _m, c in fail_checks:
+                        c.status = "WARN"
+                        c.detail += " (downgraded: title+author match)"
         else:
             # No confirmed source — use all checks
             result.overall = "OK"

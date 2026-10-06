@@ -167,11 +167,14 @@ class SignalExtractor:
             ))
 
         # metadata_mismatch
+        has_id_match = any(
+            m.found_by_id for m in result.source_matches
+        ) if result.source_matches else False
+
         if result.source_matches:
             best = max(result.source_matches, key=lambda m: m.match_score)
-            mismatch = best.match_score < 70
+            mismatch = best.match_score < 65
             # Also fire if L0 overall is FAIL despite finding the reference
-            # (e.g. title matches but author/year clearly wrong — chimera)
             if not mismatch and found and result.overall == "FAIL":
                 mismatch = True
             signals.append(SignalObservation(
@@ -182,10 +185,27 @@ class SignalExtractor:
                         f"l0_overall={result.overall}",
             ))
 
+        # chimera_detected — ID resolves but core identity fields contradict
+        # Only fire on author or year FAIL (venue mismatch too noisy)
+        if result.source_matches and found and has_id_match:
+            failed_fields = []
+            for m in result.source_matches:
+                if m.found_by_id:
+                    for c in m.checks:
+                        if c.status == "FAIL" and c.field in (
+                            "authors", "year"
+                        ):
+                            failed_fields.append(c.field)
+            is_chimera = len(failed_fields) > 0
+            signals.append(SignalObservation(
+                signal_name="chimera_detected",
+                fired=is_chimera,
+                confidence=0.9 if is_chimera else 0.95,
+                details=f"id_match=True, failed_fields={failed_fields}"
+                        if is_chimera else "",
+            ))
+
         # no_id_match — found by search only, no DOI/arXiv ID resolved
-        has_id_match = any(
-            m.found_by_id for m in result.source_matches
-        ) if result.source_matches else False
         no_id_fired = found and not has_id_match
         signals.append(SignalObservation(
             signal_name="no_id_match",
@@ -322,29 +342,40 @@ class SignalExtractor:
         """Extract signals from L3 graph anomaly detection."""
         signals = []
 
-        # Build a map of anomaly types to max severity
-        anomaly_map = {}
+        # Build a map of anomaly types to max score (float)
+        anomaly_map: dict[str, float] = {}
+        severity_map: dict[str, str] = {}
         for a in anomalies:
             atype = a.anomaly_type.value if hasattr(a.anomaly_type, 'value') else str(a.anomaly_type)
-            if atype not in anomaly_map or a.severity > anomaly_map[atype]:
-                anomaly_map[atype] = a.severity
+            score = getattr(a, 'score', 0.0) or 0.0
+            if atype not in anomaly_map or score > anomaly_map[atype]:
+                anomaly_map[atype] = score
+                severity_map[atype] = getattr(a, 'severity', '')
 
-        # Map anomaly types to signal names
+        # Severity string → confidence mapping
+        _SEV_CONF = {"critical": 1.0, "high": 0.85, "medium": 0.6, "low": 0.3}
+
+        # Map anomaly types (enum .value = lowercase) to signal names
         type_to_signal = {
-            "SELF_CITATION_RING": "citation_ring_detected",
-            "EXCESSIVE_SELF_CITATION": "excessive_self_citation",
-            "TEMPORAL_ANOMALY": "temporal_anomaly",
-            "ORPHAN_CLUSTER": "orphan_cluster",
+            "self_citation_ring": "citation_ring_detected",
+            "excessive_self_citation": "excessive_self_citation",
+            "temporal_anomaly": "temporal_anomaly",
+            "orphan_cluster": "orphan_cluster",
+            "benford_violation": "benford_violation",
+            "reciprocal_citation": "reciprocal_citation",
+            "citation_burst": "citation_burst",
         }
 
         for atype, signal_name in type_to_signal.items():
             if signal_name in SIGNAL_DEFINITIONS:
-                severity = anomaly_map.get(atype, 0)
+                score = anomaly_map.get(atype, 0.0)
+                sev = severity_map.get(atype, "")
+                conf = _SEV_CONF.get(sev, min(score, 1.0) if score > 0 else 0.0)
                 signals.append(SignalObservation(
                     signal_name=signal_name,
-                    fired=severity > 0,
-                    confidence=min(severity, 1.0),
-                    details=f"severity={severity:.2f}" if severity > 0 else "",
+                    fired=atype in anomaly_map,
+                    confidence=conf,
+                    details=f"severity={sev}, score={score:.2f}" if atype in anomaly_map else "",
                 ))
 
         return signals
