@@ -48,20 +48,898 @@
 {"id": "89b2157b-12fd-4e36-8d16-7d422cb3ba4c", "reason": "abstract answers it", "abstract_best": 5.079}
 {"id": "006159e0-1c85-4e7c-b0f8-677269116fa9", "reason": "cited work not found on arXiv by title", "title": "Deep Relative Distance Learning: Tell the Difference between Similar Vehicles"}
 {"id": "9cc597c4-a636-4c80-8b63-714daa381ff5", "reason": "abstract answers it", "abstract_best": 2.301}
-{"id": "c914cff7-3999-4764-a35e-4eb5ca318791", "reason": "fetch budget exhausted"}
 {"id": "d2e70f66-fd1a-4166-bc7c-17d82285b684", "reason": "cited work not found on arXiv by title", "title": "To Center or Not to Center: That Is Not the Question—An Ancillarity–Sufficiency Interweavi"}
 {"id": "e73339d7-7f45-4b73-ba47-2e77ed4a255a", "reason": "cited work not found on arXiv by title", "title": "Continuous sign language recognition: Towards large vocabulary statistical recognition sys"}
 {"id": "407595e5-0f1a-4b94-8af6-57c5268e4caf", "reason": "cited work not found on arXiv by title", "title": "Deep Hand: How to Train a CNN on 1 Million Hand Images When Your Data is Continuous and We"}
-{"id": "f8c54597-a553-4271-ae5c-452456ae5e51", "reason": "fetch budget exhausted"}
 {"id": "b76fd16f-0fc9-4c6e-a86f-336b216cfe14", "reason": "abstract answers it", "abstract_best": 3.983}
 {"id": "7383f1e4-b8a1-4035-babf-ba02c7c981d5", "reason": "abstract answers it", "abstract_best": 2.298}
-{"id": "ce9b139c-7006-466e-bda8-7045d6a3e972", "reason": "fetch budget exhausted"}
-{"id": "bc997727-aeb9-4483-bf19-ed13a2a3e971", "reason": "fetch budget exhausted"}
-{"id": "c6596492-f39f-49ea-8b91-633b0259a79c", "reason": "fetch budget exhausted"}
-{"id": "02c76d2c-ee56-4772-84a1-f425e14770d2", "reason": "fetch budget exhausted"}
+{"id": "ce9b139c-7006-466e-bda8-7045d6a3e972", "reason": "abstract ranks within the top passages", "abstract_best": 1.315, "top_score": 8.158}
+{"id": "bc997727-aeb9-4483-bf19-ed13a2a3e971", "reason": "no LaTeX e-print", "arxiv_id": "quant-ph/0010114v1"}
 {"id": "cca408c8-99db-45dc-a027-e88122dfd40c", "reason": "abstract answers it", "abstract_best": 2.348}
 {"id": "d84017fe-b3ab-4ece-9753-13e52cf7d664", "reason": "abstract answers it", "abstract_best": 3.225}
-{"id": "01f4d80a-4d64-4fc7-855c-9c217aabb329", "reason": "fetch budget exhausted"}
 {"id": "338fd3f1-9bb6-4861-bb9a-698471d973cd", "reason": "abstract answers it", "abstract_best": 2.331}
-{"id": "336a89c0-829d-4b93-a828-bc7fb693b33f", "reason": "fetch budget exhausted"}
 {"id": "2df5e90f-897e-4a4e-8ccc-5e8083391a53", "reason": "openalex lookup failed"}
+{"id": "a9b72e8a-43cd-4e24-a2f3-953d93f8a7da", "reason": "background citation list"}
+{"id": "14415ab5-b7c7-45d2-85d3-9bf022a1de9d", "reason": "background citation list"}
+{"id": "054d3f22-4f3c-4694-b5dd-e6850ec23d5e", "reason": "background citation list"}
+{"id": "08090bfa-aa57-46e7-b510-7e44c81e3689", "reason": "background citation list"}
+{"id": "ec886f4e-93bb-47bf-9cec-b9366f887c69", "reason": "background citation list"}
+{"id": "8eb0b2ce-a79c-4c9e-8fc5-34d6190c80cf", "reason": "background citation list"}
+{"id": "e3a400fb-e900-4edb-8a5d-ae44ded3905e", "reason": "background citation list"}
+{"id": "a57607e3-3130-4b2e-af66-426f9f940fa7", "reason": "background citation list"}
+{"id": "873be5e5-5a34-4877-91e2-942cd901b46e", "reason": "background citation list"}
+{"id": "81752ad9-25ea-4567-aaa6-b2bc8ff4415d", "reason": "background citation list"}
+{"id": "b399916a-1d1d-46bb-ab8f-857be0dbd096", "reason": "background citation list"}
+{"id": "ce2e8d4d-9f72-4c39-ab28-532edef5fdd0", "reason": "background citation list"}
+{"id": "1c332980-4f28-46f7-b1b5-8233d2d11a07", "reason": "background citation list"}
+{"id": "377d579c-8ec0-4067-91d7-72a4760fb692", "reason": "background citation list"}
+{"id": "79228fa2-eb51-4426-9cea-295af453c3c5", "reason": "background citation list"}
+{"id": "fcebdc43-134d-4b1f-88fd-dd1a57be8daf", "reason": "background citation list"}
+{"id": "9a53820b-bbf7-4204-ba19-2d585b0ce10d", "reason": "background citation list"}
+{"id": "0b79318c-1145-4c6d-b158-b9b68241bec7", "reason": "background citation list"}
+{"id": "cc5ec342-813d-4c78-b680-64f9d3ce24ac", "reason": "background citation list"}
+{"id": "1566e05b-990f-47bf-8e54-4ece8b1cb0bc", "reason": "background citation list"}
+{"id": "f7d21e74-9a39-4258-850e-9b5b15dac9d6", "reason": "background citation list"}
+{"id": "bccbf44a-c193-4e15-a855-6398b2721a27", "reason": "background citation list"}
+{"id": "749cb634-1589-44b5-b136-e6b1c6519a21", "reason": "background citation list"}
+{"id": "a032c00c-91de-4059-8a43-ee03889a28fe", "reason": "background citation list"}
+{"id": "95432efd-8837-4924-8d52-82ac6c614e32", "reason": "background citation list"}
+{"id": "ed7a916e-0047-450a-8d2d-875c10ae6ffa", "reason": "background citation list"}
+{"id": "5159194a-bf3b-4a49-99b9-b6856c631f88", "reason": "background citation list"}
+{"id": "c07f6e35-dd57-4493-811d-d8c8451cb8ed", "reason": "background citation list"}
+{"id": "cfb1fe26-b112-41d6-a5cf-d81fdf32da10", "reason": "background citation list"}
+{"id": "9728fe70-ec11-42ca-aa1d-f324df1d4582", "reason": "background citation list"}
+{"id": "0ccbf2fc-2749-4e04-ae7d-ac68fdf69b89", "reason": "background citation list"}
+{"id": "e0208484-5a33-414a-b822-debe9e59dd65", "reason": "openalex lookup failed"}
+{"id": "1e7cae02-25aa-449b-9dc4-8b037ec21e94", "reason": "abstract answers it", "abstract_best": 2.552}
+{"id": "c065b82d-d30d-4af8-af09-19b367a33b13", "reason": "cited work not found on arXiv by title", "title": "Néron Models"}
+{"id": "e375f6b5-3f16-42b9-8f6e-e8481564e051", "reason": "abstract ranks within the top passages", "abstract_best": 0.0, "top_score": 8.761}
+{"id": "d74a8c1f-dd70-4b10-a536-a24e0862a387", "reason": "openalex lookup failed"}
+{"id": "122bed9d-4ada-43a4-b502-a6ed4b3946ec", "reason": "cited work not found on arXiv by title", "title": "Finite Element Procedures"}
+{"id": "2e04cd49-082b-4b09-9aa4-1c399374fe4c", "reason": "abstract ranks within the top passages", "abstract_best": 0.0, "top_score": 5.787}
+{"id": "b9ba7bd6-e1d8-466c-bb44-a1b3f61f5390", "reason": "abstract answers it", "abstract_best": 2.344}
+{"id": "260cfb7f-521d-4d6f-b803-9c9e7df16aa1", "reason": "cited work not found on arXiv by title", "title": "Statistical Mechanics: Theory and Molecular Simulation"}
+{"id": "841707ef-03a2-43b3-9629-422a2d51b29c", "reason": "cited work not found on arXiv by title", "title": "Learning Curves: Asymptotic Values and Rate of Convergence"}
+{"id": "d93a7e3c-425f-42a5-9878-fd281dbb636f", "reason": "cited work not found on arXiv by title", "title": "Baryon isocurvature fluctuations at small scales and baryonic dark matter"}
+{"id": "49861765-ae40-4e21-958a-c8b91ac23915", "reason": "cited work not found on arXiv by title", "title": "Expanding maps on Cantor sets and analytic continuation of zeta functions"}
+{"id": "a89d58bd-28c8-4410-b526-d0db2398a60d", "reason": "abstract answers it", "abstract_best": 2.351}
+{"id": "69846076-310c-4096-aafd-bc9d8e4418db", "reason": "cited work not found on arXiv by title", "title": "The computation of loop amplitudes in gauge theories"}
+{"id": "956c4d8f-ed1a-40be-9db8-6a59ed2da0c6", "reason": "abstract answers it", "abstract_best": 2.832}
+{"id": "df704d92-d65c-4db5-ab1f-f7ce18586afe", "reason": "abstract answers it", "abstract_best": 3.402}
+{"id": "092b17e9-a5fb-4d79-8500-7851fbc29b81", "reason": "cited work not found on arXiv by title", "title": "Heights of Heegner cycles and derivatives of L-series"}
+{"id": "d667cffc-0ac4-48fb-a623-7d8750b01598", "reason": "openalex lookup failed"}
+{"id": "0247e504-e62b-415d-87eb-8b054c6d159a", "reason": "cited work not found on arXiv by title", "title": "A simple biologically inspired algorithm for collision-free navigation of a unicycle-like "}
+{"id": "462dc227-0cca-41a7-84c4-d2162e0b5533", "reason": "abstract answers it", "abstract_best": 4.551}
+{"id": "329a445e-1665-4cf1-9f1d-723d2632b8db", "reason": "cited work not found on arXiv by title", "title": "Autonomous UAV Surveillance in Complex Urban Environments"}
+{"id": "6d25427d-0998-44a4-bf9a-b511f105f5bd", "reason": "openalex lookup failed"}
+{"id": "0be2052d-3ffd-4c33-8f12-7a0c565b4ec0", "reason": "cited work not found on arXiv by title", "title": "Infinite games on finitely coloured graphs with applications to automata on infinite trees"}
+{"id": "81f02457-f21d-4d50-81ce-7cb28bf20894", "reason": "cited work not found on arXiv by title", "title": "On the complexity of omega -automata"}
+{"id": "4be55834-3315-4946-aae7-01479e77a92a", "reason": "cited work not found on arXiv by title", "title": "Relating hierarchies of word and tree automata"}
+{"id": "38a37f1b-7ee2-4e2b-b3d2-54fc6242adbc", "reason": "cited work not found on arXiv by title", "title": "Testing and generating infinite sequences by a finite automaton"}
+{"id": "49eb8b5b-4d5d-4cd4-9053-2f80c2f1ea8f", "reason": "cited work not found on arXiv by title", "title": "A Tight Lower Bound for Determinization of Transition Labeled Büchi Automata"}
+{"id": "d003b355-f1d8-4955-a6f1-a17bad72e8b3", "reason": "cited work not found on arXiv by title", "title": "Measuring Massive Multitask Language Understanding"}
+{"id": "bd7a4326-5155-48b0-8fb1-f98e6aa9d070", "reason": "cited work not found on arXiv by title", "title": "The Pile: An 800GB Dataset of Diverse Text for Language Modeling"}
+{"id": "087d35a4-46a0-4a2b-93a6-50cac250697e", "reason": "cited work not found on arXiv by title", "title": "PromptSource: An Integrated Development Environment and Repository for Natural Language Pr"}
+{"id": "b70f6c84-12c4-4a29-abd1-da0e571716a7", "reason": "cited work not found on arXiv by title", "title": "Quantum discord for two-qubit systems"}
+{"id": "4d56067b-d19c-416f-922e-d1fa505a333f", "reason": "cited work not found on arXiv by title", "title": "Quantum discord for two-qubit X states"}
+{"id": "a9ed17fd-802f-4d6d-a115-622f33406f7a", "reason": "cited work not found on arXiv by title", "title": "Quantum Discord: A Measure of the Quantumness of Correlations"}
+{"id": "5cfa0929-a728-4f9f-92b5-3ee89c22fb35", "reason": "cited work not found on arXiv by title", "title": "Ocean Tide Models Developed by Assimilating TOPEX/POSEIDON Altimeter Data into Hydrodynami"}
+{"id": "3562d015-127c-4d69-99a0-cbd245140af4", "reason": "cited work not found on arXiv by title", "title": "The Kuramoto model in complex networks"}
+{"id": "1742fdb8-c542-40ec-b40f-600d7a235074", "reason": "cited work not found on arXiv by title", "title": "Ontop: Answering SPARQL queries over relational databases"}
+{"id": "3ad5df80-954f-482a-9cf0-5dbf9719a290", "reason": "abstract answers it", "abstract_best": 2.452}
+{"id": "90a701f7-8998-408b-9289-0be6c0c2b477", "reason": "openalex lookup failed"}
+{"id": "22d7a22a-4a52-475e-9a60-02b09eba8d07", "reason": "abstract answers it", "abstract_best": 2.314}
+{"id": "46566c5f-e97e-4785-b19b-82e260e7f9bc", "reason": "cited work not found on arXiv by title", "title": "Reinforcement Learning: An Introduction"}
+{"id": "a05ff842-ea66-4239-bb2b-ea363bff5fee", "reason": "openalex lookup failed"}
+{"id": "59c924c2-bd61-441a-bbf4-786efbcee203", "reason": "cited work not found on arXiv by title", "title": "Observation of a strongly ferromagnetic spinor Bose-Einstein condensate"}
+{"id": "c5ffd9b4-b7bb-4ef8-bac1-ce86dc8b2d0c", "reason": "openalex lookup failed"}
+{"id": "77534060-c018-4550-b13b-89738039fa93", "reason": "abstract answers it", "abstract_best": 3.971}
+{"id": "690b7266-1907-44e3-9894-5953f604e984", "reason": "openalex lookup failed"}
+{"id": "3b612c72-92f7-4752-bbe2-473cd0e4a106", "reason": "cited work not found on arXiv by title", "title": "Variational Convergence for Functions and Operators"}
+{"id": "418b3447-ccfe-47b9-a9a5-3fc2c14cd65c", "reason": "cited work not found on arXiv by title", "title": "Multilayer networks"}
+{"id": "d3168163-d8dc-4bec-9315-61a728616bd9", "reason": "background citation list"}
+{"id": "7f412f32-ce16-4c2b-9628-c3bb2912f070", "reason": "background citation list"}
+{"id": "f33e0898-6ee1-4c1f-9bf1-4198ecc4bc3b", "reason": "background citation list"}
+{"id": "c0930354-361f-4187-a95b-895b9200998c", "reason": "background citation list"}
+{"id": "5868e0b7-6309-4150-85bd-c2b595d96534", "reason": "background citation list"}
+{"id": "d099278b-5f5a-4456-9e8b-3846d682b51f", "reason": "background citation list"}
+{"id": "54acd25c-8945-4186-89be-abd51072e8bd", "reason": "background citation list"}
+{"id": "d3bf2578-7dcd-4e75-862c-3f362c98d8c2", "reason": "background citation list"}
+{"id": "4b3e2955-ca97-4712-b530-23ab642f726b", "reason": "background citation list"}
+{"id": "96c8c50f-7213-4483-9413-816e0171f4b3", "reason": "background citation list"}
+{"id": "a9b5d6da-dca3-4a43-8973-650007ed0b6f", "reason": "background citation list"}
+{"id": "3b1260e0-137f-4f94-8a32-62524dc0e4b5", "reason": "background citation list"}
+{"id": "2d46d3bc-2337-4c72-be4f-4cfae31e5c3f", "reason": "background citation list"}
+{"id": "93cc9eae-21ca-4906-b755-26cbd6cb7401", "reason": "background citation list"}
+{"id": "4c235525-f5d0-4a2e-aee2-ad77ec36f005", "reason": "background citation list"}
+{"id": "5ea0985b-ec42-4766-ba26-ca3feb097e99", "reason": "background citation list"}
+{"id": "fa0b2dc5-a320-4530-93f1-459a1aed1488", "reason": "background citation list"}
+{"id": "7c5d0bed-d689-46fa-9c94-341e630ece9f", "reason": "background citation list"}
+{"id": "d527fcc5-1a36-4e88-ad24-58365f0f0d61", "reason": "background citation list"}
+{"id": "cb8e1af1-78a0-4b55-9ebe-e579c1be0ac1", "reason": "background citation list"}
+{"id": "2852fcd0-2fb0-44e5-a423-114faba0a98a", "reason": "background citation list"}
+{"id": "67c796b7-3228-40d7-8e0d-1e538e366c4c", "reason": "background citation list"}
+{"id": "1a6f96b2-ab53-4001-949f-017aa01f4ebe", "reason": "background citation list"}
+{"id": "cb7b40c8-0ca4-4a3a-b16a-ff2c6b1911dd", "reason": "cited work not found on arXiv by title", "title": "On the commuting probability in finite groups"}
+{"id": "55c2e2c6-a555-4973-8833-7bb86aaa6245", "reason": "cited work not found on arXiv by title", "title": "Predicting Pragmatic Reasoning in Language Games"}
+{"id": "f912098b-fee6-4b6e-84ea-c48988cf6b95", "reason": "cited work not found on arXiv by title", "title": "Stellar Atmosphere Modeling"}
+{"id": "3bf879d0-2922-4496-9297-233e06cfb27f", "reason": "cited work not found on arXiv by title", "title": "Model Reduction by Moment Matching for Linear and Nonlinear Systems"}
+{"id": "2a6cbb45-2757-475d-a058-637bb9e4d44d", "reason": "openalex lookup failed"}
+{"id": "1cb9b0f7-5e88-4688-9fe6-0bdcd3bb5498", "reason": "openalex lookup failed"}
+{"id": "a07e6e71-2d26-4646-8ed2-340e5fb39e42", "reason": "cited work not found on arXiv by title", "title": "Context-adaptive Entropy Model for End-to-end Optimized Image Compression"}
+{"id": "315c6278-f405-4246-b659-c0e63ab7641a", "reason": "abstract answers it", "abstract_best": 2.863}
+{"id": "fe397341-51ac-47fc-ad73-b6e45a935ecf", "reason": "cited work not found on arXiv by title", "title": "Lossy Image Compression with Compressive Autoencoders"}
+{"id": "6c096872-169d-4c02-bf43-ad591ff0eb99", "reason": "cited work not found on arXiv by title", "title": "ImageNet classification with deep convolutional neural networks"}
+{"id": "27e793b9-68b6-47cb-8aa4-ab70a55bfeaf", "reason": "openalex lookup failed"}
+{"id": "f6b5354d-0db4-4764-8970-2d6e8692647d", "reason": "openalex lookup failed"}
+{"id": "9e45a198-c07e-4e1b-b593-440a829ae774", "reason": "openalex lookup failed"}
+{"id": "ca6b087a-bf54-43b0-a4ef-a5ffb5532a8e", "reason": "cited work not found on arXiv by title", "title": "Notes on the occupancy problem with infinitely many boxes: general asymptotics and power l"}
+{"id": "5b5ee0b8-7216-4f27-8afa-33c1cae9e454", "reason": "cited work not found on arXiv by title", "title": "Bose–Einstein Condensation in Dilute Gases"}
+{"id": "86541ded-b1ed-42d7-a7ee-312d617e263c", "reason": "cited work not found on arXiv by title", "title": "Conditional Adversarial Domain Adaptation"}
+{"id": "716c23ef-4fbc-444f-b73c-c55add203028", "reason": "cited work not found on arXiv by title", "title": "Librispeech: An ASR corpus based on public domain audio books"}
+{"id": "2f269f30-1207-478e-8acc-2f0922f88ab3", "reason": "cited work not found on arXiv by title", "title": "Perceptual Signal Analysis and Eigenvalue-Weighted Metrics for Musical Audio Quality Asses"}
+{"id": "3157db5a-4206-42c1-ad3d-ede62d7cc14d", "reason": "openalex lookup failed"}
+{"id": "241c529e-4281-42ed-9c52-18ecec7b89aa", "reason": "cited work not found on arXiv by title", "title": "Protecting Entanglement via the Quantum Zeno Effect"}
+{"id": "ca190aa0-ba89-411b-9c97-2fa7351399cc", "reason": "openalex lookup failed"}
+{"id": "2f073529-4c9a-4177-a0b3-338ab7667385", "reason": "cited work not found on arXiv by title", "title": "Federated Learning over Wireless Networks: Optimization Model Design and Analysis"}
+{"id": "a26f5ab3-b663-453d-b2d1-0e42980f237b", "reason": "abstract answers it", "abstract_best": 2.606}
+{"id": "3b0a99aa-e41d-4186-a540-4815b109ca04", "reason": "cited work not found on arXiv by title", "title": "Advances and Open Problems in Federated Learning"}
+{"id": "93ae3a3c-464d-4b61-9dd5-ab22eb9cec25", "reason": "openalex lookup failed"}
+{"id": "077cc417-cc96-4801-adbb-630b3fc07ec8", "reason": "cited work not found on arXiv by title", "title": "Optimization by Vector Space Methods"}
+{"id": "2a3b2fd4-0f61-425b-9760-b6d30ccbad55", "reason": "cited work not found on arXiv by title", "title": "Optimal Cloudlet Placement and User to Cloudlet Allocation in Wireless Metropolitan Area N"}
+{"id": "57f60507-12d9-4394-9c94-f4b9a44ca95a", "reason": "abstract answers it", "abstract_best": 4.761}
+{"id": "59d81a91-45a8-44bf-9391-2d883de1f211", "reason": "cited work not found on arXiv by title", "title": "Decoupled Weight Decay Regularization"}
+{"id": "ee231161-138a-43c8-b701-655ac1141f41", "reason": "cited work not found on arXiv by title", "title": "Algebras of Complemented Subsets"}
+{"id": "36371d7b-d804-4e44-9dd6-eec602654d5e", "reason": "abstract answers it", "abstract_best": 4.199}
+{"id": "cc633533-4dc1-45a2-baec-c88c9e3b7902", "reason": "cited work not found on arXiv by title", "title": "Gravitational wave searches for ultralight bosons with LIGO and LISA"}
+{"id": "41f74b79-2f36-4bba-ba6e-5f8bd8e2f3c5", "reason": "cited work not found on arXiv by title", "title": "Switching in Systems and Control"}
+{"id": "c1e2fa48-2d59-443c-803a-ebdd8e1a0531", "reason": "openalex lookup failed"}
+{"id": "f0ceff13-1221-4858-afd7-8f76a54e652e", "reason": "openalex lookup failed"}
+{"id": "ed492159-59b0-449e-bb97-8cc80bf5b6a0", "reason": "abstract answers it", "abstract_best": 2.784}
+{"id": "2098e07c-f3ac-4ed0-8369-1a84975a81dc", "reason": "abstract answers it", "abstract_best": 2.575}
+{"id": "e29712e3-e09f-4ec1-8757-b44945390909", "reason": "cited work not found on arXiv by title", "title": "ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design"}
+{"id": "f1479ab8-0de9-47b8-811e-b5ba9bb3d1b3", "reason": "abstract answers it", "abstract_best": 2.161}
+{"id": "1786bc21-7bde-4640-9829-54430b01a8d2", "reason": "cited work not found on arXiv by title", "title": "Less Is More: Pay Less Attention in Vision Transformers"}
+{"id": "435aa1ea-fa3c-4fdb-8515-8d48c1fcae17", "reason": "cited work not found on arXiv by title", "title": "Non-perturbative methodologies for low-dimensional strongly-correlated systems: From non-A"}
+{"id": "7680072b-9f92-403e-9b79-1a54842a5419", "reason": "cited work not found on arXiv by title", "title": "The OpenCV library"}
+{"id": "046d647c-13f9-4394-a347-29b2c1ce0e81", "reason": "openalex lookup failed"}
+{"id": "41d80deb-d226-4d31-94c4-2670843a6d73", "reason": "openalex lookup failed"}
+{"id": "3ad0440c-b03b-4f58-af9d-6702cc738cef", "reason": "openalex lookup failed"}
+{"id": "8f38fd4a-351c-4c6f-a884-ac8fc21ab4b8", "reason": "cited work not found on arXiv by title", "title": "On the Number of Convex Lattice Polygons"}
+{"id": "935f821c-f1b1-46e2-8579-636cf48841ba", "reason": "cited work not found on arXiv by title", "title": "Gravitational reheating through conformally coupled superheavy scalar particles"}
+{"id": "46ced27d-d922-451a-8c11-7687aa23f2c8", "reason": "cited work not found on arXiv by title", "title": "Introductory Lectures on Convex Optimization: A Basic Course"}
+{"id": "93d15bcd-fe0f-4382-8666-756a88f4d629", "reason": "cited work not found on arXiv by title", "title": "A Composable Specification Language for Reinforcement Learning Tasks"}
+{"id": "5f2f9961-4d3c-49a6-910d-69592dbcc5d5", "reason": "abstract answers it", "abstract_best": 2.277}
+{"id": "5ecdcc61-c67c-45c7-8262-d63d03b8dbd7", "reason": "background citation list"}
+{"id": "930b1ed7-cd7f-4339-a799-95ebc09aabf3", "reason": "background citation list"}
+{"id": "e23b5642-ef8a-4186-b303-e79b5545f60f", "reason": "background citation list"}
+{"id": "4c5c4ae4-1757-48ee-88b1-71f947d5bb89", "reason": "background citation list"}
+{"id": "ea562589-9da9-4fa9-9e9b-6175e6d58602", "reason": "background citation list"}
+{"id": "52abd14c-744c-4c87-8f77-1d5434c07e57", "reason": "background citation list"}
+{"id": "b1ee737d-db6a-491d-8b3a-9cdaafb84484", "reason": "background citation list"}
+{"id": "7062e590-d2e8-427c-8f6d-a315eb8df6c4", "reason": "background citation list"}
+{"id": "348ac68c-ae05-49de-852a-7c0773d82f46", "reason": "background citation list"}
+{"id": "45802b8d-88cd-4058-bc71-30d47f6bd536", "reason": "background citation list"}
+{"id": "19f45229-3699-4191-a9ff-ff3f2a829a43", "reason": "background citation list"}
+{"id": "fa6574aa-3513-4b30-ae3c-7d62ad5811f0", "reason": "background citation list"}
+{"id": "ab8bde9f-4403-439f-b681-21f9f957ab72", "reason": "background citation list"}
+{"id": "fc2965dd-de99-476b-8f38-34fede7e60f5", "reason": "background citation list"}
+{"id": "54e66e2b-df8b-4472-9337-31665924c327", "reason": "background citation list"}
+{"id": "27ebedd0-b25d-42c8-a432-5704cac53e91", "reason": "background citation list"}
+{"id": "d18bc5a8-fcbd-43ec-aac9-6cd81cf7b643", "reason": "background citation list"}
+{"id": "087a6f8f-5a69-4f50-9e50-fdd9fd2ba6f3", "reason": "background citation list"}
+{"id": "ec2d6950-e1bf-46af-a957-abceefa4b836", "reason": "background citation list"}
+{"id": "aed36821-8365-438d-8d2e-6bf87eb8d52f", "reason": "background citation list"}
+{"id": "d9813b2f-7a15-4021-b9fe-be77e4ac1589", "reason": "background citation list"}
+{"id": "10cb50c6-3e51-4070-90c0-a12682eb8340", "reason": "background citation list"}
+{"id": "a979cd6b-e340-4ba5-8f71-f73d9ddfad4b", "reason": "background citation list"}
+{"id": "991219a6-70dc-4f4a-a87f-21ff25c9abca", "reason": "background citation list"}
+{"id": "f9c00702-e485-4cd5-ae48-5000e51f2057", "reason": "background citation list"}
+{"id": "46b4ab0e-1499-4ce3-bbce-588870355a9e", "reason": "background citation list"}
+{"id": "14414c8f-aab7-4f8e-bf9c-712829fcee61", "reason": "background citation list"}
+{"id": "1f46b68c-bf86-4445-a402-0c52dd0b9d06", "reason": "background citation list"}
+{"id": "b7b2972d-585f-46f1-b559-5af1b048c7e2", "reason": "background citation list"}
+{"id": "274834de-567f-4c25-a544-9b338d445245", "reason": "background citation list"}
+{"id": "0cb1b53b-9ce4-4587-b28c-cf5f7da5ecb9", "reason": "background citation list"}
+{"id": "f642e244-7601-40b2-ad0e-add5161509db", "reason": "background citation list"}
+{"id": "9287243c-b5c0-4bc1-94f3-98d6feb9f242", "reason": "background citation list"}
+{"id": "18abdc8f-e399-4ade-96ab-ea0a9b639b71", "reason": "background citation list"}
+{"id": "1363c1c5-700a-4548-8ad9-26d06bbbb72e", "reason": "openalex lookup failed"}
+{"id": "ab417d57-176e-4f51-b6b7-0003d14f63c7", "reason": "cited work not found on arXiv by title", "title": "Automatic differentiation in PyTorch"}
+{"id": "e23b7122-07d3-4b6e-b6bc-4f8aba87f30e", "reason": "cited work not found on arXiv by title", "title": "Sparse Models and Methods for Optimal Instruments With an Application to Eminent Domain"}
+{"id": "d721e6ce-e0fa-4058-ae5f-2d8f3a82adaf", "reason": "openalex lookup failed"}
+{"id": "02677ea2-29b3-4d8d-b019-f5c1bbeba1e6", "reason": "cited work not found on arXiv by title", "title": "Observed versus latent features for knowledge base and text inference"}
+{"id": "2be163f7-75fc-46b2-a316-eb435c7655c4", "reason": "cited work not found on arXiv by title", "title": "Global well-posedness and scattering for the defocusing, $L^{2}$-critical, nonlinear Schr{"}
+{"id": "f5bb7c1e-b33f-4a9a-8c1e-5a848d1daa92", "reason": "cited work not found on arXiv by title", "title": "Behaviors of Solutions for the Burgers Equation with Boundary corresponding to Rarefaction"}
+{"id": "1c05ecca-522f-4de8-8695-9e3a42e3c5d2", "reason": "cited work not found on arXiv by title", "title": "Q-learning"}
+{"id": "dc982ad5-844d-475f-bdaf-0e0dcd2be0d3", "reason": "cited work not found on arXiv by title", "title": "Application of the renormalization group to phase transitions in disordered systems"}
+{"id": "c7eb5473-704c-4323-8427-128b59a7feec", "reason": "abstract answers it", "abstract_best": 5.766}
+{"id": "ed906496-21ea-4d19-a827-6d3b030f3c76", "reason": "cited work not found on arXiv by title", "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables"}
+{"id": "fde80c3c-f175-41af-8fe8-9a5661bc7057", "reason": "cited work not found on arXiv by title", "title": "Rethinking the Inception Architecture for Computer Vision"}
+{"id": "a1b242dc-5a20-4f40-b36a-e1b647872f10", "reason": "cited work not found on arXiv by title", "title": "A forgotten topological index"}
+{"id": "c69dd8e7-565c-4c2b-acf5-a0506053423c", "reason": "cited work not found on arXiv by title", "title": "Fault-Tolerant quantum computation with constant overhead"}
+{"id": "8b27014b-180e-4fbd-b823-a1f23aabd161", "reason": "abstract answers it", "abstract_best": 3.281}
+{"id": "04b27886-40b4-4da9-94e3-bc213e3099bd", "reason": "cited work not found on arXiv by title", "title": "Fast End-to-End Trainable Guided Filter"}
+{"id": "5f78e838-587d-47d7-9916-b5f805f64d6e", "reason": "openalex lookup failed"}
+{"id": "9dfce989-888b-47ef-b22d-7223a115d285", "reason": "cited work not found on arXiv by title", "title": "Thermodynamics of Accelerating Black Holes"}
+{"id": "edd29522-4560-4e6d-bb57-e4157a4032af", "reason": "cited work not found on arXiv by title", "title": "A room-temperature ferroelectric semimetal"}
+{"id": "091067a5-4acf-4e0c-b37c-d4f3bc7149b1", "reason": "cited work not found on arXiv by title", "title": "Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation"}
+{"id": "7933e726-8c10-419a-a2cb-fd0e7798c3cb", "reason": "cited work not found on arXiv by title", "title": "Advances in prospect theory: Cumulative representation of uncertainty"}
+{"id": "8bf1871c-2248-4701-bf50-484ea42b8c81", "reason": "cited work not found on arXiv by title", "title": "Representation theory of finite groups and associative algebras"}
+{"id": "addd1933-2953-4dc3-81ea-6b2b9461e1c8", "reason": "cited work not found on arXiv by title", "title": "Hardy spaces with variable exponents and generalized Campanato spaces"}
+{"id": "4c7db73b-d4a4-4e73-a8e9-f57f49f5ace3", "reason": "cited work not found on arXiv by title", "title": "Quantum Zeno Subspaces"}
+{"id": "1154eefb-b507-492a-9e5f-e98acd8e6ed2", "reason": "abstract answers it", "abstract_best": 2.998}
+{"id": "cbbf987a-73b0-484f-83e3-ec54171039e5", "reason": "cited work not found on arXiv by title", "title": "Chiral dynamics in the presence of bound states: kaon–nucleon interactions revisited"}
+{"id": "76c9d9d3-82e8-49d2-ad46-0a22dc30f009", "reason": "openalex lookup failed"}
+{"id": "d7d22d9d-e1d7-416c-bb65-15deca854b54", "reason": "cited work not found on arXiv by title", "title": "Collective T - and P -Odd Electromagnetic Moments in Nuclei with Octupole Deformations"}
+{"id": "05fd01b7-2859-4b45-8265-1d8f9b56ddbf", "reason": "cited work not found on arXiv by title", "title": "Multiquark hadrons. I. Phenomenology of Q 2 Q ¯ 2 mesons"}
+{"id": "346fb987-90eb-4936-8b77-b3bb3c9044c1", "reason": "cited work not found on arXiv by title", "title": "De novo assembly and genotyping of variants using colored de Bruijn graphs"}
+{"id": "d62b914e-8f8d-4ad7-89f0-3a52109a1144", "reason": "cited work not found on arXiv by title", "title": "Multimodal Language Analysis in the Wild: CMU-MOSEI Dataset and Interpretable Dynamic Fusi"}
+{"id": "85f75642-9057-4d5c-9533-024be6c0d5f0", "reason": "cited work not found on arXiv by title", "title": "Audio augmentation for speech recognition"}
+{"id": "faea037f-ca16-4a31-956c-65056df9c037", "reason": "abstract answers it", "abstract_best": 2.552}
+{"id": "66b1923a-29bb-4710-b039-127e0f50f729", "reason": "cited work not found on arXiv by title", "title": "Theory of simple liquids"}
+{"id": "c1faae1b-bb0e-4880-832c-7af5877ee7d6", "reason": "openalex lookup failed"}
+{"id": "73fbad55-4dff-4475-b2ad-25771a470640", "reason": "openalex lookup failed"}
+{"id": "c612c110-dddd-49f7-8003-9a980285bb85", "reason": "abstract answers it", "abstract_best": 6.968}
+{"id": "f046e5e0-3c77-4baa-8fc5-c1c9b3d61ab9", "reason": "openalex lookup failed"}
+{"id": "c4b64bc5-03c2-4387-8f17-2b36737e2673", "reason": "openalex lookup failed"}
+{"id": "fc9725f7-5b5d-4550-b0a5-076f1d5085a5", "reason": "cited work not found on arXiv by title", "title": "Shifted symplectic structures"}
+{"id": "55e63625-1af3-4be0-a8b3-f6fb64a86786", "reason": "cited work not found on arXiv by title", "title": "A ‘Darboux theorem’ for shifted symplectic structures on derived Artin stacks, with applic"}
+{"id": "da3518f0-7550-426d-8b49-acd8388a2f3d", "reason": "cited work not found on arXiv by title", "title": "Localization of virtual classes"}
+{"id": "fa10432f-74b4-47ca-ae85-834b21393bd8", "reason": "abstract answers it", "abstract_best": 2.35}
+{"id": "53e436f7-0e13-4b8e-ae72-fb91ae872076", "reason": "cited work not found on arXiv by title", "title": "Unbiased Learning to Rank in Feeds Recommendation"}
+{"id": "0a65c42c-ca74-4523-8c3e-68c102e76f6f", "reason": "cited work not found on arXiv by title", "title": "An experimental comparison of click position-bias models"}
+{"id": "cc6b6537-d71a-4eb3-b901-7ee187452891", "reason": "cited work not found on arXiv by title", "title": "A Neural Click Model for Web Search"}
+{"id": "bb1eb8b4-080f-467b-b235-dde91124fc26", "reason": "cited work not found on arXiv by title", "title": "A dynamic bayesian network click model for web search ranking"}
+{"id": "d79ccd7e-6af8-4886-a90c-8ee39f792ca7", "reason": "cited work not found on arXiv by title", "title": "A Context-Aware Click Model for Web Search"}
+{"id": "a2494c68-f523-4334-a439-0b2abacb1bd7", "reason": "background citation list"}
+{"id": "c1a7372d-0469-4790-ab8b-13dd191c7241", "reason": "background citation list"}
+{"id": "11fa28e7-addc-494b-ac5e-d284c7adf3ab", "reason": "background citation list"}
+{"id": "e13a89ac-2b8d-4c42-88f9-ee1e15ae1354", "reason": "background citation list"}
+{"id": "d317603a-37af-459f-a84d-dff8378c2f50", "reason": "background citation list"}
+{"id": "a08facff-52b2-4a3b-86dc-3b8dc9196c9d", "reason": "background citation list"}
+{"id": "3681bca3-0983-46fc-b84e-0c6b26678d7d", "reason": "background citation list"}
+{"id": "cbaaec17-9a7a-44ce-b082-d4242d39749a", "reason": "background citation list"}
+{"id": "66aa8486-14ce-449b-914d-6930c625029d", "reason": "background citation list"}
+{"id": "2ba849d3-94a5-48c1-87df-f006496b2516", "reason": "background citation list"}
+{"id": "664e7a84-7479-4ffb-b2de-49eaa8dece20", "reason": "background citation list"}
+{"id": "77f122f2-09ef-4192-84fe-9f062f2d1530", "reason": "background citation list"}
+{"id": "8de7bb81-a11c-4949-808b-0c72bf05f796", "reason": "background citation list"}
+{"id": "28dddbb9-a314-4d91-b11f-f6e0045aef60", "reason": "background citation list"}
+{"id": "9d185994-aebe-4f6e-b26b-8d48ec3f35b7", "reason": "background citation list"}
+{"id": "751593c7-19c7-4328-9ad8-1849573c036c", "reason": "background citation list"}
+{"id": "b051c3e4-fef9-4b85-a042-aa6ca3de9c60", "reason": "background citation list"}
+{"id": "6de775c3-7c03-4bf6-ba4c-8e627b540b8c", "reason": "background citation list"}
+{"id": "e6746d0c-3f28-4b18-97fe-2356fd4e45e3", "reason": "background citation list"}
+{"id": "992ed757-4ebe-4a45-9f12-c3f7cb57e756", "reason": "background citation list"}
+{"id": "c0ada8d2-9af5-4ea4-89c2-b629eb2e03dd", "reason": "background citation list"}
+{"id": "6a926c90-4815-4454-9c1f-c5d53ade8f56", "reason": "background citation list"}
+{"id": "5e782e5c-932c-49ac-869f-74c1a217db30", "reason": "background citation list"}
+{"id": "ee684a52-940d-4a3a-ba6b-7763e30744a6", "reason": "background citation list"}
+{"id": "ae6657a5-231b-460d-b9c1-604c74a1870f", "reason": "background citation list"}
+{"id": "5c5514d8-dce7-4062-98f9-e3354f43577a", "reason": "background citation list"}
+{"id": "3fc21424-0ccf-41fe-82a4-0363c234a88f", "reason": "background citation list"}
+{"id": "71c1255a-3e0a-4560-9f26-4521cd86846e", "reason": "cited work not found on arXiv by title", "title": "A data-driven approach to predict the success of bank telemarketing"}
+{"id": "30654caf-ef3a-4ae5-aa81-aa405d084624", "reason": "abstract answers it", "abstract_best": 4.227}
+{"id": "1ec65c32-0ae2-4143-bdad-0c5ce06577f9", "reason": "openalex lookup failed"}
+{"id": "5f9bbb71-32fa-40ac-937c-e43ea29130f2", "reason": "openalex lookup failed"}
+{"id": "c688c83c-0bfd-46d4-8160-0f42eda3044f", "reason": "abstract ranks within the top passages", "abstract_best": 1.292, "top_score": 3.37}
+{"id": "ad444f54-0e62-46c4-a28f-6c90eb125104", "reason": "abstract answers it", "abstract_best": 4.888}
+{"id": "8296cf76-53b4-4fb2-b998-9e61f3fdf9f6", "reason": "openalex lookup failed"}
+{"id": "65fa68a9-417a-444d-82cb-9dac222e248a", "reason": "cited work not found on arXiv by title", "title": "The Sixth Visual Object Tracking VOT2018 Challenge Results"}
+{"id": "f8ae3cd5-9e9a-4b1b-bb16-f326cd9341a9", "reason": "cited work not found on arXiv by title", "title": "Limiting Behavior of Invariant Measures of Stochastic Delay Lattice Systems"}
+{"id": "1356e785-e9d9-461b-9f5c-ad16ed45a906", "reason": "cited work not found on arXiv by title", "title": "Self-alignment of a compact large-area atomic Sagnac interferometer"}
+{"id": "11f3eaa6-a6cd-4043-afdd-20225f865a84", "reason": "cited work not found on arXiv by title", "title": "Time Series Analysis, Forecasting, and Control"}
+{"id": "097103ef-4d27-464f-814f-2f2dacb06962", "reason": "abstract ranks within the top passages", "abstract_best": 0.0, "top_score": 0.0}
+{"id": "a9086aff-24aa-4419-a64e-c7016bc37669", "reason": "cited work not found on arXiv by title", "title": "Tag Recommendations in Folksonomies"}
+{"id": "709e4c24-33df-48a9-b826-52e2782958fc", "reason": "cited work not found on arXiv by title", "title": "POMDP-Based Statistical Spoken Dialog Systems: A Review"}
+{"id": "c72e2abe-6579-44b2-be4e-daaa98f9c080", "reason": "openalex lookup failed"}
+{"id": "cc263d2f-042c-47bb-bea1-13a6a2066fd5", "reason": "cited work not found on arXiv by title", "title": "A Network-based End-to-End Trainable Task-oriented Dialogue System"}
+{"id": "65a9c6e0-ec0d-4d06-94ac-336b52bc74b3", "reason": "openalex lookup failed"}
+{"id": "a6ff92eb-b642-4b1d-9851-089180b2593f", "reason": "cited work not found on arXiv by title", "title": "Unitary-matrix models as exactly solvable string theories"}
+{"id": "9c92a3b5-05f3-470d-a917-e8200792e020", "reason": "cited work not found on arXiv by title", "title": "A gravity theory on noncommutative spaces"}
+{"id": "805de573-b5af-4ca1-882a-447c359ebae5", "reason": "cited work not found on arXiv by title", "title": "Quantifying the Carbon Emissions of Machine Learning"}
+{"id": "760e8976-22c0-4e66-90f9-d6aad75ecab6", "reason": "openalex lookup failed"}
+{"id": "8e0e50a9-05b3-4601-933e-c89769485d0a", "reason": "openalex lookup failed"}
+{"id": "b8252896-e85f-4176-993a-3f17e2d793db", "reason": "cited work not found on arXiv by title", "title": "Lite Transformer with Long-Short Range Attention"}
+{"id": "96aeaae7-99c6-469b-91ba-13bd6840c80d", "reason": "cited work not found on arXiv by title", "title": "Generalized Gradient Approximation Made Simple"}
+{"id": "09607cab-6c48-4fd3-b2ae-1cbaeff42ed5", "reason": "cited work not found on arXiv by title", "title": "Discrete Integrable Systems and Poisson Algebras From Cluster Maps"}
+{"id": "5f98ce27-1aed-4185-a421-af4080b663c3", "reason": "openalex lookup failed"}
+{"id": "06783c1a-9cdd-4947-8951-8cc5c1545719", "reason": "openalex lookup failed"}
+{"id": "fdab2629-b2cb-4ad5-a320-d465af76e432", "reason": "cited work not found on arXiv by title", "title": "Lightkurve: Kepler and TESS time series analysis in Python"}
+{"id": "febab898-97ef-4ac3-b17b-5a2e5ddf7ead", "reason": "cited work not found on arXiv by title", "title": "The Influence Curve and its Role in Robust Estimation"}
+{"id": "028401a3-fc6f-44fb-a603-d2fcb1a30463", "reason": "abstract answers it", "abstract_best": 2.758}
+{"id": "498b4f33-a341-4c31-9278-5b2cd7ffbd40", "reason": "abstract answers it", "abstract_best": 3.542}
+{"id": "7dc4dcc9-3fcf-4ba3-98a5-55d7ff6c1a2f", "reason": "cited work not found on arXiv by title", "title": "Bottom-up broadcast neural network for music genre classification"}
+{"id": "d757a2dd-57af-4617-a394-3879db6967c4", "reason": "cited work not found on arXiv by title", "title": "Generating Long Sequences with Sparse Transformers"}
+{"id": "9f999a64-67a9-4792-b92d-f6c242a1bbbb", "reason": "openalex lookup failed"}
+{"id": "9f312e7f-e2d6-49d6-9f6c-0c8dbed74e3d", "reason": "cited work not found on arXiv by title", "title": "beta-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework"}
+{"id": "21ad627d-2a18-4846-a7d3-0a5a1dcacf8b", "reason": "cited work not found on arXiv by title", "title": "Understanding disentangling in $\\beta$-VAE"}
+{"id": "f1476695-aadf-4d0b-9ee5-7136e111bd0b", "reason": "cited work not found on arXiv by title", "title": "Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning"}
+{"id": "90bc6dbc-e43b-4d1e-bd71-e740faf61ca9", "reason": "cited work not found on arXiv by title", "title": "Generalized ADHM equations from marginal deformations in open superstring field theory"}
+{"id": "39108c8c-4b1f-40a0-83b0-66157f62d98d", "reason": "openalex lookup failed"}
+{"id": "b34ba5bf-7e4f-4c25-91cc-f9863ababc46", "reason": "abstract answers it", "abstract_best": 3.972}
+{"id": "71fcf044-0a14-43d6-be58-ea6c9eb48674", "reason": "abstract answers it", "abstract_best": 3.456}
+{"id": "f742f3dd-5b0f-49b0-a070-c031521058e5", "reason": "cited work not found on arXiv by title", "title": "Synthesizing Omnidirectional Antenna Patterns, Received Power and Path Loss from Direction"}
+{"id": "ed469e62-2525-4673-aaa0-8662c01852e8", "reason": "background citation list"}
+{"id": "1c84c350-2e8d-4cbf-910a-68137c6ef201", "reason": "background citation list"}
+{"id": "e49b331d-4037-4ab8-a9cb-6dcbb13349a8", "reason": "background citation list"}
+{"id": "8e17dd86-ad7c-4d2d-9d09-e64070efd200", "reason": "background citation list"}
+{"id": "de8c786b-b620-4661-ad57-01b7d82bd731", "reason": "background citation list"}
+{"id": "67012aaf-13e5-4830-b281-226bdd82694a", "reason": "background citation list"}
+{"id": "c0427b2d-7385-4001-906e-bd648773b705", "reason": "background citation list"}
+{"id": "35659c8c-c751-4a9f-afe8-674765f1d985", "reason": "background citation list"}
+{"id": "71125ab5-ac62-49b2-94b3-db732b29364a", "reason": "background citation list"}
+{"id": "48b46a84-29ea-4ce8-ac93-60ed91d13b24", "reason": "background citation list"}
+{"id": "3cb28491-7aa9-42d0-afa1-4856604728df", "reason": "background citation list"}
+{"id": "f02c8567-8957-45bc-bcf7-5373cc34b72e", "reason": "background citation list"}
+{"id": "2f527dfc-89c7-470f-a047-fdc689ed5195", "reason": "background citation list"}
+{"id": "9b81e36f-690c-4bf8-a495-cbf89c277561", "reason": "background citation list"}
+{"id": "2b0746df-f69d-47b3-9889-0e28fcfc3fc7", "reason": "background citation list"}
+{"id": "3ff5acd0-89a0-4003-86c2-e1308abc0365", "reason": "background citation list"}
+{"id": "26ae1ab5-0215-4285-bedb-d88246bb5c8b", "reason": "background citation list"}
+{"id": "78373ac9-e33e-40b6-b35a-f0a2a2b7b950", "reason": "background citation list"}
+{"id": "8cbee591-b506-479d-acbb-f992d3198f2a", "reason": "background citation list"}
+{"id": "945c7d85-2500-4893-a129-b766838439bc", "reason": "background citation list"}
+{"id": "c7b4363c-dd7e-4cc9-b5a0-54598b9d21d4", "reason": "background citation list"}
+{"id": "c23b6096-0820-4e1f-9492-e535c4de186f", "reason": "background citation list"}
+{"id": "37791e99-a7e1-4258-9c8b-ae844fd3e8ba", "reason": "background citation list"}
+{"id": "0d7fa1d7-e37b-4513-9133-9ca0e61cf112", "reason": "background citation list"}
+{"id": "f59fdb89-ded5-4dac-b836-c4a9f8f317b0", "reason": "background citation list"}
+{"id": "7875dc91-693b-43d4-bfda-d535f6b231a2", "reason": "background citation list"}
+{"id": "6c2afff8-08b0-4e4c-91ec-9c8f1968c81d", "reason": "background citation list"}
+{"id": "2ca630be-e078-4cfc-9040-c548090ce919", "reason": "cited work not found on arXiv by title", "title": "GW170817: Observation of Gravitational Waves from a Binary Neutron Star Inspiral"}
+{"id": "ebf98474-31b5-401d-a225-ca03c66f87b0", "reason": "cited work not found on arXiv by title", "title": "Impact of the neutron star crust on the tidal polarizability"}
+{"id": "4a901ca2-9687-45e9-b2ab-4866181c7977", "reason": "cited work not found on arXiv by title", "title": "Security Engineering: A Guide to Building Dependable Distributed Systems"}
+{"id": "7d758b18-afa1-4c6e-965a-b6bd1be62200", "reason": "cited work not found on arXiv by title", "title": "Curriculum learning"}
+{"id": "1b501007-325c-4df8-b6cf-bbeb82aceef2", "reason": "openalex lookup failed"}
+{"id": "bf1e5a57-b185-420f-97a6-fa1157813f16", "reason": "cited work not found on arXiv by title", "title": "Dynamics of a Quantum Phase Transition"}
+{"id": "64f4f109-2e36-4fa1-94a9-ae19fec1d6b8", "reason": "openalex lookup failed"}
+{"id": "e9677540-b3de-453e-b652-3bfc188aafae", "reason": "cited work not found on arXiv by title", "title": "Discrete Riemann Surfaces and the Ising Model"}
+{"id": "d8e3e9d9-5181-4124-99a8-2629bb649b53", "reason": "cited work not found on arXiv by title", "title": "Multi-task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics"}
+{"id": "3ed981e3-2e6a-4773-9525-a37512934ae3", "reason": "cited work not found on arXiv by title", "title": "Neural Architecture Search with Reinforcement Learning"}
+{"id": "c6cfdf36-ff55-47a5-abc6-819614cc1f98", "reason": "cited work not found on arXiv by title", "title": "Behavioral Game Theory: Experiments in Strategic Interaction"}
+{"id": "1932a6fc-fe27-4099-bb8e-eb839421cea5", "reason": "cited work not found on arXiv by title", "title": "Strictly proper kernel scores and characteristic kernels on compact spaces"}
+{"id": "b2df8814-4b61-4274-aa88-2c87fc86a3b6", "reason": "cited work not found on arXiv by title", "title": "Physics-informed neural networks: A deep learning framework for solving forward and invers"}
+{"id": "78d1db35-2321-407f-ad57-1ca4aa4ec86d", "reason": "abstract answers it", "abstract_best": 2.539}
+{"id": "f08c76cd-850b-48e1-8877-9ed4393c9fa5", "reason": "cited work not found on arXiv by title", "title": "Fractal Space-Time And Microphysics: Towards A Theory Of Scale Relativity"}
+{"id": "cbff102b-abf8-4cb1-843b-c6c0cbdb6396", "reason": "cited work not found on arXiv by title", "title": "Quantum Field Theory"}
+{"id": "e1252791-8398-4d8c-b686-59c57161c3a5", "reason": "openalex lookup failed"}
+{"id": "8d4001c6-28bd-4325-ac39-b5809dddbe46", "reason": "cited work not found on arXiv by title", "title": "Attention is not Explanation"}
+{"id": "f12b6e10-2eca-4ee7-9f74-d154b123eab3", "reason": "abstract answers it", "abstract_best": 2.528}
+{"id": "0383a3da-8cb6-4b41-87ed-06a3e00b5186", "reason": "cited work not found on arXiv by title", "title": "New MDS Euclidean Self-Orthogonal Codes"}
+{"id": "9e86a72a-e16d-4762-bdf1-9dac4401bbfb", "reason": "cited work not found on arXiv by title", "title": "Functorial Semantics for Relational Theories"}
+{"id": "821f73cc-0db2-44bf-b93a-ddd82173435f", "reason": "cited work not found on arXiv by title", "title": "Asymptotic stabilization of a flexible beam with an attached mass"}
+{"id": "202b86cc-ec7d-40c4-8d59-d2e5f230f79c", "reason": "cited work not found on arXiv by title", "title": "Journal of Statistical Physics"}
+{"id": "c7d653e7-a027-4bce-a9b3-156210bea045", "reason": "cited work not found on arXiv by title", "title": "Grad-CAM++: Generalized Gradient-Based Visual Explanations for Deep Convolutional Networks"}
+{"id": "39d291ac-8c4d-4076-9026-608d9b9c607a", "reason": "openalex lookup failed"}
+{"id": "7722921a-5960-46a8-a7c7-25c9729059f8", "reason": "openalex lookup failed"}
+{"id": "1f7d2379-b579-4f6e-937c-247b2f4c6626", "reason": "cited work not found on arXiv by title", "title": "MSR-net:Low-light Image Enhancement Using Deep Convolutional Network"}
+{"id": "0ea2840b-d282-4602-802d-eeaefd12d565", "reason": "cited work not found on arXiv by title", "title": "Topology of cosmic domains and strings"}
+{"id": "bcbe43b3-aeaf-4a79-b26c-4dd6ab3c542f", "reason": "abstract answers it", "abstract_best": 2.001}
+{"id": "cfdce9ee-99f4-446a-8914-4f1b28a3967a", "reason": "cited work not found on arXiv by title", "title": "Persistent excitation in adaptive systems"}
+{"id": "a8b871f6-5c16-4009-85dd-50ddfeecc522", "reason": "cited work not found on arXiv by title", "title": "Discrete Time Stochastic Adaptive Control"}
+{"id": "3a23573b-434d-448a-9cb2-6c1514ab2d10", "reason": "cited work not found on arXiv by title", "title": "Video Anomaly Detection With Compact Feature Sets for Online Performance"}
+{"id": "885aa2ad-1b03-4bd7-829a-21623aeed534", "reason": "openalex lookup failed"}
+{"id": "e540d2eb-c556-4d54-943a-dc42ae833b26", "reason": "openalex lookup failed"}
+{"id": "646377f6-2469-4df5-a35d-141eb0f1e9af", "reason": "cited work not found on arXiv by title", "title": "Describing Graphs: A First-Order Approach to Graph Canonization"}
+{"id": "36fa17a6-c377-4d42-b7ac-538e74d77d97", "reason": "openalex lookup failed"}
+{"id": "6dc17e1c-7c9d-43c8-aa94-933b282511f6", "reason": "cited work not found on arXiv by title", "title": "FURIA: an algorithm for unordered fuzzy rule induction"}
+{"id": "48464ea9-73db-4478-bef1-f7259730ca9d", "reason": "cited work not found on arXiv by title", "title": "Quantum Theory of Angular Momentum"}
+{"id": "227fccc5-e60a-4420-9e95-e4bfbfd4df9e", "reason": "cited work not found on arXiv by title", "title": "Angular Momentum"}
+{"id": "d94be48e-e0f9-458f-9ca9-d1869370ff4a", "reason": "cited work not found on arXiv by title", "title": "Special Functions: An Introduction to the Classical Functions of Mathematical Physics"}
+{"id": "51be80d7-ca9d-4910-bd76-eea755f7f8f6", "reason": "cited work not found on arXiv by title", "title": "Methods of Mathematical Physics"}
+{"id": "eb9d2dc0-7a78-40cd-afb4-8ee4a3e3b507", "reason": "openalex lookup failed"}
+{"id": "b5127f5f-6838-48c2-911a-9c9004f2d0b5", "reason": "abstract answers it", "abstract_best": 6.714}
+{"id": "34695190-a0f9-429e-a582-f520b975d097", "reason": "cited work not found on arXiv by title", "title": "iBOT: Image BERT Pre-Training with Online Tokenizer"}
+{"id": "c9d18358-ba90-4b39-94f7-87ef5be763fb", "reason": "cited work not found on arXiv by title", "title": "Masked Autoencoders Are Scalable Vision Learners"}
+{"id": "d8a03f56-6863-4911-a08d-4cd8ea86be0e", "reason": "cited work not found on arXiv by title", "title": "Adversarial Masking for Self-Supervised Learning"}
+{"id": "cccd9c3d-2d00-42bf-98a7-d8058273b898", "reason": "cited work not found on arXiv by title", "title": "Emerging Properties in Self-Supervised Vision Transformers"}
+{"id": "639bed1b-e078-43da-bd04-640840c3a738", "reason": "cited work not found on arXiv by title", "title": "An Economic Theory of Democracy."}
+{"id": "46263a0b-4d9d-4200-9596-23d853fc7187", "reason": "cited work not found on arXiv by title", "title": "COMMUNICATIONS"}
+{"id": "48e07ad9-87ce-492d-854a-1e39167ac372", "reason": "cited work not found on arXiv by title", "title": "Hyperdimensional Computing: An Introduction to Computing in Distributed Representation wit"}
+{"id": "db642c88-540d-4df1-bb41-4ce3276b2ea7", "reason": "background citation list"}
+{"id": "ba68db47-6584-4a48-afd6-0f6a90b05f26", "reason": "background citation list"}
+{"id": "33bdc0ba-2a5d-4a5c-aa48-b08d0d17b5c9", "reason": "background citation list"}
+{"id": "86f9008e-cdb0-4b52-8c6d-c0eff9dc6cd8", "reason": "background citation list"}
+{"id": "a0223b31-c348-4e70-b5bd-a25d7636fde4", "reason": "background citation list"}
+{"id": "2a73a802-53eb-4f37-88eb-4ba581179d3e", "reason": "background citation list"}
+{"id": "e7259232-917e-4760-9540-79650d3b8593", "reason": "background citation list"}
+{"id": "fbc2c3a0-3fbe-44fa-ba9d-57379c343646", "reason": "background citation list"}
+{"id": "3b84cddc-95b6-47c9-b352-f05a9d902995", "reason": "background citation list"}
+{"id": "c92364aa-87ad-4dc3-829d-8e47a8717a98", "reason": "background citation list"}
+{"id": "24538176-8ac1-4e2a-a51e-141e5f0f8911", "reason": "background citation list"}
+{"id": "62314fc6-15b9-4f57-8b44-e09c8d1b5330", "reason": "background citation list"}
+{"id": "0656beed-47ba-44b5-b029-64dccebfabc1", "reason": "background citation list"}
+{"id": "3254a593-00cf-4521-9cd7-90eb667e1159", "reason": "background citation list"}
+{"id": "d432fe91-0661-4dd6-912b-4915df95364b", "reason": "background citation list"}
+{"id": "5b1fd26a-8674-4c80-88b7-9557c69480f4", "reason": "background citation list"}
+{"id": "6e1f2cb5-66f2-4d5a-81e5-521dabe9a440", "reason": "background citation list"}
+{"id": "58e38eba-6bb1-428e-83d2-40cda9b8207b", "reason": "background citation list"}
+{"id": "fead081c-2e37-41d0-92e3-9285f1b9b0e8", "reason": "background citation list"}
+{"id": "d684904b-8a43-4970-b23e-e6e74fe11f40", "reason": "background citation list"}
+{"id": "58b8525f-77a1-4fc7-9034-0fece3d69f0e", "reason": "cited work not found on arXiv by title", "title": "Distributed representations and nested compositional structure"}
+{"id": "e055535c-d81d-4add-b75f-110cc7d262fa", "reason": "cited work not found on arXiv by title", "title": "A Robust and Energy-Efficient Classifier Using Brain-Inspired Hyperdimensional Computing"}
+{"id": "0698225e-e7b6-4cfb-af8b-d3e95200c45f", "reason": "cited work not found on arXiv by title", "title": "Fast Graph Representation Learning with PyTorch Geometric"}
+{"id": "07729c61-8696-49bd-9c1f-9ef5d2c54903", "reason": "cited work not found on arXiv by title", "title": "A note on Hardy spaces and bounded linear operators"}
+{"id": "3e5d53bb-e634-4ae4-9f67-7c3a829fb765", "reason": "openalex lookup failed"}
+{"id": "9111ec9f-53d2-49ff-bddf-387e5da7217d", "reason": "cited work not found on arXiv by title", "title": "A New Ensemble Learning Framework for 3D Biomedical Image Segmentation"}
+{"id": "e999eaa2-830b-4672-9ae2-a3630cc69cde", "reason": "cited work not found on arXiv by title", "title": "Bridging the Gap Between 2D and 3D Organ Segmentation with Volumetric Fusion Net"}
+{"id": "867a5a29-f252-4c70-a531-09f6a803fbed", "reason": "openalex lookup failed"}
+{"id": "67cbd949-0f5f-469b-9528-55a45153c9f5", "reason": "cited work not found on arXiv by title", "title": "Fully convolutional networks for semantic segmentation"}
+{"id": "0084c066-d616-4ca6-95ce-1ec1278f9dbb", "reason": "cited work not found on arXiv by title", "title": "Deep Lesion Graphs in the Wild: Relationship Learning and Organization of Significant Radi"}
+{"id": "a5dc82c5-d2a8-479d-9395-3758f3d8ca81", "reason": "openalex lookup failed"}
+{"id": "c7a1f9dd-1415-4dda-bd6c-9f2b76baa621", "reason": "cited work not found on arXiv by title", "title": "Covariant Loop Quantum Gravity: An Elementary Introduction to Quantum Gravity and Spinfoam"}
+{"id": "6d47a258-cf97-4d9b-8acf-80e0b31ec979", "reason": "cited work not found on arXiv by title", "title": "Ponzano-Regge model revisited I: Gauge fixing, observables and interacting spinning partic"}
+{"id": "fd26f583-1558-4cb3-995a-e0af03000976", "reason": "cited work not found on arXiv by title", "title": "The Ponzano-Regge model"}
+{"id": "77268446-dc90-48d8-9941-2fc8bc85a1a4", "reason": "cited work not found on arXiv by title", "title": "A MODEL OF THREE-DIMENSIONAL LATTICE GRAVITY"}
+{"id": "f8f549d5-c632-4f6e-85f9-bade07c20155", "reason": "openalex lookup failed"}
+{"id": "8a6fc84d-e9e6-4ea9-aed6-96527f9b1b78", "reason": "openalex lookup failed"}
+{"id": "06128773-c234-4921-af6c-b987ab3a6bfb", "reason": "openalex lookup failed"}
+{"id": "9ad6b538-a304-47f7-be82-8e774ea0df14", "reason": "abstract answers it", "abstract_best": 4.943}
+{"id": "5f2778d5-6362-47a3-9199-353960c8c935", "reason": "cited work not found on arXiv by title", "title": "Dimensional reduction in quantum gravity"}
+{"id": "4d9aef4e-533b-47c8-910c-00e5261e3533", "reason": "cited work not found on arXiv by title", "title": "The world as a hologram"}
+{"id": "6388cd68-3497-4521-90c5-3ee5fb05795e", "reason": "cited work not found on arXiv by title", "title": "Elements of Algebraic Topology"}
+{"id": "87979a76-ef49-4bec-b245-8f6c5523ed15", "reason": "cited work not found on arXiv by title", "title": "BQP and the polynomial hierarchy"}
+{"id": "ed9be04a-c488-42a5-8882-e83e1a6cdb5b", "reason": "cited work not found on arXiv by title", "title": "Policy Gradient Methods for Reinforcement Learning with Function Approximation"}
+{"id": "dac57391-4145-4f42-89cf-330541ea9d64", "reason": "cited work not found on arXiv by title", "title": "Natural actor–critic algorithms"}
+{"id": "93d265d3-5350-4c3b-8f01-2ab78977dbe5", "reason": "abstract answers it", "abstract_best": 3.027}
+{"id": "9a3f12cd-4084-4fb5-a8e8-8acbdd1db5e8", "reason": "cited work not found on arXiv by title", "title": "Robust MDPs with k-Rectangular Uncertainty"}
+{"id": "d57f58f5-4d12-4f5a-b70a-8bf0b82ff896", "reason": "cited work not found on arXiv by title", "title": "IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architectures"}
+{"id": "d9f75925-ee68-4d8c-80fe-7d2adc6286f2", "reason": "cited work not found on arXiv by title", "title": "Present Position and Potential Developments: Some Personal Views: Statistical Theory: The "}
+{"id": "240daa73-7376-40ae-8b51-2d8a65f388e7", "reason": "cited work not found on arXiv by title", "title": "Hidden technical debt in Machine learning systems"}
+{"id": "2dc132fc-d671-4f92-80c1-2cf045642131", "reason": "cited work not found on arXiv by title", "title": "Multivariable Feedback Control: Analysis and Design"}
+{"id": "e7fe2a59-fbad-47b5-9f33-129f85cf971a", "reason": "openalex lookup failed"}
+{"id": "e230df0f-a5cf-405c-ade4-49dab38165cc", "reason": "openalex lookup failed"}
+{"id": "ddbbfe5c-ca82-4815-9a2d-4111a2265671", "reason": "cited work not found on arXiv by title", "title": "Large-Scale Study of Curiosity-Driven Learning"}
+{"id": "1dc0ddb4-9992-4a8f-9696-3e9ad3853e19", "reason": "cited work not found on arXiv by title", "title": "Jamming is not just cool any more"}
+{"id": "d8e37187-63c6-455c-a006-61e294a2b9ca", "reason": "cited work not found on arXiv by title", "title": "Strong Zc+(3900)→J/ψπ+ ; ηcρ+ decays in QCD"}
+{"id": "7801b993-3bbc-43a4-89f5-fb52e892dd2b", "reason": "abstract answers it", "abstract_best": 2.698}
+{"id": "bbe760fb-0bd4-4a9c-b0ff-d5fef6070c96", "reason": "cited work not found on arXiv by title", "title": "Introduction to Nonparametric Estimation"}
+{"id": "d67be0f5-9588-44f9-b16c-81c57f419662", "reason": "cited work not found on arXiv by title", "title": "Astronomy"}
+{"id": "7baffaa9-a56a-44e4-879c-3a453101bf00", "reason": "cited work not found on arXiv by title", "title": "Photochemistry of Planetary Atmospheres"}
+{"id": "40a8b321-fd71-4e0b-a712-1e415a8f4d71", "reason": "cited work not found on arXiv by title", "title": "Moduli stacks of stable toric quasimaps"}
+{"id": "bba10f87-d1ef-44cc-abc0-b7f27d557aa8", "reason": "cited work not found on arXiv by title", "title": "Axially symmetric jet flows"}
+{"id": "73548131-aac7-4c78-aa7f-be0021caf1d7", "reason": "abstract answers it", "abstract_best": 3.704}
+{"id": "f9b3b755-8d56-41b8-9252-2357c2c4fb6d", "reason": "openalex lookup failed"}
+{"id": "d146fae0-b7cd-4446-bc63-581eed0c7098", "reason": "openalex lookup failed"}
+{"id": "e21c824a-93f4-407c-bcca-216bea4090d9", "reason": "cited work not found on arXiv by title", "title": "Automatic Perturbation Analysis for Scalable Certified Robustness and Beyond"}
+{"id": "be455e35-5127-4bd7-b8f7-9cb6f093cdc5", "reason": "cited work not found on arXiv by title", "title": "QKD: Quantization-aware Knowledge Distillation"}
+{"id": "e1c483e5-71bf-4943-8859-4c980fc73f2b", "reason": "cited work not found on arXiv by title", "title": "Interacting quantum observables : categorical algebra and diagrammatics"}
+{"id": "f53f70bf-5c8f-426d-bc1a-8a682a767ac6", "reason": "abstract answers it", "abstract_best": 2.242}
+{"id": "63fa4133-77e3-4644-9326-881b3742824b", "reason": "cited work not found on arXiv by title", "title": "DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter"}
+{"id": "b410deda-5289-4f9a-8ab1-cfcba2c04060", "reason": "background citation list"}
+{"id": "8677f582-3cca-4bdd-b224-8bb0742cd0e0", "reason": "background citation list"}
+{"id": "03aa710a-1f19-4d6d-84f9-d05b4d44e13d", "reason": "background citation list"}
+{"id": "cbf185d0-f4b9-46b7-8350-3807a2bf7771", "reason": "background citation list"}
+{"id": "d4cbfaf6-6b4f-413b-90af-2444be9c035a", "reason": "background citation list"}
+{"id": "a326e3e4-1f0b-4a6b-aca8-b8db077fddbe", "reason": "background citation list"}
+{"id": "5a230354-bcb9-40b4-9760-6c3b02c93e14", "reason": "background citation list"}
+{"id": "367cb3ff-8d26-4d0b-9f93-fc15db8e5778", "reason": "background citation list"}
+{"id": "237c9fe7-702b-4c92-be68-09b48cb62b44", "reason": "background citation list"}
+{"id": "150a299c-99c2-40c5-a62f-df459fc28da5", "reason": "background citation list"}
+{"id": "74e0e82f-5379-4f08-a74b-bf2ffc1086b8", "reason": "background citation list"}
+{"id": "cbb632ed-ee3d-480b-a35b-acf5751bb879", "reason": "background citation list"}
+{"id": "f396a171-ffb9-458c-ba87-0995704b107c", "reason": "background citation list"}
+{"id": "bebd6f34-36ac-429f-9c62-d2987736f9de", "reason": "background citation list"}
+{"id": "f7b98a28-44bf-4dc1-9d9e-abc0c8d525fa", "reason": "background citation list"}
+{"id": "1182c8ea-ebeb-4f10-a12c-5b2d673d94cd", "reason": "background citation list"}
+{"id": "6f9a511b-7286-4da3-9c24-9851d153bd3e", "reason": "background citation list"}
+{"id": "f8c94c08-f25d-4dca-af77-977734c852e2", "reason": "background citation list"}
+{"id": "9adaa1c1-63ae-48b2-8792-7c2dc8a7e252", "reason": "background citation list"}
+{"id": "aeb38358-3a4e-4f96-a47e-d8e353be68b6", "reason": "background citation list"}
+{"id": "d6a50225-65d6-467c-8934-c1bb4ed1d7a9", "reason": "background citation list"}
+{"id": "3e33789d-2138-449b-b617-4ebde74117e8", "reason": "background citation list"}
+{"id": "c9afe603-92ff-41d6-a2c5-c9982ba09e7a", "reason": "background citation list"}
+{"id": "8826e021-1723-41a9-a3d9-ceb4b63073ce", "reason": "background citation list"}
+{"id": "7bc8bc7d-ca03-41f8-911b-456ad6e43039", "reason": "background citation list"}
+{"id": "015ca525-89df-439c-8e5f-5dad4deb67ee", "reason": "background citation list"}
+{"id": "58fce934-af82-48f3-a90c-69874d004a82", "reason": "background citation list"}
+{"id": "fb27b7b6-6cbb-4bc8-b695-2a1ccb413291", "reason": "background citation list"}
+{"id": "812f7b20-b7fc-46ae-9d81-b84e1a0c0a1c", "reason": "background citation list"}
+{"id": "5faada41-bb65-4353-b883-51730248a480", "reason": "background citation list"}
+{"id": "ed04e83f-2a95-45b7-b475-34eecf2da33d", "reason": "background citation list"}
+{"id": "79ad253c-5772-4954-b688-4fd8d439ea0f", "reason": "background citation list"}
+{"id": "6fe8279d-b655-406e-9316-aba0dadc941a", "reason": "background citation list"}
+{"id": "3ed025c9-a9b1-4e7e-ad97-6ccf63f2d08d", "reason": "background citation list"}
+{"id": "a924b55b-f027-4e32-96a2-7c0f5523262e", "reason": "background citation list"}
+{"id": "888b16f6-e00d-4114-98dd-7859b3750461", "reason": "background citation list"}
+{"id": "bf32dd99-2bb0-4f2e-99ae-7e8f69a7e7f2", "reason": "background citation list"}
+{"id": "45d8ad8d-c9e8-4417-82a5-35ce7a561e9a", "reason": "background citation list"}
+{"id": "ca5aead1-9681-4645-92e4-b9e498134fa3", "reason": "background citation list"}
+{"id": "8f5c4037-2abd-4132-88d8-ec32d0d73244", "reason": "cited work not found on arXiv by title", "title": "Nuanced Metrics for Measuring Unintended Bias with Real Data for Text Classification"}
+{"id": "4e7d6349-0ac0-4704-abb0-e8011454cf8c", "reason": "cited work not found on arXiv by title", "title": "Ridge Regression: Biased Estimation for Nonorthogonal Problems"}
+{"id": "e1d2e0a8-ad89-4f18-878e-900660c9ddd3", "reason": "cited work not found on arXiv by title", "title": "Fast randomized kernel ridge regression with statistical guarantees"}
+{"id": "26a5d6dd-5532-43d3-9c3b-1b9c54ea52ad", "reason": "openalex lookup failed"}
+{"id": "72209226-fc20-4983-ab32-f7662fd2c86f", "reason": "cited work not found on arXiv by title", "title": "Local Intrinsic Dimensionality I: An Extreme-Value-Theoretic Foundation for Similarity App"}
+{"id": "d467baaa-f811-4f49-aa2c-003fc902b58e", "reason": "cited work not found on arXiv by title", "title": "Effects of mixing with quark singlets"}
+{"id": "251cec53-e6c1-4021-9ddc-81010893bbd4", "reason": "abstract answers it", "abstract_best": 2.066}
+{"id": "f9513a1e-9d2b-45d6-ac8f-d632f15ab4e9", "reason": "cited work not found on arXiv by title", "title": "The expected signature of Brownian motion stopped on the boundary of a circle has finite r"}
+{"id": "a9ea476d-6c91-44e0-b4ea-8a3078e87a7b", "reason": "cited work not found on arXiv by title", "title": "Certifying Geometric Robustness of Neural Networks"}
+{"id": "2ac28bfe-98e7-492a-b577-567b4dba689f", "reason": "abstract answers it", "abstract_best": 2.985}
+{"id": "f3cb17c5-36c8-4a6b-8d0e-6782fb6ada6a", "reason": "abstract answers it", "abstract_best": 4.874}
+{"id": "1bc99711-ebeb-4d38-a373-7f12c66f9b14", "reason": "abstract answers it", "abstract_best": 2.937}
+{"id": "34a0ed71-8d1c-4395-b346-7b9cecb9a259", "reason": "cited work not found on arXiv by title", "title": "Local and Global Instabilities in Spatially Developing Flows"}
+{"id": "2654e089-a48a-4598-b0ba-4051b175c70e", "reason": "abstract answers it", "abstract_best": 5.556}
+{"id": "cc817bc7-9bd9-43e8-bed7-6e86b389f644", "reason": "cited work not found on arXiv by title", "title": "Computational Methods for Inverse Problems"}
+{"id": "0a491654-3c3a-49df-a8e7-feb00ec0d72c", "reason": "abstract answers it", "abstract_best": 4.833}
+{"id": "603551bf-8faa-435e-a7e8-407dd48d67d8", "reason": "cited work not found on arXiv by title", "title": "Criteria for virtual fibering"}
+{"id": "9341a396-4952-4dff-9d27-b2f5e49b8e86", "reason": "abstract answers it", "abstract_best": 3.081}
+{"id": "5ed9f9b0-3cc4-4999-9f71-00f7314b4ac4", "reason": "cited work not found on arXiv by title", "title": "Adaptive optics with an infrared pyramid wavefront sensor at Keck"}
+{"id": "56500f57-4a53-4b72-8720-a482a9f08d7d", "reason": "abstract answers it", "abstract_best": 3.096}
+{"id": "744398ae-7065-497e-897e-6c8762a3836b", "reason": "cited work not found on arXiv by title", "title": "Duality and separation theorems in idempotent semimodules"}
+{"id": "f2ef8a0a-fdf1-4c23-9037-871438d76e86", "reason": "cited work not found on arXiv by title", "title": "Idempotent functional analysis: an algebraic approach"}
+{"id": "2e0c146f-3c4c-458a-8569-56131fa624e8", "reason": "cited work not found on arXiv by title", "title": "Central charges in the canonical realization of asymptotic symmetries: An example from thr"}
+{"id": "23f50f66-0b8d-4d53-9a52-f2423301a102", "reason": "abstract answers it", "abstract_best": 2.034}
+{"id": "fa1a5a43-1dbc-4f9b-8b0d-c08144cf2f34", "reason": "cited work not found on arXiv by title", "title": "Adaptive anisotropic remeshing for cloth simulation"}
+{"id": "804c905d-813a-4642-aa34-c5fd8e011b19", "reason": "cited work not found on arXiv by title", "title": "NTopo: Mesh-free Topology Optimization using Implicit Neural Representations"}
+{"id": "8cb58bc0-03a9-46e1-b1bf-16b2df0efd43", "reason": "abstract answers it", "abstract_best": 3.732}
+{"id": "9ebba135-f218-479c-a477-019eaed71490", "reason": "openalex lookup failed"}
+{"id": "0923291b-fcc4-4b2b-8fb1-a712c3707281", "reason": "cited work not found on arXiv by title", "title": "Accurate normalization of real-time quantitative RT-PCR data by geometric averaging of mul"}
+{"id": "bdd84c14-b447-45ab-937c-c9c238eb07d4", "reason": "cited work not found on arXiv by title", "title": "Reduction Techniques for Instance-Based Learning Algorithms"}
+{"id": "1100aa02-3a3a-4f6f-8a0d-85eaf114b705", "reason": "openalex lookup failed"}
+{"id": "7e4d1b9e-065e-43e4-a111-e59845601009", "reason": "openalex lookup failed"}
+{"id": "cbd223f1-34f4-408c-af5c-4c06352e2ee9", "reason": "cited work not found on arXiv by title", "title": "Unsupervised Learning of Visual Features by Contrasting Cluster Assignments"}
+{"id": "81f738b2-3b82-4cf4-8d62-39949564793d", "reason": "cited work not found on arXiv by title", "title": "Deep Network Interpolation for Continuous Imagery Effect Transition"}
+{"id": "4dcdfeaa-b056-4e3c-9d48-ecc75bd3916b", "reason": "abstract answers it", "abstract_best": 4.336}
+{"id": "4460dae4-ed23-48b4-be33-0f86546ec616", "reason": "cited work not found on arXiv by title", "title": "Average Consensus in the Presence of Delays in Directed Graph Topologies"}
+{"id": "a674a10d-e153-4447-9bda-59bbcf5100b6", "reason": "cited work not found on arXiv by title", "title": "The GN Model of Non-Linear Propagation in Uncompensated Coherent Optical Systems"}
+{"id": "6a3b540d-7cb8-4564-bdf7-3a80a3471a98", "reason": "abstract answers it", "abstract_best": 3.266}
+{"id": "6e787185-20fb-4e9d-ad3d-e74f112c463c", "reason": "cited work not found on arXiv by title", "title": "Anomalous Hall effect in a two-dimensional Dirac band: The link between the Kubo-Streda fo"}
+{"id": "403449b2-51d5-4569-80fb-9376ef50c6ec", "reason": "cited work not found on arXiv by title", "title": "Fundamentals of Radar Signal Processing"}
+{"id": "1b336a9b-3601-4d6d-8745-c534f67bafaa", "reason": "cited work not found on arXiv by title", "title": "Estimating or Propagating Gradients Through Stochastic Neurons for Conditional Computation"}
+{"id": "ac87354e-ce04-4770-aaa3-bcbf078ef86e", "reason": "cited work not found on arXiv by title", "title": "The Parabolic Differential Equations and the Associated Semi-Groups of Transformations"}
+{"id": "415361f0-5b25-4b83-a3bb-2475a686b75e", "reason": "cited work not found on arXiv by title", "title": "Role of substrate unbinding in Michaelis–Menten enzymatic reactions"}
+{"id": "fdf238fc-ea1f-4d69-90bb-f04ca10390ce", "reason": "cited work not found on arXiv by title", "title": "Optimal Stochastic Restart Renders Fluctuations in First Passage Times Universal"}
+{"id": "ad442c34-b026-45cc-bea5-6ddd5a3d0d5a", "reason": "cited work not found on arXiv by title", "title": "Least General Generalizations in Description Logic: Verification and Existence"}
+{"id": "d70df15d-ad2b-483c-baca-55cfb37192ec", "reason": "cited work not found on arXiv by title", "title": "Neutrino masses in SU(2) ⊗ U(1) theories"}
+{"id": "33e5c83a-d2c0-48e3-ac88-1ba025113ad0", "reason": "cited work not found on arXiv by title", "title": "Deep unfolding of a proximal interior point method for image restoration"}
+{"id": "fb976510-3343-42d2-97ab-575dcfa949aa", "reason": "cited work not found on arXiv by title", "title": "Exploiting Known Interference as Green Signal Power for Downlink Beamforming Optimization"}
+{"id": "1fb07fa9-f9fb-4ae4-a297-688808194942", "reason": "abstract answers it", "abstract_best": 3.798}
+{"id": "17c1911c-6d45-4d04-a219-db6207534b4a", "reason": "cited work not found on arXiv by title", "title": "On Combinatorial Expansion of the Conformal Blocks Arising from AGT Conjecture"}
+{"id": "ca6579f8-e400-4930-862c-6aaaa969a2eb", "reason": "background citation list"}
+{"id": "05dd328a-755a-4a29-8e2d-997084ce6d6d", "reason": "background citation list"}
+{"id": "0eeb6802-1b52-4ad2-af95-02b951a37dd8", "reason": "background citation list"}
+{"id": "47b79253-0979-4fff-bfbe-d1f2c3963860", "reason": "background citation list"}
+{"id": "01a649c0-030a-4487-93ad-14c47b11227e", "reason": "background citation list"}
+{"id": "3e20e6d5-2729-4184-be31-9a30f5c973b0", "reason": "background citation list"}
+{"id": "20ba341b-0628-437a-8ac8-cacafe564ce3", "reason": "background citation list"}
+{"id": "5778ffbb-fa6f-4ddc-a575-25b7d7bb1bd7", "reason": "background citation list"}
+{"id": "eb4ea2fb-fe82-41ea-86ea-98912ca5bfaa", "reason": "background citation list"}
+{"id": "833c13f4-c471-4572-8a58-e013a657c281", "reason": "background citation list"}
+{"id": "fb0c82d2-9704-4cca-b078-b15594e62f46", "reason": "background citation list"}
+{"id": "f36e3f27-7733-45ee-b481-fbbac090fb25", "reason": "background citation list"}
+{"id": "680209ae-125c-41c4-9ace-0073c1c52c87", "reason": "background citation list"}
+{"id": "14194c04-f6a4-497f-a17b-90b841841f4f", "reason": "background citation list"}
+{"id": "f4346d97-a64a-468c-a52f-b48bbafea88f", "reason": "background citation list"}
+{"id": "d72338da-75a7-4176-91f8-a254deb958c7", "reason": "background citation list"}
+{"id": "e9ca0abf-32bd-443d-9968-3036aa233ff1", "reason": "background citation list"}
+{"id": "07232178-a8eb-43a5-9403-7dbfc68a109e", "reason": "background citation list"}
+{"id": "bb723d72-b334-49b6-be16-814f29bc2f37", "reason": "abstract answers it", "abstract_best": 2.205}
+{"id": "f1ac7adb-5eb0-40a8-a821-2c387e8f31e2", "reason": "cited work not found on arXiv by title", "title": "Eigenstate thermalization hypothesis in conformal field theory"}
+{"id": "5f300a2f-55bc-4ca0-8cb4-e400f11df393", "reason": "openalex lookup failed"}
+{"id": "29900391-0cba-45ab-bf1a-3db6e9549dfc", "reason": "cited work not found on arXiv by title", "title": "Charged eigenstate thermalization, Euclidean wormholes and global symmetries in quantum gr"}
+{"id": "fcecbf29-274b-4ede-a4dc-e9eae344f714", "reason": "cited work not found on arXiv by title", "title": "The On-Line Encyclopedia of Integer Sequences"}
+{"id": "da4bd571-95e2-43e6-a26c-5bdd9006e777", "reason": "abstract answers it", "abstract_best": 4.816}
+{"id": "9afd37b2-f557-47e9-a232-89f4b2de9077", "reason": "abstract answers it", "abstract_best": 2.96}
+{"id": "d46249e9-0381-497d-b963-06cd06601def", "reason": "cited work not found on arXiv by title", "title": "Voltage‐Sourced Converters in Power Systems"}
+{"id": "fc25a098-56d3-474e-8687-bec920ee1a31", "reason": "abstract answers it", "abstract_best": 4.559}
+{"id": "15b1b7c9-b9ef-4ccf-bba6-feba39ca484f", "reason": "abstract answers it", "abstract_best": 2.039}
+{"id": "ac05b398-bc2c-4c05-9a5d-e3acf4438aef", "reason": "cited work not found on arXiv by title", "title": "Algorithmic Recourse in the Wild: Understanding the Impact of Data and Model Shifts"}
+{"id": "d0f0ba00-81d9-4534-b6bc-d4de6a5fe4fa", "reason": "openalex lookup failed"}
+{"id": "fc23a04e-4149-4fb8-819e-8d1b81d7d226", "reason": "cited work not found on arXiv by title", "title": "On the radius of analyticity of solutions to the three-dimensional Euler equations"}
+{"id": "c38c853e-c2a1-40a7-bd66-b7157cd3cfec", "reason": "cited work not found on arXiv by title", "title": "Observation of coherent elastic neutrino-nucleus scattering"}
+{"id": "53483a40-5fd3-4e13-9f85-b62373000d03", "reason": "cited work not found on arXiv by title", "title": "Topology from the Differentiable Viewpoint."}
+{"id": "ef1b45c6-d218-401f-9719-b465ee11399e", "reason": "cited work not found on arXiv by title", "title": "Accumulation of nonlinear interference noise in fiber-optic systems"}
+{"id": "aed7afb8-a210-45c8-9064-c78b204d340b", "reason": "cited work not found on arXiv by title", "title": "Disordered Speech Data Collection: Lessons Learned at 1 Million Utterances from Project Eu"}
+{"id": "a04b5410-7091-4cf5-b61c-0720f6b86a8b", "reason": "cited work not found on arXiv by title", "title": "High-energy tests of Lorentz invariance"}
+{"id": "05aa30f0-c458-4cbb-b7ad-943f0c5a41b6", "reason": "cited work not found on arXiv by title", "title": "Permutation invariant training of deep models for speaker-independent multi-talker speech "}
+{"id": "d303fe8c-d021-4122-9aec-9b660ba8d2d0", "reason": "cited work not found on arXiv by title", "title": "End-To-End Multi-Talker Overlapping Speech Recognition"}
+{"id": "50fc96e1-6a02-41a3-afb0-8daba9e8e56e", "reason": "cited work not found on arXiv by title", "title": "Multi-target detection and tracking from a single camera in Unmanned Aerial Vehicles (UAVs"}
+{"id": "76d088a7-98e1-4cc8-a955-b73f108a4cf2", "reason": "cited work not found on arXiv by title", "title": "Domain-Symmetric Networks for Adversarial Domain Adaptation"}
+{"id": "2de8b2af-8577-4271-ad9b-62eff81b5044", "reason": "abstract answers it", "abstract_best": 2.142}
+{"id": "64afe5cb-cffe-468d-bccc-5a331e810707", "reason": "abstract answers it", "abstract_best": 4.456}
+{"id": "c17f9ddc-b7bd-421e-b4b1-1fa88cf887ef", "reason": "cited work not found on arXiv by title", "title": "NEXT ORDER ASYMPTOTICS AND RENORMALIZED ENERGY FOR RIESZ INTERACTIONS"}
+{"id": "3faf551d-fd32-4b8b-a504-450cda8c7a6a", "reason": "cited work not found on arXiv by title", "title": "Entropy"}
+{"id": "d044e3a2-2230-462e-ba65-96bda17ed3f1", "reason": "abstract answers it", "abstract_best": 2.013}
+{"id": "99c62068-dc2b-4021-8f46-c8ffc95aac85", "reason": "cited work not found on arXiv by title", "title": "Noise2Self: Blind Denoising by Self-Supervision"}
+{"id": "2f0640d8-fa68-42ef-a4e4-10b58a054592", "reason": "cited work not found on arXiv by title", "title": "Deep Learning for Audio Signal Processing"}
+{"id": "e5d3fa39-0ed9-48d1-befd-aa9060cec0c5", "reason": "cited work not found on arXiv by title", "title": "Statistical phrase-based translation"}
+{"id": "4ba2f125-38c3-4dd2-8400-47c1cd895fb4", "reason": "cited work not found on arXiv by title", "title": "Learning Spatiotemporal Features with 3D Convolutional Networks"}
+{"id": "75bb6952-69ff-40b9-bef9-a1b7afad8402", "reason": "cited work not found on arXiv by title", "title": "Twisted form hierarchies, Killing-Yano equations and supersymmetric backgrounds"}
+{"id": "3ad6f9d6-f7ef-436f-a6cf-34a12804eda2", "reason": "cited work not found on arXiv by title", "title": "The spinorial geometry of supersymmetric backgrounds"}
+{"id": "cd346e64-e033-4b98-b18a-43febda63f5d", "reason": "cited work not found on arXiv by title", "title": "StarCraft II: A New Challenge for Reinforcement Learning"}
+{"id": "6ea809cf-db7c-4cfc-9ee1-fdbad175f9ef", "reason": "cited work not found on arXiv by title", "title": "The Simplicial Model of Univalent Foundations (after Voevodsky)"}
+{"id": "6bc0d888-e488-439f-ae35-8cc95ad75ce2", "reason": "cited work not found on arXiv by title", "title": "Univalent categories and the Rezk completion"}
+{"id": "66e49add-a8c6-4431-bf8d-5bae578582ba", "reason": "cited work not found on arXiv by title", "title": "A model for the homotopy theory of homotopy theory"}
+{"id": "920b8d94-5538-4c13-a461-ca4e1a29e2b7", "reason": "cited work not found on arXiv by title", "title": "The Cauchy Problem in General Relativity"}
+{"id": "6248b170-0277-4b18-a9c5-625da00e71be", "reason": "abstract answers it", "abstract_best": 2.747}
+{"id": "ed4d1049-2f14-48ab-9703-d5696846b2c5", "reason": "cited work not found on arXiv by title", "title": "ConSERT: A Contrastive Framework for Self-Supervised Sentence Representation Transfer"}
+{"id": "9ac23d21-0ad4-468f-9a99-81e5953d93bf", "reason": "cited work not found on arXiv by title", "title": "Orbital magnetization in crystalline solids: Multi-band insulators, Chern insulators, and "}
+{"id": "05b6fc38-4f27-4f51-aaa7-3a4671ac7199", "reason": "cited work not found on arXiv by title", "title": "Potential Estimates and Quasilinear Parabolic Equations with Measure Data"}
+{"id": "cc1824d1-c93e-4d16-8ce9-3cbf797b0430", "reason": "openalex lookup failed"}
+{"id": "a09ab188-b08d-4dda-8498-6683ac74588f", "reason": "abstract answers it", "abstract_best": 2.362}
+{"id": "99f55f7e-30a2-46b0-a0ad-6b73869e3671", "reason": "openalex lookup failed"}
+{"id": "3dbaa5c3-9220-4b1e-8139-edd12f2dc29b", "reason": "openalex lookup failed"}
+{"id": "6ef0db40-5f1b-447f-b7c0-31c5e35197ca", "reason": "openalex lookup failed"}
+{"id": "5ef3f0d9-9795-479d-b066-ac35ee276aa6", "reason": "background citation list"}
+{"id": "b50547ac-b9c7-4473-95d7-7fdcfc652e62", "reason": "background citation list"}
+{"id": "faa1b39a-5db5-447b-930d-0c95eff8cb8f", "reason": "background citation list"}
+{"id": "105c5f90-ab86-42c9-9a24-2e3cc4e39e0c", "reason": "background citation list"}
+{"id": "e09dfda5-3199-4e59-aab6-fb484cd10445", "reason": "background citation list"}
+{"id": "c30292cf-6949-47aa-91e2-3622c8b087df", "reason": "background citation list"}
+{"id": "cb2be5e1-462e-4c9d-9620-69759ae6243e", "reason": "background citation list"}
+{"id": "e1df827b-1dd7-4817-8f02-d6cac34c0739", "reason": "background citation list"}
+{"id": "f7bb4b34-6a44-441a-adff-9567cfb07dec", "reason": "background citation list"}
+{"id": "0489a964-f3d8-4ab0-ae1c-bf27599ad8c0", "reason": "background citation list"}
+{"id": "4535c326-73a2-4794-b4b0-b13c38ab30aa", "reason": "background citation list"}
+{"id": "a66ec596-ff1e-450c-bfaf-5bf53284975f", "reason": "background citation list"}
+{"id": "343b6cff-2d2f-40e6-9db0-74655ba0d8e7", "reason": "background citation list"}
+{"id": "54b260c1-0d95-4153-ba14-a4fb7679a7c8", "reason": "background citation list"}
+{"id": "86608528-d9ae-4d41-aeca-819b7c7db66e", "reason": "background citation list"}
+{"id": "3441d527-5b4c-4182-8de4-df1794435733", "reason": "background citation list"}
+{"id": "0bac7666-d158-48d4-89d5-3b076173f2fb", "reason": "background citation list"}
+{"id": "6923dcb9-339c-4604-9b1b-a7d19d312c90", "reason": "background citation list"}
+{"id": "f011b4e5-ace6-429c-89bd-c48a6c945608", "reason": "background citation list"}
+{"id": "2b514d41-e6b1-4bea-8d41-6106f044b48f", "reason": "background citation list"}
+{"id": "443f501d-d1f2-47f1-9cda-26706934ef94", "reason": "background citation list"}
+{"id": "442b6d1d-5933-44f7-9a3c-f427970c5ed8", "reason": "background citation list"}
+{"id": "c6fb04c0-e826-4f4a-b9aa-0babdaac1f53", "reason": "background citation list"}
+{"id": "39e869cc-e4db-4afc-995f-6a3d1d8adb5c", "reason": "background citation list"}
+{"id": "b0594c8d-6679-465d-b133-ff909e69746e", "reason": "background citation list"}
+{"id": "660b95b8-37a9-4290-b614-fad467b55b40", "reason": "background citation list"}
+{"id": "f582382c-ec6a-450e-a78b-7420d0dd6345", "reason": "background citation list"}
+{"id": "b2d9e3e3-9639-4c1c-86d8-130f7d62fe96", "reason": "background citation list"}
+{"id": "41e32b16-8cdf-4be4-8247-456bb3ae8328", "reason": "background citation list"}
+{"id": "c3e91321-701b-4b34-bd92-809da366b204", "reason": "background citation list"}
+{"id": "f4f431ca-42ff-406b-a1e2-5472743be632", "reason": "background citation list"}
+{"id": "bffd3d5f-405f-40c4-bfaa-f55af97228d6", "reason": "background citation list"}
+{"id": "787c9470-09b4-4633-a966-11dad676f65b", "reason": "background citation list"}
+{"id": "ad9f6969-3db6-49ce-8101-4ead14e38c76", "reason": "background citation list"}
+{"id": "029e5523-1e96-4f6b-87e2-8443a480fc57", "reason": "background citation list"}
+{"id": "4a8629f7-b49c-413b-b749-364e60f9989d", "reason": "background citation list"}
+{"id": "bb1451eb-5d48-49aa-a686-857ca3ac2630", "reason": "background citation list"}
+{"id": "15412d75-d5c2-4ef7-b6c3-5f4877c83e19", "reason": "abstract answers it", "abstract_best": 3.023}
+{"id": "aedadf33-8dfd-484c-a2f2-ad4c4e0221c9", "reason": "abstract ranks within the top passages", "abstract_best": 1.762, "top_score": 8.338}
+{"id": "a59298d7-d931-4f29-bf62-4393cb9caea8", "reason": "abstract answers it", "abstract_best": 3.658}
+{"id": "7ef11474-fb1f-488d-85e9-245702b32c70", "reason": "cited work not found on arXiv by title", "title": "Kernel Methods for Pattern Analysis"}
+{"id": "fc4cc5dd-da40-419e-9c2a-09bde2273074", "reason": "cited work not found on arXiv by title", "title": "Recent Rapid Regional Climate Warming on the Antarctic Peninsula"}
+{"id": "14d94209-946a-49f2-96be-7372fe8c0e3f", "reason": "abstract answers it", "abstract_best": 4.644}
+{"id": "2dd610a8-bb35-4c3d-9a60-aa4fc44d7965", "reason": "cited work not found on arXiv by title", "title": "Computer Simulation of Liquids"}
+{"id": "3fd83761-6a39-452d-b694-e14eb8933a46", "reason": "abstract answers it", "abstract_best": 4.32}
+{"id": "8441e044-cc85-48ab-9a34-e24d0cf524a9", "reason": "openalex lookup failed"}
+{"id": "2cf4b9b8-d9f3-46f9-bde4-9e8066bc31bf", "reason": "cited work not found on arXiv by title", "title": "Transverse Momentum and Centrality Dependence of High- pT Nonphotonic Electron Suppression"}
+{"id": "f570591e-21b2-4bcf-ba6c-7528866a2172", "reason": "cited work not found on arXiv by title", "title": "Recovering Accurate 3D Human Pose in the Wild Using IMUs and a Moving Camera"}
+{"id": "c4edbf96-f650-4a7c-933b-2f251b9272f1", "reason": "abstract answers it", "abstract_best": 5.412}
+{"id": "111bd35b-921c-49f5-8f04-890d85a79398", "reason": "abstract answers it", "abstract_best": 5.506}
+{"id": "b0acadcb-0619-4f61-ab1c-879ca0602321", "reason": "abstract answers it", "abstract_best": 6.072}
+{"id": "f2da85c3-ae24-43e3-93b5-e3f971e52a90", "reason": "openalex lookup failed"}
+{"id": "da18b96f-4070-4259-8e81-8f9d43a63866", "reason": "openalex lookup failed"}
+{"id": "d334af28-f43f-42a7-9a41-ec412bd0b995", "reason": "cited work not found on arXiv by title", "title": "On a Method to Measure Supervised Multiclass Model’s Interpretability: Application to Degr"}
+{"id": "d76fcabe-31e1-41af-acc4-af08e8ff67db", "reason": "cited work not found on arXiv by title", "title": "Some regularity properties of solutions of Monge Ampère equation"}
+{"id": "fa770afe-6c7f-4ed0-ae81-e2ae111e4406", "reason": "cited work not found on arXiv by title", "title": "Toll convexity"}
+{"id": "c4f2b25f-cf08-483d-b4c0-de22d7a1f1c3", "reason": "cited work not found on arXiv by title", "title": "A logic for reasoning about time and reliability"}
+{"id": "fde48cf6-17d8-4aa1-8d10-4bd87905a060", "reason": "abstract answers it", "abstract_best": 3.448}
+{"id": "fd4681e9-a481-42a9-b028-50cf44200016", "reason": "abstract answers it", "abstract_best": 2.093}
+{"id": "88a78166-19c9-43f3-aec8-2105990a9284", "reason": "abstract answers it", "abstract_best": 2.864}
+{"id": "28872bbd-f229-4cf7-b659-8f00c0f65685", "reason": "openalex lookup failed"}
+{"id": "a6d40474-29d8-461d-a6f0-e78639f4b5eb", "reason": "openalex lookup failed"}
+{"id": "2b4f2980-96a8-46ea-9d07-a1f5075cf440", "reason": "abstract answers it", "abstract_best": 2.362}
+{"id": "3401e0d0-2923-48a3-a2f9-35b396a9846d", "reason": "openalex lookup failed"}
+{"id": "6cd50063-21e7-4cc2-8a4d-cd57414350cc", "reason": "abstract ranks within the top passages", "abstract_best": 0.526, "top_score": 5.128}
+{"id": "5f037403-d3dc-42d1-9e89-b8f3cff204ee", "reason": "cited work not found on arXiv by title", "title": "Generating wall shear stress for coronary artery in real-time using neural networks: Feasi"}
+{"id": "b7f393d2-fb7e-4832-91fe-04a1436e548b", "reason": "openalex lookup failed"}
+{"id": "d14ce748-5560-46ef-8135-d52c50c8a376", "reason": "openalex lookup failed"}
+{"id": "b1c309fb-53a4-4522-bf97-ae4720479b25", "reason": "openalex lookup failed"}
+{"id": "340f5357-109c-4a7d-8e4d-81a288c96f16", "reason": "cited work not found on arXiv by title", "title": "The Master Equation and the Convergence Problem in Mean Field Games"}
+{"id": "8fdc2891-47bc-4f23-b5ce-bdca56a2a725", "reason": "cited work not found on arXiv by title", "title": "The strongly-interacting light Higgs"}
+{"id": "1a452398-c312-46df-b1e5-63fc8fc2f460", "reason": "abstract answers it", "abstract_best": 2.031}
+{"id": "069733aa-7a82-489f-b74a-3dca262f819c", "reason": "openalex lookup failed"}
+{"id": "e0dc1530-ac3a-4b2e-9162-556f3c28eb9a", "reason": "cited work not found on arXiv by title", "title": "FastSpeech: Fast, Robust and Controllable Text to Speech"}
+{"id": "d37b32f7-6476-4710-823e-95eb285219dd", "reason": "openalex lookup failed"}
+{"id": "88c9f40a-a89b-40e8-a35e-d376a840b905", "reason": "cited work not found on arXiv by title", "title": "MIA-COV19D: COVID-19 Detection through 3-D Chest CT Image Analysis"}
+{"id": "48a981d4-f1f9-4ed6-926e-ae04fc607d60", "reason": "cited work not found on arXiv by title", "title": "Spectral stochastic estimation of high-Reynolds-number wall-bounded turbulence for a refin"}
+{"id": "c9571545-7896-4e5d-9582-50b013170b76", "reason": "cited work not found on arXiv by title", "title": "Knot Floer homology and integer surgeries"}
+{"id": "e55bf771-0e7c-4bf3-81e0-108974f3a061", "reason": "background citation list"}
+{"id": "0723b67a-a01c-4ca3-afe7-216efe37cca5", "reason": "background citation list"}
+{"id": "ca1a5ea2-59d7-4868-ba89-9ebb3d77cf9b", "reason": "background citation list"}
+{"id": "cfff43cc-65a9-48eb-a7dd-7f79eab1a9a4", "reason": "background citation list"}
+{"id": "dca72035-e6c5-463c-a1c1-313dca0a142a", "reason": "background citation list"}
+{"id": "fc280eaf-707e-48a2-a8c6-3c1da84dbcce", "reason": "background citation list"}
+{"id": "582b0cc8-8f6c-459f-bb8f-9428c4eddb16", "reason": "background citation list"}
+{"id": "ce26fa5a-4022-4e7a-9864-9e6cd79786e4", "reason": "background citation list"}
+{"id": "dd29100f-7040-422f-8962-64498543038f", "reason": "background citation list"}
+{"id": "c52c7a49-b79d-448a-b176-13a1cb23b533", "reason": "background citation list"}
+{"id": "21f85062-70de-4986-850d-e5102ae14609", "reason": "background citation list"}
+{"id": "1d0ea97c-e61d-4812-81cf-6ce4c5365585", "reason": "background citation list"}
+{"id": "848235ea-8596-426f-ac69-961f4ba874eb", "reason": "background citation list"}
+{"id": "6c867cac-d06e-418b-89a9-3fbdb79c9fe9", "reason": "background citation list"}
+{"id": "efcf4b4b-88bd-4d75-9af8-1a4459bc830c", "reason": "background citation list"}
+{"id": "eb912ecb-850e-4282-8a79-fcffda72eff1", "reason": "background citation list"}
+{"id": "e528df7d-396f-4ae0-a553-a9b6ea0cc654", "reason": "background citation list"}
+{"id": "4d7aa079-6095-49a1-86c7-5c6d772fe861", "reason": "background citation list"}
+{"id": "59965a54-c847-4bd0-b5b8-3021f3004b0b", "reason": "background citation list"}
+{"id": "5eeebd4e-8994-4e0f-866b-5c026d4d5ad2", "reason": "background citation list"}
+{"id": "c00eb3a8-5593-4692-85aa-d8ee14443c3d", "reason": "background citation list"}
+{"id": "a8b78c6d-b6b2-48f2-b6a1-e22a4238f19e", "reason": "background citation list"}
+{"id": "757a1e50-ef06-4419-853d-ffb41c6ed3af", "reason": "openalex lookup failed"}
+{"id": "cb20b5b0-c3d4-4261-99e9-fae58b4e8fb7", "reason": "cited work not found on arXiv by title", "title": "End-to-End Speech Separation with Unfolded Iterative Phase Reconstruction"}
+{"id": "f08199ae-68dc-41b5-b240-12c4e4ec524a", "reason": "abstract answers it", "abstract_best": 2.088}
+{"id": "5be9e440-29c0-4232-a390-8701413b58be", "reason": "cited work not found on arXiv by title", "title": "Phase-sensitive and recognition-boosted speech separation using deep recurrent neural netw"}
+{"id": "8a46dcb7-b2ce-4060-abd5-60bc05d136be", "reason": "cited work not found on arXiv by title", "title": "Nonlinear Water Waves with Applications to Wave-Current Interactions and Tsunamis"}
+{"id": "94444382-d43b-4f43-a7a2-deaa752b77fa", "reason": "cited work not found on arXiv by title", "title": "An adaptive sequential Monte Carlo method for approximate Bayesian computation"}
+{"id": "816ce349-a860-4d0b-b7a5-8013fd5862ee", "reason": "abstract answers it", "abstract_best": 9.251}
+{"id": "c0d010db-7c88-4b2d-b412-9796b26654a9", "reason": "cited work not found on arXiv by title", "title": "Shape Manifolds, Procrustean Metrics, and Complex Projective Spaces"}
+{"id": "d83ab1ca-656a-41ca-b009-72e538ee39bc", "reason": "cited work not found on arXiv by title", "title": "Irreducible representations of Leavitt path algebras"}
+{"id": "adf27931-ffd1-43c8-93ca-efeb0b546aaa", "reason": "cited work not found on arXiv by title", "title": "Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discov"}
+{"id": "19629d9c-1eb2-40f4-a280-4c9b4f3dc207", "reason": "cited work not found on arXiv by title", "title": "Adversarially Learned Inference"}
+{"id": "e8c3d123-32f5-4b37-812e-8575e0f062c3", "reason": "abstract answers it", "abstract_best": 2.186}
+{"id": "097c7494-31ae-4c68-ac28-5452a5fdbda0", "reason": "cited work not found on arXiv by title", "title": "Local B − L Symmetry of Electroweak Interactions, Majorana Neutrinos, and Neutron Oscillat"}
+{"id": "a48622eb-907c-4acf-a98c-0200885a49a9", "reason": "cited work not found on arXiv by title", "title": "Comparing protein abundance and mRNA expression levels on a genomic scale."}
+{"id": "49b2ca1d-34b4-49da-86b1-e20a1116343f", "reason": "cited work not found on arXiv by title", "title": "Nitrate leaching in temperate agroecosystems: sources, factors and mitigating strategies"}
+{"id": "7f890fb2-2429-4b7c-ab0c-6c751ca9545f", "reason": "cited work not found on arXiv by title", "title": "AFLP markers reveal high polymorphic rates in ryegrasses (Lolium spp.)"}
+{"id": "696f10d5-2915-4e6c-8873-8655e391bb70", "reason": "openalex lookup failed"}
+{"id": "ce2410b2-92df-45ac-9227-c5459e794f39", "reason": "cited work not found on arXiv by title", "title": "J"}
+{"id": "568ed41e-dcf1-439a-b54b-24a09f5f3d82", "reason": "cited work not found on arXiv by title", "title": "On partially wrapped Fukaya categories"}
+{"id": "189561a9-3e59-4ea2-bc29-ad48ae0ec2b3", "reason": "abstract answers it", "abstract_best": 2.091}
+{"id": "54e3995c-24cf-49cb-b98e-dded442d94a0", "reason": "cited work not found on arXiv by title", "title": "Intrinsic mirror symmetry and categorical crepant resolutions"}
+{"id": "e56d5815-1413-442f-8fde-c93a025bb825", "reason": "cited work not found on arXiv by title", "title": "On the Inductive Bias of Neural Tangent Kernels"}
+{"id": "4a70b082-eaac-452e-8394-463af832b2a4", "reason": "cited work not found on arXiv by title", "title": "A 2.4% Determination of the Local Value of the Hubble Constant"}
+{"id": "93c83c8a-0c15-4e93-9862-f8b8539e7349", "reason": "openalex lookup failed"}
+{"id": "75ce52d1-743a-49d3-9128-11861fe5c5e3", "reason": "cited work not found on arXiv by title", "title": "Knowledge tracing: Modeling the acquisition of procedural knowledge"}
+{"id": "dd00e0d1-2bb6-4525-90df-e66acc044411", "reason": "abstract answers it", "abstract_best": 2.165}
+{"id": "ba301d8c-178a-4d0d-8bcb-29fc16e907d4", "reason": "cited work not found on arXiv by title", "title": "XVA: Credit, Funding and Capital Valuation Adjustments"}
+{"id": "900885a8-123f-412d-a5c3-e0ca549b37c6", "reason": "cited work not found on arXiv by title", "title": "Parameterization-free projection for geometry reconstruction"}
+{"id": "9f0828aa-f343-49a2-980e-d4b885f5f21b", "reason": "cited work not found on arXiv by title", "title": "The Theory of Partitions"}
+{"id": "79d623c5-776f-493a-addf-9fe2672598c0", "reason": "abstract answers it", "abstract_best": 2.57}
+{"id": "010e9135-a485-4866-b0da-de0fa8610c3c", "reason": "cited work not found on arXiv by title", "title": "The Effects of Thermal Stratification on Clustering Properties of Canopy Turbulence"}
+{"id": "e33a3e6f-c929-42f3-9859-3144f4deee4b", "reason": "cited work not found on arXiv by title", "title": "The role of surface characteristics on intermittency and zero‐crossing properties of atmos"}
+{"id": "69d0bd26-7f76-4cdd-a5fb-23b6b0625e97", "reason": "cited work not found on arXiv by title", "title": "Edge-aware point set resampling"}
+{"id": "6e5bf4c4-6b37-4051-a239-94d84e90d032", "reason": "cited work not found on arXiv by title", "title": "Graph Signal Processing: Overview, Challenges, and Applications"}
+{"id": "dfdcef76-10c9-46d1-81e4-c25217c65b2b", "reason": "cited work not found on arXiv by title", "title": "Quantum tunneling beyond semiclassical approximation"}
+{"id": "cf0e6b7b-43eb-4b0f-97eb-4f3444ec261a", "reason": "cited work not found on arXiv by title", "title": "Invariant Risk Minimization"}
+{"id": "e48bcb93-9e52-4fab-9f2c-3d8d57b2ee6d", "reason": "abstract answers it", "abstract_best": 2.063}
+{"id": "0643a7ad-57ff-468c-b82f-d30be19c8b84", "reason": "abstract answers it", "abstract_best": 5.121}
+{"id": "e39e1eab-b3d2-494d-a212-aab4187052ea", "reason": "cited work not found on arXiv by title", "title": "Information asymmetry in KL-regularized RL"}
+{"id": "f70067c3-8b68-4e55-b965-4bfc8e1757f2", "reason": "openalex lookup failed"}
+{"id": "9695487b-c0b1-40e5-9fcb-82c254e59c37", "reason": "cited work not found on arXiv by title", "title": "Potential field methods and their inherent limitations for mobile robot navigation"}
+{"id": "b1ea2453-9a69-40a3-9254-a6617c575961", "reason": "cited work not found on arXiv by title", "title": "The Standard Model prediction for R_{e/mu}^{(pi,K)}"}
+{"id": "d7abad5e-5c22-456e-864d-b9cca41c6096", "reason": "cited work not found on arXiv by title", "title": "Black holes and the butterfly effect"}
+{"id": "7edd0de7-6f06-4e25-9468-7b9a507d0350", "reason": "openalex lookup failed"}
+{"id": "b683022d-7955-489f-addc-2d167d917624", "reason": "cited work not found on arXiv by title", "title": "Classical and Quantum Algorithms for Orthogonal Neural Networks"}
+{"id": "602bece4-f7dc-4c28-a1c4-0ef85ecb8327", "reason": "cited work not found on arXiv by title", "title": "Theoretical Foundations of Deep Learning via Sparse Representations: A Multilayer Sparse M"}
+{"id": "9eee9d32-4aa4-4228-a89c-bc04e116b26b", "reason": "openalex lookup failed"}
+{"id": "011d752a-b2e6-4ba1-b38c-ee2c8847f66d", "reason": "openalex lookup failed"}
+{"id": "c3e0577a-1b04-417e-8cc0-b9f9706141c5", "reason": "cited work not found on arXiv by title", "title": "Wasserstein GAN"}
+{"id": "814cbfdb-4b5e-47e7-a87a-a4f75b9a29b1", "reason": "cited work not found on arXiv by title", "title": "Generating Natural Language Adversarial Examples through Probability Weighted Word Salienc"}
+{"id": "45e2fe76-fa2f-47a9-9977-bdff55a5b659", "reason": "background citation list"}
+{"id": "e600f67d-6fdc-4e02-9a72-e47aa6abc851", "reason": "background citation list"}
+{"id": "338133c2-5be6-46a3-b1f6-2d7e6a395f05", "reason": "background citation list"}
+{"id": "94ebac85-f7eb-48c3-922f-d421426eb710", "reason": "background citation list"}
+{"id": "748a210a-28c0-4d8e-9a68-a62c81f378c4", "reason": "background citation list"}
+{"id": "0cbb7f88-9fde-4520-8b53-c7f4dc7a92b1", "reason": "background citation list"}
+{"id": "34ce4f50-9f77-4ccd-9dd0-1436a02f9798", "reason": "background citation list"}
+{"id": "50f3301e-8f15-4801-9b92-e54ba122a0f9", "reason": "background citation list"}
+{"id": "22f40d47-8805-455b-b941-36ef4e9187e2", "reason": "background citation list"}
+{"id": "52e42280-a10a-4227-98ed-b6edc04dc6b4", "reason": "background citation list"}
+{"id": "fef360f1-2a80-4a91-805f-f46dfcba281f", "reason": "background citation list"}
+{"id": "76671d42-bd7d-46f8-a486-9ec5cc66350f", "reason": "background citation list"}
+{"id": "68c1e2c9-b4bb-4ca5-97f2-83429d03ee25", "reason": "background citation list"}
+{"id": "ac7fb53e-3f63-4c13-97ea-54f2d189ff28", "reason": "background citation list"}
+{"id": "1d431d20-8a05-42a8-b5ed-5527db05cb17", "reason": "background citation list"}
+{"id": "3b794a23-6634-48b3-be09-be081e5c7cbd", "reason": "background citation list"}
+{"id": "c19e163d-f16b-4c46-bb21-eebf357e7f5e", "reason": "background citation list"}
+{"id": "10755e66-5335-4de7-8002-5b9d9f5e633a", "reason": "background citation list"}
+{"id": "a529cfba-b477-404c-8b64-434205b05a09", "reason": "cited work not found on arXiv by title", "title": "Is BERT Really Robust? A Strong Baseline for Natural Language Attack on Text Classificatio"}
+{"id": "6e010a07-e222-470b-9cb4-24917377841f", "reason": "openalex lookup failed"}
+{"id": "03cb9b3d-f1ed-4f4c-8533-3f61947bf355", "reason": "openalex lookup failed"}
+{"id": "d4db07de-0aea-4d98-9021-3595b4e4da70", "reason": "abstract answers it", "abstract_best": 2.833}
+{"id": "ecbb0d8a-5f64-4ae1-bffb-8716d78dfbbf", "reason": "openalex lookup failed"}
+{"id": "3c994f0b-f027-4324-bde4-7dbcac69f9c1", "reason": "openalex lookup failed"}
+{"id": "1a779b85-baff-496f-b013-ba4ed2a9881b", "reason": "openalex lookup failed"}
+{"id": "7418aedc-40ac-4d3d-af7d-7f61861cf6e8", "reason": "cited work not found on arXiv by title", "title": "Primordial black holes from cusp collapse on cosmic strings"}
+{"id": "35075cf1-4b89-4102-9667-19beb7e67293", "reason": "cited work not found on arXiv by title", "title": "Strange Hadron Spectroscopy with Secondary KL Beam in Hall D"}
+{"id": "fd9d77e8-5b08-4526-943a-2f752b3fd665", "reason": "cited work not found on arXiv by title", "title": "Test of lepton universality in beauty-quark decays"}
+{"id": "ed3d4f85-6294-4b2d-bb93-c16673832c62", "reason": "cited work not found on arXiv by title", "title": "Virus Spread in Networks"}
+{"id": "bb70f4bd-4914-4d07-b7e4-76d2fa8c6c98", "reason": "cited work not found on arXiv by title", "title": "A remark on the scattering of BPS monopoles"}
+{"id": "30cc4cc4-4fa9-4d8e-897b-3c41031287a1", "reason": "cited work not found on arXiv by title", "title": "A duality theorem for Willmore surfaces"}
+{"id": "bd3f5691-c505-415d-acdb-0a3b5076fb17", "reason": "cited work not found on arXiv by title", "title": "Evasion attacks against machine learning at test time"}
+{"id": "2af8440a-6d09-447b-898e-ce5f4848fa26", "reason": "abstract answers it", "abstract_best": 3.122}
+{"id": "09b495af-4269-4727-b1a7-19c43ca7b13e", "reason": "abstract answers it", "abstract_best": 2.345}
+{"id": "fc228290-0b1b-4d21-8fa8-981386a7f81e", "reason": "cited work not found on arXiv by title", "title": "On the Effectiveness of Interval Bound Propagation for Training Verifiably Robust Models"}
+{"id": "ae92dd7f-7f0e-439f-8828-0ce80855967a", "reason": "cited work not found on arXiv by title", "title": "Certified Adversarial Robustness with Additive Noise"}
+{"id": "1b2d0544-fbd2-422c-b714-5825786ffbd5", "reason": "cited work not found on arXiv by title", "title": "Quantum Wasserstein Generative Adversarial Networks"}
+{"id": "98985be2-fca2-4ff5-af8c-2cafbaec2961", "reason": "openalex lookup failed"}
+{"id": "e9474620-718c-4fe7-976a-b7a75510d936", "reason": "cited work not found on arXiv by title", "title": "Private Adaptive Gradient Methods for Convex Optimization"}
+{"id": "1be59d82-1e39-42cf-965f-5c3b91ac6b9f", "reason": "openalex lookup failed"}
+{"id": "cc0b7a58-a91a-48b1-8f62-6a1c3483a859", "reason": "abstract answers it", "abstract_best": 2.972}
+{"id": "3d918148-bfa9-4942-a466-e4eeba9deb37", "reason": "cited work not found on arXiv by title", "title": "The Strength of Weak Ties"}
+{"id": "7e253ead-6e4f-4697-a48b-1d46a47d8745", "reason": "cited work not found on arXiv by title", "title": "Sanity Checks for Saliency Maps"}
+{"id": "f2b4f761-f921-40d4-a56e-978025f96000", "reason": "abstract answers it", "abstract_best": 2.564}
+{"id": "b1292e7e-19da-4f9b-b7fa-40f8b15ac5af", "reason": "openalex lookup failed"}
+{"id": "97dd3b04-a861-41b4-901d-3f0f82e4248f", "reason": "cited work not found on arXiv by title", "title": "The Spectrum of Heavy Tailed Random Matrices"}
+{"id": "dc2b1a3a-4f2e-4887-ab87-b2f5a962c7fb", "reason": "cited work not found on arXiv by title", "title": "Secure polarization-independent subcarrier quantum key distribution in optical fiber chann"}
+{"id": "b7c61cfc-b6d7-4314-a816-c39689fb85d7", "reason": "cited work not found on arXiv by title", "title": "A new gradient estimate for the complex Monge-Ampère equation"}
+{"id": "2b655ed6-04df-4aea-91fe-513313a35c79", "reason": "openalex lookup failed"}
+{"id": "95fdea3a-4029-4b8a-8847-dc2588541b80", "reason": "openalex lookup failed"}
+{"id": "16f91e73-c3d6-4f93-8b2d-df49a2e771f2", "reason": "cited work not found on arXiv by title", "title": "Clingo = ASP + Control: Preliminary Report"}
+{"id": "f5340e6e-b2ff-46b9-a9b8-530cd84c6429", "reason": "cited work not found on arXiv by title", "title": "A geometry-based stochastic MIMO model for vehicle-to-vehicle communications"}
+{"id": "9e8df738-5980-47db-94d1-767812298660", "reason": "cited work not found on arXiv by title", "title": "Wireless communications"}
+{"id": "22e6cb67-8b81-4586-8fa5-c9d5511586f1", "reason": "cited work not found on arXiv by title", "title": "Vortex Counting and Lagrangian 3-Manifolds"}
+{"id": "42891105-87fe-42ec-b8dc-57dad77e698a", "reason": "abstract ranks within the top passages", "abstract_best": 0.0, "top_score": 11.86}
+{"id": "0afd7fae-cdf3-4ba0-8b5a-d8358a5fc84b", "reason": "cited work not found on arXiv by title", "title": "The brace of a classical group"}
+{"id": "cddc9361-4619-4ad8-8890-db6828ce0858", "reason": "cited work not found on arXiv by title", "title": "A quantitative description of membrane current and its application to conduction and excit"}
+{"id": "e817b8c4-cc52-4480-84c1-9718f662e11b", "reason": "cited work not found on arXiv by title", "title": "A sequential constraint relaxation algorithm for rank-one constrained problems"}
+{"id": "69f74473-9d9b-4360-b106-1dc5030efff2", "reason": "cited work not found on arXiv by title", "title": "The central role of the propensity score in observational studies for causal effects"}
+{"id": "0d05d66a-4d0d-4af1-8667-027ab769b574", "reason": "openalex lookup failed"}
+{"id": "93357e57-8abe-4224-beee-315263f2e5d0", "reason": "cited work not found on arXiv by title", "title": "Berry’s phase for energy bands in solids"}
+{"id": "ac174fe8-fa58-409c-8415-a376d728bc22", "reason": "cited work not found on arXiv by title", "title": "A Short Course on Topological Insulators: Band Structure and Edge States in One and Two Di"}
+{"id": "a80a0713-38d6-4453-a804-d4ad1e1fb1c9", "reason": "no LaTeX e-print", "arxiv_id": "1610.00080v2"}
+{"id": "7a428a97-c8eb-4358-9aa7-08638fb5444d", "reason": "cited work not found on arXiv by title", "title": "Principles of the Theory of Solids"}
+{"id": "bc2a7829-b8da-41ad-bdbe-2c5094828b2c", "reason": "openalex lookup failed"}
+{"id": "444a1210-ba0a-48fc-82d3-3e48d91c3232", "reason": "background citation list"}
+{"id": "ed371251-cf30-4e83-83ba-021d8d02d5e6", "reason": "background citation list"}
+{"id": "c1576faf-03a4-480a-aa39-971a32e135f8", "reason": "background citation list"}
+{"id": "a32e9631-03a3-452b-85b7-258b279ae1cc", "reason": "background citation list"}
+{"id": "29890349-dc95-4990-8697-5c0e7e37973f", "reason": "background citation list"}
+{"id": "c408f87d-2384-405f-a6ff-8ee2e2eae171", "reason": "background citation list"}
+{"id": "b5cf5e9e-59dd-4a6c-9b36-10e04f319bee", "reason": "background citation list"}
+{"id": "d4adf103-ffbd-4f40-997d-c9d2fc88f6f9", "reason": "background citation list"}
+{"id": "9a4df96c-8276-43c0-8eb5-464a6b05ad41", "reason": "background citation list"}
+{"id": "44f7213c-8be9-4c70-957a-d11b81ade19c", "reason": "background citation list"}
+{"id": "6190938e-d2c3-4356-8bfe-5f4cd48e1829", "reason": "background citation list"}
+{"id": "651e444f-4787-42db-9a8c-7ba00e57fdfa", "reason": "background citation list"}
+{"id": "399cceef-38f9-4530-83fa-083392844f2f", "reason": "background citation list"}
+{"id": "f8f009eb-5511-4534-972d-69b875d14ba2", "reason": "background citation list"}
+{"id": "d517219e-025d-44c3-9a81-c32483d346d2", "reason": "background citation list"}
+{"id": "d4e60fce-2bee-4607-81e4-20f8282d53a9", "reason": "background citation list"}
+{"id": "c69f703c-59f3-4ff2-9a69-af1d23f6a7da", "reason": "background citation list"}
+{"id": "7af6279e-f950-4f9b-aa54-819197b4a167", "reason": "background citation list"}
+{"id": "a3176525-b183-4fb6-945a-c96b68c6f147", "reason": "background citation list"}
+{"id": "50664554-7bed-4232-8966-320f6aee2061", "reason": "background citation list"}
+{"id": "721e9393-70c5-4304-b41b-509afa14b1b3", "reason": "background citation list"}
+{"id": "4b3bf8d5-e743-49a6-9a74-9b6630f14483", "reason": "background citation list"}
+{"id": "a42d0b5d-3c73-4bee-a2b9-74165ac5d486", "reason": "cited work not found on arXiv by title", "title": "Higher-order self-adjoint boundary-value problems on time scales"}
+{"id": "caef0a29-802b-4910-b764-7c734383df3a", "reason": "cited work not found on arXiv by title", "title": "Dominant and Recessive Solutions of Self-Adjoint Matrix Systems on Time Scales"}
+{"id": "0f6a3dd7-5019-45fe-a75c-4b1c9ac20bcc", "reason": "cited work not found on arXiv by title", "title": "Equivalence of Discrete Euler Equations and Discrete Hamiltonian Systems"}
+{"id": "e185634e-eb7c-48a9-b0de-3522d757ea37", "reason": "openalex lookup failed"}
+{"id": "cc2d2705-0abc-40b5-966d-6f78341a50eb", "reason": "cited work not found on arXiv by title", "title": "Some remarks on the geometry of austere manifolds"}
+{"id": "99ab57ae-2c44-4893-a005-d1e2b1435bc1", "reason": "abstract answers it", "abstract_best": 2.075}
+{"id": "62b4dc90-7e6d-49e5-a559-92bcd6b0170f", "reason": "cited work not found on arXiv by title", "title": "Scalable Differential Privacy with Sparse Network Finetuning"}
+{"id": "f3c907bd-475b-44c4-a1ea-3bf63ab5d5ef", "reason": "cited work not found on arXiv by title", "title": "Process Algebra: Equational Theories of Communicating Processes"}
+{"id": "a0252dca-477e-4b96-99b0-d0f4eacbbde9", "reason": "cited work not found on arXiv by title", "title": "Quantized Hall Conductance in a Two-Dimensional Periodic Potential"}
+{"id": "76e9cf48-ac1e-4866-8b69-1a461cc29499", "reason": "abstract answers it", "abstract_best": 2.821}
+{"id": "b090bda8-e186-4aaa-9211-bc987210f153", "reason": "cited work not found on arXiv by title", "title": "A Faithful Binary Circuit Model"}
+{"id": "fc041543-55f9-4d1f-97e9-e7b519f07846", "reason": "cited work not found on arXiv by title", "title": "Federated Semi-Supervised Learning with Inter-Client Consistency & Disjoint Learning"}
+{"id": "d9ef22bb-2ae0-4c34-b053-3aef3b908510", "reason": "cited work not found on arXiv by title", "title": "Dynamics of a Quantum Phase Transition: Exact Solution of the Quantum Ising Model"}
+{"id": "96a5d6af-376c-4d16-9b41-30b1f85bac91", "reason": "cited work not found on arXiv by title", "title": "Science"}
+{"id": "ba7b9314-7888-414d-b144-e6d57bd517ff", "reason": "cited work not found on arXiv by title", "title": "Homology and Shellability of Matroids and Geometric Lattices"}
+{"id": "4697ed77-8fc5-4aa3-8d98-16e3739523e3", "reason": "fetch budget exhausted"}
+{"id": "659e1058-de2a-49de-b0f9-8084554fc63d", "reason": "fetch budget exhausted"}
+{"id": "0175b9d6-b91a-4127-967a-3225b02770d0", "reason": "fetch budget exhausted"}
+{"id": "9d4fb8a8-f9a6-46b6-a85b-63e12621352c", "reason": "fetch budget exhausted"}
+{"id": "e01861c3-67e8-4c9b-a315-b978c7472d81", "reason": "abstract answers it", "abstract_best": 2.062}
+{"id": "540d63a4-b771-4b6d-9e80-a2e825d97c63", "reason": "openalex lookup failed"}
+{"id": "cbe09326-3c6f-45d6-8987-6a41b64d2b22", "reason": "openalex lookup failed"}
+{"id": "71391794-b2e7-4434-b153-985e14b22311", "reason": "openalex lookup failed"}
+{"id": "9d415512-3eb1-42b3-b782-6648022c8d91", "reason": "fetch budget exhausted"}
+{"id": "d0adc7d1-50ef-4405-9338-933b0bad178e", "reason": "cited work not found on arXiv by title", "title": "The scattering of electrons by atoms and crystals. I. A new theoretical approach"}
+{"id": "9e7a1e73-6df1-4070-89ff-c52a2e5fdfef", "reason": "fetch budget exhausted"}
+{"id": "0519f129-0577-4cc6-8ce5-6f9f67905f26", "reason": "fetch budget exhausted"}
+{"id": "60526483-19fd-429e-87f6-4d8a43a6fc1a", "reason": "abstract answers it", "abstract_best": 2.801}
+{"id": "49e250a9-dfe8-4a65-a5ec-5e0663d22964", "reason": "abstract answers it", "abstract_best": 2.333}
+{"id": "5f9796c8-41bf-44fc-a35d-02e79a31625c", "reason": "abstract answers it", "abstract_best": 2.072}
+{"id": "ec589101-c7a5-4923-9ffc-216b7c26d0f1", "reason": "fetch budget exhausted"}
+{"id": "6e3d38af-8f06-4766-924a-d852dce9682c", "reason": "cited work not found on arXiv by title", "title": "An Introduction to Variational Methods for Graphical Models"}
+{"id": "40a2b35c-9e84-4355-a859-4398f398e828", "reason": "fetch budget exhausted"}
+{"id": "718a5f59-0cc8-47c2-ae5a-77b2b6f22a78", "reason": "openalex lookup failed"}
+{"id": "9bb6d2c6-d119-4545-b953-91b3a17bafaf", "reason": "fetch budget exhausted"}
+{"id": "edce0815-db17-4746-a5b9-b1e55616f5a4", "reason": "openalex lookup failed"}
+{"id": "4035ad06-58c4-4080-acd4-012f0e98212d", "reason": "fetch budget exhausted"}
+{"id": "24d9e4ac-d654-4142-a6d8-fd91d92cba1e", "reason": "fetch budget exhausted"}
+{"id": "5e135e6d-4057-423e-88e3-519dc60e2a42", "reason": "openalex lookup failed"}
+{"id": "0ac7c9a9-66c1-45c3-9f27-a84cc57142e9", "reason": "fetch budget exhausted"}
+{"id": "490a7f62-18da-47e0-8179-bf8d3cdaf6c9", "reason": "fetch budget exhausted"}
+{"id": "b8ed0eec-5f5e-44a6-ab39-651e99ccdc2e", "reason": "openalex lookup failed"}
+{"id": "db261b4e-800e-4970-98e6-94584a5496c7", "reason": "cited work not found on arXiv by title", "title": "When Do You Need Billions of Words of Pretraining Data?"}
+{"id": "3dce86c2-dbad-493b-bff5-b3a6f8553202", "reason": "cited work not found on arXiv by title", "title": "A Comprehensive Network Atlas Reveals That Turing Patterns Are Common but Not Robust"}

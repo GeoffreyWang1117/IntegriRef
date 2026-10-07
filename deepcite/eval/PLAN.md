@@ -188,3 +188,53 @@ python -m deepcite.eval.citation_integrity --split test --out results.json
 Every result records `selection_regex_sha256`. The selection patterns are expected to
 change — a "finding" family is the obvious next step — and a number without the hash
 that produced it is not attributable to anything.
+
+### First real batch, 2026-10-07 (patterns ab0e1801)
+
+19,500 unarXive rows -> **48 candidates**, 945 rejected, 26 min.
+
+| rejected because | n |
+|---|---|
+| cited work not found on arXiv by title | 357 |
+| background citation list | 343 |
+| OpenAlex lookup failed | 113 |
+| abstract already answers it | 106 |
+| fetch budget exhausted | 14 |
+| abstract ranks within the top passages | 10 |
+| no LaTeX e-print | 2 |
+
+**The fetch budget is the only binding constraint.** 48 of 60 allowed fetches became
+candidates (80%), and 14 rows were discarded purely for hitting the cap, so yield
+scales nearly linearly with fetches at ~26 s per candidate (title lookup and e-print
+fetch are each rate-limited to one per 3 s, now machine-wide). ~300 candidates is
+about 2.7 hours unattended.
+
+`abstract_best` has a **median of 0.00** and the joint top score a median of 8.86, so
+the body-only criterion is doing real work rather than passing everything.
+Family spread: finding 24, attribution 21, using 3 — the findings family added after
+Part A carries half the batch, which is the direct payoff of that measurement.
+
+**Hand-read quality, 6 sampled: about 4 usable.** Two look like genuine mismatches
+worth a human verdict:
+
+* A paper grouped with "early studies on SLR … isolated signs or gestures" whose own
+  text says "we concentrate on continuous SLR (CSLR)".
+* "the global performance of the unambiguous protocol is achieved by an online
+  strategy" against the cited paper's "achieved by a global unambiguous three-outcome
+  POVM" — not the same thing.
+
+One was ambiguous in an interesting way: a 1979 result (secret sharing) attributed to
+a 2015 paper that merely restates the history. That is a real integrity problem, but a
+different one from what this filter claims to find, and the retrieved passage does not
+settle it. One had the retrieval simply miss — the top passage was a figure caption
+rather than the definition the claim is about.
+
+So the usable rate is far better than the 0-of-1 from ROA-LLM, and it is still not a
+substitute for labelling: roughly a third of mechanically-passing candidates are not
+what they look like.
+
+**A limitation of this source, not of deepcite:** unarXive strips reference markers and
+some math, leaving artifacts in the citing sentence — `(REF )`, a bare `Theorem `, and
+occasionally a sentence truncated mid-word. They do not affect retrieval much but they
+make a claim harder for a human labeller to read, so labels should be taken against the
+original arXiv source rather than the stored `citing_sentence`.
