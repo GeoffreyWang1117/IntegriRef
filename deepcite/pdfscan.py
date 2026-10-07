@@ -22,6 +22,11 @@ counted in ``warnings`` and produces no citation -- a wrong mapping would send
 a human to check a claim against the wrong paper.
 
 Stdlib only, plus the poppler ``pdftotext`` binary.
+
+VENDORED BYTE-FOR-BYTE into bibguard as ``src/bibguard/parsers/pdf_layout.py``
+(2026-10-07): bibguard's ``pdf`` command uses ``scan_references`` only. Edit this
+file, then copy it; ~/Tools/skill-backend-check.sh fails when the two differ.
+``texscan`` is imported lazily so the copy imports without it.
 """
 
 from __future__ import annotations
@@ -34,8 +39,10 @@ import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from .texscan import Sentence, segment
+if TYPE_CHECKING:                       # lazily imported in scan_pdf; see the docstring
+    from .texscan import Sentence
 
 CITE_TOKEN = "CITEREF"
 
@@ -730,49 +737,93 @@ def _find_markers(body: str, refs: list[RefEntry], style: str) -> tuple[list[_Ma
 
 # --- driver ---------------------------------------------------------------------
 
-def scan_pdf(pdf: Path) -> ScannedPdf:
-    pdf = Path(pdf)
-    raw_bytes = pdf.read_bytes()
-    sha = hashlib.sha256(raw_bytes).hexdigest()
-    warnings: list[str] = []
+@dataclass
+class RefList:
+    pdf_sha256: str
+    refs: list[RefEntry]
+    style: str                # "numeric" | "author-year" | "unknown" (from the list itself)
+    warnings: list[str]
 
-    sizes, blocks = _layout(_run_tsv(pdf))
+
+def _prepare(pdf: Path):
+    """(sha, page sizes, ordered blocks, body line height, vocabulary), or None if the
+    PDF has no text layer."""
+    raw_bytes = Path(pdf).read_bytes()
+    sha = hashlib.sha256(raw_bytes).hexdigest()
+    sizes, blocks = _layout(_run_tsv(Path(pdf)))
     blocks = _drop_running_heads(blocks, sizes)
     ordered = _order(blocks, sizes)
     if not ordered:
-        return ScannedPdf(sha, "", [], [], "unknown", ["no text extracted (scanned image PDF?)"])
-
+        return sha, sizes, [], 0.0, None
     weight: Counter = Counter()
     for b in ordered:
         for l in b.lines:
             weight[round(l.h, 1)] += len(l.text)
     body_h = weight.most_common(1)[0][0]
     vocab = _Vocab([l.text for b in ordered for l in b.lines])
+    return sha, sizes, ordered, body_h, vocab
 
-    # Where the reference list starts and stops.
+
+def _reference_region(ordered: list[_Block], body_h: float):
+    """(head index or None, body blocks, reference blocks, appendix blocks)."""
     head = next((i for i, b in enumerate(ordered) if _is_ref_heading(b)
                  and i > len(ordered) // 4), None)
     if head is None:
         head = next((i for i, b in enumerate(ordered) if _is_ref_heading(b)), None)
     if head is None:
+        return None, ordered, [], []
+    after = ordered[head + 1:]
+    hs = sorted(l.h for b in after[:12] for l in b.lines) or [body_h]
+    ref_h = hs[len(hs) // 2]
+    stop = len(ordered)
+    for j in range(head + 1, len(ordered)):
+        b = ordered[j]
+        heading = (len(b.lines) <= 2 and b.h >= 1.1 * ref_h and len(b.text) < 90
+                   and not _YEAR_ANY.search(b.text))
+        if j > head + 1 and (heading or _is_appendix_heading(b, body_h)):
+            stop = j
+            break
+    # Appendices printed after the reference list: a reviewer reads them.
+    return head, ordered[:head], ordered[head + 1:stop], ordered[stop:]
+
+
+def _parse_references(ref_blocks: list[_Block], vocab) -> tuple[list[RefEntry], str]:
+    ref_lines: list[_Line] = []
+    for b in ref_blocks:
+        for k, l in enumerate(b.lines):
+            l._col = b.col if b.col >= 0 else 0           # type: ignore[attr-defined]
+            l._block_start = k == 0                        # type: ignore[attr-defined]
+            ref_lines.append(l)
+    return _split_refs(ref_lines, vocab) if ref_lines else ([], "unknown")
+
+
+def scan_references(pdf: Path) -> RefList:
+    """The reference list alone: entries with title, surnames, year, arXiv id and DOI.
+    This is what bibguard's ``pdf`` command uses."""
+    sha, _, ordered, body_h, vocab = _prepare(pdf)
+    if not ordered:
+        return RefList(sha, [], "unknown", ["no text extracted (scanned image PDF?)"])
+    head, _, ref_blocks, _ = _reference_region(ordered, body_h)
+    if head is None:
+        return RefList(sha, [], "unknown", ["no References heading found; reference list not parsed"])
+    refs, style = _parse_references(ref_blocks, vocab)
+    warnings = [] if refs else ["References heading found but no entries parsed"]
+    return RefList(sha, refs, style, warnings)
+
+
+def scan_pdf(pdf: Path) -> ScannedPdf:
+    from .texscan import segment
+    pdf = Path(pdf)
+    warnings: list[str] = []
+
+    sha, sizes, ordered, body_h, vocab = _prepare(pdf)
+    if not ordered:
+        return ScannedPdf(sha, "", [], [], "unknown", ["no text extracted (scanned image PDF?)"])
+
+    # Where the reference list starts and stops.
+    head, body_blocks, ref_blocks, appendix_blocks = _reference_region(ordered, body_h)
+    if head is None:
         warnings.append("no References heading found; reference list not parsed")
-        body_blocks, ref_blocks, appendix_blocks = ordered, [], []
-    else:
-        body_blocks = ordered[:head]
-        after = ordered[head + 1:]
-        hs = sorted(l.h for b in after[:12] for l in b.lines) or [body_h]
-        ref_h = hs[len(hs) // 2]
-        stop = len(ordered)
-        for j in range(head + 1, len(ordered)):
-            b = ordered[j]
-            heading = (len(b.lines) <= 2 and b.h >= 1.1 * ref_h and len(b.text) < 90
-                       and not _YEAR_ANY.search(b.text))
-            if j > head + 1 and (heading or _is_appendix_heading(b, body_h)):
-                stop = j
-                break
-        ref_blocks = ordered[head + 1:stop]
-        # Appendices printed after the reference list: a reviewer reads them.
-        appendix_blocks = ordered[stop:]
 
     # Body: per page, small-font blocks (footnotes, captions, table cells) go
     # last so they do not split a sentence running from one column to the next.
@@ -830,13 +881,7 @@ def scan_pdf(pdf: Path) -> ScannedPdf:
             prev_aside = is_aside
 
     # References.
-    ref_lines: list[_Line] = []
-    for b in ref_blocks:
-        for k, l in enumerate(b.lines):
-            l._col = b.col if b.col >= 0 else 0           # type: ignore[attr-defined]
-            l._block_start = k == 0                        # type: ignore[attr-defined]
-            ref_lines.append(l)
-    refs, ref_style = _split_refs(ref_lines, vocab) if ref_lines else ([], "unknown")
+    refs, ref_style = _parse_references(ref_blocks, vocab)
     if head is not None and not refs:
         warnings.append("References heading found but no entries parsed")
 
