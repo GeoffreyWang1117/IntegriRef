@@ -605,10 +605,44 @@ def cmd_annotate(a: argparse.Namespace) -> int:
         else:
             n = len(rec["llm_opinion"]["quotes"])
             print(f"  accepted {rid}: {rec['llm_opinion'].get('assessment', '-')}, "
-                  f"{n} quote(s) verified against {rec.get('cited_id')}")
+                  f"{n} quote(s) verified against {_artifact_label(rec)}"
+                  f"{_quote_locators(rec)}")
     out = K.write(paper, data, cache_dir)
     out.with_suffix(".md").write_text(REP.render(data), encoding="utf-8")
     return C.EXIT_QUOTE_REJECTED if rejected else C.EXIT_OK
+
+
+def _artifact_label(rec: dict) -> str:
+    """What the quotes were checked against, never None.
+
+    A record whose artifact came from --artifact may have no resolvable cited_id,
+    and printing that None made a passing check read as if nothing had been
+    checked -- the wrong failure mode for a tool whose whole claim is that every
+    quote resolves. Reported from another session, 2026-10-07.
+    """
+    if rec.get("cited_id"):
+        return str(rec["cited_id"])
+    art = rec.get("artifact") or {}
+    kind, ref = art.get("kind") or "artifact", art.get("ref") or ""
+    sha = (art.get("sha256") or "")[:12]
+    if ref:
+        name = ref if ref.startswith(("http://", "https://")) else Path(ref).name
+        return f"{kind}:{name}" + (f"@{sha}" if sha else "")
+    if rec.get("cited_title"):
+        return f'title:"{rec["cited_title"][:60]}"'
+    return kind
+
+
+def _quote_locators(rec: dict, limit: int = 2) -> str:
+    """Append where the quotes landed, so the line is auditable at a glance."""
+    qs = ((rec.get("llm_opinion") or {}).get("quotes") or [])
+    locs = [f"{q.get('file')}:{q.get('line')}" for q in qs
+            if q.get("file") and q.get("line")]
+    if not locs:
+        return ""
+    shown = ", ".join(locs[:limit])
+    more = f" +{len(locs) - limit}" if len(locs) > limit else ""
+    return f" ({shown}{more})"
 
 
 # --- report / packet ---------------------------------------------------------
