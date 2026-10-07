@@ -51,6 +51,7 @@ from pathlib import Path
 from .. import fetch as F
 from .. import retrieve as V
 from .. import resolve as R
+from ..net import SourceRefused, http_get
 from .. import select as S
 from ..contract import CITE_RE, strip_comments
 
@@ -87,6 +88,20 @@ BODY_ONLY_TOPK = 3       # no abstract sentence may appear this high up
 # space, so a magnitude floor here is legitimate -- unlike the cross-corpus
 # comparison it replaced.
 JOINT_MIN = 4.0
+
+
+def _emit(sink, cand) -> None:
+    """Append a candidate to disk immediately.
+
+    A batch large enough to be useful runs for hours, and arXiv rate limiting is
+    now machine-wide: another tool's 429 becomes a shared cooldown that raises
+    SourceRefused here. Keeping results only in memory until the end means one
+    refusal, or any crash, throws away the whole run.
+    """
+    if sink is None:
+        return
+    sink.write(json.dumps(asdict(cand), ensure_ascii=False) + "\n")
+    sink.flush()
 
 
 @dataclass
@@ -198,6 +213,36 @@ def bib_titles(bib_path: Path) -> dict[str, str]:
 _T_NORM = re.compile(r"[^a-z0-9]+")
 
 
+def _memo_file() -> Path:
+    return (F.default_cache_dir().parent / "mine_title_memo.json")
+
+
+def _memo() -> dict:
+    try:
+        return json.loads(_memo_file().read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def _memo_put(key: str, value) -> None:
+    """Persist a title lookup, including the negative result.
+
+    Title lookups dominate a batch -- about 430 of them for 60 fetches in the
+    first real run, roughly 21 of its 26 minutes -- and they are what earned this
+    machine an arXiv 429. Caching them on disk means a throttled run costs its
+    work once rather than every retry, and negatives are cached too because a
+    title that is not on arXiv stays not on arXiv.
+    """
+    m = _memo()
+    m[key] = value
+    try:
+        f = _memo_file()
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(m), encoding="utf-8")
+    except OSError:
+        pass
+
+
 def arxiv_meta(title: str, timeout: int = 60) -> tuple[str, str] | None:
     """(versioned arXiv id, abstract) for a title, or None.
 
@@ -206,16 +251,20 @@ def arxiv_meta(title: str, timeout: int = 60) -> tuple[str, str] | None:
     """
     if not title.strip():
         return None
+    key = _T_NORM.sub(" ", title.lower()).strip()
+    cached = _memo().get(key, "__miss__")
+    if cached != "__miss__":
+        return tuple(cached) if cached else None
     q = urllib.parse.urlencode({"search_query": f'ti:"{title}"', "max_results": 5})
-    F.polite_wait()
-    xml = None
-    req = urllib.request.Request(f"http://export.arxiv.org/api/query?{q}",
-                                 headers={"User-Agent": UA})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as fh:
-            xml = fh.read().decode("utf-8", "replace")
-    except Exception:
+    # http_get, not a bare urlopen with a blanket except: swallowing the error
+    # turned arXiv's 429 into "cited work not on arXiv by title", so a throttled
+    # run quietly recorded hundreds of works as absent that are in fact there.
+    # A refusal has to be distinguishable from an answer of "not present".
+    body = http_get(f"http://export.arxiv.org/api/query?{q}", "arxiv",
+                    timeout=timeout, wait=F.polite_wait)
+    if body is None:
         return None
+    xml = body.decode("utf-8", "replace")
     want = _T_NORM.sub(" ", title.lower()).strip()
     for ent in re.findall(r"<entry>(.*?)</entry>", xml, re.S):
         t = re.search(r"<title>(.*?)</title>", ent, re.S)
@@ -229,13 +278,18 @@ def arxiv_meta(title: str, timeout: int = 60) -> tuple[str, str] | None:
             continue
         vid = i.group(1)
         if not re.search(r"v\d+$", vid):
+            _memo_put(key, None)
             return None
-        return vid, _WS.sub(" ", s.group(1)).strip() if s else ""
+        out = (vid, _WS.sub(" ", s.group(1)).strip() if s else "")
+        _memo_put(key, list(out))
+        return out
+    _memo_put(key, None)
     return None
 
 
 def mine_local(paper: Path, bib: Path, cache_dir: Path | None,
-               max_fetch: int = 40) -> tuple[list[Candidate], list[dict]]:
+               max_fetch: int = 40, sink=None
+               ) -> tuple[list[Candidate], list[dict]]:
     """Mine one local paper: .tex for claims, .bib for titles, arXiv for both sides."""
     from .. import texscan as T
 
@@ -244,8 +298,11 @@ def mine_local(paper: Path, bib: Path, cache_dir: Path | None,
     rejected: list[dict] = []
     fetches = 0
     seen: set[tuple[str, str]] = set()
+    stop = [False]
 
     for rel in T.tex_files(paper):
+        if stop[0]:
+            break
         for cit in T.scan_file(paper, rel).citations:
             sent = cit.sentence.text
             sel = S.select(sent)
@@ -271,7 +328,12 @@ def mine_local(paper: Path, bib: Path, cache_dir: Path | None,
                 rejected.append({"id": uid, "reason": "fetch budget exhausted"})
                 continue
             fetches += 1
-            meta = arxiv_meta(title)
+            try:
+                meta = arxiv_meta(title)
+            except SourceRefused as e:
+                rejected.append({"id": uid, "reason": f"source refused: {e}"})
+                stop[0] = True
+                break
             if not meta:
                 rejected.append({"id": uid, "reason": "cited work not on arXiv",
                                  "title": title[:90]})
@@ -283,7 +345,14 @@ def mine_local(paper: Path, bib: Path, cache_dir: Path | None,
                                  "abstract_best": round(a_score, 3),
                                  "arxiv_id": aid})
                 continue
-            art = F.fetch_eprint(aid, cache_dir)
+            try:
+                art = F.fetch_eprint(aid, cache_dir)
+            except SourceRefused as e:
+                # Shared cooldown: every later fetch would refuse too, so stop
+                # instead of burning through the remaining rows.
+                rejected.append({"id": uid, "reason": f"source refused: {e}"})
+                stop[0] = True
+                break
             if art is None or art.kind != F.KIND_TEX:
                 rejected.append({"id": uid, "reason": "no LaTeX e-print",
                                  "arxiv_id": aid})
@@ -308,6 +377,7 @@ def mine_local(paper: Path, bib: Path, cache_dir: Path | None,
                 search_terms=terms, abstract_best=round(a_score, 3),
                 fulltext_best=round(f_score, 3),
                 fulltext_passage=V.clip_words(passage), fulltext_locator=loc))
+            _emit(sink, kept[-1])
     return kept, rejected
 
 
@@ -381,9 +451,10 @@ def citrec_rows(local: Path | None = None):
 
 
 def mine(limit: int, cache_dir: Path | None, batch: int = 50,
-         max_fetch: int = 40, local: Path | None = None
+         max_fetch: int = 40, local: Path | None = None, sink=None
          ) -> tuple[list[Candidate], list[dict]]:
     ds = citrec_rows(local)
+    stop = [False]
     kept: list[Candidate] = []
     rejected: list[dict] = []
     pending: list[tuple[str, str, str, object]] = []   # id, oa, sentence, selection
@@ -421,7 +492,12 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
             #
             # arxiv_meta requires a tight title match, so a hit validates the id
             # by construction, and it returns the abstract in the same request.
-            axm = arxiv_meta(info["title"])      # not `meta`: that is the batch dict
+            try:
+                axm = arxiv_meta(info["title"])  # not `meta`: that is the batch dict
+            except SourceRefused as e:
+                rejected.append({"id": uid, "reason": f"source refused: {e}"})
+                stop[0] = True
+                break
             if not axm:
                 rejected.append({"id": uid,
                                  "reason": "cited work not found on arXiv by title",
@@ -434,7 +510,14 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
                 rejected.append({"id": uid, "reason": "fetch budget exhausted"})
                 continue
             fetches += 1
-            art = F.fetch_eprint(aid, cache_dir)
+            try:
+                art = F.fetch_eprint(aid, cache_dir)
+            except SourceRefused as e:
+                # Shared cooldown: every later fetch would refuse too, so stop
+                # instead of burning through the remaining rows.
+                rejected.append({"id": uid, "reason": f"source refused: {e}"})
+                stop[0] = True
+                break
             if art is None or art.kind != F.KIND_TEX:
                 rejected.append({"id": uid, "reason": "no LaTeX e-print",
                                  "arxiv_id": aid})
@@ -458,9 +541,12 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
                 claim_type=sel.claim_type, search_terms=terms,
                 abstract_best=round(a_score, 3), fulltext_best=round(f_score, 3),
                 fulltext_passage=V.clip_words(passage), fulltext_locator=loc))
+            _emit(sink, kept[-1])
         pending.clear()
 
     for row in ds:
+        if stop[0]:
+            break
         seen += 1
         if seen > limit:
             break
@@ -509,18 +595,22 @@ def main(argv=None) -> int:
 
     t0 = time.time()
     cache = Path(a.cache_dir) if a.cache_dir else None
+    # Opened before mining, not after: a multi-hour batch must survive a crash or
+    # a shared rate-limit refusal with its candidates already on disk.
+    sink = open(a.out, "w", encoding="utf-8") if a.out else None
     if a.source == "local":
         if not (a.paper and a.bib):
             print("--source local needs --paper and --bib")
             return 2
         kept, rejected = mine_local(Path(a.paper).expanduser().resolve(),
                                     Path(a.bib).expanduser(), cache,
-                                    max_fetch=a.max_fetch)
+                                    max_fetch=a.max_fetch, sink=sink)
         print(f"  {a.paper} -> {len(kept)} candidates, {len(rejected)} rejected, "
               f"{time.time() - t0:.0f}s")
     else:
         kept, rejected = mine(a.limit, cache, max_fetch=a.max_fetch,
-                              local=Path(a.citrec) if a.citrec else None)
+                              local=Path(a.citrec) if a.citrec else None,
+                              sink=sink)
         print(f"  streamed {a.limit} rows -> {len(kept)} candidates, "
               f"{len(rejected)} rejected, {time.time() - t0:.0f}s")
     reasons: dict[str, int] = {}
@@ -528,10 +618,8 @@ def main(argv=None) -> int:
         reasons[r["reason"]] = reasons.get(r["reason"], 0) + 1
     for why in sorted(reasons, key=lambda k: -reasons[k]):
         print(f"    {why:34} {reasons[why]}")
-    if a.out:
-        Path(a.out).write_text(
-            "".join(json.dumps(asdict(c), ensure_ascii=False) + "\n" for c in kept),
-            encoding="utf-8")
+    if sink:
+        sink.close()
         print(f"  candidates -> {a.out}")
     if a.rejects:
         Path(a.rejects).write_text(
