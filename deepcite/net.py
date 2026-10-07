@@ -28,13 +28,68 @@ class SourceRefused(RuntimeError):
         self.reason = reason
 
 
+def _shared_update(provider: str, fn) -> bool:
+    """Machine-wide turn-taking shared with bibguard, scout, arxiv-fetch and
+    keys-doctor (2026-10-07): $RESEARCH_RATELIMIT_DIR or ~/.cache/research-ratelimit,
+    <provider>.lock flock()ed while <provider>.json {"next_ok", "cooldown_until",
+    "why"} is read and rewritten. False when unavailable (not POSIX, unwritable)."""
+    import json
+    import os
+    from pathlib import Path
+    try:
+        import fcntl
+        base = os.environ.get("RESEARCH_RATELIMIT_DIR")
+        d = Path(base).expanduser() if base else \
+            Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "research-ratelimit"
+        d.mkdir(parents=True, exist_ok=True)
+        with open(d / f"{provider}.lock", "a+") as lk:
+            fcntl.flock(lk.fileno(), fcntl.LOCK_EX)
+            sp = d / f"{provider}.json"
+            try:
+                state = json.loads(sp.read_text())
+            except (OSError, ValueError):
+                state = {}
+            fn(state)
+            sp.write_text(json.dumps(state))
+        return True
+    except (ImportError, OSError):
+        return False
+
+
 def polite_wait() -> None:
-    """Serialize arXiv requests at >= MIN_INTERVAL (API lookups and e-prints)."""
+    """Serialize arXiv requests at >= MIN_INTERVAL (API lookups and e-prints), across
+    every process on this machine; refuse instead of sleeping through a long shared
+    cooldown another process recorded after a 429."""
     global _last_request
+    box = {}
+
+    def take(st):
+        now = time.time()
+        cool = float(st.get("cooldown_until", 0)) - now
+        if cool > _MAX_RETRY_WAIT:
+            box["refuse"] = (cool, st.get("why", "HTTP 429"))
+            return
+        until = max(float(st.get("next_ok", 0)), float(st.get("cooldown_until", 0)))
+        if until > now:
+            time.sleep(until - now)
+        st["next_ok"] = time.time() + MIN_INTERVAL
+    if _shared_update("arxiv", take):
+        if "refuse" in box:
+            cool, why = box["refuse"]
+            raise SourceRefused("arxiv", f"cooling down {cool:.0f}s after {why} (shared across processes)")
+        _last_request = time.monotonic()
+        return
     gap = time.monotonic() - _last_request
     if gap < MIN_INTERVAL:
         time.sleep(MIN_INTERVAL - gap)
     _last_request = time.monotonic()
+
+
+def _shared_cooldown(provider: str, seconds: float, why: str) -> None:
+    def cool(st):
+        st["cooldown_until"] = max(float(st.get("cooldown_until", 0)), time.time() + seconds)
+        st["why"] = why
+    _shared_update(provider, cool)
 
 
 def http_get(url: str, source: str, timeout: int = 60, wait=None,
@@ -60,6 +115,8 @@ def http_get(url: str, source: str, timeout: int = 60, wait=None,
                 ra = float(ra) if ra is not None else None
             except ValueError:
                 ra = None
+            if e.code == 429 and source in ("arxiv", "datacite", "openreview"):
+                _shared_cooldown(source, ra if ra is not None else 2.0, f"HTTP 429 to deepcite")
             if e.code in _RETRY_STATUSES and attempt == 0 and (ra is None or ra <= _MAX_RETRY_WAIT):
                 time.sleep(ra if ra is not None else 2.0)
                 continue
