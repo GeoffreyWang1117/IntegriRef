@@ -50,6 +50,7 @@ from pathlib import Path
 
 from .. import fetch as F
 from .. import retrieve as V
+from .. import resolve as R
 from .. import select as S
 from ..contract import CITE_RE, strip_comments
 
@@ -343,12 +344,46 @@ def body_only(terms: list[str], abstract: str, body: str, claim_type: str
     return ok, top.rank_score, top.text, f"{top.file}:{top.line_start}"
 
 
-def mine(limit: int, cache_dir: Path | None, batch: int = 50,
-         max_fetch: int = 40) -> tuple[list[Candidate], list[dict]]:
-    from datasets import load_dataset
+CITREC_URL = ("https://huggingface.co/datasets/saier/unarXive_citrec/"
+              "resolve/main/data/train.jsonl")
+CITREC_LOCAL = (Path(__file__).resolve().parents[2] / "benchmarks" / "data"
+                / "unarxive" / "citrec_head.jsonl")
 
-    ds = load_dataset("saier/unarXive_citrec", name="default", split="train",
-                      streaming=True)
+
+def citrec_rows(local: Path | None = None):
+    """Iterate unarXive citrec rows from a locally cached prefix of train.jsonl.
+
+    The HF `datasets` streaming path is not used: train.jsonl is a single 5.8 GB
+    file and unauthenticated range-less reads of it time out repeatedly. An HTTP
+    range request for the first few hundred MB is reliable, gives ~100k rows --
+    far more than the arXiv fetch budget can consume -- and keeps this module
+    free of the `datasets` dependency. Fetch it with:
+
+        curl -L -r 0-314572800 <CITREC_URL> -o benchmarks/data/unarxive/citrec_head.jsonl
+
+    The final line of a range download is truncated, so undecodable lines are
+    skipped rather than repaired.
+    """
+    path = Path(local) if local else CITREC_LOCAL
+    if not path.exists():
+        raise FileNotFoundError(
+            f"{path} not found. Range-download a prefix of {CITREC_URL} first; "
+            f"see this function's docstring.")
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError:
+                continue      # truncated tail of the range request
+
+
+def mine(limit: int, cache_dir: Path | None, batch: int = 50,
+         max_fetch: int = 40, local: Path | None = None
+         ) -> tuple[list[Candidate], list[dict]]:
+    ds = citrec_rows(local)
     kept: list[Candidate] = []
     rejected: list[dict] = []
     pending: list[tuple[str, str, str, object]] = []   # id, oa, sentence, selection
@@ -374,13 +409,27 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
                 rejected.append({"id": uid, "reason": "abstract answers it",
                                  "abstract_best": round(a_score, 3)})
                 continue
-            aid = info["arxiv_id"]
-            if not aid:
-                rejected.append({"id": uid, "reason": "cited work not on arXiv"})
+            abstract = info["abstract"]
+            # Resolve the artifact by TITLE, not by OpenAlex's arXiv link.
+            #
+            # Using the link directly produced a wrong artifact on a 355-row
+            # sample: a paragraph about projecting point clouds into 3D voxels
+            # resolved to 1810.04805 (BERT), because that work's OpenAlex
+            # locations carry an arXiv url that does not belong to it. Mining the
+            # wrong paper manufactures a candidate that a human would then be
+            # asked to label -- the exact failure this project exists to catch.
+            #
+            # arxiv_meta requires a tight title match, so a hit validates the id
+            # by construction, and it returns the abstract in the same request.
+            axm = arxiv_meta(info["title"])      # not `meta`: that is the batch dict
+            if not axm:
+                rejected.append({"id": uid,
+                                 "reason": "cited work not found on arXiv by title",
+                                 "title": (info["title"] or "")[:90]})
                 continue
-            if not re.search(r"v\d+$", aid):
-                rejected.append({"id": uid, "reason": f"unversioned arXiv id {aid}"})
-                continue
+            aid, arxiv_abstract = axm
+            # Prefer arXiv's abstract: it is the artifact we are about to search.
+            abstract = arxiv_abstract or info["abstract"]
             if fetches >= max_fetch:
                 rejected.append({"id": uid, "reason": "fetch budget exhausted"})
                 continue
@@ -394,7 +443,7 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
                 p.read_text(encoding="utf-8", errors="replace")
                 for p in art.files[:40])
             full = CITE_RE.sub(" ", strip_comments(full))   # comments are not evidence
-            ok, f_score, passage, loc = body_only(terms, info["abstract"], full,
+            ok, f_score, passage, loc = body_only(terms, abstract, full,
                                                   sel.claim_type)
             if not ok:
                 rejected.append({"id": uid,
@@ -447,7 +496,10 @@ def main(argv=None) -> int:
     ap.add_argument("--paper", default=None, help="--source local: paper directory")
     ap.add_argument("--bib", default=None, help="--source local: .bib file")
     ap.add_argument("--limit", type=int, default=2000,
-                    help="unarXive rows to stream")
+                    help="unarXive rows to read")
+    ap.add_argument("--citrec", default=None,
+                    help="locally cached prefix of unarXive citrec train.jsonl "
+                         "(default benchmarks/data/unarxive/citrec_head.jsonl)")
     ap.add_argument("--max-fetch", type=int, default=40,
                     help="cap on arXiv e-print fetches (>=3 s apart)")
     ap.add_argument("--out", default=None)
@@ -467,7 +519,8 @@ def main(argv=None) -> int:
         print(f"  {a.paper} -> {len(kept)} candidates, {len(rejected)} rejected, "
               f"{time.time() - t0:.0f}s")
     else:
-        kept, rejected = mine(a.limit, cache, max_fetch=a.max_fetch)
+        kept, rejected = mine(a.limit, cache, max_fetch=a.max_fetch,
+                              local=Path(a.citrec) if a.citrec else None)
         print(f"  streamed {a.limit} rows -> {len(kept)} candidates, "
               f"{len(rejected)} rejected, {time.time() - t0:.0f}s")
     reasons: dict[str, int] = {}

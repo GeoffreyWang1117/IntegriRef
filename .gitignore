@@ -149,3 +149,7 @@ Thumbs.db
 
 # deepcite worklist cache (regenerable; keyed on tool + selection-regex hash)
 .cache/
+
+# unarXive citrec is a 5.8 GB upstream file; only a locally range-downloaded
+# prefix is used and it is reproducible from the URL in mine_fulltext_cases.py
+benchmarks/data/unarxive/

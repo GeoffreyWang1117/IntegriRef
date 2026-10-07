@@ -1,0 +1,67 @@
+{"id": "4fbcbe80-e2c3-4b00-abd7-245b47762a35", "reason": "background citation list"}
+{"id": "6171119f-e73f-4761-8670-c809e0c1e367", "reason": "background citation list"}
+{"id": "5a4abbb8-4f1b-4298-96af-55c82e7666f0", "reason": "background citation list"}
+{"id": "52754995-40be-4a5d-9d25-c3cf6928e7cb", "reason": "background citation list"}
+{"id": "830b0c0d-d01f-4c58-9fcd-7a10614ae79f", "reason": "background citation list"}
+{"id": "28c67f3a-19ce-41f8-84d7-86a35b3236af", "reason": "background citation list"}
+{"id": "f9a6bb8d-9a03-4b0f-8ac1-c623638d83c8", "reason": "background citation list"}
+{"id": "efc452ca-fccf-4619-afd1-224e52f574e3", "reason": "background citation list"}
+{"id": "18f8133b-a009-4c5a-98cb-9fafa21518f8", "reason": "background citation list"}
+{"id": "d0f1a834-1204-42b0-9a54-f29361755863", "reason": "background citation list"}
+{"id": "70730c4f-e475-4d63-81dc-8eac291765ff", "reason": "background citation list"}
+{"id": "c0b1ba2d-d5fb-4029-9cac-af0379bfca3c", "reason": "background citation list"}
+{"id": "42b4c509-3d9d-412f-ac87-c4e952d854e1", "reason": "background citation list"}
+{"id": "f2c0f394-3756-4384-8b34-8db19de561f5", "reason": "background citation list"}
+{"id": "05786950-7cb3-4059-86a9-805020807c0c", "reason": "background citation list"}
+{"id": "1d027719-f90f-4200-bb4e-067fadb7ebb5", "reason": "background citation list"}
+{"id": "67c5b681-3ee2-47c1-8fed-30c96fb2b544", "reason": "background citation list"}
+{"id": "4cada0b3-94d2-48bf-90e2-8fe5f893d7ad", "reason": "background citation list"}
+{"id": "1d9e0889-f90c-4fa9-a496-eece11142c5f", "reason": "background citation list"}
+{"id": "2600d80e-6237-49f6-ba9a-223b5d0a2c36", "reason": "background citation list"}
+{"id": "0e928f42-b40e-4723-9fb8-fe47bc0bd9b1", "reason": "background citation list"}
+{"id": "69005716-9bca-4d2b-8713-babbecac7364", "reason": "background citation list"}
+{"id": "d8ffa33d-0fe6-4d1a-8dcc-ea33a81a3358", "reason": "background citation list"}
+{"id": "6d15160c-6938-4a9c-9a84-1cd7d1acb506", "reason": "background citation list"}
+{"id": "fb5f9e57-ab10-4a7e-8ae1-add74f12f506", "reason": "background citation list"}
+{"id": "077beae6-3628-47fc-b3ef-ecdf19cfff9d", "reason": "abstract answers it", "abstract_best": 5.06}
+{"id": "704f6e88-871c-42f0-9965-96ac71a96ffb", "reason": "cited work not found on arXiv by title", "title": "Banach Spaces of Analytic Functions."}
+{"id": "4cd056bb-07df-4bf6-89f4-22ac8ed3ff9d", "reason": "cited work not found on arXiv by title", "title": "Lett="}
+{"id": "8efca86f-b455-43ec-91fc-4def5e00b663", "reason": "openalex lookup failed"}
+{"id": "0e8c9dfd-0c94-4c2c-9355-7ae4ceb044d2", "reason": "abstract ranks within the top passages", "abstract_best": 0.0, "top_score": 16.142}
+{"id": "842fc9b8-4a07-47b2-a8d1-71d0b50932be", "reason": "abstract answers it", "abstract_best": 4.897}
+{"id": "b4fd04b4-6d9f-46a8-9f14-156f1e328735", "reason": "cited work not found on arXiv by title", "title": "Building Skeleton Models via 3-D Medial Surface Axis Thinning Algorithms"}
+{"id": "062bdb8a-64e1-437f-bc83-c90ee43f026d", "reason": "cited work not found on arXiv by title", "title": "Human-level control through deep reinforcement learning"}
+{"id": "5b971dee-430d-4042-b16f-19a4cfdcf9b6", "reason": "abstract answers it", "abstract_best": 3.062}
+{"id": "84b024ea-13c1-469f-868d-79361d4bc1af", "reason": "abstract answers it", "abstract_best": 2.71}
+{"id": "2b67d9bc-8cd7-4fc8-acf0-56e9c65e752b", "reason": "cited work not found on arXiv by title", "title": "AI-Assisted Pipeline for Dynamic Generation of Trustworthy Health Supplement Content at Sc"}
+{"id": "f9ac80b0-64bb-4a8b-a143-01abf2227869", "reason": "abstract answers it", "abstract_best": 2.722}
+{"id": "f85eff61-d7fe-43e1-8679-5a0206b8937e", "reason": "openalex lookup failed"}
+{"id": "237c1668-f56d-48c2-b004-492763a5c697", "reason": "openalex lookup failed"}
+{"id": "ea068b56-dc47-4b91-9cdb-cb6c7c7319e6", "reason": "openalex lookup failed"}
+{"id": "06472e41-f0e2-40ed-8dd7-e5d6857af3ca", "reason": "abstract ranks within the top passages", "abstract_best": 1.961, "top_score": 6.154}
+{"id": "b1c2f060-3b4a-451f-a443-5a9f15812904", "reason": "abstract answers it", "abstract_best": 4.726}
+{"id": "e6f156b8-4b26-4d1f-827c-4e02f930cfbb", "reason": "openalex lookup failed"}
+{"id": "acf7a08a-b58b-40da-9250-584e6a20fc9a", "reason": "cited work not found on arXiv by title", "title": "Indication of Reactor ν ¯ e Disappearance in the Double Chooz Experiment"}
+{"id": "6aa302e4-62a1-472e-82b1-9491e1bec1b1", "reason": "cited work not found on arXiv by title", "title": "Equation of State Calculations by Fast Computing Machines"}
+{"id": "bc8c51a4-c5d9-4436-8d40-8e612082d911", "reason": "abstract answers it", "abstract_best": 2.41}
+{"id": "eb7fd85a-aec8-4adf-842a-3e7ce99a0850", "reason": "cited work not found on arXiv by title", "title": "Tightness criteria for laws of semimartingales"}
+{"id": "89b2157b-12fd-4e36-8d16-7d422cb3ba4c", "reason": "abstract answers it", "abstract_best": 5.079}
+{"id": "006159e0-1c85-4e7c-b0f8-677269116fa9", "reason": "cited work not found on arXiv by title", "title": "Deep Relative Distance Learning: Tell the Difference between Similar Vehicles"}
+{"id": "9cc597c4-a636-4c80-8b63-714daa381ff5", "reason": "abstract answers it", "abstract_best": 2.301}
+{"id": "c914cff7-3999-4764-a35e-4eb5ca318791", "reason": "fetch budget exhausted"}
+{"id": "d2e70f66-fd1a-4166-bc7c-17d82285b684", "reason": "cited work not found on arXiv by title", "title": "To Center or Not to Center: That Is Not the Question—An Ancillarity–Sufficiency Interweavi"}
+{"id": "e73339d7-7f45-4b73-ba47-2e77ed4a255a", "reason": "cited work not found on arXiv by title", "title": "Continuous sign language recognition: Towards large vocabulary statistical recognition sys"}
+{"id": "407595e5-0f1a-4b94-8af6-57c5268e4caf", "reason": "cited work not found on arXiv by title", "title": "Deep Hand: How to Train a CNN on 1 Million Hand Images When Your Data is Continuous and We"}
+{"id": "f8c54597-a553-4271-ae5c-452456ae5e51", "reason": "fetch budget exhausted"}
+{"id": "b76fd16f-0fc9-4c6e-a86f-336b216cfe14", "reason": "abstract answers it", "abstract_best": 3.983}
+{"id": "7383f1e4-b8a1-4035-babf-ba02c7c981d5", "reason": "abstract answers it", "abstract_best": 2.298}
+{"id": "ce9b139c-7006-466e-bda8-7045d6a3e972", "reason": "fetch budget exhausted"}
+{"id": "bc997727-aeb9-4483-bf19-ed13a2a3e971", "reason": "fetch budget exhausted"}
+{"id": "c6596492-f39f-49ea-8b91-633b0259a79c", "reason": "fetch budget exhausted"}
+{"id": "02c76d2c-ee56-4772-84a1-f425e14770d2", "reason": "fetch budget exhausted"}
+{"id": "cca408c8-99db-45dc-a027-e88122dfd40c", "reason": "abstract answers it", "abstract_best": 2.348}
+{"id": "d84017fe-b3ab-4ece-9753-13e52cf7d664", "reason": "abstract answers it", "abstract_best": 3.225}
+{"id": "01f4d80a-4d64-4fc7-855c-9c217aabb329", "reason": "fetch budget exhausted"}
+{"id": "338fd3f1-9bb6-4861-bb9a-698471d973cd", "reason": "abstract answers it", "abstract_best": 2.331}
+{"id": "336a89c0-829d-4b93-a828-bc7fb693b33f", "reason": "fetch budget exhausted"}
+{"id": "2df5e90f-897e-4a4e-8ccc-5e8083391a53", "reason": "openalex lookup failed"}
