@@ -238,3 +238,31 @@ some math, leaving artifacts in the citing sentence — `(REF )`, a bare `Theore
 occasionally a sentence truncated mid-word. They do not affect retrieval much but they
 make a claim harder for a human labeller to read, so labels should be taken against the
 original arXiv source rather than the stored `citing_sentence`.
+
+### Correction to the Part A numbers, 2026-10-10
+
+Retrieval was dropping short units. `MIN_WINDOW_WORDS = 12` exists to keep heading
+fragments out of file-window ranking, but `rank_units` scores **sentences**, and the
+floor deleted any sentence under twelve content words. Crisp factual sentences are
+short, so it was deleting the decisive ones: on a synthetic MQuAKE corpus,
+"The conjunction over all edits is reported only as a reference metric." -- eleven
+content words, three query terms, including the rarest -- scored 0, while a vaguer
+two-term sentence won. That sentence is the one that settles the ROA-LLM claim.
+
+The floor is now a parameter: 12 for file windows, 4 for pre-segmented units, where
+the caller has already chosen the granularity. Re-measured:
+
+| | before | after |
+|---|---|---|
+| dev recall@5, discriminative | 0.8059 (137/170) | **0.8118** (138/170) |
+| test recall@5, discriminative | 0.7257 (246/339) | **0.7404** (251/339) |
+| dev / test recall@5, all | 0.759 / 0.6662 | 0.7673 / 0.6805 |
+| selection | unchanged | unchanged |
+
+So the earlier figures understated retrieval rather than overstating it. They were
+still wrong, and the reason is worth keeping: **the results filenames pin only the
+selection-pattern hash**, so two runs of "ab0e1801" can differ because retrieval
+changed underneath. That is the same attribution problem flagged to the other
+session about corpus-global idf, arriving from the other direction. New files carry
+`_minunit4`; a results file should name every component that can move a number, not
+just the one that moved last time.

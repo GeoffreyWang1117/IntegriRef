@@ -60,7 +60,13 @@ def clip_words(s: str, limit: int = MAX_WORDS) -> str:
     return s if len(w) <= limit else " ".join(w[:limit]) + " \u2026"
 
 
-MIN_WINDOW_WORDS = 12     # below this a window is a title or a heading fragment
+MIN_WINDOW_WORDS = 12     # below this a FILE WINDOW is a title or heading fragment
+# Pre-segmented units are a different matter: the caller already chose the
+# granularity, and a crisp factual sentence is often short. Applying the window
+# floor to sentences silently deleted the decisive ones -- "The conjunction over
+# all edits is reported only as a reference metric." is 11 content words and was
+# scored 0 despite matching three query terms, while a vaguer 2-term sentence won.
+MIN_UNIT_WORDS = 4
 
 # Words that signal a window is *about* a given kind of claim. A window that
 # discusses metrics outranks one that merely repeats the benchmark's name.
@@ -132,7 +138,8 @@ def _tabular_penalty(raw: str, dl: int) -> float:
 
 def rank_units(terms: list[str], units: list[tuple[str, int, int, str]],
                top_k: int = MAX_PASSAGES, claim_type: str = "other",
-               k1: float = 1.2, b: float = 0.75) -> list[Passage]:
+               k1: float = 1.2, b: float = 0.75,
+               min_words: int = MIN_UNIT_WORDS) -> list[Passage]:
     """Rank pre-segmented units instead of files.
 
     ``units`` are ``(label, line_start, line_end, raw_text)``. This is the entry
@@ -141,7 +148,7 @@ def rank_units(terms: list[str], units: list[tuple[str, int, int, str]],
     disk to window over. The scoring is identical to ``rank``; only the source of
     the candidate units differs, so numbers from the two paths are comparable.
     """
-    return _score(terms, units, top_k, claim_type, k1, b)
+    return _score(terms, units, top_k, claim_type, k1, b, min_words)
 
 
 def rank(terms: list[str], artifact_files: list[Path], root: Path,
@@ -161,14 +168,15 @@ def rank(terms: list[str], artifact_files: list[Path], root: Path,
 
 
 def _score(terms: list[str], windows: list[tuple[str, int, int, str]],
-           top_k: int, claim_type: str, k1: float, b: float) -> list[Passage]:
+           top_k: int, claim_type: str, k1: float, b: float,
+           min_words: int = MIN_WINDOW_WORDS) -> list[Passage]:
     want = {t.lower() for t in terms}
     if not want or not windows:
         return []
 
     disp = [display_text(raw) for _, _, _, raw in windows]
     toks = [_terms(d) for d in disp]
-    keep = [i for i, tk in enumerate(toks) if len(tk) >= MIN_WINDOW_WORDS]
+    keep = [i for i, tk in enumerate(toks) if len(tk) >= min_words]
     if not keep:
         keep = list(range(len(windows)))       # tiny artifact: take what there is
 

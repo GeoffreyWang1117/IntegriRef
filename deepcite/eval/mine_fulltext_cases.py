@@ -82,7 +82,16 @@ MAX_CITES_IN_SENTENCE = 2
 # ABSTRACT_WEAK threshold above survives only as a cheap pre-filter that avoids
 # fetching an e-print when the abstract plainly already answers the claim; it
 # never decides whether a candidate is kept.
-BODY_ONLY_TOPK = 3       # no abstract sentence may appear this high up
+# "The abstract does not answer this" has to be expressed in a way that does not
+# depend on how many sentences the documents happen to have. An earlier version
+# required no abstract sentence in the absolute top 3, which is unsatisfiable for a
+# short paper -- with six sentences in the joint pool, the top 3 always contains
+# one -- and trivially satisfied for a long one. Same flaw as comparing BM25 scores
+# across two corpora: the criterion moved with the size rather than the content.
+#
+# Instead: the best body passage must clear JOINT_MIN, and the best abstract
+# sentence must score below this fraction of it.
+ABSTRACT_RATIO = 0.5
 # Ordering alone is not enough: a claim nothing in the paper matches also puts no
 # abstract sentence in the top 3. Within the joint ranking the scores share one idf
 # space, so a magnitude floor here is legitimate -- unlike the cross-corpus
@@ -405,13 +414,22 @@ def body_only(terms: list[str], abstract: str, body: str, claim_type: str
     scores.
     """
     units = _units(abstract, "abstract") + _units(body, "body")
-    got = V.rank_units(terms, units, top_k=BODY_ONLY_TOPK, claim_type=claim_type)
+    if not units:
+        return False, 0.0, "", ""
+    # Rank the whole pool, not a top slice: the criterion needs the best abstract
+    # sentence as well as the best body one, in the same idf space.
+    got = V.rank_units(terms, units, top_k=len(units), claim_type=claim_type)
     if not got:
         return False, 0.0, "", ""
-    top = got[0]
-    is_body_only = all(p.file == "body" for p in got[:BODY_ONLY_TOPK])
-    ok = is_body_only and top.file == "body" and top.rank_score >= JOINT_MIN
-    return ok, top.rank_score, top.text, f"{top.file}:{top.line_start}"
+    best_body = next((p for p in got if p.file == "body"), None)
+    best_abs = next((p for p in got if p.file == "abstract"), None)
+    if best_body is None:
+        return False, 0.0, "", ""
+    ok = (best_body.rank_score >= JOINT_MIN
+          and (best_abs is None
+               or best_abs.rank_score < ABSTRACT_RATIO * best_body.rank_score))
+    return (ok, best_body.rank_score, best_body.text,
+            f"{best_body.file}:{best_body.line_start}")
 
 
 CITREC_URL = ("https://huggingface.co/datasets/saier/unarXive_citrec/"
@@ -573,9 +591,180 @@ def mine(limit: int, cache_dir: Path | None, batch: int = 50,
     return kept, rejected
 
 
+# --- arxiv-bulk: both sides of the citation from a local corpus --------------
+#
+# With an S3 corpus slice on disk there is no network step at all, and the one
+# that used to dominate -- the title search that cost 430 requests per 60 fetches
+# and earned a 429 -- is not merely cheaper but unnecessary. arXiv ids are written
+# down in the citing paper's own bibliography, in .bib fields (eprint,
+# archivePrefix, url) and literally as "arXiv:2305.14795" in a .bbl. Reading them
+# is exact, where a title search was a guess that had to be validated.
+
+_BIBITEM = re.compile(r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}")
+_ARXIV_IN_TEXT = re.compile(
+    r"ar[Xx]iv[:\s/]*((?:\d{4}\.\d{4,5})(?:v\d+)?|[a-z-]+(?:\.[A-Z]{2})?/\d{7}(?:v\d+)?)")
+_ABSTRACT = re.compile(
+    r"\\begin\{abstract\}(.*?)\\end\{abstract\}|\\abstract\{(.*?)\n\s*\n", re.S)
+
+
+def bbl_arxiv_ids(text: str) -> dict[str, str]:
+    """``{bibitem key: arXiv id}`` from a compiled .bbl.
+
+    Most arXiv submissions ship a .bbl rather than a .bib, so without this the
+    corpus route would only work for the minority that include their .bib.
+    Splitting on \\bibitem keeps an id attached to the entry that printed it
+    instead of to whichever entry happens to be nearest.
+    """
+    out: dict[str, str] = {}
+    marks = list(_BIBITEM.finditer(text))
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        hit = _ARXIV_IN_TEXT.search(text[m.end():end])
+        if hit:
+            out[m.group(1)] = hit.group(1)
+    return out
+
+
+def corpus_cited_ids(paper_dir: Path) -> dict[str, str]:
+    """``{bib key: arXiv id}`` for one paper, from its .bib if present else .bbl."""
+    ids: dict[str, str] = {}
+    for bib in sorted(paper_dir.glob("*.bib")):
+        text = bib.read_text(encoding="utf-8", errors="replace")
+        for key, entry in R.split_bib(text).items():
+            if key.startswith("@"):
+                continue
+            got = R.bib_arxiv_id(entry)
+            if got:
+                ids[key] = got
+    for bbl in sorted(paper_dir.glob("*.bbl")):
+        for key, got in bbl_arxiv_ids(
+                bbl.read_text(encoding="utf-8", errors="replace")).items():
+            ids.setdefault(key, got)
+    return ids
+
+
+def corpus_abstract(paper_dir: Path) -> str:
+    """The cited paper's own abstract, from its source.
+
+    Taken from the artifact rather than from a metadata API: it is the same
+    document the body comes from, so "the abstract does not answer this but the
+    body does" is a statement about one text, not a comparison across sources.
+    """
+    for tex in sorted(paper_dir.glob("*.tex")):
+        hit = _ABSTRACT.search(tex.read_text(encoding="utf-8", errors="replace"))
+        if hit:
+            return V.display_text(
+                strip_comments(hit.group(1) or hit.group(2) or ""))
+    return ""
+
+
+def corpus_body(paper_dir: Path, max_files: int = 40) -> str:
+    r"""The cited paper's prose with the abstract removed.
+
+    Two things this has to get right, both found by the synthetic-corpus test:
+
+    * **The abstract must be excluded.** It lives in the same .tex, so returning
+      the whole file made "the evidence is in the body, not the abstract"
+      self-contradictory -- the abstract was in both sides of the comparison.
+    * **Segmentation needs prose, not LaTeX.** Sentences are split on a
+      terminator followed by a capital, and `\end{abstract}` or `\section{...}`
+      starts with a backslash, so splitting raw source merged whole papers into
+      two or three enormous units and the ranking became meaningless.
+
+    The locator this produces is therefore a sentence index, not a file line.
+    """
+    texts = []
+    for tex in sorted(paper_dir.glob("*.tex"))[:max_files]:
+        texts.append(tex.read_text(encoding="utf-8", errors="replace"))
+    raw = strip_comments("\n".join(texts))
+    raw = _ABSTRACT.sub(" ", raw)
+    return V.display_text(CITE_RE.sub(" ", raw))
+
+
+def mine_bulk(root: Path | None = None, max_papers: int = 0, sink=None
+              ) -> tuple[list[Candidate], list[dict]]:
+    """Mine an S3 corpus slice. No network, no rate limit, no id resolution."""
+    from . import arxiv_bulk as B
+    from .. import texscan as T
+
+    index = B.load_index(Path(root) if root else B.DEFAULT_ROOT)
+    if not index:
+        raise FileNotFoundError(
+            "no corpus index; run `python -m deepcite.eval.arxiv_bulk fetch` then "
+            "`index` first")
+    kept: list[Candidate] = []
+    rejected: list[dict] = []
+    papers = sorted(index.items())
+    if max_papers:
+        papers = papers[:max_papers]
+
+    for citing_id, citing_dir in papers:
+        cdir = Path(citing_dir)
+        try:
+            cited_ids = corpus_cited_ids(cdir)
+        except OSError:
+            continue
+        if not cited_ids:
+            rejected.append({"id": citing_id, "reason": "no arXiv ids in its bibliography"})
+            continue
+        seen: set[tuple[str, str]] = set()
+        for rel in T.tex_files(cdir):
+            for cit in T.scan_file(cdir, rel).citations:
+                sent = cit.sentence.text
+                sel = S.select(sent)
+                if not sel:
+                    continue
+                uid = f"{citing_id}:{rel}:{cit.sentence.line}:{cit.bib_key}"
+                if (cit.bib_key, sent) in seen:
+                    continue
+                seen.add((cit.bib_key, sent))
+                if len(CITE_RE.findall(sent)) > MAX_CITES_IN_SENTENCE:
+                    rejected.append({"id": uid, "reason": "background citation list"})
+                    continue
+                aid = cited_ids.get(cit.bib_key)
+                if not aid:
+                    rejected.append({"id": uid, "reason": "cited work has no arXiv id in the bib"})
+                    continue
+                base = re.sub(r"v\d+$", "", aid)
+                cited_dir = index.get(aid) or index.get(base)
+                if not cited_dir:
+                    # Expected and not a failure: the corpus is a slice, so most
+                    # cited works simply are not in it. Widening the slice is the
+                    # only fix, and it costs only S3 bytes.
+                    rejected.append({"id": uid, "reason": "cited work outside the corpus slice",
+                                     "arxiv_id": aid})
+                    continue
+                terms = S.search_terms(sent)
+                if not terms:
+                    rejected.append({"id": uid, "reason": "no search terms"})
+                    continue
+                pdir = Path(cited_dir)
+                abstract, body = corpus_abstract(pdir), corpus_body(pdir)
+                if not body.strip():
+                    rejected.append({"id": uid, "reason": "cited work has no LaTeX body",
+                                     "arxiv_id": aid})
+                    continue
+                ok, score, passage, loc = body_only(terms, abstract, body, sel.claim_type)
+                if not ok:
+                    rejected.append({"id": uid,
+                                     "reason": "abstract ranks within the top passages",
+                                     "top_score": round(score, 3), "arxiv_id": aid})
+                    continue
+                kept.append(Candidate(
+                    unarxive_id=uid, openalex_id="", cited_arxiv_id=aid,
+                    cited_title="", citing_sentence=sent, family=sel.family,
+                    pattern_id=sel.pattern_id, claim_type=sel.claim_type,
+                    search_terms=terms, abstract_best=0.0,
+                    fulltext_best=round(score, 3),
+                    fulltext_passage=V.clip_words(passage), fulltext_locator=loc))
+                _emit(sink, kept[-1])
+    return kept, rejected
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="python -m deepcite.eval.mine_fulltext_cases")
-    ap.add_argument("--source", choices=("local", "unarxive"), default="local",
+    ap.add_argument("--source", choices=("local", "unarxive", "arxiv-bulk"),
+                    default="local",
                     help="local reads a paper's .tex+.bib and uses arXiv only; "
                          "unarxive streams 2.5M contexts but needs OpenAlex, whose "
                          "unauthenticated budget is per-IP per-day")
@@ -583,6 +772,11 @@ def main(argv=None) -> int:
     ap.add_argument("--bib", default=None, help="--source local: .bib file")
     ap.add_argument("--limit", type=int, default=2000,
                     help="unarXive rows to read")
+    ap.add_argument("--max-papers", type=int, default=0,
+                    help="--source arxiv-bulk: cap citing papers scanned (0 = all)")
+    ap.add_argument("--corpus-root", default=None,
+                    help="--source arxiv-bulk: corpus root (default the "
+                         "arxiv_bulk cache)")
     ap.add_argument("--citrec", default=None,
                     help="locally cached prefix of unarXive citrec train.jsonl "
                          "(default benchmarks/data/unarxive/citrec_head.jsonl)")
@@ -606,6 +800,11 @@ def main(argv=None) -> int:
                                     Path(a.bib).expanduser(), cache,
                                     max_fetch=a.max_fetch, sink=sink)
         print(f"  {a.paper} -> {len(kept)} candidates, {len(rejected)} rejected, "
+              f"{time.time() - t0:.0f}s")
+    elif a.source == "arxiv-bulk":
+        kept, rejected = mine_bulk(a.corpus_root, max_papers=a.max_papers,
+                                   sink=sink)
+        print(f"  corpus -> {len(kept)} candidates, {len(rejected)} rejected, "
               f"{time.time() - t0:.0f}s")
     else:
         kept, rejected = mine(a.limit, cache, max_fetch=a.max_fetch,

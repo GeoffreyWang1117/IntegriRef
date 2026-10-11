@@ -187,6 +187,36 @@ def _md5(path: Path) -> str:
 _ID_IN_MEMBER = re.compile(r"(\d{4}\.\d{4,5})|([a-z-]+(?:\.[A-Z]{2})?\d{7})")
 
 
+def unpack_submission(blob: Path, dest: Path) -> str | None:
+    """Unpack one paper's submission package, the way fetch_eprint does.
+
+    Each member of an arXiv_src tarball is itself a submission archive -- usually
+    a gzipped tar, sometimes a single gzipped .tex, occasionally a PDF-only
+    deposit. Extracting the outer tar alone leaves those packages unopened and the
+    corpus unreadable, so the same content sniffing used for e-prints is applied
+    here. Returns the kind, or None when nothing usable came out.
+    """
+    from .. import fetch as F
+
+    kind = F.sniff(blob)
+    if kind is None:
+        return None
+    dest.mkdir(parents=True, exist_ok=True)
+    try:
+        if kind == "tar":
+            with tarfile.open(blob, "r:gz") as tf:
+                F._safe_extract(tf, dest)
+        elif kind == "gz":
+            import gzip
+            with gzip.open(blob, "rb") as fh:
+                (dest / "main.tex").write_bytes(fh.read(F.MAX_BYTES))
+        else:                       # pdf: kept so the record says why, not mined
+            blob.replace(dest / "paper.pdf")
+    except Exception:
+        return None
+    return kind
+
+
 def build_index(root: Path = DEFAULT_ROOT) -> dict[str, str]:
     """Extract every tarball and map arXiv id -> extracted directory.
 
@@ -197,6 +227,7 @@ def build_index(root: Path = DEFAULT_ROOT) -> dict[str, str]:
     src = root / "src"
     src.mkdir(parents=True, exist_ok=True)
     index: dict[str, str] = {}
+    skipped = 0
     for tar in tars:
         print(f"  index {tar.name}")
         with tarfile.open(tar) as tf:
@@ -211,14 +242,21 @@ def build_index(root: Path = DEFAULT_ROOT) -> dict[str, str]:
                 if out.exists():
                     index[aid] = str(out)
                     continue
-                out.mkdir(parents=True, exist_ok=True)
                 data = tf.extractfile(m)
                 if data is None:
                     continue
-                (out / Path(m.name).name).write_bytes(data.read())
+                blob = src / f".{aid}.blob"
+                blob.parent.mkdir(parents=True, exist_ok=True)
+                blob.write_bytes(data.read())
+                kind = unpack_submission(blob, out)
+                blob.unlink(missing_ok=True)
+                if kind is None:
+                    skipped += 1
+                    continue
                 index[aid] = str(out)
     (root / "index.json").write_text(json.dumps(index), encoding="utf-8")
-    print(f"  {len(index)} papers indexed -> {root / 'index.json'}")
+    print(f"  {len(index)} papers indexed, {skipped} unusable "
+          f"-> {root / 'index.json'}")
     return index
 
 
