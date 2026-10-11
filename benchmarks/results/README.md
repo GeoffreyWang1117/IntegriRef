@@ -40,3 +40,52 @@ reproduce byte-identically, because Crossref, OpenAlex, S2 and PubMed records
 change; tier counts are stable, individual posteriors drift. Experiments over
 fixed splits (`exp_yearfix_revalidate.py`, `exp_natchim_eval.py`) are
 deterministic given the same registry responses.
+
+## Scale runs (added 2026-10-11)
+
+An audit by a second agent found that every headline scale number was
+**unverifiable from this repository**. The outputs were not missing -- they were
+sitting untracked in `paper/gem2026/bench_results/`, which is not where anyone
+auditing the benchmark would look. They are now published under
+`benchmarks/results/scale/` and every number below was recomputed from them.
+
+| Reported | File | Recomputation |
+|---|---|---|
+| rv-1926: hallucination recall **99.9%** | `scale/bench_reference_verification_20260524_215031.json` | `metrics.halluc_recall_elev` = 1214/1215. The ≥HIGH operating point is 1211/1215 = 99.7%, also in the file |
+| rv-1926: chimera **100%**, retraction **100%** | same | 339/339 and 23/23 at ≥ELEVATED |
+| rv-1926: FPR **4.6%**, accuracy **99.1%** | same | 16/349 and 1909/1926 |
+| ret-6391: retraction recall **98.3%**, 5,393/5,488 | `scale/bench_retracted_papers_20260524_202842.json` | `metrics.retract_recall_elev` |
+| ret-6391: accuracy **97.9%** | same | 6258/6391 |
+| ret-6391: FPR **4.2%**, "38 FP = 18+20" | same | 38 of 903 `real_control` rows reach ≥ELEVATED; 38/903 = 4.2%. The 18 and 20 are the `chimera_detected` and `no_id_match` fire counts on those controls, not two FP subsets — the audit could not tell from the paper alone |
+| Crossref-only ablation | `scale/*_crossref_only_*.json` | same shape, single registry |
+
+Each row of `results[]` carries `posterior`, `signals_fired`, `actual_risk`,
+`actual_found`, `actual_retracted` and latency, so the metrics can be recomputed
+from the per-case data rather than read off a summary.
+
+## Which file holds the authoritative golden-58 labels
+
+**`benchmarks/data/golden_test_set.json`** -- 28 retracted, 10 real, 15
+hallucinated, 5 chimera, matching Table 1.
+
+`fusion_20260318_102715.json` and `comparison_20260318_100615.json` carry
+**23/18/14/3** in their `category` fields. That is the *retired reclassification*
+the paper describes at `main.tex:162`: "an earlier reclassification of 8 cases as
+``real'' inflated our recall and is no longer reported". The delta reconciles
+exactly -- real −8, retracted +5, hallucinated +1, chimera +2 -- and the paper
+reports metrics under the original labels, recomputed offline from those files'
+per-case tiers.
+
+An audit read the 23/18/14/3 composition as contradicting Table 1. It does not,
+but nothing in this directory said so, which is the same failure in a different
+place: the data was right and the signposting was missing.
+
+## Still not published
+
+These remain unverifiable from the repository, and saying so is better than
+leaving a reader to discover it: Table 1's per-model baseline verdicts and the
+Clopper-Pearson inputs; the 19-bibliography / 114-reference L3 clean-bibliography
+run; the 8,817-case raw posteriors, folds and temporal predictions behind the
+calibration figures; the feature matrix and fold assignment behind AUC .989 vs
+.992; the throughput logs matching the reported 500-reference microbenchmark; and
+the manifest of the 845 bibliographies walked for NatChim.
