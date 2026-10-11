@@ -66,7 +66,7 @@ MIN_WINDOW_WORDS = 12     # below this a FILE WINDOW is a title or heading fragm
 # floor to sentences silently deleted the decisive ones -- "The conjunction over
 # all edits is reported only as a reference metric." is 11 content words and was
 # scored 0 despite matching three query terms, while a vaguer 2-term sentence won.
-MIN_UNIT_WORDS = 4
+MIN_UNIT_WORDS = 1
 
 # Words that signal a window is *about* a given kind of claim. A window that
 # discusses metrics outranks one that merely repeats the benchmark's name.
@@ -177,8 +177,14 @@ def _score(terms: list[str], windows: list[tuple[str, int, int, str]],
     disp = [display_text(raw) for _, _, _, raw in windows]
     toks = [_terms(d) for d in disp]
     keep = [i for i, tk in enumerate(toks) if len(tk) >= min_words]
-    if not keep:
-        keep = list(range(len(windows)))       # tiny artifact: take what there is
+    # No "if nothing qualifies, take everything" fallback. It made a short unit's
+    # eligibility depend on whether a longer unit happened to be in the same
+    # batch: "fraud" is scored when it is the only unit and silently dropped when
+    # a long sentence sits beside it. Same batch-dependence flaw as the absolute
+    # top-3 rule and the absolute score floor, reported by the Codex session.
+    # For units the floor is 1: the caller already chose the granularity, and
+    # second-guessing it is what deleted the decisive sentences. Only the
+    # file-window path, where a fragment really is a heading, keeps 12.
 
     df: dict[str, int] = {}
     for i in keep:

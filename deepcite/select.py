@@ -408,7 +408,7 @@ def _bare_finding(masked: str, max_keys_per_marker: int | None) -> Selection | N
     return None
 
 
-def search_terms(sentence: str, limit: int = 8) -> list[str]:
+def search_terms(sentence: str, limit: int = 16) -> list[str]:
     """Content words from the claim, used to retrieve passages and to record
     what was looked for when nothing is found (CLAIM_ABSENT_FROM_ARTIFACT)."""
     masked = mask_cites(sentence).replace(CITE_TOKEN, " ")
@@ -423,13 +423,20 @@ def search_terms(sentence: str, limit: int = 8) -> list[str]:
             "over", "under", "into", "across", "within", "between", "while",
             "when", "where", "each", "every", "any", "one", "two", "via", "per",
             "only", "same", "well", "much", "many", "very", "upon", "about"}
-    seen, out = set(), []
+    seen, cand = set(), []
     for w in words:
         lw = w.lower()
         if lw in stop or lw in seen:
             continue
         seen.add(lw)
-        out.append(w)
-        if len(out) >= limit:
-            break
-    return out
+        cand.append(w)
+    # Rank by how much a term narrows the search, not by where it sits in the
+    # sentence. Keeping the first eight in reading order meant a decisive term
+    # late in a long sentence never reached retrieval -- reported by the Codex
+    # session with "alpha ... iota", where only `iota` identifies the evidence.
+    # Numbers and capitalised names are the most selective, then longer words.
+    def informativeness(w: str) -> tuple:
+        return (bool(re.fullmatch(r"\d+(?:\.\d+)?", w)),
+                w[:1].isupper(), len(w))
+    cand.sort(key=informativeness, reverse=True)
+    return cand[:limit]

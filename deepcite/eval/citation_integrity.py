@@ -182,6 +182,17 @@ def evaluate(split: str, top_k: int = V.MAX_PASSAGES) -> dict:
         # before/after comparison meaningful instead of anecdotal.
         "selection_regex_sha256": S.patterns_sha256(),
         "tool_version": __import__("deepcite").__version__,
+        # Every knob that can move a number, recorded in the result rather than
+        # encoded in a filename. Three reported retrieval figures have already
+        # changed under a constant patterns hash, because the hash pins selection
+        # only; a reader could not tell those runs apart.
+        "retrieval_config": {
+            "min_unit_words": V.MIN_UNIT_WORDS,
+            "min_window_words": V.MIN_WINDOW_WORDS,
+            "max_passages": V.MAX_PASSAGES,
+            "max_words": V.MAX_WORDS,
+            "search_terms_limit": S.search_terms.__defaults__[0],
+        },
         "selection": {
             "recall_on_checkable": _rate(sel_fired_with_ev, sel_total_with_ev),
             "fired/with_evidence": f"{sel_fired_with_ev}/{sel_total_with_ev}",

@@ -700,9 +700,25 @@ def mine_bulk(root: Path | None = None, max_papers: int = 0, sink=None
 
     for citing_id, citing_dir in papers:
         cdir = Path(citing_dir)
+        if not cdir.is_dir():
+            # Distinct from "its bibliography has no arXiv ids", which is what a
+            # missing directory used to be reported as: Path.glob on a missing
+            # directory yields nothing rather than raising, so the cause was
+            # misattributed instead of lost. (The Codex session reported this as
+            # a silent drop; it was a silent *mislabel*.)
+            rejected.append({"id": citing_id,
+                             "reason": "corpus directory missing",
+                             "path": str(cdir)})
+            continue
         try:
             cited_ids = corpus_cited_ids(cdir)
-        except OSError:
+        except OSError as e:
+            # Recorded, not skipped: a corrupted or moved index entry used to
+            # vanish from both the totals and the rejection reasons, so a corpus
+            # half of whose entries were unreadable looked like a corpus with
+            # nothing to find.
+            rejected.append({"id": citing_id,
+                             "reason": f"corpus entry unreadable: {e}"})
             continue
         if not cited_ids:
             rejected.append({"id": citing_id, "reason": "no arXiv ids in its bibliography"})
