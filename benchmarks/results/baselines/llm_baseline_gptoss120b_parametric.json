@@ -1,0 +1,483 @@
+{
+  "model": "gpt-oss:120b",
+  "mode": "parametric",
+  "split": "golden",
+  "metrics": {
+    "n": 58,
+    "n_halluc": 20,
+    "n_real": 38,
+    "tp": 19,
+    "fp": 9,
+    "uncertain": 1,
+    "errors": 0,
+    "tool_calls": 0,
+    "halluc_recall": "19/20 = 95.0%",
+    "fpr": "9/38 = 23.7%"
+  },
+  "results": [
+    {
+      "id": "retracted_001",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 14720.9,
+      "error": null
+    },
+    {
+      "id": "retracted_002",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 21140.4,
+      "error": null
+    },
+    {
+      "id": "retracted_003",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 25608.5,
+      "error": null
+    },
+    {
+      "id": "retracted_004",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 21319.2,
+      "error": null
+    },
+    {
+      "id": "retracted_005",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 17136.5,
+      "error": null
+    },
+    {
+      "id": "retracted_006",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 23830.3,
+      "error": null
+    },
+    {
+      "id": "retracted_007",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 19175.2,
+      "error": null
+    },
+    {
+      "id": "retracted_008",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 18364.7,
+      "error": null
+    },
+    {
+      "id": "retracted_009",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 21398.8,
+      "error": null
+    },
+    {
+      "id": "retracted_010",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 23551.2,
+      "error": null
+    },
+    {
+      "id": "retracted_011",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 23568.5,
+      "error": null
+    },
+    {
+      "id": "retracted_012",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 14385.4,
+      "error": null
+    },
+    {
+      "id": "retracted_013",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 32088.4,
+      "error": null
+    },
+    {
+      "id": "retracted_014",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 19511.0,
+      "error": null
+    },
+    {
+      "id": "retracted_015",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "uncertain",
+      "latency_ms": 28413.7,
+      "error": null
+    },
+    {
+      "id": "retracted_016",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 14324.4,
+      "error": null
+    },
+    {
+      "id": "retracted_017",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 27560.4,
+      "error": null
+    },
+    {
+      "id": "retracted_018",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 25503.9,
+      "error": null
+    },
+    {
+      "id": "retracted_019",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 36117.9,
+      "error": null
+    },
+    {
+      "id": "retracted_020",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 22878.8,
+      "error": null
+    },
+    {
+      "id": "retracted_021",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 36673.6,
+      "error": null
+    },
+    {
+      "id": "retracted_022",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 16829.8,
+      "error": null
+    },
+    {
+      "id": "retracted_023",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 48384.6,
+      "error": null
+    },
+    {
+      "id": "retracted_024",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 56120.1,
+      "error": null
+    },
+    {
+      "id": "retracted_025",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 60076.4,
+      "error": null
+    },
+    {
+      "id": "retracted_026",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 41698.5,
+      "error": null
+    },
+    {
+      "id": "retracted_027",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 9169.0,
+      "error": null
+    },
+    {
+      "id": "retracted_028",
+      "category": "retracted",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 48776.3,
+      "error": null
+    },
+    {
+      "id": "real_001",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 22724.7,
+      "error": null
+    },
+    {
+      "id": "real_002",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 26574.3,
+      "error": null
+    },
+    {
+      "id": "real_003",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 25303.2,
+      "error": null
+    },
+    {
+      "id": "real_004",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 8867.0,
+      "error": null
+    },
+    {
+      "id": "real_005",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 66908.0,
+      "error": null
+    },
+    {
+      "id": "real_006",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "hallucinated",
+      "latency_ms": 3150.7,
+      "error": null
+    },
+    {
+      "id": "real_007",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 2401.8,
+      "error": null
+    },
+    {
+      "id": "real_008",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 3506.5,
+      "error": null
+    },
+    {
+      "id": "real_009",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 3403.6,
+      "error": null
+    },
+    {
+      "id": "real_010",
+      "category": "real",
+      "ground_truth": "real",
+      "prediction": "real",
+      "latency_ms": 1290.2,
+      "error": null
+    },
+    {
+      "id": "halluc_001",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 7548.5,
+      "error": null
+    },
+    {
+      "id": "halluc_002",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 5017.5,
+      "error": null
+    },
+    {
+      "id": "halluc_003",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 4902.4,
+      "error": null
+    },
+    {
+      "id": "halluc_004",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 3569.0,
+      "error": null
+    },
+    {
+      "id": "halluc_005",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 4305.1,
+      "error": null
+    },
+    {
+      "id": "halluc_006",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 3050.7,
+      "error": null
+    },
+    {
+      "id": "halluc_007",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 6018.0,
+      "error": null
+    },
+    {
+      "id": "halluc_008",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 3596.7,
+      "error": null
+    },
+    {
+      "id": "halluc_009",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 5607.3,
+      "error": null
+    },
+    {
+      "id": "halluc_010",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 1592.0,
+      "error": null
+    },
+    {
+      "id": "halluc_011",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 2437.9,
+      "error": null
+    },
+    {
+      "id": "halluc_012",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 2850.1,
+      "error": null
+    },
+    {
+      "id": "halluc_013",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 7197.0,
+      "error": null
+    },
+    {
+      "id": "halluc_014",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "real",
+      "latency_ms": 3908.4,
+      "error": null
+    },
+    {
+      "id": "halluc_015",
+      "category": "hallucinated",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 4974.6,
+      "error": null
+    },
+    {
+      "id": "chimera_001",
+      "category": "chimera",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 2249.1,
+      "error": null
+    },
+    {
+      "id": "chimera_002",
+      "category": "chimera",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 2884.2,
+      "error": null
+    },
+    {
+      "id": "chimera_003",
+      "category": "chimera",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 2786.7,
+      "error": null
+    },
+    {
+      "id": "chimera_004",
+      "category": "chimera",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 3221.2,
+      "error": null
+    },
+    {
+      "id": "chimera_005",
+      "category": "chimera",
+      "ground_truth": "hallucinated",
+      "prediction": "hallucinated",
+      "latency_ms": 5511.0,
+      "error": null
+    }
+  ]
+}

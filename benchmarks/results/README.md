@@ -80,12 +80,34 @@ An audit read the 23/18/14/3 composition as contradicting Table 1. It does not,
 but nothing in this directory said so, which is the same failure in a different
 place: the data was right and the signposting was missing.
 
+## Baselines and L3, published 2026-10-11
+
+Found by the same audit, in the same place as the scale runs: untracked under
+`paper/gem2026/bench_results/`.
+
+| Reported | File | Recomputation |
+|---|---|---|
+| L3 clean bibliographies: 19 bibs, 114 refs, FPR **0.9% → 73.7%**, 8,381 events, **11/19** critical | `scale/bench_borderline_l3_clean_20260526_132740.json` | `metrics` carries all of them: `n_clean_bibs 19`, `ref_level_fpr_by_config` `1/114 = 0.9%` and `84/114 = 73.7%`, `bib_fpr_crit_by_config` `11/19 = 57.9%`, `anomaly_type_counts_clean.reciprocal_citation 8381` |
+| Table 1 LLM rows: **0–95%** recall, **0–30%** FPR | `baselines/llm_baseline_*.json` (9 models) | per-case `ground_truth` / `prediction`. Recomputing the 20 hallucinated+chimera positives against the real negatives reproduces that range |
+
+**One caveat on the baseline files, stated because it would otherwise look like a
+discrepancy.** Four of the nine (claude, gemini_pro, gemini_flash, gpt4o) score
+against **15** real negatives rather than the 10 in Table 1's caption, and encode
+`prediction` differently from the five newer runs. So the published *range*
+reproduces, but an exact per-model row needs each file's own encoding. The
+CheckIfExist row has no published file at all.
+
 ## Still not published
 
 These remain unverifiable from the repository, and saying so is better than
-leaving a reader to discover it: Table 1's per-model baseline verdicts and the
-Clopper-Pearson inputs; the 19-bibliography / 114-reference L3 clean-bibliography
-run; the 8,817-case raw posteriors, folds and temporal predictions behind the
-calibration figures; the feature matrix and fold assignment behind AUC .989 vs
-.992; the throughput logs matching the reported 500-reference microbenchmark; and
-the manifest of the 845 bibliographies walked for NatChim.
+leaving a reader to discover it: the **CheckIfExist** row of Table 1 and the
+Clopper-Pearson inputs for every row; the fold assignment and feature matrix
+behind **AUC .989 vs .992** and the 0-FPR recall .03 → .77; the **500-reference
+local microbenchmark** logs behind the throughput figures; and the manifest of the
+**845 bibliographies** walked for NatChim — see
+`../data/NATCHIM_PROVENANCE.md`, where the only published mining metadata states a
+different scan size for a different run.
+
+Resolved since first writing this list: the scale runs, the L3 clean-bibliography
+run and the LLM baseline verdicts, all above. The calibration figures are
+recomputable from the scale per-case posteriors.
