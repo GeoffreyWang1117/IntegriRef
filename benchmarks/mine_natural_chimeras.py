@@ -520,7 +520,15 @@ def main():
     chimeras, controls, rejected, scanned = mine(
         args.target, args.max_citing, args.limit_per_topic)
 
-    out_path = DATA / "natural_chimeras.jsonl"
+    # Timestamped, because fixed paths destroyed this split's own provenance.
+    # An earlier run produced the 33-chimera set the paper evaluates
+    # (natural_chimeras_v1.jsonl, kept only because someone renamed it by hand);
+    # a later run overwrote the meta and rejected files at these fixed paths, so
+    # the sampling frame behind the published NatChim -- the paper's "845
+    # bibliographies" -- is irrecoverable. A mining script must not be able to
+    # erase the lineage of a release that cites it.
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    out_path = DATA / f"natural_chimeras_{stamp}.jsonl"
     with open(out_path, "w") as fh:
         for case in chimeras + controls:
             fh.write(json.dumps(case) + "\n")
@@ -549,8 +557,9 @@ def main():
                          "mismatches OpenAlex does not corroborate"],
         },
     }
-    (DATA / "natural_chimeras_meta.json").write_text(json.dumps(meta, indent=2))
-    (DATA / "natural_chimeras_rejected.json").write_text(
+    (DATA / f"natural_chimeras_{stamp}_meta.json").write_text(
+        json.dumps(meta, indent=2))
+    (DATA / f"natural_chimeras_{stamp}_rejected.json").write_text(
         json.dumps(rejected, indent=2))
     print(json.dumps(meta, indent=2))
     print(f"Wrote {out_path}")

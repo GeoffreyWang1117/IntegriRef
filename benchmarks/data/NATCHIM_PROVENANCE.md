@@ -35,10 +35,22 @@ cases, matching the evaluation's 18/18). But **the v1 run's own log is not in th
 repository**, so the 845 figure cannot be checked against anything here, and the
 only published mining metadata states a different scan size for a different run.
 
-I am recording this rather than resolving it. Either the v1 log turns up and 845
-is confirmed, or the paper's provenance sentence has to be rewritten to describe
-what can actually be shown. Until then, treat 845 as unverified. The 33 cases and
-their evaluation are reproducible; the sampling frame they were drawn from is not.
+**Searched, and it is irrecoverable.** `mine_natural_chimeras.py` wrote all three
+outputs to fixed paths -- `natural_chimeras.jsonl`, `natural_chimeras_meta.json`,
+`natural_chimeras_rejected.json` -- so the later 120-row run overwrote the v1
+run's meta and rejected files in place. Nothing survives on disk or in git
+history, and `natural_chimeras_v1.jsonl` exists only because someone renamed it by
+hand. The script now timestamps its outputs so this cannot recur.
+
+So **845 cannot be substantiated and the paper's sentence has to change.** The 33
+cases and their evaluation are reproducible; the sampling frame they were drawn
+from is not, and no file in this repository can establish it.
+
+The same applies to the Limitations sentence "the split stays small because
+precision demanded discarding far more candidates than it kept":
+`natural_chimeras_full120_rejected.json` holds **one** rejected candidate, and it
+belongs to the 120-row run. There is no published evidence of a large discard, so
+that sentence is unsupported too.
 
 ## Why this matters beyond bookkeeping
 
