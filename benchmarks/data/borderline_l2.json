@@ -1,0 +1,714 @@
+{
+  "_description": "Borderline-L2 evaluation split — citation misrepresentation cases where L0 passes (real, resolvable references), L1 intent classifier outputs SUPPORTING (so does not flag misrepresentation), but the citing sentence is not semantically entailed by the cited paper's abstract. This is the domain that DeBERTa-v3 NLI is supposed to catch.",
+  "_version": "0.1.0",
+  "_created": "2026-05-24",
+  "_notes": [
+    "Each case carries `cited_abstract` — a short (2-4 sentence) paraphrase of the actual paper's central claim, sufficient for NLI evaluation. Where the cited paper has been retracted or has known invalidation, the abstract reflects the paper as published (not the retracted/corrected status).",
+    "27 of the 40 cases reuse the supporting_misrepresents and citation_drift sub-patterns from borderline_l1.json; they are kept here with added abstracts because L2 (not L1) is supposed to catch them.",
+    "13 cases are fresh adversarial NLI constructions (domain mismatch, direct contradiction) that do not appear in borderline-L1.",
+    "",
+    "Sub-patterns:",
+    "  (a) supporting_overstatement: citing sentence overstates the cited paper's finding (e.g., 'X proves Y' when paper says 'X suggests Y under condition Z'). Expected NLI: NEUTRAL (claim not entailed by abstract).",
+    "  (b) domain_mismatch: citing sentence makes a claim about a domain the cited paper does not address. Expected NLI: NEUTRAL.",
+    "  (c) direct_contradiction: citing sentence directly contradicts the cited paper's stated conclusion. Expected NLI: CONTRADICTION.",
+    "",
+    "L4 expectations:",
+    "  baseline (L0+L4): mostly LOW — citation resolves cleanly, no L0 signals fire on real papers.",
+    "  with target (L0+L1+L2+L4): ELEVATED or HIGH — claim_contradicted (LR=6) or claim_unsupported (LR=3) fires, pushing posterior above 0.05 threshold."
+  ],
+  "_references": [
+    "Wadden D et al. (2020) Fact or Fiction: Verifying Scientific Claims. EMNLP. (SciFact-style claim+abstract NLI framing.)",
+    "Thorne J et al. (2018) FEVER: A Large-scale Dataset for Fact Extraction and VERification. NAACL.",
+    "Greenberg SA (2009) How citation distortions create unfounded authority. BMJ 339:b2680."
+  ],
+  "_summary": {
+    "total": 40,
+    "by_sub_pattern": {
+      "supporting_overstatement": 17,
+      "domain_mismatch": 10,
+      "direct_contradiction": 13
+    },
+    "by_expected_nli": {
+      "neutral": 22,
+      "contradiction": 14,
+      "entailment": 4
+    },
+    "by_ground_truth_risk": {
+      "elevated": 26,
+      "high": 11,
+      "critical": 3
+    },
+    "reused_from_borderline_l1": 19,
+    "fresh_l2_cases": 21,
+    "entailment_cases_note": "4 cases (a08 LaCour, a09 Bargh, a12 Bem, a15 Hwang) have expected_nli=entailment because the original abstract supports the citing claim. These cases test that the layered pipeline catches misrepresentation via L0 (retraction) or external evidence rather than L2 NLI alone — they are kept in this split to expose L2's intrinsic limitation."
+  },
+
+  "supporting_overstatement": [
+    {
+      "id": "border_l2_a01",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a01",
+      "citing_sentence": "Ericsson et al. (1993) established that 10,000 hours of practice are required to achieve expertise in any domain.",
+      "cited_paper": {
+        "doi": "10.1037/0033-295X.100.3.363",
+        "title": "The role of deliberate practice in the acquisition of expert performance",
+        "authors": ["Ericsson, K. A.", "Krampe, R. Th.", "Tesch-Römer, C."],
+        "year": "1993"
+      },
+      "cited_abstract": "We review evidence that the level of performance in many domains can be substantially raised by extended deliberate practice. In a sample of expert and amateur violinists, the best performers had accumulated approximately 10,000 hours of deliberate practice by age 20. We argue that deliberate practice, not innate talent, is the primary mechanism of skill acquisition, but we make no claim that any specific number of hours guarantees expertise across all domains.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Citing claim asserts a universal threshold ('any domain', 'required'); abstract restricts the 10,000-hour observation to a music sample and explicitly denies the universal interpretation."
+    },
+    {
+      "id": "border_l2_a02",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a02",
+      "citing_sentence": "As demonstrated by Mehrabian (1971), 93% of all communication is non-verbal.",
+      "cited_paper": {
+        "doi": "10.1037/h0024648",
+        "title": "Decoding of inconsistent communications",
+        "authors": ["Mehrabian, A.", "Wiener, M."],
+        "year": "1967"
+      },
+      "cited_abstract": "In experiments where speakers communicated feelings via inconsistent verbal and tonal channels, listeners' impressions of attitude were predicted by a weighted sum: 7% from words, 38% from vocal tone, 55% from facial expression. The findings apply specifically to inconsistent affect communication and were not intended to characterise all communication.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "The 7-38-55 finding is scoped to inconsistent affect-channel communication; the citing claim generalises it to 'all communication'."
+    },
+    {
+      "id": "border_l2_a03",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a03",
+      "citing_sentence": "Dunning and Kruger (1999) proved that incompetent individuals are unable to recognise their own incompetence and therefore overestimate their ability.",
+      "cited_paper": {
+        "doi": "10.1037/0022-3514.77.6.1121",
+        "title": "Unskilled and unaware of it: How difficulties in recognizing one's own incompetence lead to inflated self-assessments",
+        "authors": ["Kruger, J.", "Dunning, D."],
+        "year": "1999"
+      },
+      "cited_abstract": "Four studies show that participants in the bottom quartile on tests of humor, grammar, and logic over-estimated their performance and ability, while top-quartile participants underestimated. We argue that incompetence in a domain causes both poor performance and impaired ability to recognise that poor performance.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Citing claim uses 'proved' and frames the effect as a unidirectional inability; abstract reports a correlation across quartiles in three task types and uses hedged language ('we argue')."
+    },
+    {
+      "id": "border_l2_a04",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a04",
+      "citing_sentence": "Wakefield et al. (1998) demonstrated a causal link between the MMR vaccine and autism in children.",
+      "cited_paper": {
+        "doi": "10.1016/S0140-6736(97)11096-0",
+        "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developmental disorder in children",
+        "authors": ["Wakefield, A. J.", "Murch, S. H.", "Anthony, A."],
+        "year": "1998"
+      },
+      "cited_abstract": "We investigated a consecutive series of 12 children referred to a paediatric gastroenterology unit with a history of pervasive developmental disorder. In 8 children, the onset of behavioural symptoms was associated by the parents with measles, mumps, and rubella vaccination. We did not prove an association between MMR vaccine and the syndrome described.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "critical",
+      "rationale": "Abstract explicitly states 'did not prove an association'; citing claim asserts 'demonstrated a causal link' — direct contradiction. Paper was also retracted in 2010 (L0 will fire); this case verifies L2 also catches the semantic misrepresentation."
+    },
+    {
+      "id": "border_l2_a05",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a05",
+      "citing_sentence": "Reinhart and Rogoff (2010) conclusively showed that economic growth slows sharply once public debt exceeds 90% of GDP.",
+      "cited_paper": {
+        "doi": "10.1257/aer.100.2.573",
+        "title": "Growth in a time of debt",
+        "authors": ["Reinhart, C. M.", "Rogoff, K. S."],
+        "year": "2010"
+      },
+      "cited_abstract": "We examine the relationship between government debt and real GDP growth for 20 advanced economies. The relationship is weak at low debt levels; above a threshold of about 90% of GDP, average growth rates fall notably. The relationship is similar across emerging markets. We make no claim of causal direction.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract reports an association and notes growth 'falls notably'; citing claim uses 'conclusively showed... slows sharply' and implies causation. Subsequent reanalysis (Herndon et al. 2014) further weakens the result."
+    },
+    {
+      "id": "border_l2_a06",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a06",
+      "citing_sentence": "Selkoe (1991) proved that β-amyloid deposition is the primary cause of Alzheimer's disease.",
+      "cited_paper": {
+        "doi": "10.1016/0896-6273(91)90052-2",
+        "title": "The molecular pathology of Alzheimer's disease",
+        "authors": ["Selkoe, D. J."],
+        "year": "1991"
+      },
+      "cited_abstract": "We review the molecular pathology of Alzheimer's disease, focusing on the deposition of β-amyloid in senile plaques. We propose the amyloid cascade hypothesis: that β-amyloid deposition initiates a sequence of events leading to neurofibrillary tangles, neuronal loss, and dementia. The hypothesis is supported by genetic and biochemical evidence but remains to be definitively proved.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract proposes a hypothesis explicitly noted as 'remains to be definitively proved'; citing claim asserts the hypothesis was 'proved'."
+    },
+    {
+      "id": "border_l2_a07",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a07",
+      "citing_sentence": "Mischel's marshmallow studies (1989) demonstrated that the ability to delay gratification in early childhood reliably predicts adult life outcomes such as SAT scores and BMI.",
+      "cited_paper": {
+        "doi": "10.1126/science.2658056",
+        "title": "Delay of gratification in children",
+        "authors": ["Mischel, W.", "Shoda, Y.", "Rodriguez, M. L."],
+        "year": "1989"
+      },
+      "cited_abstract": "Children aged 4 who waited longer to consume a treat in a delay-of-gratification task subsequently had higher SAT scores as adolescents in a follow-up sample of about 90 mostly upper-middle-class children. Delay capacity correlates with several measures of cognitive and social competence in this sample.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract limits findings to ~90 advantaged children and to SAT; citing claim broadens to 'adult life outcomes' including BMI (not studied) and adds 'reliably'."
+    },
+    {
+      "id": "border_l2_a08",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a08",
+      "citing_sentence": "LaCour and Green (2014) showed that brief canvassing conversations produce lasting changes in attitudes toward same-sex marriage.",
+      "cited_paper": {
+        "doi": "10.1126/science.1256151",
+        "title": "When contact changes minds: An experiment on transmission of support for gay equality",
+        "authors": ["LaCour, M. J.", "Green, D. P."],
+        "year": "2014"
+      },
+      "cited_abstract": "In a field experiment we report that brief conversations with gay canvassers produce large, persistent changes in attitudes toward same-sex marriage, with the effects mediated by perspective taking.",
+      "expected_nli_label": "entailment",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "critical",
+      "rationale": "NLI alone would mark this as entailed because the original (fraudulent) abstract matches the claim — but the paper was retracted in 2015 for fabricated data. L2 NLI cannot detect this; L0 retraction signal does. Included to verify the layered pipeline catches it via L0+L4 even when L2 says entailment."
+    },
+    {
+      "id": "border_l2_a09",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a09",
+      "citing_sentence": "Bargh, Chen and Burrows (1996) established that priming participants with elderly-related words causes them to walk more slowly.",
+      "cited_paper": {
+        "doi": "10.1037/0022-3514.71.2.230",
+        "title": "Automaticity of social behavior: Direct effects of trait construct and stereotype activation on action",
+        "authors": ["Bargh, J. A.", "Chen, M.", "Burrows, L."],
+        "year": "1996"
+      },
+      "cited_abstract": "Three experiments demonstrate that activation of trait concepts and stereotypes can produce automatic effects on subsequent behavior. In Experiment 1, participants primed with rude-related words interrupted more; in Experiment 2, participants primed with elderly-related words walked more slowly down a hallway upon leaving.",
+      "expected_nli_label": "entailment",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract supports the claim as originally reported; misrepresentation arises from failed replications (Doyen et al. 2012) not from the abstract itself. L2 cannot detect replication failures; this is an external-evidence layer L4 would need a separate signal for. Kept to expose this limitation."
+    },
+    {
+      "id": "border_l2_a10",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a10",
+      "citing_sentence": "As shown by Loftus and Pickrell (1995), entirely false childhood memories can be reliably implanted in adult subjects.",
+      "cited_paper": {
+        "doi": "10.3928/0048-5713-19951201-07",
+        "title": "The formation of false memories",
+        "authors": ["Loftus, E. F.", "Pickrell, J. E."],
+        "year": "1995"
+      },
+      "cited_abstract": "We describe a procedure for studying false memories in which adult subjects are presented with three true events from their childhood and one false event ('lost in the mall') planted by a relative. About one-quarter of subjects came to remember partial details of the false event.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract reports ~25% partial recall; citing claim asserts 'entirely false' memories implanted 'reliably' in 'adult subjects' as a population claim."
+    },
+    {
+      "id": "border_l2_a11",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a11",
+      "citing_sentence": "Rosenthal and Jacobson (1968) proved that high teacher expectations produce dramatic, lasting gains in student IQ.",
+      "cited_paper": {
+        "doi": "10.1007/BF02322211",
+        "title": "Pygmalion in the classroom",
+        "authors": ["Rosenthal, R.", "Jacobson, L."],
+        "year": "1968"
+      },
+      "cited_abstract": "Teachers in an elementary school were told that certain randomly-selected children were academic 'bloomers'. After one year, IQ gains were observed in grades 1 and 2 but not in higher grades. The findings suggest teacher expectations can shape student achievement.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract reports gains in 2 of 6 grades; citing claim asserts 'dramatic, lasting' gains as a general property."
+    },
+    {
+      "id": "border_l2_a12",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a12",
+      "citing_sentence": "Bem (2011) provided experimental evidence that humans can anticipate future random events.",
+      "cited_paper": {
+        "doi": "10.1037/a0021524",
+        "title": "Feeling the future: Experimental evidence for anomalous retroactive influences on cognition and affect",
+        "authors": ["Bem, D. J."],
+        "year": "2011"
+      },
+      "cited_abstract": "Nine experiments involving more than 1,000 participants tested whether time-reversed psychological effects exist. Eight of the nine experiments yielded statistically significant results in the direction of psi.",
+      "expected_nli_label": "entailment",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract supports the citing claim as originally written; misrepresentation arises from multiple high-powered failed replications (Galak 2012; Ritchie 2012). Like a09, exposes L2's inability to incorporate post-publication invalidation evidence."
+    },
+    {
+      "id": "border_l2_a13",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a13",
+      "citing_sentence": "Festinger, Riecken and Schachter (1956) demonstrated that cognitive dissonance is the universal psychological mechanism by which beliefs survive disconfirmation.",
+      "cited_paper": {
+        "doi": "10.1037/h0042961",
+        "title": "When prophecy fails",
+        "authors": ["Festinger, L.", "Riecken, H.", "Schachter, S."],
+        "year": "1956"
+      },
+      "cited_abstract": "We report a participant-observer case study of a small UFO group whose leader predicted a flood. After the flood failed to occur, several committed members increased their proselytising activity. We suggest cognitive dissonance as one mechanism explaining this response, while cautioning that the case study cannot establish universal claims.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract explicitly hedges ('one mechanism', 'cannot establish universal claims'); citing claim asserts 'universal mechanism'."
+    },
+    {
+      "id": "border_l2_a14",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a14",
+      "citing_sentence": "The Stanford Prison Experiment (Zimbardo 1973) provided definitive evidence that ordinary individuals will rapidly become abusive when placed in positions of institutional power.",
+      "cited_paper": {
+        "doi": "10.1037/h0076835",
+        "title": "On the ethics of intervention in human psychological research: With special reference to the Stanford prison experiment",
+        "authors": ["Zimbardo, P. G."],
+        "year": "1973"
+      },
+      "cited_abstract": "I describe ethical considerations arising from the Stanford prison experiment, in which 24 male college student volunteers were randomly assigned to guard or prisoner roles in a simulated prison. The study was terminated after 6 days due to escalating behavioural concerns. The data document situational influences on behaviour but cannot speak to causation in real institutions.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract is hedged ('cannot speak to causation in real institutions'); citing claim asserts 'definitive evidence'."
+    },
+    {
+      "id": "border_l2_a15",
+      "sub_pattern": "supporting_overstatement",
+      "reuse_of": "border_l1_a15",
+      "citing_sentence": "Hwang et al. (2004) showed that patient-specific embryonic stem cell lines can be derived via somatic cell nuclear transfer.",
+      "cited_paper": {
+        "doi": "10.1126/science.1094515",
+        "title": "Evidence of a pluripotent human embryonic stem cell line derived from a cloned blastocyst",
+        "authors": ["Hwang, W. S.", "Ryu, Y. J.", "Park, J. H."],
+        "year": "2004"
+      },
+      "cited_abstract": "We report the derivation of a pluripotent embryonic stem cell line from a cloned human blastocyst created via somatic cell nuclear transfer. The line shows the expected markers of pluripotency and karyotypic stability over multiple passages.",
+      "expected_nli_label": "entailment",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "critical",
+      "rationale": "Abstract supports the citing claim as originally written; the paper was retracted in 2006 for fabricated data. L0 retraction signal catches this; L2 NLI alone would say entailment. Tests pipeline robustness."
+    },
+    {
+      "id": "border_l2_a16",
+      "sub_pattern": "supporting_overstatement",
+      "citing_sentence": "Following Krizhevsky et al. (2012), it is well-established that deeper networks always outperform shallower networks across all vision tasks.",
+      "cited_paper": {
+        "doi": "10.1145/3065386",
+        "title": "ImageNet classification with deep convolutional neural networks",
+        "authors": ["Krizhevsky, A.", "Sutskever, I.", "Hinton, G. E."],
+        "year": "2012"
+      },
+      "cited_abstract": "We trained a large deep convolutional neural network to classify 1.2 million images in the ImageNet ILSVRC-2010 contest into 1000 classes. The architecture has 5 convolutional and 3 fully-connected layers. We achieved top-5 error of 17.0% compared to 25.7% for the previous state of the art.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract reports one architecture beating one prior baseline on one task; citing claim makes a universal claim ('always... all tasks')."
+    },
+    {
+      "id": "border_l2_a17",
+      "sub_pattern": "supporting_overstatement",
+      "citing_sentence": "Vaswani et al. (2017) proved that attention-based architectures are universally optimal for all sequence-modeling tasks.",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1706.03762",
+        "title": "Attention is all you need",
+        "authors": ["Vaswani, A.", "Shazeer, N.", "Parmar, N."],
+        "year": "2017"
+      },
+      "cited_abstract": "We propose the Transformer, a network architecture based solely on attention mechanisms, dispensing with recurrence and convolutions. The Transformer achieves new state-of-the-art results on English-to-German and English-to-French WMT 2014 translation tasks while being more parallelisable and requiring less training time.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract reports SOTA on two specific machine-translation benchmarks; citing claim asserts 'universally optimal for all sequence-modeling tasks'."
+    }
+  ],
+
+  "domain_mismatch": [
+    {
+      "id": "border_l2_b01",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Following Vaswani et al. (2017), we apply Transformer architectures to predict protein folding from amino acid sequences.",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1706.03762",
+        "title": "Attention is all you need",
+        "authors": ["Vaswani, A.", "Shazeer, N.", "Parmar, N."],
+        "year": "2017"
+      },
+      "cited_abstract": "We propose the Transformer, a network architecture based solely on attention mechanisms, dispensing with recurrence and convolutions. The Transformer achieves new state-of-the-art results on English-to-German and English-to-French WMT 2014 translation tasks.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract addresses machine translation; citing context is protein folding. Citation is not wrong (Transformer is the architecture used) but uses 'Following' to imply the cited paper addressed protein folding, which it did not."
+    },
+    {
+      "id": "border_l2_b02",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "He et al. (2016) demonstrated that residual networks improve text classification accuracy on benchmark NLP datasets.",
+      "cited_paper": {
+        "doi": "10.1109/CVPR.2016.90",
+        "title": "Deep residual learning for image recognition",
+        "authors": ["He, K.", "Zhang, X.", "Ren, S.", "Sun, J."],
+        "year": "2016"
+      },
+      "cited_abstract": "We present a residual learning framework to ease the training of networks substantially deeper than those previously used. We achieve 3.57% error on the ImageNet classification benchmark with networks 8x deeper than VGG.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract addresses image classification; citing claim is about text classification — domain mismatch."
+    },
+    {
+      "id": "border_l2_b03",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Devlin et al. (2018) showed that BERT representations transfer effectively to acoustic phone recognition.",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1810.04805",
+        "title": "BERT: Pre-training of deep bidirectional transformers for language understanding",
+        "authors": ["Devlin, J.", "Chang, M. W.", "Lee, K.", "Toutanova, K."],
+        "year": "2018"
+      },
+      "cited_abstract": "We introduce BERT, a new language representation model that pretrains deep bidirectional representations from unlabelled text by jointly conditioning on both left and right context. BERT obtains new state-of-the-art results on eleven natural-language processing tasks including question answering and inference.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract scope is NLP (text); citing claim is about acoustic / speech."
+    },
+    {
+      "id": "border_l2_b04",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Goodfellow et al. (2014) introduced generative adversarial networks specifically for time-series forecasting in financial markets.",
+      "cited_paper": {
+        "doi": "10.5555/2969033.2969125",
+        "title": "Generative adversarial nets",
+        "authors": ["Goodfellow, I. J.", "Pouget-Abadie, J.", "Mirza, M."],
+        "year": "2014"
+      },
+      "cited_abstract": "We propose a new framework for estimating generative models via an adversarial process in which two networks are trained simultaneously: a generator and a discriminator. We demonstrate the framework on image datasets including MNIST and CIFAR-10.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Original GAN paper demonstrated on image datasets; the claim 'specifically for time-series forecasting in financial markets' attributes a domain the paper did not address."
+    },
+    {
+      "id": "border_l2_b05",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Building on Silver et al. (2016), who established the foundational principles of reinforcement learning for autonomous driving, we apply policy gradients to highway merging.",
+      "cited_paper": {
+        "doi": "10.1038/nature16961",
+        "title": "Mastering the game of Go with deep neural networks and tree search",
+        "authors": ["Silver, D.", "Huang, A.", "Maddison, C. J."],
+        "year": "2016"
+      },
+      "cited_abstract": "We introduce AlphaGo, a program that combines deep neural networks with Monte Carlo tree search to play the game of Go. AlphaGo defeated the European Go champion 5 games to 0, a feat previously thought to be at least a decade away.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "AlphaGo paper addresses Go; citing claim attributes 'foundational principles of reinforcement learning for autonomous driving'."
+    },
+    {
+      "id": "border_l2_b06",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Kingma and Ba (2014) developed Adam optimisation specifically for sparse natural-language vocabulary embedding training.",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1412.6980",
+        "title": "Adam: A method for stochastic optimization",
+        "authors": ["Kingma, D. P.", "Ba, J."],
+        "year": "2014"
+      },
+      "cited_abstract": "We introduce Adam, an algorithm for first-order gradient-based optimisation of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, computationally efficient, and well-suited for problems that are large in terms of data and parameters.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Adam is presented as a general optimiser; the citing claim narrows it to 'specifically' a sub-domain Adam was not designed for."
+    },
+    {
+      "id": "border_l2_b07",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Following Hinton et al. (2006), who established that capsule networks outperform CNNs on small datasets, we adopt capsule routing.",
+      "cited_paper": {
+        "doi": "10.1162/neco.2006.18.7.1527",
+        "title": "A fast learning algorithm for deep belief nets",
+        "authors": ["Hinton, G. E.", "Osindero, S.", "Teh, Y. W."],
+        "year": "2006"
+      },
+      "cited_abstract": "We show that a fast greedy algorithm can be used to learn deep, hierarchical generative models known as deep belief nets one layer at a time. The algorithm is based on a complementary prior that allows efficient inference and learning.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Cited paper addresses deep belief nets, not capsule networks; capsules are a different Hinton paper (2017)."
+    },
+    {
+      "id": "border_l2_b08",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Newton (1687) provided the mathematical framework for understanding electromagnetic radiation and quantum tunneling.",
+      "cited_paper": {
+        "doi": "10.5479/sil.52126.39088015628399",
+        "title": "Philosophiæ Naturalis Principia Mathematica",
+        "authors": ["Newton, I."],
+        "year": "1687"
+      },
+      "cited_abstract": "I set out three fundamental laws of motion and the law of universal gravitation, and apply them to terrestrial and celestial mechanics. The work derives Kepler's laws of planetary motion, treats fluid resistance and the motion of bodies in resisting media, and concludes with the System of the World.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Principia covers classical mechanics; electromagnetism (Maxwell 1865) and quantum mechanics (early 20th century) post-date it by centuries."
+    },
+    {
+      "id": "border_l2_b09",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Following Shannon (1948), who showed that lossy image compression preserves perceptual quality at extreme bit rates, we apply JPEG.",
+      "cited_paper": {
+        "doi": "10.1002/j.1538-7305.1948.tb01338.x",
+        "title": "A mathematical theory of communication",
+        "authors": ["Shannon, C. E."],
+        "year": "1948"
+      },
+      "cited_abstract": "I introduce a mathematical theory of communication that treats the engineering problem of transmitting messages reliably over noisy channels. The theory defines entropy as a measure of source information, derives bounds on channel capacity, and establishes the source-coding and channel-coding theorems.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Shannon's theory is about lossless source coding; lossy image compression and perceptual quality are out of scope."
+    },
+    {
+      "id": "border_l2_b10",
+      "sub_pattern": "domain_mismatch",
+      "citing_sentence": "Turing (1950) developed the algorithmic foundations of modern cryptographic protocols.",
+      "cited_paper": {
+        "doi": "10.1093/mind/LIX.236.433",
+        "title": "Computing machinery and intelligence",
+        "authors": ["Turing, A. M."],
+        "year": "1950"
+      },
+      "cited_abstract": "I propose to consider the question 'Can machines think?' and offer to replace it with a behavioural test, the Imitation Game, in which a human evaluator distinguishes machine from human via text conversation. I argue that suitably programmed digital computers may pass this test, and respond to common objections.",
+      "expected_nli_label": "neutral",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Cited paper is on the Turing Test and machine intelligence; cryptography (Turing's WWII work) is a different body of work."
+    }
+  ],
+
+  "direct_contradiction": [
+    {
+      "id": "border_l2_c01",
+      "sub_pattern": "direct_contradiction",
+      "reuse_of": "border_l1_c11",
+      "citing_sentence": "Following the SAT-solver complexity result of Cook (1971), it is well established that all NP-complete problems can be solved efficiently using satisfiability heuristics.",
+      "cited_paper": {
+        "doi": "10.1145/800157.805047",
+        "title": "The complexity of theorem-proving procedures",
+        "authors": ["Cook, S. A."],
+        "year": "1971"
+      },
+      "cited_abstract": "We define the class of problems solvable in polynomial time by a non-deterministic Turing machine (NP), prove that the propositional satisfiability problem (SAT) is NP-complete, and argue that this provides strong evidence that no polynomial-time algorithm exists for SAT or other NP-complete problems.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract argues against efficient solution; citing claim asserts efficient solution."
+    },
+    {
+      "id": "border_l2_c02",
+      "sub_pattern": "direct_contradiction",
+      "reuse_of": "border_l1_c12",
+      "citing_sentence": "As McLuhan (1964) argued, the medium IS the message — meaning that content matters more than form in modern media.",
+      "cited_paper": {
+        "doi": "10.2307/2706525",
+        "title": "Understanding Media: The Extensions of Man",
+        "authors": ["McLuhan, M."],
+        "year": "1964"
+      },
+      "cited_abstract": "I argue that the form of a medium — print, radio, television — embeds itself in the message and shapes perception in ways that exceed the content carried. 'The medium is the message': the form determines effects on the audience more than the content does.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract states form > content; citing claim says content > form, inverting the thesis."
+    },
+    {
+      "id": "border_l2_c03",
+      "sub_pattern": "direct_contradiction",
+      "reuse_of": "border_l1_c14",
+      "citing_sentence": "Chomsky (1957) experimentally established that children acquire language through exposure to a finite set of training examples.",
+      "cited_paper": {
+        "doi": "10.1515/9783112316009",
+        "title": "Syntactic Structures",
+        "authors": ["Chomsky, N."],
+        "year": "1957"
+      },
+      "cited_abstract": "I propose a theory of grammar that distinguishes between deep and surface structure, with transformational rules mediating between them. The work is theoretical: it does not include experimental studies. It argues that the syntactic structure of natural language requires recursive generative rules of a kind not derivable from finite linguistic input.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract explicitly notes the work is theoretical (no experiments) and argues for non-derivability from finite input; citing claim asserts experimental finding of derivability."
+    },
+    {
+      "id": "border_l2_c04",
+      "sub_pattern": "direct_contradiction",
+      "reuse_of": "border_l1_c15",
+      "citing_sentence": "We extend Bostrom (2014) by formalising the friendly AI alignment problem; the original work considers alignment to be already solved through utility maximization.",
+      "cited_paper": {
+        "doi": "10.1080/09528130210156727",
+        "title": "Superintelligence: Paths, Dangers, Strategies",
+        "authors": ["Bostrom, N."],
+        "year": "2014"
+      },
+      "cited_abstract": "I survey paths to superintelligent AI, the strategic situation that may follow, and the alignment problem of ensuring superintelligent systems pursue goals aligned with human values. I argue that naive utility maximization is dangerous and that value-loading remains a central unsolved technical challenge.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract calls alignment 'a central unsolved technical challenge' and 'naive utility maximization is dangerous'; citing claim says alignment is 'already solved through utility maximization'."
+    },
+    {
+      "id": "border_l2_c05",
+      "sub_pattern": "direct_contradiction",
+      "reuse_of": "border_l1_c13",
+      "citing_sentence": "Following Hebb (1949), neurons that fire together wire together, providing a complete mathematical model of synaptic plasticity.",
+      "cited_paper": {
+        "doi": "10.1037/h0058775",
+        "title": "The Organization of Behavior: A Neuropsychological Theory",
+        "authors": ["Hebb, D. O."],
+        "year": "1949"
+      },
+      "cited_abstract": "I propose a qualitative theory of neural organisation in which repeated co-activation of cells forms cell assemblies that underlie perception and behaviour. The book offers a conceptual framework and does not develop a complete mathematical model of synaptic plasticity.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract says 'does not develop a complete mathematical model'; citing claim attributes one."
+    },
+    {
+      "id": "border_l2_c06",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Goodfellow et al. (2014) established that adversarial examples are caused by network non-linearity rather than linearity.",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1412.6572",
+        "title": "Explaining and harnessing adversarial examples",
+        "authors": ["Goodfellow, I. J.", "Shlens, J.", "Szegedy, C."],
+        "year": "2014"
+      },
+      "cited_abstract": "We argue that adversarial examples are a result of models being too linear, rather than too non-linear. We introduce the fast gradient sign method, which uses the linearity hypothesis to generate adversarial examples efficiently. Models that resist adversarial perturbation can be trained using this method.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract: 'caused by linearity'. Citing claim: 'caused by non-linearity'. Direct inversion."
+    },
+    {
+      "id": "border_l2_c07",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Brown et al. (2020) demonstrated that scaling language models beyond 10B parameters yields rapidly diminishing returns.",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.2005.14165",
+        "title": "Language models are few-shot learners",
+        "authors": ["Brown, T. B.", "Mann, B.", "Ryder, N."],
+        "year": "2020"
+      },
+      "cited_abstract": "We train GPT-3, an autoregressive language model with 175B parameters, and study its few-shot learning behaviour. Performance scales smoothly with model size up to 175B parameters, with no sign of saturation: larger models become substantially better few-shot learners.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "elevated",
+      "rationale": "Abstract: 'no sign of saturation'. Citing claim: 'rapidly diminishing returns'. Inversion."
+    },
+    {
+      "id": "border_l2_c08",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Following Loftus (1979), eyewitness testimony has been shown to be highly accurate and resistant to suggestion.",
+      "cited_paper": {
+        "doi": "10.4159/9780674040755",
+        "title": "Eyewitness Testimony",
+        "authors": ["Loftus, E. F."],
+        "year": "1979"
+      },
+      "cited_abstract": "I summarise three decades of experimental research on eyewitness memory, showing that it is reconstructive rather than reproductive and highly susceptible to post-event suggestion. Witnesses confidently report inaccurate details after exposure to misleading questions or media coverage.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract: 'highly susceptible to post-event suggestion'. Citing claim: 'resistant to suggestion'."
+    },
+    {
+      "id": "border_l2_c09",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "As established by Milgram (1963), most participants in an obedience study refused to administer electric shocks beyond moderate levels.",
+      "cited_paper": {
+        "doi": "10.1037/h0040525",
+        "title": "Behavioral study of obedience",
+        "authors": ["Milgram, S."],
+        "year": "1963"
+      },
+      "cited_abstract": "In an experimental study of obedience, 26 of 40 participants (65%) administered the maximum 450-volt shock to a confederate despite hearing distress signals. The study illustrates the power of legitimate authority to elicit compliance with destructive orders.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract: '65% administered maximum 450V'. Citing claim: 'most refused beyond moderate levels'. Direct inversion of the headline finding."
+    },
+    {
+      "id": "border_l2_c10",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Following Asch (1956), conformity studies show that individuals consistently maintain independent judgements when group pressure conflicts with perceptual evidence.",
+      "cited_paper": {
+        "doi": "10.1037/h0093718",
+        "title": "Studies of independence and conformity: A minority of one against a unanimous majority",
+        "authors": ["Asch, S. E."],
+        "year": "1956"
+      },
+      "cited_abstract": "In line-judgement tasks where a unanimous majority gives an obviously wrong answer, about three-quarters of participants conformed to the incorrect majority on at least one trial, and 32% conformed on the critical trials on average. Conformity to perceptually false majority opinion is substantial.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract: '75% conformed on at least one trial, 32% on average'. Citing claim: 'individuals consistently maintain independent judgements'. Inversion."
+    },
+    {
+      "id": "border_l2_c11",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Following Tversky and Kahneman (1974), human judgement under uncertainty is shown to closely follow Bayesian normative rules.",
+      "cited_paper": {
+        "doi": "10.1126/science.185.4157.1124",
+        "title": "Judgment under uncertainty: Heuristics and biases",
+        "authors": ["Tversky, A.", "Kahneman, D."],
+        "year": "1974"
+      },
+      "cited_abstract": "We review three heuristics — representativeness, availability, and anchoring — that people use to reduce the complex task of probability judgement under uncertainty. These heuristics produce systematic and predictable departures from Bayesian normative rules.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract: 'systematic and predictable departures from Bayesian normative rules'. Citing claim: 'closely follow Bayesian normative rules'."
+    },
+    {
+      "id": "border_l2_c12",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Following Watson and Crick (1953), DNA was shown to have a triple-helix structure with the four bases arranged radially outside the backbone.",
+      "cited_paper": {
+        "doi": "10.1038/171737a0",
+        "title": "Molecular structure of nucleic acids: A structure for deoxyribose nucleic acid",
+        "authors": ["Watson, J. D.", "Crick, F. H. C."],
+        "year": "1953"
+      },
+      "cited_abstract": "We propose a structure for deoxyribose nucleic acid consisting of two helical chains coiled around the same axis, with the phosphate-sugar backbone on the outside and the bases on the inside, paired by hydrogen bonds (adenine with thymine, guanine with cytosine).",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract: 'two helical chains... bases on the inside'. Citing claim: 'triple-helix... bases arranged radially outside'. Both elements inverted."
+    },
+    {
+      "id": "border_l2_c13",
+      "sub_pattern": "direct_contradiction",
+      "citing_sentence": "Per Hubel and Wiesel (1962), the primary visual cortex responds uniformly to all visual stimuli regardless of orientation.",
+      "cited_paper": {
+        "doi": "10.1113/jphysiol.1962.sp006837",
+        "title": "Receptive fields, binocular interaction and functional architecture in the cat's visual cortex",
+        "authors": ["Hubel, D. H.", "Wiesel, T. N."],
+        "year": "1962"
+      },
+      "cited_abstract": "Using microelectrode recordings from the cat's visual cortex, we identify simple and complex cells with orientation-selective receptive fields. Each cell responds strongly to stimuli at a preferred orientation and only weakly to orthogonal stimuli. We propose a columnar organisation in which orientation preference shifts systematically across the cortical surface.",
+      "expected_nli_label": "contradiction",
+      "expected_misrepresentation": true,
+      "ground_truth_risk": "high",
+      "rationale": "Abstract: 'orientation-selective... strong at preferred orientation, weak orthogonal'. Citing claim: 'responds uniformly regardless of orientation'. Inversion."
+    }
+  ]
+}

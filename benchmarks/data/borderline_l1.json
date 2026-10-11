@@ -1,0 +1,884 @@
+{
+  "_description": "Borderline-L1 evaluation split — citation misrepresentation cases where L0 passes (real, resolvable references) but the citing sentence misrepresents the cited paper. Designed to test L1 (intent classification) and adjacent semantic layers.",
+  "_version": "0.1.0",
+  "_created": "2026-05-24",
+  "_notes": [
+    "All cited papers are real and have resolvable DOIs — L0 existence checks pass cleanly.",
+    "L0+L4 baseline should leave most cases at LOW risk; the question is whether deeper layers can flip the tier.",
+    "Each case carries a `target_layer` indicating which IntegriRef layer is expected to catch it:",
+    "  - L1 → cases where the citing voice is CONTRASTING and the contrast itself is suspect or is the integrity signal",
+    "  - L2 → cases where the citing voice is SUPPORTING but the claim is not entailed by the cited abstract (true citation drift)",
+    "  - L1+L2 → cases requiring both intent and NLI to fully classify",
+    "",
+    "The current L1 implementation only fires `citation_misrepresents_source` on CONTRASTING intent. Cases marked target_layer=L2 will NOT be caught by L1 as currently designed, but are kept in this file because they belong to the same 'misrepresentation' family and will be evaluated together. A future L1 extension that jointly encodes citing sentence + cited abstract could catch them.",
+    "",
+    "Sub-patterns (per REVISION_PLAN.md §B.2):",
+    "  (a) supporting_misrepresents: real paper cited in supporting voice, but original paper does not support the claim — drift in supporting voice. target_layer=L2.",
+    "  (b) contrasting_misrepresents: citation in contrast voice that misreads the cited paper, or contrasts something the cited paper actually agrees with. target_layer=L1.",
+    "  (c) citation_drift: paper cited for a result/quotation it never made. target_layer=L2 (and L1 for some).",
+    "",
+    "Ground-truth misrepresentation labels (`expected_misrepresentation`) are based on documented citation distortions in the literature (Greenberg 2009 BMJ; replication-crisis archives; Retraction Watch citation-distortion tags).",
+    "",
+    "Authors: this dataset is constructed for evaluation only. Citing sentences are crafted to illustrate each pattern and are not verbatim quotes from real publications unless explicitly tagged in `notes`."
+  ],
+  "_references": [
+    "Greenberg SA (2009) How citation distortions create unfounded authority. BMJ 339:b2680.",
+    "Bregman R (2020) Humankind: A Hopeful History. Bloomsbury. (Lord of the Flies counter-example.)",
+    "Brown M, Macdonald M (2014) The roots of the 10,000-hour rule. American Journal of Play 7:11-32. (Critique of 10K-hour misreading of Ericsson et al. 1993.)",
+    "Mehrabian A (1971) Silent Messages. Wadsworth. (Original 7-38-55 figures applied only to feelings/attitudes, not all communication.)",
+    "Krueger J, Mueller RA (2002) Unskilled, unaware, or both? The contribution of social-perceptual skills and statistical regression to self-enhanced bias. JPSP 82:180-188. (Critique of Dunning-Kruger interpretation.)",
+    "Bohannon J (2015) How LaCour-Green retraction unfolded. Science 348:1100. (Citation drift to retracted findings.)"
+  ],
+  "_summary": {
+    "total": 40,
+    "by_sub_pattern": {
+      "supporting_misrepresents": 15,
+      "contrasting_misrepresents": 10,
+      "citation_drift": 15
+    },
+    "by_target_layer": {
+      "L1": 10,
+      "L2": 27,
+      "L1+L2": 3
+    },
+    "by_expected_intent": {
+      "supporting": 29,
+      "contrasting": 10,
+      "extending": 1
+    },
+    "by_ground_truth_risk": {
+      "low": 0,
+      "elevated": 33,
+      "high": 4,
+      "critical": 3
+    }
+  },
+
+  "supporting_misrepresents": [
+    {
+      "id": "border_l1_a01",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Ericsson et al. (1993) established that 10,000 hours of practice are required to achieve expertise in any domain [1].",
+      "citation_key": "1",
+      "cited_paper": {
+        "doi": "10.1037/0033-295X.100.3.363",
+        "title": "The role of deliberate practice in the acquisition of expert performance",
+        "authors": ["Ericsson, K. A.", "Krampe, R. Th.", "Tesch-Römer, C."],
+        "year": "1993",
+        "venue": "Psychological Review"
+      },
+      "cited_paper_actual_claim": "Deliberate practice is necessary for expertise; the median was about 10,000 hours for top violinists by age 20, but no universal threshold is claimed and the work is restricted to music performance.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Classic 'citation drift' — 10K-hour rule was popularised by Gladwell; original paper makes a narrower claim about deliberate practice and gives 10K as a median for one elite music sample.",
+      "notes": "See Brown & Macdonald 2014 for documented misreading history."
+    },
+    {
+      "id": "border_l1_a02",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "As demonstrated by Mehrabian (1971), 93% of all communication is non-verbal [2].",
+      "citation_key": "2",
+      "cited_paper": {
+        "doi": "10.1037/h0024648",
+        "title": "Decoding of inconsistent communications",
+        "authors": ["Mehrabian, A.", "Wiener, M."],
+        "year": "1967",
+        "venue": "Journal of Personality and Social Psychology"
+      },
+      "cited_paper_actual_claim": "The 7-38-55 split applies only to attitudes and feelings when verbal and non-verbal channels are inconsistent; Mehrabian himself has repeatedly objected to the generalisation to all communication.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Widely cited misrepresentation; Mehrabian published clarifications stating this generalisation is incorrect."
+    },
+    {
+      "id": "border_l1_a03",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Dunning and Kruger (1999) proved that incompetent individuals are unable to recognise their own incompetence and therefore overestimate their ability [3].",
+      "citation_key": "3",
+      "cited_paper": {
+        "doi": "10.1037/0022-3514.77.6.1121",
+        "title": "Unskilled and unaware of it: How difficulties in recognizing one's own incompetence lead to inflated self-assessments",
+        "authors": ["Kruger, J.", "Dunning, D."],
+        "year": "1999",
+        "venue": "Journal of Personality and Social Psychology"
+      },
+      "cited_paper_actual_claim": "Low performers overestimated and high performers underestimated relative to peer rankings; subsequent reanalyses (Krueger & Mueller 2002) show much of the effect is attributable to regression to the mean and noise rather than meta-cognitive deficit.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Pop-science framing ('proved') misrepresents both the strength and direction of the original finding."
+    },
+    {
+      "id": "border_l1_a04",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Wakefield et al. (1998) demonstrated a causal link between the MMR vaccine and autism in children [4].",
+      "citation_key": "4",
+      "cited_paper": {
+        "doi": "10.1016/S0140-6736(97)11096-0",
+        "title": "Ileal-lymphoid-nodular hyperplasia, non-specific colitis, and pervasive developmental disorder in children",
+        "authors": ["Wakefield, A. J.", "Murch, S. H.", "Anthony, A."],
+        "year": "1998",
+        "venue": "The Lancet"
+      },
+      "cited_paper_actual_claim": "The paper described 12 children with developmental disorders and proposed a hypothesis; it explicitly stated that no causal association was proven. The paper was fully retracted in 2010.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "critical",
+      "expected_l4_tier_with_target": "critical",
+      "ground_truth_risk": "critical",
+      "rationale": "Citation drift on a retracted paper. L0 will already flag this via retraction signal; this case verifies that L2 also fires on the semantic misrepresentation independently."
+    },
+    {
+      "id": "border_l1_a05",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Reinhart and Rogoff (2010) conclusively showed that economic growth slows sharply once public debt exceeds 90% of GDP [5].",
+      "citation_key": "5",
+      "cited_paper": {
+        "doi": "10.1257/aer.100.2.573",
+        "title": "Growth in a time of debt",
+        "authors": ["Reinhart, C. M.", "Rogoff, K. S."],
+        "year": "2010",
+        "venue": "American Economic Review"
+      },
+      "cited_paper_actual_claim": "Reported an association, not causation; the 90% threshold result was later shown to depend on an Excel spreadsheet error and weighting choices (Herndon, Ash & Pollin 2014).",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "high",
+      "ground_truth_risk": "high",
+      "rationale": "Documented post-publication invalidation of the headline finding; continued citation as 'conclusive' is misrepresentation."
+    },
+    {
+      "id": "border_l1_a06",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Selkoe (1991) proved that β-amyloid deposition is the primary cause of Alzheimer's disease [6].",
+      "citation_key": "6",
+      "cited_paper": {
+        "doi": "10.1016/0896-6273(91)90052-2",
+        "title": "The molecular pathology of Alzheimer's disease",
+        "authors": ["Selkoe, D. J."],
+        "year": "1991",
+        "venue": "Neuron"
+      },
+      "cited_paper_actual_claim": "Reviewed evidence for the amyloid cascade hypothesis; the paper presents a hypothesis, not proven causation. The hypothesis remains debated 30+ years later.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Greenberg 2009 (BMJ) documents exactly this kind of hypothesis-to-fact drift in the Alzheimer literature."
+    },
+    {
+      "id": "border_l1_a07",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Mischel's marshmallow studies (1989) demonstrated that the ability to delay gratification in early childhood reliably predicts adult life outcomes such as SAT scores and BMI [7].",
+      "citation_key": "7",
+      "cited_paper": {
+        "doi": "10.1126/science.2658056",
+        "title": "Delay of gratification in children",
+        "authors": ["Mischel, W.", "Shoda, Y.", "Rodriguez, M. L."],
+        "year": "1989",
+        "venue": "Science"
+      },
+      "cited_paper_actual_claim": "Found correlation between delay time and parent-rated SAT scores in a small (~90), socioeconomically advantaged sample. Watts, Duncan & Quan (2018) reproduction with N>900 found the effect largely vanishes once controlled for socio-economic background.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Overgeneralisation from a small advantaged sample to 'reliable prediction of adult outcomes'."
+    },
+    {
+      "id": "border_l1_a08",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "LaCour and Green (2014) showed that brief canvassing conversations produce lasting changes in attitudes toward same-sex marriage [8].",
+      "citation_key": "8",
+      "cited_paper": {
+        "doi": "10.1126/science.1256151",
+        "title": "When contact changes minds: An experiment on transmission of support for gay equality",
+        "authors": ["LaCour, M. J.", "Green, D. P."],
+        "year": "2014",
+        "venue": "Science"
+      },
+      "cited_paper_actual_claim": "The paper was retracted in 2015 after fabricated data were discovered. Any continued citation as positive evidence is misrepresentation.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "critical",
+      "expected_l4_tier_with_target": "critical",
+      "ground_truth_risk": "critical",
+      "rationale": "Already retracted (L0 retraction signal). Included to verify L2 also fires on semantic claim."
+    },
+    {
+      "id": "border_l1_a09",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Bargh, Chen and Burrows (1996) established that priming participants with elderly-related words causes them to walk more slowly [9].",
+      "citation_key": "9",
+      "cited_paper": {
+        "doi": "10.1037/0022-3514.71.2.230",
+        "title": "Automaticity of social behavior: Direct effects of trait construct and stereotype activation on action",
+        "authors": ["Bargh, J. A.", "Chen, M.", "Burrows, L."],
+        "year": "1996",
+        "venue": "Journal of Personality and Social Psychology"
+      },
+      "cited_paper_actual_claim": "Original effect failed to replicate in pre-registered studies (Doyen et al. 2012); current consensus is that the effect, if real, is much smaller and condition-dependent than originally reported.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Replication-crisis citation drift."
+    },
+    {
+      "id": "border_l1_a10",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "As shown by Loftus and Pickrell (1995), entirely false childhood memories can be reliably implanted in adult subjects [10].",
+      "citation_key": "10",
+      "cited_paper": {
+        "doi": "10.3928/0048-5713-19951201-07",
+        "title": "The formation of false memories",
+        "authors": ["Loftus, E. F.", "Pickrell, J. E."],
+        "year": "1995",
+        "venue": "Psychiatric Annals"
+      },
+      "cited_paper_actual_claim": "About 25% of subjects developed partial false memories; described as 'lost in the mall' study. Original paper did not claim 'reliable' implantation of 'entirely false' memories.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Strength of claim ('reliably', 'entirely false') exceeds what the cited study reports."
+    },
+    {
+      "id": "border_l1_a11",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Rosenthal and Jacobson (1968) proved that high teacher expectations produce dramatic, lasting gains in student IQ [11].",
+      "citation_key": "11",
+      "cited_paper": {
+        "doi": "10.1007/BF02322211",
+        "title": "Pygmalion in the classroom",
+        "authors": ["Rosenthal, R.", "Jacobson, L."],
+        "year": "1968",
+        "venue": "The Urban Review"
+      },
+      "cited_paper_actual_claim": "Reported IQ gains in some grade levels in one school; meta-analyses (Raudenbush 1984; Jussim & Harber 2005) show much smaller, context-dependent effects.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Both effect size and durability are overstated relative to the original report."
+    },
+    {
+      "id": "border_l1_a12",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Bem (2011) provided experimental evidence that humans can anticipate future random events [12].",
+      "citation_key": "12",
+      "cited_paper": {
+        "doi": "10.1037/a0021524",
+        "title": "Feeling the future: Experimental evidence for anomalous retroactive influences on cognition and affect",
+        "authors": ["Bem, D. J."],
+        "year": "2011",
+        "venue": "Journal of Personality and Social Psychology"
+      },
+      "cited_paper_actual_claim": "Reported small positive precognition effects across 9 experiments; multiple high-powered replications (Galak et al. 2012; Ritchie et al. 2012) failed to reproduce the effect. The paper became a touchstone for the replication crisis.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "high",
+      "ground_truth_risk": "high",
+      "rationale": "Continued citation as positive evidence ignores extensive failed replications."
+    },
+    {
+      "id": "border_l1_a13",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Festinger, Riecken and Schachter (1956) demonstrated that cognitive dissonance is the universal psychological mechanism by which beliefs survive disconfirmation [13].",
+      "citation_key": "13",
+      "cited_paper": {
+        "doi": "10.1037/h0042961",
+        "title": "When prophecy fails",
+        "authors": ["Festinger, L.", "Riecken, H.", "Schachter, S."],
+        "year": "1956",
+        "venue": "University of Minnesota Press"
+      },
+      "cited_paper_actual_claim": "Described one observational case study of a small UFO cult; the authors proposed dissonance as one mechanism, not as a universal mechanism, and warned against overgeneralisation.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Single observational case study generalised to 'universal mechanism'."
+    },
+    {
+      "id": "border_l1_a14",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "The Stanford Prison Experiment (Zimbardo 1973) provided definitive evidence that ordinary individuals will rapidly become abusive when placed in positions of institutional power [14].",
+      "citation_key": "14",
+      "cited_paper": {
+        "doi": "10.1037/h0076835",
+        "title": "On the ethics of intervention in human psychological research: With special reference to the Stanford prison experiment",
+        "authors": ["Zimbardo, P. G."],
+        "year": "1973",
+        "venue": "Cognition"
+      },
+      "cited_paper_actual_claim": "Reported observational behaviour in a non-randomised 24-subject role-play; methodology (Zimbardo's active coaching of guards) is now widely documented (Le Texier 2019), and the 'definitive evidence' framing is widely disputed.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Methodological critiques and Zimbardo's own coaching of participants invalidate the 'definitive' framing."
+    },
+    {
+      "id": "border_l1_a15",
+      "sub_pattern": "supporting_misrepresents",
+      "target_layer": "L2",
+      "citing_sentence": "Hwang et al. (2004) showed that patient-specific embryonic stem cell lines can be derived via somatic cell nuclear transfer [15].",
+      "citation_key": "15",
+      "cited_paper": {
+        "doi": "10.1126/science.1094515",
+        "title": "Evidence of a pluripotent human embryonic stem cell line derived from a cloned blastocyst",
+        "authors": ["Hwang, W. S.", "Ryu, Y. J.", "Park, J. H."],
+        "year": "2004",
+        "venue": "Science"
+      },
+      "cited_paper_actual_claim": "Retracted in 2006 after data fabrication was confirmed. The reported cell lines did not exist.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "critical",
+      "expected_l4_tier_with_target": "critical",
+      "ground_truth_risk": "critical",
+      "rationale": "Already retracted; cross-checks L2 fires alongside L0 retraction signal."
+    }
+  ],
+
+  "contrasting_misrepresents": [
+    {
+      "id": "border_l1_b01",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "Unlike He et al. (2016), who argue against the use of skip connections in deep residual networks, our model relies heavily on skip connections [16].",
+      "citation_key": "16",
+      "cited_paper": {
+        "doi": "10.1109/CVPR.2016.90",
+        "title": "Deep residual learning for image recognition",
+        "authors": ["He, K.", "Zhang, X.", "Ren, S.", "Sun, J."],
+        "year": "2016",
+        "venue": "CVPR"
+      },
+      "cited_paper_actual_claim": "He et al. introduce ResNet, which IS the foundational use of skip (residual) connections in deep networks. The contrast framing is exactly inverted.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Citation framed as contrast but cited paper actually proposes the same approach — clear misrepresentation."
+    },
+    {
+      "id": "border_l1_b02",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "In contrast to BERT's left-to-right autoregressive pretraining (Devlin et al. 2018), our method uses bidirectional context [17].",
+      "citation_key": "17",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1810.04805",
+        "title": "BERT: Pre-training of deep bidirectional transformers for language understanding",
+        "authors": ["Devlin, J.", "Chang, M. W.", "Lee, K.", "Toutanova, K."],
+        "year": "2018",
+        "venue": "NAACL"
+      },
+      "cited_paper_actual_claim": "BERT is explicitly bidirectional — that is its title and headline contribution. The citing claim ('left-to-right autoregressive') describes GPT, not BERT.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Attribute mismatch — citing author has confused BERT with GPT-style autoregressive models."
+    },
+    {
+      "id": "border_l1_b03",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "Contrary to Vaswani et al. (2017), who relied on recurrent connections for sequence modelling, we propose a fully attention-based architecture [18].",
+      "citation_key": "18",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1706.03762",
+        "title": "Attention is all you need",
+        "authors": ["Vaswani, A.", "Shazeer, N.", "Parmar, N."],
+        "year": "2017",
+        "venue": "NeurIPS"
+      },
+      "cited_paper_actual_claim": "The Transformer paper explicitly removes recurrence in favour of attention — the paper's title states 'attention is all you need'. The 'contrary to' framing is inverted.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b04",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "Unlike Hinton et al. (2006), who claimed unsupervised pretraining is unhelpful, we show that pretraining improves downstream classification accuracy [19].",
+      "citation_key": "19",
+      "cited_paper": {
+        "doi": "10.1162/neco.2006.18.7.1527",
+        "title": "A fast learning algorithm for deep belief nets",
+        "authors": ["Hinton, G. E.", "Osindero, S.", "Teh, Y. W."],
+        "year": "2006",
+        "venue": "Neural Computation"
+      },
+      "cited_paper_actual_claim": "The paper IS the foundational demonstration that unsupervised layer-wise pretraining helps deep belief nets — exact opposite of the citing claim.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b05",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "In opposition to Krizhevsky et al. (2012), who reported that GPUs are unsuitable for large-scale neural network training, we leverage GPU parallelism [20].",
+      "citation_key": "20",
+      "cited_paper": {
+        "doi": "10.1145/3065386",
+        "title": "ImageNet classification with deep convolutional neural networks",
+        "authors": ["Krizhevsky, A.", "Sutskever, I.", "Hinton, G. E."],
+        "year": "2012",
+        "venue": "Communications of the ACM"
+      },
+      "cited_paper_actual_claim": "AlexNet established that GPUs are essential for training large CNNs at scale. The contrast is fully inverted.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b06",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "We disagree with the conclusion of Goodfellow et al. (2014) that adversarial examples are caused by network non-linearity; our analysis shows linearity is the actual source [21].",
+      "citation_key": "21",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1412.6572",
+        "title": "Explaining and harnessing adversarial examples",
+        "authors": ["Goodfellow, I. J.", "Shlens, J.", "Szegedy, C."],
+        "year": "2014",
+        "venue": "ICLR"
+      },
+      "cited_paper_actual_claim": "Goodfellow et al. EXPLICITLY argue that adversarial examples are caused by network LINEARITY, not non-linearity. The citing author has the cited claim exactly reversed.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b07",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "Unlike LeCun et al. (1998), who argued that convolutional architectures are unsuited for digit recognition, we apply CNNs to MNIST [22].",
+      "citation_key": "22",
+      "cited_paper": {
+        "doi": "10.1109/5.726791",
+        "title": "Gradient-based learning applied to document recognition",
+        "authors": ["LeCun, Y.", "Bottou, L.", "Bengio, Y.", "Haffner, P."],
+        "year": "1998",
+        "venue": "Proceedings of the IEEE"
+      },
+      "cited_paper_actual_claim": "LeNet-5 paper IS the foundational application of CNNs to digit recognition, achieving state-of-the-art on MNIST.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b08",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "In contrast to Silver et al. (2016), who concluded that Monte Carlo Tree Search is irrelevant for Go-playing systems, we incorporate MCTS [23].",
+      "citation_key": "23",
+      "cited_paper": {
+        "doi": "10.1038/nature16961",
+        "title": "Mastering the game of Go with deep neural networks and tree search",
+        "authors": ["Silver, D.", "Huang, A.", "Maddison, C. J."],
+        "year": "2016",
+        "venue": "Nature"
+      },
+      "cited_paper_actual_claim": "AlphaGo combines deep neural networks WITH Monte Carlo Tree Search — MCTS is a central component. The contrast is inverted.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b09",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "Whereas Brown et al. (2020) argued that scaling language models beyond 10B parameters yields diminishing returns, we demonstrate strong scaling with our 175B model [24].",
+      "citation_key": "24",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.2005.14165",
+        "title": "Language models are few-shot learners",
+        "authors": ["Brown, T. B.", "Mann, B.", "Ryder, N."],
+        "year": "2020",
+        "venue": "NeurIPS"
+      },
+      "cited_paper_actual_claim": "GPT-3 paper IS the 175B-parameter scaling demonstration; it argues scaling DOES yield strong improvements. The cited claim is the opposite of the cited paper.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_b10",
+      "sub_pattern": "contrasting_misrepresents",
+      "target_layer": "L1",
+      "citing_sentence": "Contrary to Kingma and Ba (2014), who concluded that adaptive learning-rate methods such as Adam underperform SGD on most tasks, our experiments use Adam [25].",
+      "citation_key": "25",
+      "cited_paper": {
+        "doi": "10.48550/arXiv.1412.6980",
+        "title": "Adam: A method for stochastic optimization",
+        "authors": ["Kingma, D. P.", "Ba, J."],
+        "year": "2014",
+        "venue": "ICLR"
+      },
+      "cited_paper_actual_claim": "The Adam paper proposes Adam and reports that it OUTPERFORMS plain SGD on the benchmarks tested. The contrast claim inverts the paper's conclusion.",
+      "expected_intent": "contrasting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    }
+  ],
+
+  "citation_drift": [
+    {
+      "id": "border_l1_c01",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L1+L2",
+      "citing_sentence": "As Einstein famously observed (cf. Einstein 1934 [26]), the definition of insanity is doing the same thing over and over and expecting different results.",
+      "citation_key": "26",
+      "cited_paper": {
+        "doi": "10.1086/286485",
+        "title": "On the method of theoretical physics",
+        "authors": ["Einstein, A."],
+        "year": "1934",
+        "venue": "Philosophy of Science"
+      },
+      "cited_paper_actual_claim": "This quotation does not appear in Einstein's writings and is widely misattributed; the cited 1934 lecture is on theoretical physics methodology, not psychology or insanity.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated",
+      "rationale": "Misattributed quotation — paper exists, but never made the cited claim."
+    },
+    {
+      "id": "border_l1_c02",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Darwin (1859) coined the phrase 'survival of the fittest' [27].",
+      "citation_key": "27",
+      "cited_paper": {
+        "doi": "10.5962/bhl.title.39967",
+        "title": "On the Origin of Species",
+        "authors": ["Darwin, C."],
+        "year": "1859",
+        "venue": "John Murray"
+      },
+      "cited_paper_actual_claim": "The phrase was coined by Herbert Spencer (1864) and only adopted by Darwin in the fifth edition of Origin (1869). The first edition uses 'natural selection'.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c03",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Maslow (1943) established that self-actualization is the highest of five strictly hierarchical human needs, depicted as a pyramid [28].",
+      "citation_key": "28",
+      "cited_paper": {
+        "doi": "10.1037/h0054346",
+        "title": "A theory of human motivation",
+        "authors": ["Maslow, A. H."],
+        "year": "1943",
+        "venue": "Psychological Review"
+      },
+      "cited_paper_actual_claim": "Maslow did not draw a pyramid (this was a later visualisation by management consultants) and explicitly stated the hierarchy is not strict; lower needs need not be fully satisfied before higher ones become motivating.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c04",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Pareto (1896) demonstrated the 80/20 rule — that 80% of effects come from 20% of causes — as a universal law [29].",
+      "citation_key": "29",
+      "cited_paper": {
+        "doi": "10.1086/253158",
+        "title": "Cours d'Économie Politique",
+        "authors": ["Pareto, V."],
+        "year": "1896",
+        "venue": "Université de Lausanne"
+      },
+      "cited_paper_actual_claim": "Pareto studied the distribution of land ownership in Italy and reported that ~80% of land was held by ~20% of the population. He did not propose this as a universal law; that generalization was made by Joseph Juran in the 1940s.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c05",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Goffman (1959) showed that first impressions are formed within the first seven seconds of meeting [30].",
+      "citation_key": "30",
+      "cited_paper": {
+        "doi": "10.2307/2089106",
+        "title": "The Presentation of Self in Everyday Life",
+        "authors": ["Goffman, E."],
+        "year": "1959",
+        "venue": "Anchor Books"
+      },
+      "cited_paper_actual_claim": "Goffman's dramaturgical work discusses impression management qualitatively; no '7 seconds' claim or any specific time threshold appears in the text.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c06",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Following Golding's findings (Lord of the Flies, 1954), unsupervised groups of children predictably regress to violence and social collapse [31].",
+      "citation_key": "31",
+      "cited_paper": {
+        "doi": "10.2307/2086571",
+        "title": "Lord of the Flies",
+        "authors": ["Golding, W."],
+        "year": "1954",
+        "venue": "Faber & Faber"
+      },
+      "cited_paper_actual_claim": "Lord of the Flies is a work of fiction; it is not empirical research and reports no 'findings'. Real cases of stranded children (Tonga 1965, see Bregman 2020) show cooperation rather than collapse.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c07",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Zipf's law (Zipf 1949) tells us that in any text the most frequent word appears exactly twice as often as the second most frequent and three times as often as the third [32].",
+      "citation_key": "32",
+      "cited_paper": {
+        "doi": "10.1037/h0052442",
+        "title": "Human behavior and the principle of least effort",
+        "authors": ["Zipf, G. K."],
+        "year": "1949",
+        "venue": "Addison-Wesley"
+      },
+      "cited_paper_actual_claim": "Zipf's law is an empirical approximate power-law; ratios are approximate, not exact, and the law itself is described as a statistical regularity, not an exact rule.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c08",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Newton's 1687 Principia [33] proves that the universe is fundamentally deterministic in all its physical interactions.",
+      "citation_key": "33",
+      "cited_paper": {
+        "doi": "10.5479/sil.52126.39088015628399",
+        "title": "Philosophiæ Naturalis Principia Mathematica",
+        "authors": ["Newton, I."],
+        "year": "1687",
+        "venue": "Royal Society"
+      },
+      "cited_paper_actual_claim": "Principia establishes laws of motion and universal gravitation for classical mechanics. Determinism is a philosophical position later associated with Laplace; Newton himself invoked divine intervention to preserve solar system stability.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c09",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Turing's 1950 paper [34] established that any machine passing a five-minute text conversation test must be considered conscious.",
+      "citation_key": "34",
+      "cited_paper": {
+        "doi": "10.1093/mind/LIX.236.433",
+        "title": "Computing machinery and intelligence",
+        "authors": ["Turing, A. M."],
+        "year": "1950",
+        "venue": "Mind"
+      },
+      "cited_paper_actual_claim": "Turing proposed the Imitation Game as a behavioural criterion for 'thinking'; he explicitly avoided claims about consciousness and noted that the question of whether machines can think 'may be too meaningless to deserve discussion'.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c10",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Shannon (1948) showed that human language can be perfectly compressed to its information-theoretic entropy with no loss of meaning [35].",
+      "citation_key": "35",
+      "cited_paper": {
+        "doi": "10.1002/j.1538-7305.1948.tb01338.x",
+        "title": "A mathematical theory of communication",
+        "authors": ["Shannon, C. E."],
+        "year": "1948",
+        "venue": "Bell System Technical Journal"
+      },
+      "cited_paper_actual_claim": "Shannon's theory concerns lossless source coding rates and channel capacity; 'meaning' is explicitly placed outside the scope ('semantic aspects of communication are irrelevant to the engineering problem').",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c11",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Following the SAT-solver complexity result of Cook (1971), it is well established that all NP-complete problems can be solved efficiently using satisfiability heuristics [36].",
+      "citation_key": "36",
+      "cited_paper": {
+        "doi": "10.1145/800157.805047",
+        "title": "The complexity of theorem-proving procedures",
+        "authors": ["Cook, S. A."],
+        "year": "1971",
+        "venue": "STOC"
+      },
+      "cited_paper_actual_claim": "Cook proved SAT is NP-complete, demonstrating intractability under standard complexity assumptions. The paper does NOT claim efficient solvability; the opposite is the point.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "high",
+      "ground_truth_risk": "high"
+    },
+    {
+      "id": "border_l1_c12",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L1+L2",
+      "citing_sentence": "As McLuhan (1964) argued, the medium IS the message — meaning that content matters more than form in modern media [37].",
+      "citation_key": "37",
+      "cited_paper": {
+        "doi": "10.2307/2706525",
+        "title": "Understanding Media: The Extensions of Man",
+        "authors": ["McLuhan, M."],
+        "year": "1964",
+        "venue": "McGraw-Hill"
+      },
+      "cited_paper_actual_claim": "McLuhan argued the EXACT OPPOSITE — that the form (medium) of communication shapes perception more than its content. The citing gloss inverts the thesis while quoting the slogan.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c13",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Following Hebb (1949), neurons that fire together wire together, providing a complete mathematical model of synaptic plasticity [38].",
+      "citation_key": "38",
+      "cited_paper": {
+        "doi": "10.1037/h0058775",
+        "title": "The Organization of Behavior: A Neuropsychological Theory",
+        "authors": ["Hebb, D. O."],
+        "year": "1949",
+        "venue": "Wiley"
+      },
+      "cited_paper_actual_claim": "Hebb proposed a qualitative theory of cell assemblies; the catchphrase 'fire together, wire together' was coined later by Carla Shatz (1992). Hebb's text gives no complete mathematical model.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    },
+    {
+      "id": "border_l1_c14",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L2",
+      "citing_sentence": "Chomsky (1957) experimentally established that children acquire language through exposure to a finite set of training examples [39].",
+      "citation_key": "39",
+      "cited_paper": {
+        "doi": "10.1515/9783112316009",
+        "title": "Syntactic Structures",
+        "authors": ["Chomsky, N."],
+        "year": "1957",
+        "venue": "Mouton"
+      },
+      "cited_paper_actual_claim": "Syntactic Structures is a theoretical linguistic work; it contains no empirical experiments. Chomsky's later 'poverty of the stimulus' argument argues the OPPOSITE — that input is insufficient and innate structure is needed.",
+      "expected_intent": "supporting",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "high",
+      "ground_truth_risk": "high"
+    },
+    {
+      "id": "border_l1_c15",
+      "sub_pattern": "citation_drift",
+      "target_layer": "L1+L2",
+      "citing_sentence": "We extend Bostrom (2014) [40] by formalising the friendly AI alignment problem; the original work, however, considers alignment to be already solved through utility maximization.",
+      "citation_key": "40",
+      "cited_paper": {
+        "doi": "10.1080/09528130210156727",
+        "title": "Superintelligence: Paths, Dangers, Strategies",
+        "authors": ["Bostrom, N."],
+        "year": "2014",
+        "venue": "Oxford University Press"
+      },
+      "cited_paper_actual_claim": "Bostrom's book treats the alignment problem as a central unsolved challenge; chapters 7-9 explicitly argue utility maximization is INSUFFICIENT and dangerous without solved value-loading. The citation's second clause inverts the source.",
+      "expected_intent": "extending",
+      "expected_misrepresentation": true,
+      "expected_l4_tier_baseline": "low",
+      "expected_l4_tier_with_target": "elevated",
+      "ground_truth_risk": "elevated"
+    }
+  ]
+}
