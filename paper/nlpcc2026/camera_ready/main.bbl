@@ -1,0 +1,93 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{abbonato2026checkifexist}
+Abbonato, D.: {CheckIfExist}: Detecting citation hallucinations in the era of {AI}-generated content. arXiv preprint arXiv:2602.15871  (2026). \doi{10.48550/arXiv.2602.15871}
+
+\bibitem{agrawal2024language}
+Agrawal, A., Suzgun, M., Mackey, L., Kalai, A.: Do language models know when they're hallucinating references? In: Findings of the Association for Computational Linguistics: EACL 2024. pp. 912--928. Association for Computational Linguistics (2024). \doi{10.18653/v1/2024.findings-eacl.62}
+
+\bibitem{alkaissi2023artificial}
+Alkaissi, H., McFarlane, S.I.: Artificial hallucinations in {ChatGPT}: Implications in scientific writing. Cureus  \textbf{15}(2),  e35179 (2023). \doi{10.7759/cureus.35179}
+
+\bibitem{ammar2018construction}
+Ammar, W., Groeneveld, D., Bhagavatula, C., Beltagy, I., Crawford, M., et~al.: Construction of the literature graph in {Semantic Scholar}. In: Proceedings of NAACL-HLT. pp. 84--91 (2018). \doi{10.18653/v1/N18-3011}
+
+\bibitem{athaluri2023exploring}
+Athaluri, S.A., Manthena, S.V., Kesapragada, V.S.R.K.M., Yarlagadda, V., Dave, T., Dutt, R.T.S.: Exploring the boundaries of reality: Investigating the phenomenon of artificial intelligence hallucination in scientific writing through {ChatGPT} references. Cureus  \textbf{15}(4),  e37432 (2023). \doi{10.7759/cureus.37432}
+
+\bibitem{bakker2023evaluating}
+Bakker, N.J., Theis-Mahon, N.R., Brown, S.J.: Evaluating the accuracy of scite, a smart citation index. Hypothesis: Research Journal for Health Information Professionals  \textbf{35}(2) (2023)
+
+\bibitem{beltagy2019scibert}
+Beltagy, I., Lo, K., Cohan, A.: {SciBERT}: A pretrained language model for scientific text. In: Proceedings of EMNLP. pp. 3615--3620 (2019). \doi{10.18653/v1/D19-1371}
+
+\bibitem{campanario2011benford}
+Campanario, J.M., Coslado, M.A.: Benford's law and citations, articles and impact factors of scientific journals. Scientometrics  \textbf{88}(2),  421--432 (2011). \doi{10.1007/s11192-011-0387-9}
+
+\bibitem{cohan2019structural}
+Cohan, A., Ammar, W., van Zuylen, M., Cady, F.: Structural scaffolds for citation intent classification in scientific publications. In: Proceedings of NAACL-HLT. pp. 3586--3596 (2019). \doi{10.18653/v1/N19-1361}
+
+\bibitem{deepseek2026v4pro}
+{DeepSeek-AI}: {DeepSeek-V4-Pro} official release. \url{https://api-docs.deepseek.com/news/news260424} (2026), accessed 2026-05-24
+
+\bibitem{dunford2024bibliography}
+Dunford, R., Rosenblum, B., Izzo~Hunter, S.: Using automated analysis of the bibliography to detect potential research integrity issues. Learned Publishing  \textbf{37}(2),  147--153 (2024). \doi{10.1002/leap.1600}
+
+\bibitem{fister2016toward}
+Fister, I., Fister~Jr., I., Perc, M.: Toward the discovery of citation cartels in citation networks. Frontiers in Physics  \textbf{4}, ~49 (2016). \doi{10.3389/fphy.2016.00049}
+
+\bibitem{glm2025arc}
+{GLM-4.5 Team}: {GLM-4.5}: Agentic, reasoning, and coding ({ARC}) foundation models. arXiv preprint arXiv:2508.06471  (2025). \doi{10.48550/arXiv.2508.06471}
+
+\bibitem{google2024gemini2}
+{Google DeepMind}: Introducing {Gemini} 2.0: Our new {AI} model for the agentic era. \url{https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/} (2024), accessed 2026-03-26
+
+\bibitem{hendricks2020crossref}
+Hendricks, G., Tkaczyk, D., Lin, J., Feeney, P.: Crossref: The sustainable source of community-owned scholarly metadata. Quantitative Science Studies  \textbf{1}(1),  414--427 (2020). \doi{10.1162/qss_a_00022}
+
+\bibitem{jurgens2018measuring}
+Jurgens, D., Kumar, S., Hoover, R., McFarland, D., Jurafsky, D.: Measuring the evolution of a scientific field through citation frames. Transactions of the Association for Computational Linguistics  \textbf{6},  391--406 (2018). \doi{10.1162/tacl_a_00028}
+
+\bibitem{kinney2023semantic}
+Kinney, R., et~al.: The {Semantic Scholar} open data platform. arXiv preprint arXiv:2301.10140  (2023)
+
+\bibitem{kojaku2021}
+Kojaku, S., Livan, G., Masuda, N.: Detecting anomalous citation groups in journal networks. Scientific Reports  \textbf{11}(1),  14524 (2021). \doi{10.1038/s41598-021-93572-3}
+
+\bibitem{lo2020s2orc}
+Lo, K., Wang, L.L., Neumann, M., Kinney, R., Weld, D.S.: {S2ORC}: The {Semantic Scholar} open research corpus. In: Proceedings of ACL. pp. 4969--4983 (2020). \doi{10.18653/v1/2020.acl-main.447}
+
+\bibitem{openai2025gptoss}
+{OpenAI}: gpt-oss-120b \& gpt-oss-20b model card. arXiv preprint arXiv:2508.10925  (2025). \doi{10.48550/arXiv.2508.10925}
+
+\bibitem{oppenlaender2026retract}
+Oppenlaender, J.: How ten publishers retract research. arXiv preprint arXiv:2602.19197  (2026). \doi{10.48550/arXiv.2602.19197}
+
+\bibitem{priem2022openalex}
+Priem, J., Piwowar, H., Orr, R.: {OpenAlex}: A fully-open index of scholarly works, authors, venues, institutions, and concepts. arXiv preprint arXiv:2205.01833  (2022)
+
+\bibitem{rosvall2008infomap}
+Rosvall, M., Bergstrom, C.T.: Maps of random walks on complex networks reveal community structure. Proceedings of the National Academy of Sciences  \textbf{105}(4),  1118--1123 (2008). \doi{10.1073/pnas.0706851105}
+
+\bibitem{scancar2026papermill}
+Scancar, B., Byrne, J.A., Causeur, D., Barnett, A.G.: Machine learning based screening of potential paper mill publications in cancer research: Methodological and cross sectional study. BMJ  \textbf{392},  e087581 (2026). \doi{10.1136/bmj-2025-087581}
+
+\bibitem{thorne2018fever}
+Thorne, J., Vlachos, A., Christodoulopoulos, C., Mittal, A.: {FEVER}: A large-scale dataset for fact extraction and {VER}ification. In: Proceedings of NAACL-HLT. pp. 809--819 (2018). \doi{10.18653/v1/N18-1074}
+
+\bibitem{traag2019leiden}
+Traag, V.A., Waltman, L., van Eck, N.J.: From {Louvain} to {Leiden}: Guaranteeing well-connected communities. Scientific Reports  \textbf{9}, ~5233 (2019). \doi{10.1038/s41598-019-41695-z}
+
+\bibitem{wadden2020fact}
+Wadden, D., Lin, S., Lo, K., Wang, L.L., van Zuylen, M., Cohan, A., Hajishirzi, H.: Fact or fiction: Verifying scientific claims. In: Proceedings of EMNLP. pp. 7534--7550 (2020). \doi{10.18653/v1/2020.emnlp-main.609}
+
+\bibitem{walters2023fabrication}
+Walters, W.H., Wiese, E.I.: Fabrication and errors in the bibliographic citations generated by {ChatGPT}. Scientific Reports  \textbf{13}(1),  14045 (2023). \doi{10.1038/s41598-023-41032-5}
+
+\bibitem{wilinski2026datalake}
+Wilinski, J.: The science data lake: A unified open infrastructure integrating 293 million papers across eight scholarly sources with embedding-based ontology alignment. arXiv preprint arXiv:2603.03126  (2026). \doi{10.48550/arXiv.2603.03126}
+
+\end{thebibliography}

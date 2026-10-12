@@ -1,0 +1,340 @@
+\documentclass[runningheads]{llncs}
+
+% Force A4 output (Springer/LNCS default) regardless of the TeX
+% distribution's Letter default. \paperwidth/\paperheight must be set too,
+% because hyperref's setpagesize re-derives the PDF page size from them.
+\setlength{\paperwidth}{210mm}
+\setlength{\paperheight}{297mm}
+\pdfpagewidth=210true mm
+\pdfpageheight=297true mm
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric}
+% Pack floats tighter so sequential [t] tables do not leave large
+% bottom gaps on text pages.
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.9}
+\setcounter{totalnumber}{3}
+\setlength{\textfloatsep}{10pt plus 2pt minus 4pt}
+\setlength{\abovecaptionskip}{6pt}
+\usepackage[numbers,sort&compress]{natbib}
+% llncs.cls defines \chapter, so natbib defaults to the book-class
+% bibliography (\clearpage + \chapter*{\bibname}). LNCS wants a section-level
+% "References" head with no page break.
+\renewcommand{\bibsection}{\section*{\refname}}
+% llncs.cls sets its own thebibliography in \small; natbib's replacement
+% defaults to \normalsize, so restore the LNCS look.
+\renewcommand{\bibfont}{\small}
+\setlength{\bibsep}{0pt}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\renewcommand\UrlFont{\rmfamily}
+
+% Map BibTeX commands used in this paper to LNCS \cite
+\let\citet\cite
+\let\citep\cite
+\let\citealp\cite
+
+\begin{document}
+
+\title{IntegriRef: A Five-Layer Bayesian Framework for Cross-Domain Reference Integrity Verification}
+\titlerunning{IntegriRef}
+
+\author{Zhaohui Wang\orcidID{0009-0006-1187-1903}}
+\authorrunning{Z. Wang}
+\institute{Viterbi School of Engineering, University of Southern California,\\
+Los Angeles, CA 90089, USA\\
+\email{zwang000@usc.edu}}
+
+\maketitle
+
+\begin{abstract}
+LLMs frequently fabricate bibliographic references, generating plausible but false DOIs, authors, venues, and citation metadata. Comparing a resolved record's fields against the printed reference is established practice \cite{dunford2024bibliography}, but it is applied case by case rather than fused with retraction, citation-context and graph evidence into a calibrated score.
+\textbf{IntegriRef} is a five-layer pipeline that queries 62 registry adapters and aggregates 21 typed signals by na\"ive likelihood-ratio fusion with post-hoc Platt calibration. Its operational core is multi-registry existence checking (L0) fused into a calibrated risk tier (L4); intent, NLI and citation-graph layers are targeted escalation modules, and we report the empirical contribution and limitations of each layer. On two externally labeled splits (Retraction~Watch, Crossref, PubMed), IntegriRef achieves 99.9\% recall on 1{,}215 hallucinated references and 98.3\% recall on 5{,}488 retracted papers (FPR 4.6\%, 4.2\% on matched controls). On a 58-case golden set it reaches 85\% hallucination recall at 0\% FPR, while the highest-recall parametric LLM (gpt-oss-120b) reaches 95\% at 20\% FPR; in this 58-case setup, adding a Crossref lookup tool \emph{reduced} the performance of both glm-4.6 and deepseek-v4-pro.
+Registry checks catch most fabrication, but ID-resolving chimeras need cross-field validation. Raw posteriors rank well yet are poorly calibrated (ECE 0.36$\to$0.003 after Platt); empirical LRs differ from hand-set by 1--2 orders of magnitude, and 9 of 21 signals stay empirically unvalidated. Fusion refines severity but flips no escalation decision --- L0 makes that call. We trace a year-only chimera blind spot (0/60) to a verdict-downgrade rule and fix it (60/60 CRITICAL at 0/60 FPR); at $N{>}200$ rather than 40, the intent and NLI layers prove markedly weaker than small splits suggested.
+
+\keywords{Citation integrity \and Hallucination detection \and Bayesian fusion \and Reference verification \and LLM evaluation.}
+\end{abstract}
+
+\section{Introduction}
+
+LLM-assisted writing has introduced a growing class of integrity threats to the scholarly record. \citet{alkaissi2023artificial} and \citet{athaluri2023exploring} documented that 18--36\% of ChatGPT-generated citations are fabricated, and \citet{walters2023fabrication} found rates up to 55\%. Beyond hallucination, 9.87\% of cancer research publications show paper-mill characteristics \cite{scancar2026papermill}, and over 10,000 papers were retracted in 2023 alone \cite{oppenlaender2026retract}.
+
+Current tools address one dimension of this. Existing reference checkers such as CheckIfExist \cite{abbonato2026checkifexist} cascade several registries to decide whether a reference exists, and publisher-side workflows already compare a resolved DOI's registered metadata against the printed entry to surface chimeras \cite{dunford2024bibliography}. What is missing is not the field comparison but its integration: neither judges whether a citation supports the claim made about it, identifies manipulation patterns such as citation rings, or reports a calibrated risk tier that weighs these signals against one another.
+
+We frame reference integrity verification as a \emph{factual consistency} problem, extending evidence-based claim verification \cite{thorne2018fever,wadden2020fact} to bibliographic metadata: the ``claim'' is the citing sentence, the ``evidence'' the cited paper's registry record. A single existence check cannot separate a legitimate paper from a retracted one still indexed, or from a chimera resolving to the wrong publication; intent, entailment, graph topology and statistical consistency add complementary but noisy evidence, so the question is how to fuse them into a ranked risk score and, separately, how to calibrate it.
+
+\textbf{IntegriRef} organizes this into five layers: \textbf{L0} (Existence), a multi-registry cascade over 62 adapters with hallucination-pattern detection; \textbf{L1} (Intent), intent classification for misrepresentation; \textbf{L2} (Semantics), NLI claim--evidence alignment; \textbf{L3} (Graph), seven graph anomaly detectors; and \textbf{L4} (Risk), Bayesian fusion of 21 likelihood-ratio signals into a posterior we analyze and calibrate post-hoc (\S\ref{ssec:calib}). The cascade is deliberately asymmetric and we say so rather than present five co-equal layers: \textbf{L0+L4 is the operational core}, and L1--L3 are targeted escalation modules (\S\ref{ssec:layers}). Registry breadth is scoped likewise: 62 adapters span six domains, but only four academic registries are validated at scale and every benchmark is academic.
+
+\noindent Our contributions: (1) framing reference integrity as one problem spanning hallucination, chimeras, misrepresentation and graph manipulation; (2) a multi-registry cascade with 21 typed signals and Bayesian risk tiers, audited by a hand-set-versus-empirical LR comparison and per-signal validation status; (3) \textbf{IntegriRef-Bench}, with $N{>}200$ borderline splits and chimeras mined from published bibliographies; (4) the findings that registry checks catch most fabrication while chimeras need cross-field validation, that in our 58-case setup a Crossref tool \emph{reduced} the performance of both LLMs tested with it, and that the contextual layers are far weaker at $N{>}200$ than 40-case splits imply.
+
+\section{Related Work}
+
+\textbf{Citation hallucination.} \citet{agrawal2024language} show LLMs partly know when they hallucinate a reference but cannot self-correct; CheckIfExist \cite{abbonato2026checkifexist} checks DOI existence in Crossref and Semantic Scholar, with no semantic or graph analysis. \textbf{Intent and NLI.} SciCite \cite{cohan2019structural} introduced structural scaffolds with SciBERT \cite{beltagy2019scibert}; SciFact \cite{wadden2020fact} framed claim verification as NLI; scite.ai's commercial intent classifier scored 29\% macro F1 independently \cite{bakker2023evaluating}. \textbf{Citation-graph anomalies.} Cartels and manipulation networks are documented in \cite{fister2016toward,kojaku2021}; Benford violations in citation counts indicate manipulation \cite{campanario2011benford}; Leiden \cite{traag2019leiden} and Infomap \cite{rosvall2008infomap} underpin cartel detection. \textbf{Scholarly KGs.} Crossref \cite{hendricks2020crossref}, OpenAlex \cite{priem2022openalex}, Semantic Scholar \cite{kinney2023semantic,ammar2018construction} and S2ORC \cite{lo2020s2orc} provide the metadata layer; \citet{wilinski2026datalake} unify eight sources under one ontology. None combine existence, intent, NLI, graph and Bayesian fusion in a single pipeline.
+
+\section{System Architecture}
+
+Each layer emits typed signals that a Bayesian scorer aggregates into a posterior risk probability (Fig.~\ref{fig:architecture}).
+
+\begin{figure}[t]
+\centering
+\definecolor{lzeroc}{HTML}{2A63C4}
+\definecolor{lonec}{HTML}{1E7E34}
+\definecolor{ltwoc}{HTML}{B06F00}
+\definecolor{lthreec}{HTML}{C0392B}
+\definecolor{lfourc}{HTML}{6A3FB5}
+\begin{tikzpicture}[font=\scriptsize, node distance=3mm,
+  layer/.style={rounded corners=2pt, draw, thick, align=center,
+                text width=19.8mm, inner sep=2pt, minimum height=13mm},
+  chip/.style={rounded corners=1.5pt, inner sep=2pt, font=\tiny\bfseries, text=white},
+  arr/.style={->, >=stealth, semithick, gray!55!black}]
+\node[layer, draw=lzeroc, fill=lzeroc!7] (l0)
+  {\mbox{\textcolor{lzeroc}{\bfseries L0 Existence}}\\[1.5pt]
+   62 registries, 6 domains; 7 fabrication patterns\\[1.5pt] \emph{6 signals}};
+\node[layer, draw=lonec, fill=lonec!7, right=3.6mm of l0] (l1)
+  {\mbox{\textcolor{lonec}{\bfseries L1 Intent}}\\[1.5pt]
+   SciBERT (SciCite), 87.6\% macro F1\\[1.5pt] \emph{2 signals}};
+\node[layer, draw=ltwoc, fill=ltwoc!7, right=3.6mm of l1] (l2)
+  {\mbox{\textcolor{ltwoc}{\bfseries L2 Semantics}}\\[1.5pt]
+   DeBERTa-v3 NLI (SciFact); \emph{advisory}\\[1.5pt] \emph{2 signals}};
+\node[layer, draw=lthreec, fill=lthreec!7, right=3.6mm of l2] (l3)
+  {\mbox{\textcolor{lthreec}{\bfseries L3 Graph}}\\[1.5pt]
+   OpenAlex 2-hop, 7 anomaly det.; \emph{explanatory}\\[1.5pt] \emph{7 signals}};
+\node[layer, draw=lfourc, fill=lfourc!7, right=3.6mm of l3] (l4)
+  {\mbox{\textcolor{lfourc}{\bfseries L4 Risk}}\\[1.5pt]
+   na\"ive LR fusion, 21 signals; Platt-calib.\\[1.5pt] \emph{4 tiers}};
+\draw[arr] (l0) -- (l1); \draw[arr] (l1) -- (l2);
+\draw[arr] (l2) -- (l3); \draw[arr] (l3) -- (l4);
+\draw[arr, dashed] (l0.north) to[out=32, in=148]
+  node[above, font=\tiny, pos=0.5]{early stop: skip L1--L3 (67\% of references)} (l4.north);
+\node[chip, fill=lthreec!60!black, below=4mm of l4.south east, anchor=east] (t4) {CRIT.};
+\node[chip, fill=lthreec, left=1mm of t4] (t3) {HIGH};
+\node[chip, fill=ltwoc, left=1mm of t3] (t2) {ELEV.};
+\node[chip, fill=lonec, left=1mm of t2] (t1) {LOW};
+\draw[arr] (l4.south) -- ++(0,-2.6mm);
+\end{tikzpicture}
+\caption{IntegriRef five-layer cascade: L0+L4 form the operational core; L1--L3 are targeted escalation modules, skipped when the L0 interim posterior is decisive.}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{L0: Multi-Registry Existence Verification}
+
+L0 queries 62 registry adapters across six domains (35 academic, including Crossref, OpenAlex, PubMed, Semantic Scholar, arXiv and DBLP, plus patents, legal, government, financial and standards) by ID lookup over 15 auto-detected identifier types, with RapidFuzz fallback search. A composite score $s = 0.35e + 0.25t + 0.15a + 0.10v + 0.15c$ aggregates existence, title, author, venue and context matches; the weights are heuristically set on development data and act only as a tie-breaker, since the typed L0 signals carry the L4 LRs. A $\pm$25\% sweep of each weight on a stratified rv-1926+ret-6391 subsample shifts no risk tier: the composite feeds only the L0 confidence label and the L2 gate, never L4. A hallucination detector assigns weighted points to seven fabrication patterns (phantom DOI 40, phantom arXiv 35, no registry match 30, author--title chimera 25, temporal impossibility 20, metadata chimera 20, venue non-existence 15), flagging references at $\geq$50, and an Aho-Corasick tortured-phrase detector (281 patterns) catches paper-mill indicators. L0 emits six typed signals: \texttt{reference\_not\_found}, \texttt{phantom\_doi}, \texttt{no\_id\_match}, \texttt{metadata\_mismatch}, \texttt{chimera\_detected} and \texttt{retracted\_citation} (Table~\ref{tab:lrs}).
+
+\subsection{L1: Citation Intent Classification}
+
+A SciBERT model fine-tuned on SciCite \cite{cohan2019structural} maps each citing sentence to a background / method / result label, read as mentioning / using / supporting, at 87.6\% macro F1 on SciCite test. That label space has no contrast class, so the model can never emit CONTRASTING --- precisely the gap misrepresentation detection depends on. An earlier lexical-cue heuristic, threshold-tuned on its own reporting split, is retired. CONTRASTING now comes from a dedicated binary CompareOrContrast detector fine-tuned on ACL-ARC \cite{jurgens2018measuring}, its threshold selected on ACL-ARC validation and never on an IntegriRef split, and \texttt{citation\_\allowbreak misrepresents\_\allowbreak source} fires when it flags contrast (\S\ref{ssec:layers}).
+
+\subsection{L2: Semantic Claim Verification (Advisory)}
+
+A DeBERTa-v3 model fine-tuned on SciFact \cite{wadden2020fact} (93.5\% accuracy) performs three-way NLI (entailment / neutral / contradiction) between the citing claim and the cited abstract. Two signals are extracted: \texttt{claim\_contradicted} (contradiction score $>0.5$) and \texttt{claim\_unsupported} (entailment $<0.4$). L2 runs only when L0 flags a reference for escalation. Matched-control evaluation (\S\ref{ssec:layers}) shows it fires far too readily on correct citations, so in the shipped configuration \textbf{L2 is advisory --- it annotates a reference but does not flip its risk tier} --- and \texttt{claim\_unsupported} is dropped from escalation.
+
+\subsection{L3: Optional Citation-Graph Explanatory Module}
+
+L3 is an optional graph-evidence module: a two-hop OpenAlex subgraph per reference DOI runs seven anomaly detectors (orphan cluster, temporal anomaly, excessive self-citation, citation ring (CIDRE-variant), Benford violation \cite{campanario2011benford}, reciprocal citation, citation burst), emitting typed signals for L4. \S\ref{ssec:layers} shows it supplies explanatory evidence, not tier flips.
+
+\subsection{L4: Bayesian Risk Scoring}
+
+L4 aggregates L0--L3 signals into a posterior via likelihood-ratio fusion. Starting from a domain-specific prior $P_0$ (3\% default, 10\% for cancer research \citep{scancar2026papermill}), beliefs update multiplicatively, $\text{odds}_{\text{post}} = \text{odds}_{\text{prior}} \cdot \prod_{i=1}^{N} \text{LR}_i^{c_i}$, where $c_i \in [0,1]$ tempers $\text{LR}_i$ under uncertainty (Pearl-style soft-evidence: $c_i{=}1$ recovers log-odds Bayes; $c_i{=}0$ ignores the signal). The 21 signals split 6/2/2/7/4 across L0/L1/L2/L3/text+statistical. \textbf{Coverage caveat:} on our 8{,}817-case pool only the 6 L0 signals fire at scale; the rest fire only on dedicated splits. The posterior maps to four tiers (LOW $<$5\%, ELEVATED 5--20\%, HIGH 20--50\%, CRITICAL $>$50\%). A \emph{hard override} escalates to CRITICAL when phantom DOI or GRIM impossibility is confirmed (fires on $<$1\% of ret-6391). An interim L4 after L0 lets the pipeline skip L1--L3 when the L0 posterior is decisive ($>$0.80 or $<$0.01).
+
+\noindent\textbf{What fusion actually buys.} On the 6{,}608 pooled cases where at least two L0 signals fire, L4 moves the severity tier relative to the strongest single signal every time (6{,}605 toward ground truth, 3 away) --- yet flips the binary escalate decision in \textbf{zero}. In short, \emph{L0 makes the escalation decision and L4 grades its severity}, making the output rankable and, after calibration, interpretable as a probability.
+
+\noindent\textbf{Deployed configuration.} The default deployed configuration is multi-registry L0 (Crossref, OpenAlex, arXiv, Semantic~Scholar, early-stopping) plus Platt-calibrated L4 na\"ive Bayes, L1 on with the off-benchmark threshold, L2 and L3 advisory --- recall 0.986 at FPR 0.043 at ELEVATED ($\geq$0.05).
+
+\section{Evaluation}
+
+\subsection{Datasets}
+\label{ssec:datasets}
+
+We release \textbf{IntegriRef-Bench}. Its base benchmark comprises 11{,}790 entries across six splits: ref\_verification (1{,}926), retracted\_papers (6{,}391, from Retraction Watch via Crossref+PubMed), signal\_unit\_tests (403, covering all 21 signals in isolation), graph\_anomaly (3{,}030), and small l1\_intent / l2\_nli probes (20 each). Training uses 11K SciCite \cite{cohan2019structural} for L1 and 6.6K SciFact \cite{wadden2020fact} for L2. This version adds three evaluation splits closing gaps in the earlier ones --- \textbf{Borderline-L1-v2} ($N{=}289$) and \textbf{Borderline-L2-v2} ($N{=}209$), replacing 40-case hand-built splits, and \textbf{NatChim} ($N{=}93$: 33 mined chimeras + 60 matched controls), chimeras mined from real bibliographies rather than synthesized --- for 12{,}381 entries across nine splits in total.\footnote{Code and IntegriRef-Bench: \url{https://github.com/GeoffreyWang1117/IntegriRef}. NatChim ships with the release; the two Borderline-v2 splits are fixed-seed selections over ACL-ARC and SciFact dev, rebuilt by the released script rather than redistributed.}
+
+\paragraph{Golden Benchmark.}
+The curated golden set has 58 cases: 28 retracted (including Wakefield and Surgisphere), 10 verified real (Transformer, ResNet, BERT), 15 LLM-hallucinated with fabricated DOIs, and 5 chimeras pairing real DOIs with wrong author--title. Every evaluation here uses these original labels without reclassification; an earlier reclassification of 8 cases as ``real'' inflated our recall and is no longer reported. Unless a table states otherwise, golden-58 metrics treat the 48 hallucinated, chimera and retracted cases as positives, the 10 verified-real papers as negatives, and ``escalated'' as tier $\geq$ELEVATED (posterior $\geq$0.05); Table~\ref{tab:results} instead scores the 20 hallucinated+chimera cases at $\geq$HIGH, per its caption.
+
+\paragraph{External-Source Splits.}
+\label{par:external}
+The two largest splits take their labels from external authorities, not author judgement: \texttt{retracted\_papers} (6{,}391) from Retraction Watch via Crossref and PubMed, its label the publisher-issued retraction notice, and \texttt{reference\_verification} (1{,}926) from Crossref-DOI namespace probes with verified-real controls drawn from topic-balanced Crossref queries across 21 domains. The 58-case golden set is the only self-curated component.
+
+\subsection{Head-to-Head Comparison}
+
+Table~\ref{tab:results} compares IntegriRef against CheckIfExist \cite{abbonato2026checkifexist} and an LLM panel spanning proprietary (Gemini~2.0~Flash \cite{google2024gemini2}), large open-weight parametric (glm-4.6 696B \cite{glm2025arc}, deepseek-v4-pro 1.6T \cite{deepseek2026v4pro}, gpt-oss-120b, 117B parameters \cite{openai2025gptoss}) and retrieval-augmented setups.\footnote{Protocol: Gemini via the Google API (March 2026); glm-4.6 and gpt-oss-120b via Ollama Cloud, deepseek-v4-pro via the DeepSeek API (May 2026). One run per model: a fixed zero-shot prompt over each reference's metadata requests a one-word REAL/HALLUCINATED/UNCERTAIN verdict (UNCERTAIN = not flagged), provider-default sampling; tool mode adds a Crossref lookup function.}
+
+\begin{table}[!tb]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{System} & \textbf{Halluc R.} & \textbf{FPR$^{\dagger}$} & \textbf{Notes} \\
+\midrule
+CheckIfExist~\cite{abbonato2026checkifexist} & 0 \footnotesize{[0,17]} & 10 \footnotesize{[0,45]} & DOI-existence only \\
+Gemini 2.0 Flash (param.) & 25.0 \footnotesize{[9,49]} & \textbf{0} \footnotesize{[0,22]} & proprietary, no retrieval \\
+glm-4.6 (param., 696B open) & 25.0 \footnotesize{[9,49]} & 20.0 \footnotesize{[3,56]} & Ollama Cloud \\
+deepseek-v4-pro (param., 1.6T) & 80.0 \footnotesize{[56,94]} & \textbf{0} \footnotesize{[0,31]} & open-weight \\
+gpt-oss-120b (param., 117B open) & \textbf{95.0} \footnotesize{[75,100]} & 20.0 \footnotesize{[3,56]} & reproducible \\
+glm-4.6 + Crossref tool & 65.0 \footnotesize{[41,85]} & 30.0 \footnotesize{[7,65]} & 45/58 tool calls \\
+deepseek-v4-pro + Crossref tool & 55.0 \footnotesize{[32,77]} & 30.0 \footnotesize{[7,65]} & 45/58 tool calls \\
+\midrule
+\textbf{IntegriRef (Ours)} & 85.0 \footnotesize{[62,97]} & \textbf{0} \footnotesize{[0,31]} & this work \\
+\bottomrule
+\end{tabular}
+\caption{Quantitative comparison on the full 58-case golden set, all values in \%; brackets are Clopper-Pearson 95\% CIs; \textbf{bold} marks the best value in each numeric column (ties included). \emph{Halluc R.} = recall on the 20 hallucinated+chimera cases (grouped as in the LLM-baseline binary task). $^{\dagger}$\emph{FPR} is on the 10 verified-real papers, excluding retracted papers, which are not ``hallucinated'' in the LLM-prompt sense (Table~\ref{tab:scale} reports retraction recall separately). Recall CIs overlap throughout; the scale conclusions rest on Tables~\ref{tab:scale}--\ref{tab:lrs}.}
+\label{tab:results}
+\end{table}
+
+Parametric LLM recall varies widely (25--95\%) and trades against FPR: gpt-oss-120b reaches 95\% recall at 20\% FPR. In this evaluation, a Crossref-lookup tool \emph{reduced} the performance of both glm-4.6 (FPR 20$\to$30\%) and deepseek-v4-pro (recall 80$\to$55\%, FPR 0$\to$30\%); only 45/58 cases triggered a tool call, and traces show the model reading a partial Crossref match as evidence of fabrication, suggesting retrieval does not help when the model cannot tell an incomplete record from a missing one. Given the single 58-case set and wide CIs, this is an observation about these two models under this protocol, not a general claim about retrieval. IntegriRef occupies a different operating point --- 85\% recall (14/15 hallucinated at $\geq$HIGH, 3/5 chimera, 17/28 retractions) at 0/10 FPR --- 10\,pp below gpt-oss-120b, which pays with 20\% FPR on verified-real papers.
+
+\subsection{Scale Evaluation}
+
+\begin{table}[!tb]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+& \textbf{rv-1926} & \textbf{ret-6391} \\
+\midrule
+Halluc.\ recall ($\geq$ELEV.)  & 99.9 \footnotesize{[99.5,100]}  & --- \\
+Chimera recall ($\geq$ELEV.)   & 100  \footnotesize{[98.9,100]}  & --- \\
+Retract.\ recall ($\geq$ELEV.) & 100  \footnotesize{[85.2,100]}  & 98.3 \footnotesize{[97.9,98.6]} \\
+FPR                            & 4.6 \footnotesize{[2.6,7.3]}    & 4.2 \footnotesize{[3.0,5.7]} \\
+Overall acc.                   & 99.1                            & 97.9 \\
+\bottomrule
+\end{tabular}
+\caption{Scale evaluation, \% with Clopper-Pearson 95\% CIs; one system on two splits, so nothing is bolded. rv-1926 = reference\_verification (1{,}215 hallucinated, 339 chimera, 23 retracted, 349 real); ret-6391 = retracted\_papers (5{,}488 retracted + 903 real controls); both carry external labels not curated by us. \emph{Registry disclosure}: ret-6391 used all four core registries; rv-1926 used Crossref+OpenAlex+arXiv only (Semantic~Scholar's $\sim$1\,query/s free tier would stretch the sweep to days); the four-registry rv-1926 FPR was not measured, and recall is expected to be insensitive, all four registries reporting the same phantom DOIs as unresolvable.}
+\label{tab:scale}
+\end{table}
+
+Table~\ref{tab:scale} validates IntegriRef beyond golden-58 on the two larger external splits. On ret-6391 it reaches 98.3\% retraction recall (5{,}393/5{,}488) at 4.2\% FPR, with \texttt{retracted\_citation} firing on 98\% and \texttt{metadata\_mismatch} on 94\% of retracted papers; the 38 false positives are chimera (18) and no-ID-match (20) firings on partially-resolving controls. On rv-1926, hallucination recall is 99.9\% and chimera recall 100\%. \emph{Caveat:} rv-1926 hallucinations and chimeras are Crossref-DOI namespace probes, so L0 multi-registry is well matched to them by construction.
+
+\paragraph{Chimera Detection: The Most Stringent Setting.} Chimeras resolve in registries, so detection needs \emph{cross-field consistency after ID resolution}: our v0.2 reached 1.2\% chimera recall because nothing fired once the DOI resolved, and a \texttt{chimera\_\allowbreak detected} signal (LR=8.0, firing when an ID-matched record has author or year FAIL) lifts this to 100\% at FPR 3.5\%$\to$7.0\%. To probe it we built three 60-case splits over shared biomedical DOI bases plus 60 unchanged controls: (a) author-only swap, (b) year-only $-7$ shift, (c) combined. Crossref-only: (a) 60/60 [94.0,100] at CRITICAL, FPR 0/60 [0,6.0]; (c) 60/60 at HIGH, FPR 0/60, though via \texttt{phantom\_doi} (51/60), joint inconsistency making the resolver reject the record outright; (b) 0/60 at any tier. Multi-registry is near-identical (FPR $\leq$1/60), so detection comes from L0 per-field comparison, not cross-registry consensus; an author-swap over 8 non-biomedical topics gives 60/60 CRITICAL / 0/60 FPR.
+
+\noindent\textbf{The year-only blind spot, diagnosed and fixed.} Case (b) is the sharpest negative result in this study: a DOI resolving to a record seven years off went undetected. The cause is not a missing signal. \texttt{match\_year} does return FAIL on an ID-resolved year discrepancy, but a downstream rule downgraded any year FAIL to WARN whenever title and author matched --- a tolerance written for preprint-versus-publication drift that also applied to ID-resolved records, so the FAIL never reached \texttt{chimera\_detected}. Restricting that tolerance to search-matched records, where the preprint rationale holds, closes the gap: (b) goes from \textbf{0/60 to 60/60 at CRITICAL, FPR 0/60}, (a) unchanged. Re-running every real control under the fix confirms it does not buy recall with false alarms: 14/349 (4.0\%) on rv-1926 and 33/903 (3.7\%) on ret-6391, both at or below the 4.6\% and 4.2\% of Table~\ref{tab:scale}. The failure mode generalizes: a per-field verdict computed correctly but softened before fusion is invisible to signal-level auditing, and only an end-to-end stress set exposes it.
+
+\noindent\textbf{Naturally-occurring chimeras.} All of the above is synthetic. As a real-data check we mined \textbf{NatChim} from publisher-deposited Crossref reference lists, which record each reference as printed and so preserve the citing authors' own errors. A reference is a candidate when its printed year or first author contradicts the record its DOI resolves to; candidates are confirmed against OpenAlex and kept only when \emph{both} registries disagree with the printed metadata, removing the legacy-backfile dates, corporate bylines and transliteration artifacts that otherwise dominate. The mined split holds 33 such references (17 year-only, 15 author-only, 1 both) plus 60 matched controls drawn from the same bibliographies. We report the split rather than a prevalence: the mining run's own log was overwritten by a later run of the same script, so we cannot state the size of the sampling frame it was drawn from, and the 33 cases were selected for the phenomenon. They establish that the failure class occurs in published bibliographies, not how often. IntegriRef escalates \textbf{33/33} to $\geq$HIGH (32 CRITICAL) at \textbf{0/60} FPR, firing \texttt{chimera\_\allowbreak detected}+\texttt{metadata\_\allowbreak mismatch} on 32; every case involving a year mismatch (18/18) is caught --- on real data, exactly the class that was invisible before the fix. These are \emph{errors of record}, sometimes the citing authors' and sometimes the registry's. The split is small by construction: every candidate had to be contradicted by both Crossref and OpenAlex, and we publish no discard log for this run, so the filter's selectivity is stated as a criterion rather than as a count.
+
+
+\subsection{Layer Contribution}
+\label{ssec:layers}
+
+\noindent\textbf{L4 fusion choice.} On golden-58 under the original labels (48 positives, 10 negatives; escalation = $\geq$ELEVATED), na\"ive Bayes with the hard override escalates TP=34, FP=0, FN=14, TN=10 (75.9\% accuracy), reaching 17/20 hallucinated+chimera at $\geq$HIGH (the 85\% of Table~\ref{tab:results}) and 17/28 retractions. Grouped Bayesian yields the same escalation set but only 7/20 at $\geq$HIGH; Dempster--Shafer escalates all 58 cases (FPR 10/10). We therefore ship na\"ive Bayes.
+
+Layer contribution needs splits where every cited paper resolves cleanly but the citing sentence misrepresents it, so L0 is silent by construction. Two 40-case hand-built splits were too small to carry a layer claim, and curated by us, so we rebuild both from public labeled corpora at $N{>}200$: \textbf{Borderline-L1-v2}, 289 ACL-ARC citation contexts \cite{jurgens2018measuring} (52 CompareOrContrast positives) held out from detector training with the threshold still chosen on ACL-ARC validation, and \textbf{Borderline-L2-v2}, all 209 SciFact dev claim--evidence pairs (71 CONTRADICT, 138 SUPPORT). Table~\ref{tab:layers} reports both against the 95 hand-built matched controls the smaller evaluation used.
+
+\begin{table}[!tb]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+\textbf{Split ($N$)} & \textbf{Firing rule} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{FPR} \\[-1pt]
+\midrule
+\multicolumn{6}{@{}l}{\emph{L1 --- contrast misreading}} \\
+Matched controls (95)   & trained detector & 0.91 & 1.00 & 0.95 & 1.2 \\
+Borderline-L1-v2 (289)  & lexical heuristic & 0.33 & 0.04 & 0.07 & 1.7 \\
+Borderline-L1-v2 (289)  & trained detector & 0.59 & 0.73 & 0.66 & 11.0 \\
+\midrule
+\multicolumn{6}{@{}l}{\emph{L2 --- claim--evidence contradiction}} \\
+Borderline-L2-v2 (209)  & contradicted $\cup$ unsupported & 0.43 & 0.96 & 0.59 & 65.9 \\
+Borderline-L2-v2 (209)  & contradicted only & 0.54 & 0.79 & 0.64 & 34.1 \\
+\bottomrule
+\end{tabular}
+\caption{L1 and L2 detector quality on the expanded held-out splits (Borderline-L1-v2 from ACL-ARC, Borderline-L2-v2 from SciFact dev), against the smaller hand-built matched controls; FPR in \%. Rows are not bolded, being mutually incomparable: the hand-built controls are easy negatives from our own pool; ACL-ARC and SciFact negatives are real citation contexts. That gap is the finding --- L1's FPR rises from 1.2\% to 11.0\% once the negatives are not ours, and L2's FPR stays unacceptably high for tier escalation under either rule.}
+\label{tab:layers}
+\end{table}
+
+Table~\ref{tab:layers} settles the ``three inert layers'' observation against the contextual layers. L1 and L2 \emph{do} act on cases exercising their target capability, but the expanded splits show the 40-case evaluation overstated their competence. The trained contrast detector is clearly the right replacement for the heuristic --- F1 0.66 against 0.07, the heuristic's apparent 1.7\% FPR being an artifact of it almost never firing (recall 0.04) --- and end-to-end, on the original 40-case split, it fires on exactly the 10 contrasting-misrepresentation cases and none of the other 30, lifting that sub-pattern from 3/10 escalated to \textbf{10/10}. Yet 11.0\% FPR on real ACL-ARC contexts means flagging roughly one correct citation in nine, so L1 serves triage, not accusation. L2 is worse: on 209 SciFact pairs the escalating rule fires on 66\% of \emph{correct} citations and the conservative rule on 34\%. \textbf{Hence L2 becomes advisory and \texttt{claim\_unsupported} leaves escalation} --- this error rate precludes its use for automatic tier escalation. On 22 hand-curated bibliography cases (8 citation rings, 8 excessive-self-citation, 6 orphan paper-mills), L0+L4 escalates 22/22 while L3 fires on 14/22 --- graph evidence, no tier flip.
+
+\noindent\textbf{L3 on clean bibliographies, and across domains.} On 19 topic-coherent clean bibliographies (114 references), L0+L4 gives 0.9\% reference-level FPR (1/114) and 0/19 at CRITICAL; adding L3 flags 84/114 references (\textbf{73.7\%} FPR) and puts 11/19 bibliographies at CRITICAL. The dominant detector is \texttt{reciprocal\_citation} with 8{,}381 firings, counted as pairwise anomaly \emph{events} over each reference's two-hop OpenAlex subgraph --- one reference can accumulate many events, which is why the count exceeds the 114 references. Because that split skews biomedical, we repeated it on 17 clean bibliographies (119 references) from three non-biomedical fields --- quantum computing (68.6\% ref-FPR with L3 vs.\ 2.9\% without), climate change (71.4\% vs.\ 0.0\%), materials science (61.9\% vs.\ 0.0\%) --- 67.2\% overall, 12/17 at CRITICAL. The confound is \emph{not} biomedical-specific: topic-coherent bibliographies show the structural patterns L3 targets in every field tested, so its detectors cannot separate ``topic coherence'' from ``cartel''. Hence L3 stays a non-tier-flipping explanatory module.
+
+\begin{table}[!tb]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+& \multicolumn{4}{c}{\textbf{rv-1926}} & \multicolumn{2}{c}{\textbf{ret-6391}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-7}
+\textbf{Variant} & \textbf{Halluc R.} & \textbf{Chim R.} & \textbf{Retr R.} & \textbf{FPR}
+                 & \textbf{Retr R.} & \textbf{FPR} \\
+\midrule
+DOI-existence only           & 97.0 & 0.6 & 17.4 & 1.7  & 0.0  & 0.0 \\
+Crossref-only L0             & 100  & 100 & 52.2 & 98.9 & 59.6 & 2.2 \\
+L0 $-$ chimera signal        & 99.9 & 100 & 100  & 3.4  & 98.0 & 2.2 \\
+L0 multi-registry            & 99.9 & 100 & 100  & 4.6  & 98.3 & 4.2 \\
+\textbf{L0+L4 (full)}        & 99.9 & 100 & 100  & 4.6  & 98.3 & 4.2 \\
+\bottomrule
+\end{tabular}
+\caption{Layer ablation (\%). Only the shipped configuration is bolded: each column ``winner'' is a degenerate trade --- DOI-existence-only reaches 0.0\% FPR by barely firing. \emph{Crossref-only} uses Crossref alone, \emph{multi-registry} 3--4 registries, \emph{L0$-$chimera} drops \texttt{chimera\_detected}.}
+\label{tab:ablation}
+\end{table}
+
+\subsection{Calibration of the L4 Posterior}
+\label{ssec:calib}
+
+We computed Expected Calibration Error (ECE) over 8{,}817 cases pooled from rv-1926, ret-6391 and the legacy ret-500 (7{,}295 positives, 1{,}522 negatives). With hand-set LRs the raw posteriors are \emph{poorly} calibrated: 10-bin ECE 0.356, Brier 0.173, maximum-bin gap 0.76, with mass piling up at $[0.50,0.60)$ ($n{=}5396$, mean predicted 0.57 against an empirical positive rate of 1.00 --- systematic under-confidence). A 5-fold cross-validated Platt rescaling of the posterior logits cuts ECE to \textbf{0.003} (Brier 0.014), and a temporal hold-out (fit on cited-year $\leq$2023, test after, 2{,}547 cases) gives \textbf{0.006}, so the correction is not an in-distribution artifact.
+\emph{Threshold sensitivity.} Raising ELEVATED$\to$HIGH ($\geq$0.05$\to$0.20) collapses chimera recall (100$\to$1.2\%) while leaving hallucination (99.9$\to$99.7\%) and retraction (100\%) intact on rv-1926; on ret-6391 HIGH gives 97.9\% recall at \textbf{0\% FPR}. Prefer HIGH when chimeras are not the target, ELEVATED otherwise.
+
+
+\subsection{Where the Improvement Comes From: Layer Ablation}
+\label{sec:ablation}
+
+Table~\ref{tab:ablation} ablates L0+L4 on the two external splits. (i) \emph{DOI-existence alone collapses on retractions} (0\% on ret-6391): retracted papers still resolve. (ii) \emph{Crossref-only inverts between splits}: it over-flags rv-1926's arXiv-DOI real controls (FPR 98.9\%, closed to 4.6\% by multi-registry) yet loses 38\,pp retraction recall on ret-6391, where it lacks PubMed notices --- no single registry covers both failure modes. (iii) The \emph{chimera signal trades FPR for retraction recall}: dropping it costs 0.3\,pp recall and saves 2\,pp FPR on ret-6391, and is irrelevant on rv-1926 chimeras --- \texttt{no\_id\_match} catches 337/339 and \texttt{reference\_not\_found} the remaining 2, which is why the row still reads 100\% --- helping only on ID-resolving chimeras (golden-58: 3/5 vs.\ 1/5). L0+L4 equals L0 multi-registry on both splits: LRs reorder within tiers without flipping cases across ELEVATED. \emph{Deployment:} multi-registry at HIGH for retraction screening (97.9\% recall, 0\% FPR), ELEVATED for chimeras.
+
+
+\subsection{Hand-set vs.\ Empirical Likelihood Ratios}
+
+Table~\ref{tab:lrs} lists all 21 signals with hand-set LR$^{+}$ and, where they fire, the empirical LR$^{+}$ on the same 8{,}817-case pool used for calibration (\S\ref{ssec:calib}; Laplace-smoothed $P(s{=}1|y{=}1)/P(s{=}1|y{=}0)$). Three are far stronger than hand-set (\texttt{metadata\_\allowbreak mismatch} and \texttt{retracted\_\allowbreak citation} by two orders of magnitude, \texttt{phantom\_doi} by 3$\times$), two weaker, and \textbf{15 of 21} never fire, leaving those hand-set values ungrounded.
+
+Whether hand-setting costs anything is testable. On the 8{,}317-case subset of that pool which excludes the legacy ret-500 split (rv-1926 + ret-6391; 7{,}065 positives, 1{,}252 negatives), hand-set na\"ive Bayes reaches AUC 0.989 against 0.992 for 5-fold cross-validated L2 logistic regression, so for \emph{ranking} the hand-set LRs are not the bottleneck. At the strict end they are: learned weights lift recall at 0\% FPR from 0.03 to \textbf{0.77}. Two signal pairs are near-collinear --- \texttt{phantom\_doi} with \texttt{reference\_\allowbreak not\_\allowbreak found} ($\phi{=}0.996$), \texttt{metadata\_\allowbreak mismatch} with \texttt{retracted\_\allowbreak citation} ($\phi{=}0.94$) --- so na\"ive Bayes double-counts them; where a zero-false-positive operating point matters, we recommend the logistic fusion that shrinks those coefficients.
+
+\begin{table}[!tb]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.95}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrc@{\hspace{1.2em}}llrrc@{}}
+\toprule
+\textbf{Signal} & \textbf{L} & \textbf{LR$_{\text{hand}}$} & \textbf{LR$_{\text{emp}}$} & \textbf{V}
+& \textbf{Signal} & \textbf{L} & \textbf{LR$_{\text{hand}}$} & \textbf{LR$_{\text{emp}}$} & \textbf{V} \\
+\midrule
+phantom\_doi          & L0 & 25 & \textbf{70}   & S & citation\_ring        & L3 & 10  & --- & U \\
+reference\_not\_found & L0 & 15 & 38            & S & excessive\_self\_cite & L3 & 4   & --- & U \\
+metadata\_mismatch    & L0 & 10 & \textbf{759}  & S & temporal\_anomaly     & L3 & 8   & --- & T \\
+chimera\_detected     & L0 & 8  & 2.1           & S & orphan\_cluster       & L3 & 2.5 & --- & T \\
+retracted\_citation   & L0 & 8  & \textbf{2343} & S & benford\_violation    & L3 & 6   & --- & U \\
+no\_id\_match         & L0 & 6  & 3.4           & S & reciprocal\_citation  & L3 & 5   & --- & T \\
+misrepresents\_source & L1 & 5  & ---           & T & citation\_burst       & L3 & 3   & --- & U \\
+all\_mentioning       & L1 & 2  & ---           & U & tortured\_phrases     & Tx & 25  & --- & U \\
+claim\_contradicted   & L2 & 6  & ---           & T & suspicious\_email     & Tx & 4   & --- & U \\
+claim\_unsupported    & L2 & 3  & ---           & T & grim\_test\_failure   & St & 50  & --- & U \\
+                      &    &    &               &   & statcheck\_error      & St & 8   & --- & U \\
+\bottomrule
+\end{tabular}
+\caption{All 21 signals with hand-set (LR$_{\text{hand}}$) and empirical (LR$_{\text{emp}}$) positive likelihood ratios LR$^{+}$; the five columns repeat side by side to fit all 21 rows. ``---'' in the LR$_{\text{emp}}$ column = never fires in the 8{,}817-case pool, so no empirical LR is estimable. Tx = text-mining; St = statistical. \textbf{V} = validation status: \textbf{S} validated at scale (6), \textbf{T} stress-tested on a borderline or matched-control split only (6), \textbf{U} implemented and unit-tested but empirically unvalidated (9). The 403-case unit-test split covers every signal but checks only that a detector fires in isolation, not that its LR is right. Bold = empirical exceeds hand-set by $\geq$1 order of magnitude.}
+\label{tab:lrs}
+\end{table}
+
+\noindent\textbf{Efficiency and error analysis.} Early stopping skips L1--L3 for 67\% of references. Component throughput is measured in isolation on local inputs with no network I/O: the L0 hallucination-pattern scorer alone reaches 336K refs/s and the L0 field comparator 18.6K refs/s (single CPU thread, batch size 1, 500 references), against 25 refs/s for L2 NLI on a 24\,GB GPU (batch 8); these are local micro-benchmarks, not registry-query rates. End-to-end throughput including live registry queries is network-bound at 2.1 s/ref on ret-6391. The 95/5{,}488 retraction misses are older small-publisher entries lacking machine-readable markers.
+
+\section{Conclusion}
+
+IntegriRef offers a calibrated audit of where reference-integrity verification is easy and where it is hard: registry checks solve most fabricated-DOI cases (99.9\% recall, 4--5\% FPR), while ID-resolving chimeras and citation-use errors need cross-field and contextual escalation; raw L4 posteriors rank well but are uncalibrated, and Platt or empirical LRs close the gap. Three negatives frame the message: in our 58-case setup a Crossref tool \emph{reduced} the performance of both LLMs tested with it, single-registry coverage inverts between populations, and the contextual layers are far weaker at $N{>}200$ than at $N{=}40$. The chimera blind spot is the transferable lesson --- a field-level verdict softened before fusion vanishes from every signal-level audit; only end-to-end stress testing finds it.
+
+\section*{Limitations and Ethics}
+\emph{Calibration.} Hand-set LRs differ from empirical by up to 2 orders of magnitude; 15/21 signals never fire in our pool and 9 stay empirically unvalidated. \emph{L1.} Much improved over the retired heuristic, but 11\% FPR on real contexts restricts it to triage. \emph{L2.} Advisory only: it flags 34--66\% of correct citations. \emph{L3.} Explanatory only; alone it lifts clean-bibliography FPR from 0.9\% to 73.7\%. \emph{Chimeras.} The year-only fix is validated on a 120-case stress set and 33 mined natural cases only. \emph{Domain coverage.} 62 adapters span 6 domains, but only four academic registries are validated at scale and all benchmarks are academic. \emph{Retraction coverage.} Recall tracks Retraction Watch and PubMed integration density. \emph{Ethics.} Reporting tiers rather than verdicts limits false-accusation risk.
+
+\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}
