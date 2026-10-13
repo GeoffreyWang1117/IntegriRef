@@ -252,6 +252,11 @@ two-term sentence won. That sentence is the one that settles the ROA-LLM claim.
 The floor is now a parameter: 12 for file windows, 4 for pre-segmented units, where
 the caller has already chosen the granularity. Re-measured:
 
+*(Superseded: the unit floor is now 1. A second session measured the 1-vs-4
+change on real data and found it **inert** -- the 6.5-9.7pp below belongs to the
+`search_terms` 8->16 change alone, and attributing it to both was wrong. See the
+metric section at the end of this file.)*
+
 | | before | after |
 |---|---|---|
 | dev recall@5, discriminative | 0.8059 (137/170) | **0.8118** (138/170) |
@@ -265,4 +270,65 @@ selection-pattern hash**, so two runs of "ab0e1801" can differ because retrieval
 changed underneath. That is the same attribution problem flagged to the other
 session about corpus-global idf, arriving from the other direction. New files carry
 `_minunit4`; a results file should name every component that can move a number, not
-just the one that moved last time.
+just the one that moved last time. *(Superseded by a `retrieval_config` block
+inside the result itself -- a filename is the wrong place for this, because it
+cannot be read back by anything that recomputes the metric.)*
+
+---
+
+## The retrieval metrics, 2026-10-13
+
+`recall@5` was the wrong name for what this harness reported. The published figure
+is the **fraction of pairs with at least one gold sentence in the top 5** -- that
+is hit@5. The real recall over gold sentences is a different, lower number. The
+old key survives as `recall@5_deprecated_alias_of_hit` so that earlier result
+files stay comparable; nothing about the measurement changed, only its name.
+
+The harness now reports the full set, separately for all pairs and for the
+discriminative subset (>5-sentence documents, the only ones where a top-5 can
+miss), and the whole k=1..5 curve so a k cannot be picked after seeing the
+results.
+
+| discriminative subset | dev | test |
+|---|---|---|
+| hit@5 | 0.8765 (149/170) | 0.8378 (284/339) |
+| evidence recall@5, micro | 0.7068 | 0.6984 |
+| evidence precision@5, micro | 0.3001 | 0.3015 |
+| **precision ceiling the gold labels allow** | **0.3900** | **0.4041** |
+| MRR@5 | 0.6961 | 0.6443 |
+| nDCG@5 | 0.6689 | 0.6064 |
+| pairs returning nothing | 4/170 | 7/339 |
+
+**The ceiling row is the point.** With five slots and a median of one or two gold
+sentences, evidence precision@5 cannot exceed ~0.39-0.40 here. Reading 0.30 as a
+weak ranker is a mistake: the list is at 77% and 75% of what the labels permit.
+Precision is reported as the reading burden a worklist implies, not as a second
+objective to maximise -- missing the only useful passage costs a reviewer more
+than one extra paragraph. Recall stays primary.
+
+**Where the headroom actually is: k=1.** Precision@1 on dev discriminative is
+0.5904 against a ceiling of 1.0, and hit@1 is 0.5765. So 41% of first-ranked
+passages are not annotated evidence while the slot could in principle always hold
+one. Ordering is the weak stage, not coverage -- which is invisible in a top-5
+number and is the argument for putting the single best candidate first and letting
+the reviewer expand.
+
+**28/361 dev pairs (59/770 test) return nothing at all.** Previously invisible:
+precision averages silently excluded them. Checked rather than assumed -- all of
+them are genuine zero lexical overlap between the claim's terms and the cited
+abstract, not an empty-term bug and not a dropped unit. They concentrate on 1-5
+sentence documents (only 4/170 fall in the discriminative subset), so they are an
+artifact of the corpus being truncated abstracts. Returning nothing is the correct
+behaviour; hiding it from the denominator was not. Coverage is now a reported
+field, and macro precision publishes the denominator it is defined on.
+
+**One caveat on every precision figure.** The corpus annotates *selected* evidence
+sentences and does not mark the rest irrelevant. A returned non-gold sentence is
+therefore "not annotated as evidence", not "shown to be useless", so these
+precisions are a lower bound on the annotated fraction of a worklist. Turning that
+bound into an estimate needs a blinded audit of high-ranked non-gold passages.
+
+`duplicate_index_pairs` is 0 on both splits. `_dedupe` drops passages overlapping
+a higher-ranked one in the same file, so two returned passages cannot share a
+sentence index -- but a duplicate would have inflated precision by scoring one
+sentence twice, so it is counted rather than assumed.

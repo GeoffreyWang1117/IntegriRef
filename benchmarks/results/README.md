@@ -111,3 +111,34 @@ different scan size for a different run.
 Resolved since first writing this list: the scale runs, the L3 clean-bibliography
 run and the LLM baseline verdicts, all above. The calibration figures are
 recomputable from the scale per-case posteriors.
+
+## deepcite retrieval metrics (added 2026-10-13)
+
+`deepcite_citint_{dev,test}_20261013_125450.json`. Read the `discriminative`
+block, not `all`: half the cited documents have 5 or fewer sentences, where a
+top-5 retrieval cannot miss.
+
+| Reported | Where in the file |
+|---|---|
+| hit@5 dev **0.8765** (149/170), test **0.8378** (284/339) | `retrieval.discriminative.hit@5` |
+| evidence recall@5 micro **0.7068 / 0.6984** | same block |
+| evidence precision@5 micro **0.3001 / 0.3015** | same block |
+| precision ceiling the gold labels allow **0.3900 / 0.4041** | `…evidence_precision@5_ceiling` |
+| MRR@5 **0.6961 / 0.6443**, nDCG@5 **0.6689 / 0.6064** | same block |
+| pairs returning nothing **4/170, 7/339** (full set: 28/361, 59/770) | `pairs_with_no_result`, `coverage` |
+
+**Precision has to be read against the ceiling in the row below it.** Five slots
+and a median of one or two gold sentences cap precision@5 at ~0.39-0.40, so 0.30
+is 77% of what is attainable. Treating it as a weak ranker would be a
+misreading; the headroom is at k=1 (precision 0.5904 against a ceiling of 1.0),
+which the top-5 figure hides. See `../../deepcite/eval/PLAN.md`, final section.
+
+What was published as `recall@5` (0.806 / 0.726 in earlier files) is **hit@5** --
+the share of pairs with at least one gold sentence retrieved, not recall over
+gold sentences. The old key is kept as `recall@5_deprecated_alias_of_hit` so the
+earlier `_ab0e1801`, `_minunit4` and `_r3` files stay comparable. The number never
+changed; the name was wrong.
+
+These files are timestamped rather than labelled with the knobs that moved
+(`_minunit4`, `_r3`): the knobs are now a `retrieval_config` block inside the
+result, because a filename cannot be read back by whatever recomputes the metric.

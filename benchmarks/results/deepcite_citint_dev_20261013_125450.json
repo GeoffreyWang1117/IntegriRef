@@ -1,0 +1,139 @@
+{
+ "split": "dev",
+ "claims": 316,
+ "top_k": 5,
+ "selection_regex_sha256": "ab0e180155dba520f815f15b27a1b835f316f1acec1accb3fabd8307edade84d",
+ "tool_version": "0.2.0",
+ "retrieval_config": {
+  "min_unit_words": 1,
+  "min_window_words": 12,
+  "max_passages": 5,
+  "max_words": 60,
+  "search_terms_limit": 16
+ },
+ "selection": {
+  "recall_on_checkable": 0.5725,
+  "fired/with_evidence": "146/255",
+  "fire_rate_on_no_evidence": 0.541,
+  "fired/no_evidence": "33/61",
+  "by_label": {
+   "ACCURATE": "154/269",
+   "CONTRADICT": "12/23",
+   "ETIQUETTE": "2/4",
+   "INDIRECT": "6/8",
+   "MISQUOTE": "4/11",
+   "NOT_SUBSTANTIATE": "17/35",
+   "OVERSIMPLIFY": "7/11"
+  },
+  "recall_on_erroneous": 0.5217
+ },
+ "retrieval": {
+  "note": "'hit@5' is the fraction of pairs with at least one gold sentence in the top 5; it was published as 'recall@5', which was the wrong name for it. 'evidence_recall' is the real recall over gold sentences. 'discriminative' = cited documents with more than 5 sentences, where a top-5 retrieval can actually miss, and is the figure to read. Precision is bounded by 'evidence_precision@5_ceiling' = sum min(|R_k|,|G|) / sum |R_k|, not by 1.0. A non-gold passage is not annotated as evidence; it is not shown to be irrelevant.",
+  "all": {
+   "hit@5": 0.8476,
+   "hit/pairs": "306/361",
+   "evidence_recall@5_micro": 0.7253,
+   "evidence_recall@5_macro": 0.7585,
+   "evidence_precision@5_micro": 0.3772,
+   "evidence_precision@5_macro": 0.453,
+   "evidence_precision@5_ceiling": 0.4591,
+   "mrr@5": 0.7043,
+   "ndcg@5": 0.6787,
+   "gold_sentences": 597,
+   "passages_shown": 1148,
+   "passages_per_pair_mean": 3.18,
+   "passages_per_pair_median": 3,
+   "pairs_with_no_result": "28/361",
+   "coverage": 0.9224,
+   "macro_precision_defined_on": "333/361",
+   "median_rank_of_first_gold_hit": 1.0,
+   "duplicate_index_pairs": 0,
+   "by_k": {
+    "1": {
+     "hit": 0.6011,
+     "evidence_recall_micro": 0.3635,
+     "evidence_precision_micro": 0.6517,
+     "evidence_precision_ceiling": 1.0
+    },
+    "2": {
+     "hit": 0.7507,
+     "evidence_recall_micro": 0.5377,
+     "evidence_precision_micro": 0.5262,
+     "evidence_precision_ceiling": 0.8016
+    },
+    "3": {
+     "hit": 0.8089,
+     "evidence_recall_micro": 0.6348,
+     "evidence_precision_micro": 0.4491,
+     "evidence_precision_ceiling": 0.6149
+    },
+    "4": {
+     "hit": 0.8338,
+     "evidence_recall_micro": 0.6868,
+     "evidence_precision_micro": 0.4024,
+     "evidence_precision_ceiling": 0.5152
+    },
+    "5": {
+     "hit": 0.8476,
+     "evidence_recall_micro": 0.7253,
+     "evidence_precision_micro": 0.3772,
+     "evidence_precision_ceiling": 0.4591
+    }
+   },
+   "recall@5_deprecated_alias_of_hit": 0.8476
+  },
+  "discriminative": {
+   "hit@5": 0.8765,
+   "hit/pairs": "149/170",
+   "evidence_recall@5_micro": 0.7068,
+   "evidence_recall@5_macro": 0.7631,
+   "evidence_precision@5_micro": 0.3001,
+   "evidence_precision@5_macro": 0.3092,
+   "evidence_precision@5_ceiling": 0.39,
+   "mrr@5": 0.6961,
+   "ndcg@5": 0.6689,
+   "gold_sentences": 307,
+   "passages_shown": 723,
+   "passages_per_pair_mean": 4.253,
+   "passages_per_pair_median": 5.0,
+   "pairs_with_no_result": "4/170",
+   "coverage": 0.9765,
+   "macro_precision_defined_on": "166/170",
+   "median_rank_of_first_gold_hit": 1,
+   "duplicate_index_pairs": 0,
+   "by_k": {
+    "1": {
+     "hit": 0.5765,
+     "evidence_recall_micro": 0.3192,
+     "evidence_precision_micro": 0.5904,
+     "evidence_precision_ceiling": 1.0
+    },
+    "2": {
+     "hit": 0.7353,
+     "evidence_recall_micro": 0.4919,
+     "evidence_precision_micro": 0.4632,
+     "evidence_precision_ceiling": 0.7883
+    },
+    "3": {
+     "hit": 0.8118,
+     "evidence_recall_micro": 0.5733,
+     "evidence_precision_micro": 0.3713,
+     "evidence_precision_ceiling": 0.5802
+    },
+    "4": {
+     "hit": 0.8471,
+     "evidence_recall_micro": 0.6384,
+     "evidence_precision_micro": 0.3229,
+     "evidence_precision_ceiling": 0.4613
+    },
+    "5": {
+     "hit": 0.8765,
+     "evidence_recall_micro": 0.7068,
+     "evidence_precision_micro": 0.3001,
+     "evidence_precision_ceiling": 0.39
+    }
+   },
+   "recall@5_deprecated_alias_of_hit": 0.8765
+  }
+ }
+}
