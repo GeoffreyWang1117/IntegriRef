@@ -63,9 +63,18 @@ pip install -r requirements.txt
 # 可选：异步 + ONNX 加速
 pip install aiohttp uvloop onnxruntime
 
-# 运行测试 (480+ tests)
+# 运行测试：确定性的离线子集（530 passed，约 1.3 秒）
+pytest -m "not network" --block-network
+
+# 全套，含 60 个打实时 registry 的测试（约 40 分钟，且会受限流影响）
 pytest tests/ -x -q
 ```
+
+`tests/test_integrity_benchmark.py` 的 60 个测试会调真实 registry（实测涉及 48
+个域名），**它们的成败取决于当时各服务是否限流** —— 同一份代码连跑两次得到
+10 和 9 个失败，来自 30 次 HTTP 429 和 6 次 DNS 失败。所以它们不是回归信号，
+已用 `network` marker 标出。`--block-network` 会装一个 socket 守卫，让以后新加
+的联网测试如果忘了打 marker 就立刻失败，而不是几个月后变成间歇性红灯。
 
 ### 基本用法
 

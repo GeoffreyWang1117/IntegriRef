@@ -393,14 +393,20 @@ class TestBatchIntegration:
             enable_l2_only_on_escalation=False,
         )
 
-        # Mock engine to return different results
-        results = [
-            _mock_l0_result("attention"),     # good
-            _mock_l0_result("hallucinated"),   # fake
-            _mock_l0_result("retracted_wakefield"),  # retracted
-        ]
+        # Keyed on the reference, not on call order. verify_batch runs the
+        # references through a ThreadPoolExecutor(max_workers=8), and a
+        # side_effect *list* is consumed in call order, which under concurrency
+        # does not line up with reference order. That made this test
+        # intermittently fail with the fake paper's assertions reading the
+        # retracted paper's signals -- rare while the suite took 39 minutes,
+        # roughly one run in two once it took seconds.
+        by_title = {
+            FIXTURES[name]["ref"]["title"]: _mock_l0_result(name)
+            for name in ("attention", "hallucinated", "retracted_wakefield")
+        }
         pipeline._engine = MagicMock()
-        pipeline._engine.verify_reference.side_effect = results
+        pipeline._engine.verify_reference.side_effect = (
+            lambda ref, *args, **kwargs: by_title[ref["title"]])
 
         refs = [
             FIXTURES["attention"]["ref"],
