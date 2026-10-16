@@ -122,7 +122,7 @@ That shape fits IPM, and it is what the evidence supports.
    real pairs mined from the `gfissore/arxiv-abstracts-2021` snapshot (1,999,486
    records scanned; seed 20261013; stratified at most 20 per delta × category
    cell), with every screening stage and its retention published in
-   `.codex/REPORT_T10.md`. Printed year is the arXiv-ID year, publication year is
+   `benchmarks/data/PREPRINT_HARD_NEGATIVES_PROVENANCE.md`. Printed year is the arXiv-ID year, publication year is
    parsed from `journal-ref`. Verified independently: a separately written parser
    reproduces all 483 ID years and publication years with zero disagreements, and
    the report's 20-row manual audit matches the fixture row for row, in order.

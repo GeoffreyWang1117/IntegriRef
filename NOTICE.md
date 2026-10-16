@@ -28,14 +28,16 @@ instances over 100 biomedical papers, used by `deepcite/eval/` as the external
 labelled corpus for retrieval and selection measurement. Not redistributed here.
 
 **arXiv metadata snapshot** `gfissore/arxiv-abstracts-2021` — the source of the
-483 preprint-to-publication pairs in `.codex/preprint_hard_negatives_*.jsonl`.
+483 preprint-to-publication pairs in
+`benchmarks/data/preprint_hard_negatives_*.jsonl`.
 Public snapshot; records are reproduced only as the fields listed in
-`.codex/REPORT_T10.md`.
+[`benchmarks/data/PREPRINT_HARD_NEGATIVES_PROVENANCE.md`](benchmarks/data/PREPRINT_HARD_NEGATIVES_PROVENANCE.md).
 
 **References-Validation / CheckIfExist** (`zabbonat/References-Validation`) — a
-third-party reference checker. A clone is kept under `.codex/` for offline
-execution at a pinned revision and is **run unmodified**; no upstream source or
-decision logic is changed. It carries its own upstream license.
+third-party reference checker. It is **not vendored here** — it carries its own
+upstream license and the harness's whole point is that it runs unmodified, so
+`benchmarks/checkifexist_offline/` clones it at a pinned revision instead. See
+that directory's README for the clone command.
 
 ## Dependency licensing worth knowing about
 

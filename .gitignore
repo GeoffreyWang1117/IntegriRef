@@ -156,3 +156,7 @@ benchmarks/data/unarxive/
 
 # Codex 侧的任务单与报告（跨 agent 协作用，不入库）
 .codex/
+
+# The pinned CheckIfExist clone that benchmarks/checkifexist_offline/ runs
+# against; it is third-party code and is deliberately not vendored.
+vendor/
