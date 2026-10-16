@@ -34,10 +34,11 @@ strong, and the evidence cuts both ways — see below.
 ## The claim that does survive
 
 > A field-level check being *correct* does not mean it *runs*, or *survives*, for
-> the records that need it. Two independent codebases skip the same comparison by
-> two different mechanisms, and unit-level testing of the check cannot see either.
+> the records that need it. Three codebases lose the same comparison by three
+> different mechanisms — a routing decision, a discarded label, a severity rule —
+> and unit-level testing of the check cannot see any of them.
 
-Evidence, from two systems with different owners:
+Evidence, from three systems, two of them with other owners:
 
 **CheckIfExist (third party).** Its `checkReference` path compares years
 extensively and emits a graded verdict — "Year Mismatch: expected X, found Y"
@@ -73,22 +74,46 @@ deterministic fixtures built from our own records, not against live Crossref, so
 it establishes the routing behaviour of the published implementation and not its
 behaviour on the full variety of real registry responses.
 
+**pvsundar's Bibliography Verification Tool (third party, and the mechanism is
+different).** A released, citable tool — MIT, ORCID, archived at
+[10.5281/zenodo.17622390](https://doi.org/10.5281/zenodo.17622390). Its DOI route
+*does* reach a year comparison, with its own ±2 tolerance, and appends
+`YEAR_MISMATCH_{n}yrs` when the gap is wider. The label never reaches a report:
+it is appended to a local list that both branches of the status block
+unconditionally rebind before the output is written. Run unmodified and offline
+against the same two cohorts, **57 of 60 year chimeras come back `VERIFIED` with
+`Issues_Detected = None`** (the other 3 fail our APA title reconstruction, not
+its year check), and **zero of 483 legitimate pairs carry a year label** either.
+A wrong year costs 25 points of match score and nothing else. Its own summary log
+instructs the reader to triage on `YEAR_MISMATCH ≤ 2 years` — a token its code
+cannot emit — and prints per-reference detail only for rows it marked
+`NEEDS_REVIEW`, so a bibliography whose single defect is a fabricated year yields
+`None - all references verified!`.
+
+So the two third-party tools lose the year comparison at different points:
+CheckIfExist never reaches it, pvsundar reaches it and drops the answer. The
+third-party checker that *does* report year drift, Binara's, carries no tolerance
+at all — it flags all 60 chimeras and 73.1% of the 483 legitimate references,
+flat across delta, which is not a checker anyone would leave switched on. Details
+and the positive controls: `benchmarks/independent_checkers/`.
+
 **IntegriRef's own earlier releases (not independent, and the nuance matters).**
 bibguard v0.2.0–v0.4.0 raise a year `FAIL` on all 60 cases, then a confirmed
 title+author postprocessor downgrades every one to `WARN`. So the discrepancy was
 never *omitted* — it surfaced, at a lower severity. Counting any warning as a
 detection gives 60/60; counting only hard failures gives 0/60.
 
-**That second finding is why "blind spot" is the wrong word.** In our tool the
-verdict was softened; in theirs it was skipped. Neither is an absent capability.
+**This is why "blind spot" is the wrong word.** In one the check was skipped, in
+the next its answer was discarded, in ours the verdict was softened. None of the
+three is an absent capability.
 The common structure is that both failures live *downstream of a correct check* —
 in a severity rule and in a routing decision — and both are invisible to anyone
 testing the comparator in isolation. That is a statement about how to audit such
 pipelines, and it is worth a careful paragraph rather than a headline.
 
-### A third instance, found in our own instrument
+### And once more, in our own instrument
 
-The same structure appeared once more, in the apparatus built to measure it. The
+The same structure appeared again, in the apparatus built to measure it. The
 first offline run classified CheckIfExist's verdicts by matching its `issues`
 strings against `/year.*mismatch/i`, and reported zero year issues across all 603
 cases. The number was correct, but it was not yet *evidence*: upstream emits
@@ -133,9 +158,40 @@ That shape fits IPM, and it is what the evidence supports.
    dependency-injected `fetch`, 603 records, zero network routes other than
    `/works/{doi}`. The sentence the paper owes its reader is now about fixtures
    rather than about source reading — see the limit stated above.
-3. **More than one independent tool.** Still open, and now the binding
-   constraint. One counterexample motivates a narrow statement and cannot support
-   prevalence.
+3. ~~**More than one independent tool.**~~ **Done.** Two further checkers by
+   different authors, run unmodified and offline on the same two cohorts
+   (`benchmarks/independent_checkers/`), with a socket guard self-tested against
+   a live URL before it is trusted. They fail in opposite directions, and
+   neither is usable:
+
+   | | catches chimeras (n=60) | flags legitimate refs (n=483) |
+   |---|---:|---:|
+   | CheckIfExist, DOI route | 0 / 60 | 0 / 483 |
+   | pvsundar, ±2 tolerance | 0 / 60 | 0 / 483 |
+   | Binara, exact match | 60 / 60 | 353 / 483 = 73.1% |
+
+   **pvsundar is a second instance of the pattern by a different mechanism.** It
+   is a released, citable tool (MIT, ORCID, Zenodo 10.5281/zenodo.17622390) and
+   its DOI route *does* reach a year comparison with a ±2 tolerance. The
+   `YEAR_MISMATCH_{n}yrs` label it produces is appended to a local list that is
+   unconditionally rebound before the output is written, so it reaches no
+   report: 57 of 60 chimeras come back `VERIFIED` with `Issues_Detected = None`,
+   and the tool's own summary log tells the reader to triage on a label its code
+   can never emit. In CheckIfExist the check is never reached; here it runs and
+   its answer is discarded. **Two independent implementations, two different
+   roads to the same silence** — which is what turns one counterexample into a
+   statement about a pattern.
+
+   Binara is the contrast: it compares the year with no tolerance whatever, so it
+   catches all 60 chimeras and flags 73.1% of legitimate preprint-to-publication
+   references, flat across delta 1–5 because it measures only that the years
+   differ. Nothing sits in the middle.
+
+   **A static pass is not this.** The source review that selected these two got
+   the first exactly right, to the line, and the second backwards: it reported
+   that Binara does not compare the year, citing a function and line numbers
+   present in no revision of that file, when in fact every revision compares it.
+   The claim survived only because it was then executed.
 4. **NatChim's sampling frame.** Irrecoverable: the mining script overwrote its own
    log (see `../benchmarks/data/NATCHIM_PROVENANCE.md`). Either re-mine with the
    now-timestamped script, or keep reporting the split without a frame.

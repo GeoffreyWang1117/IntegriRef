@@ -160,3 +160,6 @@ benchmarks/data/unarxive/
 # The pinned CheckIfExist clone that benchmarks/checkifexist_offline/ runs
 # against; it is third-party code and is deliberately not vendored.
 vendor/
+
+# pvsundar runner writes its generated .docx fixtures here
+benchmarks/independent_checkers/_scratch/

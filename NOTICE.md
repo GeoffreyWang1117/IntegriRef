@@ -47,6 +47,16 @@ upstream license and the harness's whole point is that it runs unmodified, so
 `benchmarks/checkifexist_offline/` clones it at a pinned revision instead. See
 that directory's README for the clone command.
 
+**Bibliography Verification Tool** (`pvsundar/bibliography-verification-tool`) —
+third-party, MIT, archived at `10.5281/zenodo.17622390`. **Not vendored**;
+`benchmarks/independent_checkers/` clones it at a pinned revision.
+
+**Harvard DOI & Reference Validator** (`Binara-Sachin/doi-reference-validator`) —
+third-party, and it ships **no license file**, so no grant of rights can be
+assumed. Nothing of it is copied into this repository: the harness clones it at a
+pinned revision, runs it unmodified, and quotes only line numbers and short
+identifiers for the purpose of describing its behaviour.
+
 ## Dependency licensing worth knowing about
 
 `pymupdf` is **dual-licensed AGPL-3.0 or commercial**. This repository's own code
