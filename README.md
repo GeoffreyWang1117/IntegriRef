@@ -6,6 +6,55 @@ L0-L4 五层验证栈 — 覆盖学术、专利、法律、政府、金融、标
 
 ---
 
+## 📍 当前状态 (2026-10-16)
+
+**这篇论文未发表。** NLPCC 2026 曾 Oral 录用（2026-08-12），作者选择撤稿而非支付
+注册费。撤稿已获会议秘书处书面回复（2026-10-14）：投稿 358 与 355 **已从录用名单
+移除**。回复来自 Conference Secretariat，未逐字提及 proceedings 或 Springer LNAI
+卷，因此此处只陈述其原话涵盖的范围。撤稿不计入任何发表记录。
+
+**论文该主张什么，以 [docs/IPM_POSITIONING.md](docs/IPM_POSITIONING.md) 为准。**
+2026-10-11 的对抗性审计删掉了大部分候选论点（包括「现有工具只检查 DOI 能否解析」
+这条可被 Dunford 2024 单篇证伪的断言），剩下的是一条关于**如何审计这类流水线**的
+方法论发现，不是检测方法的新颖性。五层框架的提法应当停止作为贡献出现 —— 四位
+NLPCC 评审都要求收窄它。
+
+**投稿去向：**
+
+| 去向 | 状态 | 原因 |
+|---|---|---|
+| arXiv | 包已就绪，未投 | `paper/nlpcc2026/IntegriRef_arxiv.tar.gz`，14 页 A4，验证可解压编译 |
+| ECIR 2027 Resource | ❌ 排除 | 要求至少一位作者到场（Southampton），作者 2026-10-16 决定不到场 |
+| AAAI-27 W11 (DiMiGenAIS) | 候选，截稿 2026-11-20 | `paper/aaai2027_w11/`，正文 6 页 / 含 refs 7 页；**archival 与否未知，待问组织者** |
+
+**基准已发布：** 九个 split 共 12,381 条，见
+[benchmarks/data/dataset_card.md](benchmarks/data/dataset_card.md) 与
+[benchmarks/results/README.md](benchmarks/results/README.md)。其中
+`Borderline-L1-v2` / `Borderline-L2-v2` 是对 ACL-ARC 与 SciFact dev 的定种子抽选，
+**以脚本形式发布而非转载第三方数据** —— 详见 [NOTICE.md](NOTICE.md)。
+
+**测试：** `pytest -m "not network" --block-network` 是离线回归闸门（530 passed，
+约 1.3 秒，确定性）。`tests/test_integrity_benchmark.py` 的 60 项需要实时注册表，
+通过与否取决于对方是否限流，不构成回归信号。
+
+**论文版本：**
+
+| 目录 | 状态 | 模板 |
+|---|---|---|
+| `paper/nlpcc2026/camera_ready/` | **权威版本**（唯一含审计修正，引用 Dunford 2024） | Springer LNCS |
+| `paper/aaai2027_w11/` | W11 候选，由 camera_ready 原样移植 | AAAI-27 双栏 |
+| `paper/nlpcc2026/main.tex` | 2026-08-04 旧稿，**早于审计** | LNCS |
+| `paper/main.tex` | 2026-03-18 旧稿，**早于审计** | acmart |
+| `paper/gem2026/`、`paper/ase2026/` | 早期草稿，未跟踪 | — |
+
+⚠️ 后两版不要再用于投稿：它们仍含审计已删除的断言。
+
+> **关于 `paper/nlpcc2026/review_round_*.json`**：那是 `self-review` skill 生成的
+> **模拟评审**（`venue: neurips`），不是真实评审意见，其分数不代表论文质量。真实的
+> NLPCC 评审意见体现在同目录的 `rebuttal_{3tFe,Fr11,HE9x,JYpA}.md` 中。
+
+---
+
 ## 核心能力
 
 | 验证层 | 能力 | 精度/性能 | 竞品现状 |
@@ -198,7 +247,28 @@ IntegriRef/
 
 ## Benchmark 结果
 
-### 完整性基准 (IntegriRef-Bench Golden Test Set, 58 cases)
+### 规模评估 (IntegriRef-Bench external splits, 8,317 cases) — **论文 §4.2**
+
+| 指标 | rv-1926 | ret-6391 | 说明 |
+|------|:--:|:--:|------|
+| 幻觉召回率 (≥ ELEVATED) | **99.9%** [99.5, 100] | — | 1,215 个 Crossref-DOI namespace probes |
+| Chimera 召回率 (≥ ELEVATED) | **100%** [98.9, 100] | — | 339 例 |
+| 撤稿召回率 (≥ ELEVATED) | 100% [85.2, 100] | **98.3%** [97.9, 98.6] | ret-6391 = 5,488 Retraction Watch + 903 control |
+| FPR | 4.6% [2.6, 7.3] | 4.2% [3.0, 5.7] | matched controls |
+| 整体 acc. | 99.1% | 97.9% | |
+
+标签来源外部权威 (Retraction Watch / Crossref / PubMed) 而非作者人工分类；括号为 Clopper-Pearson 95% CI。
+
+### Chimera 压力测试 (3×60 + 60 controls) — **论文 §4.3**
+
+| Split | 检测率 | FPR | 备注 |
+|---|---|---|---|
+| 作者交换 (author-only) | 60/60 CRITICAL | 0/60 | Crossref-only |
+| 年份偏移 -7y (year-only) | 0/60 | 0/60 | **盲点** |
+| 组合 (author+year) | 60/60 HIGH | 0/60 | 机制变为 `phantom_doi` |
+| 跨域 8 主题 author-swap | 60/60 CRITICAL (每主题 100%) | 0/60 | CV/DL/NLP/NN/量子/材料/能源/气候 |
+
+### 完整性基准 (Golden Test Set, 58 cases) — **论文 §4.2 Table 1**
 
 | 指标 | 优化前 | 优化后 | 说明 |
 |------|--------|--------|------|
@@ -209,6 +279,14 @@ IntegriRef/
 | 幻觉精确率 | 100% | **100%** | 无假阳性 |
 
 \* 优化前仅处理了 10/25 篇撤稿论文（超时）；优化后为全量 58-case 运行。
+
+### Platt 标定 (论文 §4.5)
+
+| 设置 | ECE (10-bin) | Brier | 备注 |
+|---|---|---|---|
+| Raw L4 hand-set LR | 0.356 | 0.173 | 8,817 案例池 |
+| 5-fold CV Platt | **0.003** | 0.014 | 论文主报告 |
+| 时序 hold-out (year ≤2023 train / >2023 test) | **0.006** | — | 确认非 in-distribution 过拟合 |
 
 **关键优化**: Phantom DOI 信号独立于搜索结果 · Kill-shot override 阻止贝叶斯软化 · 搜索阶段 author guard 防止假匹配
 
@@ -336,12 +414,16 @@ L0→L4 中间评分后，可跳过 L1–L3 的模拟实验：
 
 | 优先级 | 任务 | 说明 | 状态 |
 |--------|------|------|------|
-| **P0** | 数据集扩展 (爬虫) | 7 个爬虫就绪，需要扩充撤稿/幻觉/统计错误样本 | 🔄 进行中 |
-| **P0** | 系统论文撰写 | GEM 2026 投稿，L0-L4 全栈 + 消融 + 对比 | 🔄 进行中 |
+| **P0** | NLPCC 2026 提交 | 主稿 12pp R7 8.25 已提交 (2026-05-29) | ✅ 已提交 |
+| **P0** | NLPCC 评审应对 | 准备 rebuttal / 新实验（如有要求）| ⏳ 等待 notification |
+| **P1** | 选择 ACL workshop 平行投稿 | non-archival，论文已就绪 | ⏳ 待定 |
+| **P1** | LLM-tool-degrades 独立工作 | Table 1 现象单独成文，投 ACL/EMNLP workshop | 待规划 |
+| **P1** | 数据集扩展 (爬虫) | 7 个爬虫就绪；rv-1926/ret-6391 已扩到外部权威标签 | 🔄 持续 |
 | **P1** | 接入 4 个未连接的检测器 | tortured/email/GRIM+statcheck/sneaked → engine | 待做 |
 | **P1** | 端到端集成测试 | 用真实论文 fixture 验证完整管线 | 待做 |
 | **P2** | FastAPI REST API | 商业化 MVP，5 个核心 endpoint | 待做 |
 | **P2** | 跨数据集泛化测试 (L2) | HealthVer, FEVER, ClimateVER | 待做 |
+| **P2** | L3 检测器重新调优 | 干净文献集 73.7% FPR (论文 §4.4)，需将 reciprocal/orphan/temporal 拆为低基础发生率信号 | 待做 |
 | **P3** | LLM 幻觉引文 benchmark | GPT-4/Claude/Gemini 生成引文验证 | 待做 |
 
 ### 数据集爬虫状态
@@ -360,8 +442,8 @@ L0→L4 中间评分后，可跳过 L1–L3 的模拟实验：
 
 ### 研究方向
 
-1. **系统论文** (GEM 2026) — L0-L4 全栈 + 消融实验 + CheckIfExist 对比 (**撰写中**)
-2. **LLM 引文幻觉检测** (ACL/EMNLP) — 最热话题，基础设施已就绪
+1. **系统论文** (**NLPCC 2026**) — L0-L4 全栈 + 消融实验 + CheckIfExist + LLM panel 对比，✅ 2026-05-29 已提交
+2. **LLM 引文幻觉检测** (ACL/EMNLP workshop) — 工具增强反而降级 (论文 §4.2 / Table 1) 可作独立故事
 3. **跨领域引文操控** (QSS) — 6 领域 × 10K 论文的异常模式对比
 4. **多语言引文验证** (JCDL) — 15+ 语言验证精度差异与改进
 
@@ -381,6 +463,9 @@ L0→L4 中间评分后，可跳过 L1–L3 的模拟实验：
 
 | 文件 | 内容 |
 |------|------|
+| [paper/nlpcc2026/main.tex](paper/nlpcc2026/main.tex) | **当前主稿**：12pp LNCS, R7 8.25 |
+| [paper/nlpcc2026/review_round_*.json](paper/nlpcc2026/) | 7 轮 self-review (5.0 → 6.0 → 7.0 → 7.0 → 7.5 → 8.0 → 8.25) |
+| [paper/gem2026/](paper/gem2026/) | 实验脚本与 `bench_results/` 全部 raw JSON |
 | [docs/DEVELOPMENT_NOTES.md](docs/DEVELOPMENT_NOTES.md) | 完整技术记录：架构设计、微调记录、性能优化、Bug 修复 |
 | [docs/STRATEGY.md](docs/STRATEGY.md) | 竞品分析、技术路线、商业化路线图 |
 | [web/index.html](web/index.html) | 产品展示页 |
