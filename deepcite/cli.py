@@ -346,12 +346,58 @@ def cmd_run(a: argparse.Namespace) -> int:
     #    goes into files_sha256, so a citing file absent from the map reads as
     #    unscanned, not clean.
     rels = T.tex_files(paper, main_tex)
+
+    # 1a. Scan before deciding anything. The scan needs no .bib and no bibguard,
+    #     and its counts are what separates the three ways a run can end up with
+    #     no work: a paper that cites nothing, a paper whose citations make no
+    #     checkable claim, and a --paper pointed somewhere there is no paper.
+    files_sha, selected, n_cites = {}, [], 0
+    for rel in rels:
+        sf = T.scan_file(paper, rel)
+        files_sha[rel] = sf.raw_sha256
+        n_cites += len(sf.citations)
+        for cit in sf.citations:
+            sel = S.select(cit.sentence.text)
+            if sel:
+                selected.append((rel, cit, sel))
+
     bibs = [Path(b).expanduser() for b in (a.bib or [])] or _detect_bibs(paper, rels)
     missing = [b for b in bibs if not b.is_file()]
-    if not bibs or missing:
-        print(f"deepcite: bib file not found: {missing[0] if missing else '(none named or present)'}"
-              f" -- pass --bib", file=sys.stderr)
+    print(f"  main {main_tex or '(not found; scanned every .tex)'}; scanned {len(rels)} "
+          f".tex file(s); {n_cites} citation(s); {len(selected)} make a checkable claim")
+
+    if missing:
+        # A --bib that is not on disk is a typo in the command, not a fact about
+        # the paper. Nothing is recorded: the references were not examined.
+        print(f"deepcite: bib file not found: {missing[0]} -- pass --bib",
+              file=sys.stderr)
         return C.EXIT_NO_BIB
+    if not bibs:
+        if n_cites:
+            # Citations exist and the bibliography cannot be read, so the
+            # references were NOT examined. Still an error, and loudly so.
+            print(f"deepcite: no .bib found beside the paper, but {n_cites} "
+                  f"citation(s) are cited in {len(rels)} .tex file(s) -- "
+                  f"pass --bib. Nothing was recorded: the references were not "
+                  f"examined.", file=sys.stderr)
+            return C.EXIT_NO_BIB
+        # No bibliography and nothing cited. That is a fact about the paper,
+        # not a failed run, and it is recorded so the reader can tell it from
+        # "never ran". The counts go with it: 0 .tex files scanned means this
+        # may be the wrong directory, and only the reader can judge that.
+        payload = K.build(paper, main_tex, files_sha, [], S.patterns_sha256(),
+                          bibguard_version="(not needed: nothing to check)",
+                          scan_block=K.scan(len(rels), 0, [], 0,
+                                            K.NO_BIBLIOGRAPHY_NO_CITATIONS))
+        print("  nothing to check: no bibliography, and no \\cite in any "
+              "scanned .tex. Recorded, so this does not read as a run that "
+              "never happened.")
+        if not rels:
+            print(f"  NOTE: 0 .tex file(s) under {paper} -- if this paper has a "
+                  f"manuscript, deepcite was pointed at the wrong directory, "
+                  f"and an empty worklist is not evidence about its references.",
+                  file=sys.stderr)
+        return _finish(paper, payload, cache_dir, [])
 
     bibguard_cmd = a.bibguard.split() if a.bibguard else ["bibguard"]
     try:
@@ -363,24 +409,16 @@ def cmd_run(a: argparse.Namespace) -> int:
         print(f"deepcite: {e}", file=sys.stderr)
         return C.EXIT_BIBGUARD_TOO_OLD
 
-    files_sha, selected = {}, []
-    for rel in rels:
-        sf = T.scan_file(paper, rel)
-        files_sha[rel] = sf.raw_sha256
-        for cit in sf.citations:
-            sel = S.select(cit.sentence.text)
-            if sel:
-                selected.append((rel, cit, sel))
-
-    print(f"  main {main_tex or '(not found; scanned every .tex)'}; scanned {len(rels)} "
-          f".tex file(s); {len(selected)} citation(s) make a checkable claim")
-
     manual = dict(kv.split("=", 1) for kv in (a.artifact or []) if "=" in kv)
+    bib_names = [str(b) for b in bibs]
 
     if not selected:
         # Not an error: a paper may simply make no checkable claims. Write the
-        # cache anyway so the reader can distinguish this from "never ran".
-        payload = K.build(paper, main_tex, files_sha, [], S.patterns_sha256(), bg_version)
+        # cache anyway so the reader can distinguish this from "never ran",
+        # and record the counts so it can also tell it from an empty directory.
+        payload = K.build(paper, main_tex, files_sha, [], S.patterns_sha256(), bg_version,
+                          scan_block=K.scan(len(rels), n_cites, bib_names, 0,
+                                            K.NO_CITABLE_CLAIM))
         return _finish(paper, payload, cache_dir, [])
 
     # 2. Resolve ids for the SELECTED keys only. bibguard over the whole .bib was
@@ -411,7 +449,8 @@ def cmd_run(a: argparse.Namespace) -> int:
     memo = R._memo_load()
     records = _records_for(selected, resolved, entries, manual, art_cache, memo, a.rank)
     R._memo_save(memo)
-    payload = K.build(paper, main_tex, files_sha, records, S.patterns_sha256(), bg_version)
+    payload = K.build(paper, main_tex, files_sha, records, S.patterns_sha256(), bg_version,
+                      scan_block=K.scan(len(rels), n_cites, bib_names, len(selected)))
     return _finish(paper, payload, cache_dir, records)
 
 
@@ -511,8 +550,17 @@ def cmd_review(a: argparse.Namespace) -> int:
         records.append(rec)
     R._memo_save(memo)
 
+    # The same scan block as `run`, so one empty worklist reads like another.
+    # In review mode there is no .bib -- the reference list is printed in the PDF
+    # -- so bib_files is empty by construction and tex_files counts the one
+    # extracted body text. cite_commands and citable_claims mean what they say.
+    why = None
+    if not records:
+        why = (K.NO_BIBLIOGRAPHY_NO_CITATIONS if not scan.citations and not scan.refs
+               else K.NO_CITABLE_CLAIM)
     payload = K.build(out_dir, None, {"body.txt": C.file_sha256(body.read_bytes())}, records,
-                      S.patterns_sha256(), "not used (review of a PDF)")
+                      S.patterns_sha256(), "not used (review of a PDF)",
+                      scan_block=K.scan(1, len(scan.citations), [], len(selected), why))
     payload["paper"].update({"kind": "pdf", "pdf": str(pdf), "pdf_sha256": scan.pdf_sha256,
                              "body_text": str(body), "reference_style": scan.style,
                              "references": len(scan.refs)})

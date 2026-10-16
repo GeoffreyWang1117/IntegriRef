@@ -278,6 +278,12 @@ def test_review_a_pdf_without_tex_or_bib(offline, tmp_path):
     data = json.loads((out / "ref_check_deep.json").read_text())
     assert data["paper"]["kind"] == "pdf" and (out / "body.txt").exists()
     assert data["records"], "nothing selected from the fixture PDF"
+    # review writes the same scan block as run (spec §13), so one empty worklist
+    # reads like another. There is no .bib here: the reference list is printed.
+    sc = data["scan"]
+    assert sc["nothing_to_check"] is None
+    assert sc["bib_files"] == [] and sc["tex_files"] == 1
+    assert sc["cite_commands"] >= sc["citable_claims"] >= 1
     assert all(r["citing"]["page"] for r in data["records"])
     by_status = {r["status"] for r in data["records"]}
     assert K.SOURCE_UNAVAILABLE in by_status            # the stubbed network refused
@@ -357,3 +363,27 @@ def test_escaped_percent_in_the_source_matches_a_plain_quote(tmp_path):
          "and Relation and Object by 5% of the total")
     assert locate(q, [f], tmp_path) is not None
     assert locate(q.replace("5%", "10%"), [f], tmp_path) is None
+
+
+def test_an_empty_review_worklist_says_which_empty_it_is(tmp_path):
+    """The reader-visible half of spec §13 for review mode.
+
+    Driven through build/render rather than a PDF: a fixture PDF that cites
+    nothing would be testing pdftotext, and what has to hold here is that an
+    empty worklist still says what was looked at.
+    """
+    from deepcite import report as REP
+    for why, expect in ((K.NO_BIBLIOGRAPHY_NO_CITATIONS, "No reference list, and no citation marker"),
+                        (K.NO_CITABLE_CLAIM, "No citing sentence made a checkable claim")):
+        payload = K.build(tmp_path, None, {"body.txt": "0" * 64}, [], "ab" * 32,
+                          "not used (review of a PDF)",
+                          scan_block=K.scan(1, 0 if why == K.NO_BIBLIOGRAPHY_NO_CITATIONS else 9,
+                                            [], 0, why))
+        payload["paper"]["kind"] = "pdf"
+        md = REP.render(payload)
+        assert expect in md, md
+        # the unit is the extracted body text, not a .tex file that does not exist
+        assert "1 body text" in md and ".tex file(s)" not in md
+        # and it must never read as a clean reference list
+        assert "not a statement that the references are sound" in md or \
+               "No citing sentence made a checkable claim" in md

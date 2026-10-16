@@ -68,8 +68,8 @@ python -m deepcite annotate --paper <dir> --record <record_id> --opinion-file F
 
 | 码 | 含义 |
 |---|---|
-| 0 | 跑完了（**包括"没选中任何引用"** —— 照样写缓存，`records: []`） |
-| 2 | bib 缺失或解析不了（纯调用错误） |
+| 0 | 跑完了（**包括"没什么可核的"** —— 照样写缓存，`records: []` + `scan.nothing_to_check`，见 §13） |
+| 2 | bib **点名了但不在盘上**，或扫到了引用却找不到任何 .bib（纯调用错误 / 参考文献没被看过，**不写缓存**） |
 | 3 | bibguard < 0.5.0 —— 响亮失败，**绝不**退回自己解析 |
 | 4 | records > 0 且全部失败（单条取不到只是该条的 status，不是进程退出） |
 | 5 | `annotate` 的引文校验不通过（硬失败） |
@@ -95,6 +95,12 @@ python -m deepcite annotate --paper <dir> --record <record_id> --opinion-file F
             # 0.2.0 起可选：review 模式 "kind": "pdf", "pdf", "pdf_sha256",
             # "body_text"（抽取文本的路径，citing 的字节偏移指向它）
            },
+  # 0.2.1 起（追加，format_version 仍为 1）：这一次究竟看了什么。
+  # 空清单有三种读法且不可互换 —— 什么都没引、引了但没有可核的论断、
+  # --paper 指到了没有论文的目录。计数是唯一能分开它们的东西，所以照原样记。
+  "scan": {"tex_files": 3, "cite_commands": 41, "bib_files": ["refs.bib"],
+           "citable_claims": 7,
+           "nothing_to_check": null | "NO_BIBLIOGRAPHY_NO_CITATIONS" | "NO_CITABLE_CLAIM"},
   "records": [{
     "record_id": "<sha256(bib_key|cited_id_or_empty|citing_file_relpath|context_sha256)[:16]>",
     "bib_key": "...", "cited_id": "arXiv:2305.14795v3" | "doi:..." | "openreview:<id>" | null,
@@ -408,3 +414,38 @@ bibguard 只对**被选中的 key** 跑（以前对整份 .bib，55 s）。
 `packet` 给判读者（人或 agent）每条记录的上下文、工件本地路径和 JSONL 模板；`annotate --opinions` 批量回填，
 每条引文机械核对，`assessment` 只能是 mismatch / no_mismatch_found / unclear，永远没有 supported。
 
+
+## 13. 0.2.1 修订（2026-10-15，format_version 仍为 1）：空清单要能读
+
+**问题。** 一个没有参考文献的论文目录（实例：ServerBench 的 `artifact/`，只有 REPORT.md
+和一堆 CSV）让 `run` 打印 `bib file not found: (none named or present) -- pass --bib`
+并以 2 退出，**什么都不写**。读方 `self_review.py citations` 于是正确地说 ref-check
+"has not been run" —— 但它分不出**从来没跑**和**跑了，而且没什么可核的**，这是关于一篇
+投稿的两个不同事实。手写一条缓存记录更糟：一条伪造的"没有参考文献"记录会让下一个读者
+以为参考文献被检查过了。
+
+**改动。**
+
+1. `cmd_run` 先扫描再决定。扫描不需要 .bib 也不需要 bibguard，它的计数才是分开三种
+   结局的依据。
+2. 三路分支，而不是一个 `if not bibs or missing`：
+   - `--bib` 点名的文件不在盘上 → **退 2，不写缓存**（命令里的笔误，不是论文的事实）；
+   - 没有 .bib **但扫到了 `\cite`** → **退 2，不写缓存**，并在 stderr 上写明引用条数和
+     "the references were not examined"（参考文献确实没被看过，这必须响亮）；
+   - 没有 .bib **且一条 `\cite` 都没有** → **退 0，写缓存**，
+     `scan.nothing_to_check = "NO_BIBLIOGRAPHY_NO_CITATIONS"`。
+3. 原有的"选中 0 条"路径补上 `scan.nothing_to_check = "NO_CITABLE_CLAIM"` 和计数 ——
+   在此之前它和"没有参考文献"写出的是同一份空文件。
+4. **扫到 0 个 .tex 时额外警告目录可能点错**（stderr 和 Markdown 报告都有）。一个指错的
+   `--paper` 和一篇什么都不引的论文产出同一份空清单，而前者的空清单与那篇论文的参考文献
+   毫无关系。这是这条改动唯一真正危险的失败模式，所以它是显式的、两处都写。
+5. `report` 的空清单分支打印计数与原因，并明说这**不是**"参考文献没问题"的结论。
+
+**读方（`self_review.py citations`）** 把 `scan` 透传，并在 `records == []` 时照原样打出
+计数和原因；`scan` 缺失（2026-10-15 之前写的缓存）时直说"这个零读不出来，请重跑"，
+不猜。它不把计数变成判断：0 个 .tex 只警告"可能是目录点错了"，是不是点错了只有人能判。
+
+**测试（两个方向都断言）：** `deepcite/tests/test_cli.py` 10 条（其中 7 条在改动前的代码上
+失败）、`~/Tools/self-review/tests/run_citations_tests.sh` 22 条（新增 9 条，7 条在改动前的
+读方上失败）、`~/Tools/skill-backend-check.sh --only T29` 同时检查写方和读方 ——
+这条契约只有两边都实现才成立。

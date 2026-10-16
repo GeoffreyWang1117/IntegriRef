@@ -29,6 +29,23 @@ SOURCE_UNAVAILABLE = "SOURCE_UNAVAILABLE"
 
 FAILED_STATUSES = {NO_FULLTEXT, UNRESOLVED, SOURCE_UNAVAILABLE}
 
+# `scan.nothing_to_check` (additive 2026-10-15; format_version stays 1, an older
+# reader ignores the key). Why it exists: a run that found no bibliography at
+# all used to exit 2 and write nothing, so the reader could not tell "ran, and
+# there was nothing to check" from "never ran" -- two different facts about a
+# submission. Writing a cache entry by hand instead would be worse: a
+# fabricated "no bibliography" record makes the next reader believe the
+# references were examined.
+#
+# These are reasons, not statuses: no record is produced, so there is nothing to
+# carry a status. A reader must print the counts beside the reason, because a
+# directory with no .tex in it produces the same empty worklist as a paper that
+# cites nothing -- and the first one means the tool was pointed at the wrong
+# place.
+NO_BIBLIOGRAPHY_NO_CITATIONS = "NO_BIBLIOGRAPHY_NO_CITATIONS"
+NO_CITABLE_CLAIM = "NO_CITABLE_CLAIM"
+NOTHING_TO_CHECK_REASONS = (NO_BIBLIOGRAPHY_NO_CITATIONS, NO_CITABLE_CLAIM)
+
 # llm_opinion.assessment (optional, additive 2026-10-06). Deliberately not
 # "supported": an opinion can report that its quotes show no mismatch, never
 # that the citation is right.
@@ -39,9 +56,23 @@ def cache_path(paper: Path) -> Path:
     return paper / CACHE_RELPATH
 
 
+def scan(tex_files: int, cite_commands: int, bib_files: list[str],
+         citable_claims: int, nothing_to_check: str | None = None) -> dict:
+    """What the run looked at, so an empty worklist can be read.
+
+    `nothing_to_check` is one of NOTHING_TO_CHECK_REASONS, or None when records
+    were produced. The counts are always present and are the part that
+    distinguishes an empty paper from a wrong --paper.
+    """
+    assert nothing_to_check in (None,) + NOTHING_TO_CHECK_REASONS, nothing_to_check
+    return {"tex_files": tex_files, "cite_commands": cite_commands,
+            "bib_files": sorted(bib_files), "citable_claims": citable_claims,
+            "nothing_to_check": nothing_to_check}
+
+
 def build(paper_root: Path, main_tex: str | None, files_sha256: dict[str, str],
           records: list[dict], selection_regex_sha256: str,
-          bibguard_version: str) -> dict:
+          bibguard_version: str, scan_block: dict | None = None) -> dict:
     return {
         "format_version": FORMAT_VERSION,
         "tool": TOOL_NAME,
@@ -52,6 +83,7 @@ def build(paper_root: Path, main_tex: str | None, files_sha256: dict[str, str],
         "paper": {"root": str(paper_root.resolve()),
                   "main_tex": main_tex,
                   "files_sha256": files_sha256},
+        "scan": scan_block,
         "records": records,
     }
 

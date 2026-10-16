@@ -113,8 +113,35 @@ def render(data: dict) -> str:
              "work. Nothing here is a verdict: there is no SUPPORTED. An opinion is shown "
              "only with quotes that were found verbatim in the cited work.\n"]
     if not recs:
-        lines.append("No citing sentence made a checkable claim (protocol, metric, dataset, "
-                     "split, number, or finding attributed to a cited work).")
+        # An empty worklist has three readings and they are not interchangeable:
+        # a paper that cites nothing, a paper whose citations make no checkable
+        # claim, and a --paper that was pointed somewhere there is no paper. The
+        # counts are what tells them apart, so they are printed, not summarised.
+        sc = data.get("scan") or {}
+        # review mode reads one extracted body text out of a PDF, not .tex files,
+        # and its reference list is printed rather than in a .bib
+        pdf = (paper.get("kind") == "pdf")
+        unit = "body text" if pdf else ".tex file(s)"
+        cited = "citation marker" if pdf else "`\\cite`"
+        if sc:
+            lines.append(
+                f"Scanned **{sc.get('tex_files')} {unit}**, "
+                f"**{sc.get('cite_commands')} citation(s)**, "
+                + ("reference list: printed in the PDF.\n" if pdf else
+                   f"bibliography: {', '.join(sc.get('bib_files') or []) or '**none found**'}.\n"))
+        why = sc.get("nothing_to_check")
+        if why == "NO_BIBLIOGRAPHY_NO_CITATIONS":
+            lines.append(f"**Nothing to check.** No reference list, and no {cited} anywhere "
+                         f"in what was scanned. This is a recorded run, not a missing one -- "
+                         f"but it is also not a statement that the references are sound, "
+                         f"because there were none to read.")
+            if not sc.get("tex_files"):
+                lines.append("\n> No .tex file was found at all. If this paper has a "
+                             "manuscript, this worklist is about the wrong directory and "
+                             "says nothing about the paper's references.")
+        else:
+            lines.append("No citing sentence made a checkable claim (protocol, metric, "
+                         "dataset, split, number, or finding attributed to a cited work).")
         return "\n".join(lines) + "\n"
     counts: dict[str, int] = {}
     for r in recs:

@@ -230,3 +230,111 @@ def test_unknown_format_version_is_refused_not_guessed(paper, artifact, tmp_path
     p.write_text(json.dumps(data))
     with pytest.raises(ValueError, match="format_version"):
         K.read(paper)
+
+
+# --- an empty worklist has three readings, and they are not the same fact ----
+#
+# Before 2026-10-15 a paper directory with no bibliography made `run` print
+# "bib file not found: (none named or present)" and exit 2 without writing
+# anything. The reader (self_review.py citations) then said, correctly, that
+# ref-check "has not been run" -- and could not tell that from "ran, and there
+# was nothing to check". Writing the cache entry by hand instead is worse: a
+# fabricated "no bibliography" record makes the next reader believe the
+# references were examined.
+
+
+def _no_bib_paper(tmp_path: Path, name: str, body: str | None = None) -> Path:
+    d = tmp_path / name
+    d.mkdir()
+    (d / "REPORT.md").write_text(body or "# A report\n\nNo citations anywhere.\n")
+    return d
+
+
+def test_no_bibliography_and_no_citations_is_recorded_not_refused(tmp_path):
+    d = _no_bib_paper(tmp_path, "artifact")
+    assert not K.cache_path(d).exists()          # "never ran" is the before state
+    assert _run(["run", "--paper", str(d)]) == C.EXIT_OK
+    assert K.cache_path(d).exists()              # and now it is distinguishable
+    data = K.read(d)
+    assert data["records"] == []
+    assert data["scan"]["nothing_to_check"] == K.NO_BIBLIOGRAPHY_NO_CITATIONS
+    assert data["scan"]["tex_files"] == 0
+    assert data["scan"]["cite_commands"] == 0
+    assert data["scan"]["bib_files"] == []
+    # additive: an older reader must still accept the file
+    assert data["format_version"] == C.FORMAT_VERSION
+
+
+def test_the_report_says_which_kind_of_empty_it_is(tmp_path):
+    d = _no_bib_paper(tmp_path, "artifact2")
+    _run(["run", "--paper", str(d)])
+    md = K.cache_path(d).with_suffix(".md").read_text()
+    assert "Nothing to check" in md
+    assert "0 .tex file(s)" in md
+    # ...and must not claim anything about the references themselves
+    assert "not a statement that the references are sound" in md
+    assert "wrong directory" in md
+
+
+def test_zero_tex_files_warns_that_it_may_be_the_wrong_directory(tmp_path, capsys):
+    d = _no_bib_paper(tmp_path, "maybe_wrong")
+    _run(["run", "--paper", str(d)])
+    err = capsys.readouterr().err
+    assert "0 .tex file(s)" in err and "wrong directory" in err
+
+
+def test_a_paper_that_cites_with_no_bib_is_still_an_error(tmp_path):
+    # The opposite direction, and the one that must NOT become "nothing to
+    # check": citations exist, so the references were not examined.
+    d = tmp_path / "cites_no_bib"
+    d.mkdir()
+    (d / "main.tex").write_text(
+        "MQuAKE's native metric is conjunction over all edits"
+        "~\\cite{zhong2023mquake}.\n")
+    assert _run(["run", "--paper", str(d)]) == C.EXIT_NO_BIB
+    assert not K.cache_path(d).exists()
+
+
+def test_the_citation_count_is_named_when_there_is_no_bib(tmp_path, capsys):
+    d = tmp_path / "cites_no_bib2"
+    d.mkdir()
+    (d / "main.tex").write_text("A claim of 94.2 accuracy~\\cite{a}.\n")
+    _run(["run", "--paper", str(d)])
+    err = capsys.readouterr().err
+    assert "1 citation(s)" in err
+    assert "the references were not examined" in err
+
+
+def test_a_named_bib_that_does_not_exist_records_nothing(tmp_path):
+    d = _no_bib_paper(tmp_path, "typo")
+    assert _run(["run", "--paper", str(d), "--bib", str(d / "nope.bib")]) == C.EXIT_NO_BIB
+    assert not K.cache_path(d).exists()
+
+
+def test_no_citable_claim_records_the_reason_and_the_counts(tmp_path):
+    d = tmp_path / "quiet2"
+    d.mkdir()
+    (d / "main.tex").write_text("Background only~\\cite{bg2020}.\n")
+    (d / "r.bib").write_text("@article{bg2020,title={B},author={B},year={2020}}\n")
+    assert _run(["run", "--paper", str(d), "--bib", str(d / "r.bib"),
+                 "--bibguard", _stub(tmp_path)]) == C.EXIT_OK
+    sc = K.read(d)["scan"]
+    assert sc["nothing_to_check"] == K.NO_CITABLE_CLAIM
+    assert sc["cite_commands"] == 1             # it cites; the claim is not checkable
+    assert sc["citable_claims"] == 0
+    assert sc["bib_files"] and sc["tex_files"] == 1
+
+
+def test_a_normal_run_carries_the_counts_and_no_reason(paper, artifact, tmp_path):
+    _run(["run", "--paper", str(paper), "--bib", str(paper / "refs.bib"),
+          "--main", "main.tex", "--bibguard", _stub(tmp_path),
+          "--artifact", f"zhong2023mquake={artifact}"])
+    sc = K.read(paper)["scan"]
+    assert sc["nothing_to_check"] is None
+    assert sc["cite_commands"] == 2 and sc["citable_claims"] == 1
+    assert sc["tex_files"] == 1 and len(sc["bib_files"]) == 1
+
+
+def test_scan_refuses_a_reason_it_does_not_define():
+    with pytest.raises(AssertionError):
+        K.scan(1, 1, [], 0, "NOTHING_WRONG_HERE")

@@ -19,7 +19,7 @@ import unicodedata
 
 FORMAT_VERSION = 1
 TOOL_NAME = "integriref-deepcite"
-TOOL_VERSION = "0.2.0"
+TOOL_VERSION = "0.2.1"   # 0.2.1: scan counts, so an empty worklist can be read (spec §13)
 
 # Exit codes (§4). 1 stays reserved for unexpected failures.
 EXIT_OK = 0
