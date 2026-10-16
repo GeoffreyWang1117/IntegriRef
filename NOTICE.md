@@ -33,6 +33,14 @@ labelled corpus for retrieval and selection measurement. Not redistributed here.
 Public snapshot; records are reproduced only as the fields listed in
 [`benchmarks/data/PREPRINT_HARD_NEGATIVES_PROVENANCE.md`](benchmarks/data/PREPRINT_HARD_NEGATIVES_PROVENANCE.md).
 
+**Crossref REST API responses** — `benchmarks/crossref_dates/cache/` holds 483
+frozen `/works/{doi}` responses so the date-field analysis replays without
+network access. Crossref distributes its metadata under **CC0**. The cache was
+collected serially at no more than one request per second with the User-Agent
+`IntegriRef-research/1.0 (+https://github.com/GeoffreyWang1117/IntegriRef)` and
+no contact email, i.e. deliberately not the polite pool. Four DOIs returned 404
+and are stored as explicit `_fetch_error` envelopes, never as absent fields.
+
 **References-Validation / CheckIfExist** (`zabbonat/References-Validation`) — a
 third-party reference checker. It is **not vendored here** — it carries its own
 upstream license and the harness's whole point is that it runs unmodified, so

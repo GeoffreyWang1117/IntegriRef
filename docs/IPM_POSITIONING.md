@@ -139,28 +139,52 @@ That shape fits IPM, and it is what the evidence supports.
 4. **NatChim's sampling frame.** Irrecoverable: the mining script overwrote its own
    log (see `../benchmarks/data/NATCHIM_PROVENANCE.md`). Either re-mine with the
    now-timestamped script, or keep reporting the split without a frame.
-5. **Separating year semantics.** Half done. Publication year, online-first year,
-   issue year and arXiv version year are different things, and a numeric ±2 rule
-   conflates them. **The false-alarm cost of that conflation is now measured on a
-   third party.** Running the 483 legitimate pairs down CheckIfExist's free-text
-   path, the ±2 boundary is exactly where its verdict hardens:
+5. ~~**Separating year semantics.**~~ **Done, and the answer is not the one the
+   prerequisite assumed.** Publication year, online-first year, issue year and
+   arXiv version year are different things, and a numeric ±2 rule conflates
+   them. Both halves are now measured.
 
-   | delta | resolved | verdict |
-   |---:|---:|---|
-   | 1 | 93/93 | soft note, "likely online-first vs print date" |
-   | 2 | 95/95 | soft note |
-   | 3 | 95/95 | hard `Year Mismatch` |
-   | 4 | 94/94 | hard `Year Mismatch` |
-   | 5 | 83/83 | hard `Year Mismatch` |
+   **The cost, on a third party.** Running the 483 legitimate pairs down
+   CheckIfExist's free-text path, the ±2 boundary is exactly where its verdict
+   hardens: delta 1–2 draw a soft "likely online-first vs print date" note
+   (188/188 resolved), delta 3–5 draw a hard `Year Mismatch` (272/272 resolved),
+   on records whose correct label is LOW. Measuring this on someone else's
+   tolerance rule rather than our own is what makes it worth reporting.
 
-   Every record that resolved drew a year notice — 460/460 — and all 272 resolved
-   records at delta 3–5 drew the hard one, on records whose correct label is LOW.
-   Measuring this on someone else's tolerance rule rather than our own is what
-   makes it worth reporting. What remains is the *semantic* half: the fixture's
-   publication year comes from `journal-ref`, not from registry date-parts, so it
-   cannot yet separate online-first from issue year. T12 supplies cached Crossref
-   date-parts; until then `crossref_dates` is null in all 483 rows, and a
-   throttled response must be recorded as not fetched, never as a field absent.
+   **The semantics, against real registry dates.** 479 of 483 DOIs returned a
+   Crossref record (4 explicit 404s, which stay *unknown* rather than being read
+   as absent fields). Restricted to the 212 records carrying all three date
+   fields, so the comparison is within-record rather than across different
+   subpopulations:
+
+   | field | FPR at ±2 | at delta 3 |
+   |---|---:|---:|
+   | `published-print` | 61.3% | 43/43 |
+   | `published-online` | 52.8% | 24/43 |
+   | `issued` | 50.5% | 24/43 |
+
+   The field choice matters in exactly one place — a 3-year gap — and for an
+   explainable reason: online-first typically precedes print by about a year, so
+   a 3-year preprint-to-print gap is often a 2-year preprint-to-online gap and
+   falls inside tolerance. At delta 1–2 there is nothing to separate; by delta
+   4–5 the gap defeats every field. **Report per delta and per field; a single
+   pooled FPR is not a meaningful number**, and the complete-case rates (58.7 /
+   53.6 / 53.2) are computed over different row sets and are not comparable with
+   each other at all.
+
+   **The finding that changes the claim.** `published-online` is not only an
+   online-first date. Of the 212, it is *later* than the print date for 10, by
+   up to 9 years, and 8 of those have an online year of 2011–2013 — the
+   signature of retro-digitisation, the date a publisher's platform received a
+   scan. Five of them raise a false positive the print date would not, and they
+   account for all four delta-1 errors in the online column. So one of the
+   fields silently carries two different events under one name: **separating
+   year semantics is necessary but not sufficient, and a tolerance rule cannot
+   be repaired merely by choosing a better field.** That is a sharper statement
+   than the prerequisite asked for, and it is the one the data supports.
+
+   `posted` carries no year in any of the 479 successful responses, so its rate
+   is **not estimable** — not 0%.
 
 ## Honest summary
 
