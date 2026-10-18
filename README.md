@@ -24,8 +24,10 @@ NLPCC 评审都要求收窄它。
 | 去向 | 状态 | 原因 |
 |---|---|---|
 | arXiv | 包已就绪，未投 | `paper/nlpcc2026/IntegriRef_arxiv.tar.gz`，14 页 A4，验证可解压编译 |
-| ECIR 2027 Resource | ❌ 排除 | 要求至少一位作者到场（Southampton），作者 2026-10-16 决定不到场 |
-| AAAI-27 W11 (DiMiGenAIS) | 候选，截稿 2026-11-20 | `paper/aaai2027_w11/`，正文 6 页 / 含 refs 7 页；**archival 与否未知，待问组织者** |
+| ECIR 2027 Resource | ⏸ 封锁中，理由待重裁 | 截稿 2026-11-02。原记的理由（要求到场）已作废 —— 作者本人不出差，但这不排除 venue（D-19/D-27） |
+| AAAI-27 W11 (DiMiGenAIS) | 候选，截稿 2026-11-20 | `paper/aaai2027_w11/`，正文 6 页 / 含 refs 7 页；**archival 与否、匿名要求、页数上限均未知，待问组织者** |
+
+> 「作者不去现场」是关于出席的事实，不是 venue 筛选条件：投、录、不去。要求现场只决定录用后是否安排注册或代讲（D-27）。
 
 **基准已发布：** 九个 split 共 12,381 条，见
 [benchmarks/data/dataset_card.md](benchmarks/data/dataset_card.md) 与
