@@ -135,7 +135,7 @@ L4 aggregates L0--L3 signals into a posterior via likelihood-ratio fusion. Start
 \subsection{Datasets}
 \label{ssec:datasets}
 
-We release \textbf{IntegriRef-Bench}. Its base benchmark comprises 11{,}790 entries across six splits: ref\_verification (1{,}926), retracted\_papers (6{,}391, from Retraction Watch via Crossref+PubMed), signal\_unit\_tests (403, covering all 21 signals in isolation), graph\_anomaly (3{,}030), and small l1\_intent / l2\_nli probes (20 each). Training uses 11K SciCite \cite{cohan2019structural} for L1 and 6.6K SciFact \cite{wadden2020fact} for L2. This version adds three evaluation splits closing gaps in the earlier ones --- \textbf{Borderline-L1-v2} ($N{=}289$) and \textbf{Borderline-L2-v2} ($N{=}209$), replacing 40-case hand-built splits, and \textbf{NatChim} ($N{=}93$: 33 mined chimeras + 60 matched controls), chimeras mined from real bibliographies rather than synthesized --- for 12{,}381 entries across nine splits in total.\footnote{Code and IntegriRef-Bench: \url{https://github.com/GeoffreyWang1117/IntegriRef}. NatChim ships with the release; the two Borderline-v2 splits are fixed-seed selections over ACL-ARC and SciFact dev, rebuilt by the released script rather than redistributed.}
+We release \textbf{IntegriRef-Bench}. Its base benchmark comprises 11{,}790 entries across six splits: ref\_verification (1{,}926), retracted\_papers (6{,}391, from Retraction Watch via Crossref+PubMed), signal\_unit\_tests (403, covering all 21 signals in isolation), graph\_anomaly (3{,}030), and small l1\_intent / l2\_nli probes (20 each). Training uses 11K SciCite \cite{cohan2019structural} for L1 and 6.6K SciFact \cite{wadden2020fact} for L2. This version adds four evaluation splits closing gaps in the earlier ones --- \textbf{Borderline-L1-v2} ($N{=}289$) and \textbf{Borderline-L2-v2} ($N{=}209$), replacing 40-case hand-built splits, \textbf{NatChim} ($N{=}93$: 33 mined chimeras + 60 matched controls), chimeras mined from real bibliographies rather than synthesized, and \textbf{PrePub-483}, a hard-negative split of 483 real preprint-to-publication pairs mined from a 1{,}999{,}486-record arXiv snapshot, whose printed year is the arXiv-ID year and whose publication year is parsed from \texttt{journal-ref} --- for 12{,}864 entries across ten splits in total.\footnote{Code and IntegriRef-Bench: \url{https://github.com/GeoffreyWang1117/IntegriRef}. NatChim and PrePub-483 ship with the release; the two Borderline-v2 splits are fixed-seed selections over ACL-ARC and SciFact dev, rebuilt by the released script rather than redistributed. PrePub-483 is stratified across year gaps of 1--5 by construction, so its gap distribution is not a natural prevalence and results on it must be read per gap.}
 
 \paragraph{Golden Benchmark.}
 The curated golden set has 58 cases: 28 retracted (including Wakefield and Surgisphere), 10 verified real (Transformer, ResNet, BERT), 15 LLM-hallucinated with fabricated DOIs, and 5 chimeras pairing real DOIs with wrong author--title. Every evaluation here uses these original labels without reclassification; an earlier reclassification of 8 cases as ``real'' inflated our recall and is no longer reported. Unless a table states otherwise, golden-58 metrics treat the 48 hallucinated, chimera and retracted cases as positives, the 10 verified-real papers as negatives, and ``escalated'' as tier $\geq$ELEVATED (posterior $\geq$0.05); Table~\ref{tab:results} instead scores the 20 hallucinated+chimera cases at $\geq$HIGH, per its caption.
@@ -199,6 +199,89 @@ Table~\ref{tab:scale} validates IntegriRef beyond golden-58 on the two larger ex
 \paragraph{Chimera Detection: The Most Stringent Setting.} Chimeras resolve in registries, so detection needs \emph{cross-field consistency after ID resolution}: our v0.2 reached 1.2\% chimera recall because nothing fired once the DOI resolved, and a \texttt{chimera\_\allowbreak detected} signal (LR=8.0, firing when an ID-matched record has author or year FAIL) lifts this to 100\% at FPR 3.5\%$\to$7.0\%. To probe it we built three 60-case splits over shared biomedical DOI bases plus 60 unchanged controls: (a) author-only swap, (b) year-only $-7$ shift, (c) combined. Crossref-only: (a) 60/60 [94.0,100] at CRITICAL, FPR 0/60 [0,6.0]; (c) 60/60 at HIGH, FPR 0/60, though via \texttt{phantom\_doi} (51/60), joint inconsistency making the resolver reject the record outright; (b) 0/60 at any tier. Multi-registry is near-identical (FPR $\leq$1/60), so detection comes from L0 per-field comparison, not cross-registry consensus; an author-swap over 8 non-biomedical topics gives 60/60 CRITICAL / 0/60 FPR.
 
 \noindent\textbf{The year-only blind spot, diagnosed and fixed.} Case (b) is the sharpest negative result in this study: a DOI resolving to a record seven years off went undetected. The cause is not a missing signal. \texttt{match\_year} does return FAIL on an ID-resolved year discrepancy, but a downstream rule downgraded any year FAIL to WARN whenever title and author matched --- a tolerance written for preprint-versus-publication drift that also applied to ID-resolved records, so the FAIL never reached \texttt{chimera\_detected}. Restricting that tolerance to search-matched records, where the preprint rationale holds, closes the gap: (b) goes from \textbf{0/60 to 60/60 at CRITICAL, FPR 0/60}, (a) unchanged. Re-running every real control under the fix confirms it does not buy recall with false alarms: 14/349 (4.0\%) on rv-1926 and 33/903 (3.7\%) on ret-6391, both at or below the 4.6\% and 4.2\% of Table~\ref{tab:scale}. The failure mode generalizes: a per-field verdict computed correctly but softened before fusion is invisible to signal-level auditing, and only an end-to-end stress set exposes it.
+
+\noindent\textbf{The same silence in two other codebases.} The paragraph above
+diagnoses one tool, our own, which is an anecdote rather than a pattern. We
+therefore ran three independent third-party checkers, unmodified, against the
+same 60 year-only chimeras with their 60 matched controls and against
+PrePub-483 (Table~\ref{tab:checkers}). Each tool's network layer is replaced by
+frozen fixtures --- real Crossref responses for PrePub-483 --- and a socket
+guard, self-tested against a live URL before it is trusted, records that no run
+opens a non-local socket.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & chimeras & legit.\ refs \\
+checker, and how it treats the year & (of 60) & (of 483) \\
+\midrule
+never compared on the DOI route   & \textbf{0}    & 0 \\
+\quad same tool, free-text route  & 18/18$^{*}$   & gap $\geq$3 \\
+compared at $\pm$2, label dropped & \textbf{0}    & 0 \\
+compared by exact match           & 60            & \textbf{353} \\
+\bottomrule
+\end{tabular}
+\caption{Three third-party checkers --- CheckIfExist
+\cite{abbonato2026checkifexist} (rows 1--2),
+\citet{balakrishnan2025bibverify} and \citet{sachin2026doivalidator} --- run
+unmodified against frozen fixtures, on the year-only chimeras (correct label
+HIGH) and PrePub-483 (correct label LOW). Two never report the year at all;
+the one that does reports it on 73.1\% of legitimate references.
+Row 2 is the positive control, not a fourth tool. $^{*}$of those the tool
+itself resolved; its PrePub-483 verdict hardens from a soft note to a hard
+mismatch at a gap of 3.}
+\label{tab:checkers}
+\end{table}
+
+CheckIfExist \cite{abbonato2026checkifexist} never compares the year
+of a reference that arrives with a resolvable DOI: its DOI resolver computes the
+registered year but records only a retraction flag and two title-similarity
+notes, and the fallback returns as soon as the DOI resolves, leaving the
+year-aware matching below it unreachable. All 60 chimeras are accepted at
+confidence 100 with no issue raised. That zero is a routing consequence rather
+than an absent capability, and a positive control is what establishes the
+difference: the same fixtures sent down the tool's free-text path, where the
+comparison lives, flag 18 of the 18 that resolve there and silently accept none.
+
+The second checker \cite{balakrishnan2025bibverify} does reach a year
+comparison on its DOI route, with its own $\pm$2-year tolerance, and builds a
+\texttt{YEAR\_MISMATCH} label when the gap is wider --- then discards it. The
+label is appended to a local list that both branches of the status block rebind
+before the report is written, so a wrong year costs 25 points of match score and
+nothing else: 57 of 60 chimeras return \textsc{verified} with no issue recorded,
+0 of 483 legitimate pairs carry a year label either, and the tool's own summary
+log instructs its reader to triage on a label its code cannot emit. The third
+\cite{sachin2026doivalidator} compares the year by exact match with no tolerance
+at all, catches all 60 chimeras, and flags 353 of the 483 legitimate pairs ---
+flat across gaps of 1--5, because it measures only that two years differ.
+
+So a field check that is individually correct can be lost to a routing
+decision, to a discarded result, or to a severity rule: three codebases, three
+mechanisms, one silence, and none of the three visible to a unit test of the
+comparator. This is the generalization the previous paragraph could only
+conjecture, and it is the paper's transferable claim.
+
+\noindent\textbf{What a $\pm$2-year tolerance costs, and why no date field
+repairs it.} PrePub-483 also prices a tolerance rule on a third party's
+implementation rather than our own. Down CheckIfExist's free-text path, gaps of
+1--2 years draw a soft ``likely online-first vs print date'' note (188/188
+resolved) and gaps of 3--5 a hard year mismatch (272/272), on records whose
+correct label is LOW. The obvious repair --- compare against the right Crossref
+date field --- does not work. Restricted to the 212 records carrying
+\texttt{published-print}, \texttt{published-online} and \texttt{issued} together,
+so that the comparison is within-record rather than across subpopulations with
+different missingness, false-positive rates at $\pm$2 are 61.3\%, 52.8\% and
+50.5\%, and the entire difference sits at a gap of exactly 3, where
+online-first precedence pulls a 3-year gap back inside tolerance. Worse,
+\texttt{published-online} is \emph{later} than print for 10 of the 212, by up to
+nine years, 8 of them clustered at an online year of 2011--2013 --- the
+signature of retro-digitisation, the date a platform received a scan of an older
+article --- and 5 of those raise a false positive the print date would not. One
+field carries two different events under one name, so separating year semantics
+is necessary but not sufficient, and a numeric tolerance cannot be repaired by
+choosing a better field.
 
 \noindent\textbf{Naturally-occurring chimeras.} All of the above is synthetic. As a real-data check we mined \textbf{NatChim} from publisher-deposited Crossref reference lists, which record each reference as printed and so preserve the citing authors' own errors. A reference is a candidate when its printed year or first author contradicts the record its DOI resolves to; candidates are confirmed against OpenAlex and kept only when \emph{both} registries disagree with the printed metadata, removing the legacy-backfile dates, corporate bylines and transliteration artifacts that otherwise dominate. The mined split holds 33 such references (17 year-only, 15 author-only, 1 both) plus 60 matched controls drawn from the same bibliographies. We report the split rather than a prevalence: the mining run's own log was overwritten by a later run of the same script, so we cannot state the size of the sampling frame it was drawn from, and the 33 cases were selected for the phenomenon. They establish that the failure class occurs in published bibliographies, not how often. IntegriRef escalates \textbf{33/33} to $\geq$HIGH (32 CRITICAL) at \textbf{0/60} FPR, firing \texttt{chimera\_\allowbreak detected}+\texttt{metadata\_\allowbreak mismatch} on 32; every case involving a year mismatch (18/18) is caught --- on real data, exactly the class that was invisible before the fix. These are \emph{errors of record}, sometimes the citing authors' and sometimes the registry's. The split is small by construction: every candidate had to be contradicted by both Crossref and OpenAlex, and we publish no discard log for this run, so the filter's selectivity is stated as a criterion rather than as a count.
 
@@ -311,7 +394,7 @@ claim\_unsupported    & L2 & 3  & ---           & T & grim\_test\_failure   & St
 IntegriRef offers a calibrated audit of where reference-integrity verification is easy and where it is hard: registry checks solve most fabricated-DOI cases (99.9\% recall, 4--5\% FPR), while ID-resolving chimeras and citation-use errors need cross-field and contextual escalation; raw L4 posteriors rank well but are uncalibrated, and Platt or empirical LRs close the gap. Three negatives frame the message: in our 58-case setup a Crossref tool \emph{reduced} the performance of both LLMs tested with it, single-registry coverage inverts between populations, and the contextual layers are far weaker at $N{>}200$ than at $N{=}40$. The chimera blind spot is the transferable lesson --- a field-level verdict softened before fusion vanishes from every signal-level audit; only end-to-end stress testing finds it.
 
 \section*{Limitations and Ethics}
-\emph{Calibration.} Hand-set LRs differ from empirical by up to 2 orders of magnitude; 15/21 signals never fire in our pool and 9 stay empirically unvalidated. \emph{L1.} Much improved over the retired heuristic, but 11\% FPR on real contexts restricts it to triage. \emph{L2.} Advisory only: it flags 34--66\% of correct citations. \emph{L3.} Explanatory only; alone it lifts clean-bibliography FPR from 0.9\% to 73.7\%. \emph{Chimeras.} The year-only fix is validated on a 120-case stress set and 33 mined natural cases only. \emph{Domain coverage.} 62 adapters span 6 domains, but only four academic registries are validated at scale and all benchmarks are academic. \emph{Retraction coverage.} Recall tracks Retraction Watch and PubMed integration density. \emph{Ethics.} Reporting tiers rather than verdicts limits false-accusation risk.
+\emph{Calibration.} Hand-set LRs differ from empirical by up to 2 orders of magnitude; 15/21 signals never fire in our pool and 9 stay empirically unvalidated. \emph{L1.} Much improved over the retired heuristic, but 11\% FPR on real contexts restricts it to triage. \emph{L2.} Advisory only: it flags 34--66\% of correct citations. \emph{L3.} Explanatory only; alone it lifts clean-bibliography FPR from 0.9\% to 73.7\%. \emph{Chimeras.} The year-only fix is validated on a 120-case stress set and 33 mined natural cases only. \emph{Third-party checkers.} They are run against frozen fixtures, so Table~\ref{tab:checkers} establishes the behaviour of three published implementations on deterministic inputs, not their behaviour across the full variety of live registry responses; the chimeras' registered records are a proxy built from their paired controls, and PrePub-483's reference strings are reconstructed from stored metadata. PrePub-483 is balanced across year gaps by construction, so its rates are reported per gap and never pooled. \emph{Domain coverage.} 62 adapters span 6 domains, but only four academic registries are validated at scale and all benchmarks are academic. \emph{Retraction coverage.} Recall tracks Retraction Watch and PubMed integration density. \emph{Ethics.} Reporting tiers rather than verdicts limits false-accusation risk.
 
 \bibliographystyle{aaai2027}
 \bibliography{references}
